@@ -196,7 +196,7 @@ export default async function ProductPage(props: {
               </span>
             </div>
 
-            <h1 className="mb-2 text-3xl font-bold text-gray-900">
+            <h1 className="mb-2 font-[family-name:var(--font-anton)] text-4xl text-[#5A3493]">
               {product.title}
             </h1>
             <p className="mb-6 text-sm leading-relaxed text-gray-600">
@@ -221,7 +221,7 @@ export default async function ProductPage(props: {
                   key={b}
                   className="flex items-center gap-2 text-sm text-gray-700"
                 >
-                  <span className="text-purple-700">✓</span>
+                  <span className="text-[#5A3493]">✓</span>
                   {b}
                 </li>
               ))}
@@ -231,15 +231,15 @@ export default async function ProductPage(props: {
               <AddToCart product={product} />
             </Suspense>
 
-            <div className="mt-6 grid grid-cols-3 gap-3 border-t border-gray-100 pt-6 text-center">
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
               {[
-                { icon: "🚀", label: "Ships in 1 Business Day" },
-                { icon: "😊", label: "1,000+ Happy Customers" },
-                { icon: "🔄", label: "30-Day Guarantee" },
+                { icon: "🚚", label: "Ships Within\n1 Business Day" },
+                { icon: "😊", label: "Over 1000+\nHappy Customers" },
+                { icon: "🔄", label: "30-Day Money Back\nGuarantee" },
               ].map((b) => (
-                <div key={b.label} className="flex flex-col items-center gap-1">
+                <div key={b.label} className="flex flex-col items-center gap-2 rounded-xl bg-[#C1D0A5] px-2 py-4">
                   <span className="text-2xl">{b.icon}</span>
-                  <span className="text-xs text-gray-500">{b.label}</span>
+                  <span className="whitespace-pre-line font-semibold text-[#5A3493]">{b.label}</span>
                 </div>
               ))}
             </div>
@@ -250,7 +250,7 @@ export default async function ProductPage(props: {
       {/* ── BENEFITS ── */}
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">
+          <h2 className="mb-10 text-center font-[family-name:var(--font-anton)] text-3xl text-[#5A3493]">
             Focus Without Caffeine
           </h2>
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
@@ -269,7 +269,7 @@ export default async function ProductPage(props: {
       </section>
 
       {/* ── TIMELINE ── */}
-      <section className="bg-purple-700 py-16 text-white">
+      <section className="bg-[#5A3493] py-16 text-white">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <h2 className="mb-10 text-center text-2xl font-bold">
             What You&apos;ll Feel · Timeline
@@ -291,7 +291,7 @@ export default async function ProductPage(props: {
       {/* ── INGREDIENT CARDS ── */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">
+          <h2 className="mb-2 text-center font-[family-name:var(--font-anton)] text-3xl text-[#5A3493]">
             The Stack
           </h2>
           <p className="mb-10 text-center text-sm text-gray-500">
@@ -306,7 +306,7 @@ export default async function ProductPage(props: {
                 <span className="mb-3 block text-4xl">{ing.emoji}</span>
                 <div className="mb-1 flex items-baseline gap-2">
                   <h3 className="font-bold text-gray-900">{ing.name}</h3>
-                  <span className="text-xs font-semibold text-purple-700">
+                  <span className="text-xs font-semibold text-[#5A3493]">
                     {ing.dose}
                   </span>
                 </div>
@@ -325,7 +325,7 @@ export default async function ProductPage(props: {
       {/* ── COMPARISON TABLE ── */}
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-3xl px-4 lg:px-8">
-          <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">
+          <h2 className="mb-10 text-center font-[family-name:var(--font-anton)] text-3xl text-[#5A3493]">
             STUNN vs Regular Coffee
           </h2>
           <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
@@ -333,7 +333,7 @@ export default async function ProductPage(props: {
               <thead>
                 <tr className="border-b border-gray-100">
                   <th className="py-4 pl-6 text-left font-medium text-gray-400" />
-                  <th className="py-4 text-center font-bold text-purple-700">
+                  <th className="py-4 text-center font-bold text-[#5A3493]">
                     STUNN
                   </th>
                   <th className="py-4 pr-6 text-center font-medium text-gray-400">
@@ -354,7 +354,7 @@ export default async function ProductPage(props: {
                     <td className="py-4 pl-6 font-medium text-gray-700">
                       {label}
                     </td>
-                    <td className="py-4 text-center font-medium text-purple-700">
+                    <td className="py-4 text-center font-medium text-[#5A3493]">
                       {stunn}
                     </td>
                     <td className="py-4 pr-6 text-center text-gray-400">
@@ -371,7 +371,7 @@ export default async function ProductPage(props: {
       {/* ── TESTIMONIALS ── */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">
+          <h2 className="mb-10 text-center font-[family-name:var(--font-anton)] text-3xl text-[#5A3493]">
             What Our Customers Say
           </h2>
           <div className="grid gap-6 md:grid-cols-3">
@@ -395,7 +395,7 @@ export default async function ProductPage(props: {
       {/* ── PERSONAS ── */}
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">
+          <h2 className="mb-10 text-center font-[family-name:var(--font-anton)] text-3xl text-[#5A3493]">
             Made For You If...
           </h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -408,7 +408,7 @@ export default async function ProductPage(props: {
                       key={point}
                       className="flex items-start gap-2 text-sm text-gray-600"
                     >
-                      <span className="mt-0.5 text-purple-700">✓</span>
+                      <span className="mt-0.5 text-[#5A3493]">✓</span>
                       {point}
                     </li>
                   ))}
@@ -422,7 +422,7 @@ export default async function ProductPage(props: {
       {/* ── FAQ ── */}
       <section className="py-16">
         <div className="mx-auto max-w-3xl px-4 lg:px-8">
-          <h2 className="mb-10 text-center text-2xl font-bold text-gray-900">
+          <h2 className="mb-10 text-center font-[family-name:var(--font-anton)] text-3xl text-[#5A3493]">
             Frequently Asked Questions
           </h2>
           <StunnFaq />
@@ -430,7 +430,7 @@ export default async function ProductPage(props: {
       </section>
 
       {/* ── FOUNDER ── */}
-      <section className="bg-purple-700 py-16 text-white">
+      <section className="bg-[#5A3493] py-16 text-white">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="flex flex-col items-center gap-8 text-center md:flex-row md:text-left">
             <div className="flex h-24 w-24 flex-none items-center justify-center rounded-full bg-purple-600 text-4xl ring-4 ring-white/30">
@@ -461,7 +461,7 @@ export default async function ProductPage(props: {
           </p>
           <a
             href={`/product/${params.handle}`}
-            className="inline-block rounded-full bg-purple-700 px-10 py-4 text-sm font-semibold text-white shadow-lg transition hover:bg-purple-800"
+            className="inline-block rounded-full bg-[#F9CEE1] px-10 py-4 text-sm font-bold uppercase tracking-widest text-[#5A3493] shadow-lg transition hover:bg-[#f0bbd6]"
           >
             Get STUNN →
           </a>

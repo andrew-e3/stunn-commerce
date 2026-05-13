@@ -1,12 +1,15 @@
 import { CartProvider } from "components/cart/cart-context";
 import { Navbar } from "components/layout/navbar";
 import { WelcomeToast } from "components/welcome-toast";
-import { GeistSans } from "geist/font/sans";
+import { Anton, Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { baseUrl } from "lib/utils";
+
+const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const { SITE_NAME } = process.env;
 
@@ -27,12 +30,14 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  // Don't await the fetch, pass the Promise to the context provider
   const cart = getCart();
 
   return (
-    <html lang="en" className={GeistSans.variable}>
-      <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
+    <html lang="en" className={`${anton.variable} ${inter.variable}`}>
+      <body className="bg-[#F0F0F0] font-[family-name:var(--font-inter)] text-gray-900">
+        <div className="bg-[#F0F0F0] py-2 text-center text-sm text-[#5A3493] font-medium">
+          Upgrade your coffee ritual — get 15% off + free shipping →
+        </div>
         <CartProvider cartPromise={cart}>
           <Navbar />
           <main>

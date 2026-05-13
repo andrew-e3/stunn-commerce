@@ -56,12 +56,12 @@ export function StunnVariantSelector({
               onClick={() => select(duration)}
               className={`relative flex flex-col items-center rounded-xl border-2 px-2 py-4 text-center transition-all ${
                 isSelected
-                  ? "border-purple-700 bg-purple-50"
+                  ? "border-[#5A3493] bg-white"
                   : "border-gray-200 bg-white hover:border-purple-300"
               }`}
             >
               {config?.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-purple-700 px-3 py-0.5 text-[10px] font-bold uppercase text-white">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#5A3493] px-3 py-0.5 text-[10px] font-bold uppercase text-white">
                   Most Popular
                 </span>
               )}
@@ -72,7 +72,7 @@ export function StunnVariantSelector({
                 ${parseFloat(variant.price.amount).toFixed(2)}
               </span>
               {perDay && (
-                <span className="text-xs text-purple-700">${perDay}/day</span>
+                <span className="text-xs text-[#5A3493]">${perDay}/day</span>
               )}
             </button>
           );
