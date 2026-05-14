@@ -100,7 +100,7 @@ export default function Footer() {
       </div>
 
       {/* ── STUNN white logo ── */}
-      <div className="border-t border-white/10 px-6 py-4 lg:px-8">
+      <div className="px-6 py-4 lg:px-8">
         <Image
           src={`${CDN}STUNN_LOGO-White.png`}
           alt="STUNN"
@@ -111,7 +111,7 @@ export default function Footer() {
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="flex flex-col gap-3 border-t border-white/10 px-6 py-5 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between lg:px-8">
+      <div className="flex flex-col gap-3 px-6 py-5 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between lg:px-8">
         <span>© {year}, <Link href="/" className="hover:text-white">STUNN</Link></span>
         <Image
           src={`${CDN}icon-payment-mode-logos.svg`}
@@ -123,7 +123,7 @@ export default function Footer() {
       </div>
 
       {/* ── FDA Disclaimer ── */}
-      <div className="border-t border-white/10 px-6 py-6 text-center text-[10px] italic leading-relaxed text-white/40 lg:px-16">
+      <div className="px-6 py-6 text-center text-[10px] italic leading-relaxed text-white/40 lg:px-16">
         <p>{DISCLAIMER}</p>
       </div>
     </footer>
