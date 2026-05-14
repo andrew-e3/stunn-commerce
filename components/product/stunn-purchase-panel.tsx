@@ -4,7 +4,7 @@ import { addItem } from "components/cart/actions";
 import { useCart } from "components/cart/cart-context";
 import { Product, ProductVariant } from "lib/shopify/types";
 import Image from "next/image";
-import { useActionState, useState } from "react";
+import { useActionState, useState, useTransition } from "react";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
@@ -65,6 +65,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
   const [selectedDuration, setSelectedDuration] = useState("3 Months");
   const { addCartItem } = useCart();
   const [, formAction] = useActionState(addItem, null);
+  const [otpPending, startOtpTransition] = useTransition();
 
   const display = VARIANTS_DISPLAY.find((v) => v.duration === selectedDuration)!;
 
@@ -187,26 +188,25 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* One-time purchase — secondary, clearly below ATC */}
-      <form
-        className="mb-5"
-        action={async () => {
-          if (selectedVariant) {
-            addCartItem(selectedVariant, product);
-            addItemAction();
-          }
-        }}
-      >
+      <div className="mb-5 text-center">
         <button
-          type="submit"
-          disabled={!selectedVariant}
-          className="w-full text-center text-xs text-gray-500 disabled:opacity-50"
+          type="button"
+          disabled={!selectedVariant || otpPending}
+          onClick={() => {
+            if (!selectedVariant) return;
+            addCartItem(selectedVariant, product);
+            startOtpTransition(async () => {
+              await addItem(null, selectedVariant.id);
+            });
+          }}
+          className="text-xs text-gray-500 disabled:opacity-50"
         >
           Or{" "}
           <span className="font-semibold underline text-gray-700">
-            One-Time Purchase — ${display.retailPrice.toFixed(2)} (${display.retailPerDay}/day)
+            {otpPending ? "Adding…" : `One-Time Purchase — $${display.retailPrice.toFixed(2)} ($${display.retailPerDay}/day)`}
           </span>
         </button>
-      </form>
+      </div>
 
       {/* Trust badges */}
       <div className="mb-4 grid grid-cols-3 gap-2">
