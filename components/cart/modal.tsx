@@ -121,8 +121,60 @@ export default function CartModal() {
                     to check out faster.
                   </p>
                 </div>
-              ) : (
+              ) : (() => {
+                const FREE_SHIPPING_THRESHOLD = 60;
+                const subtotal = parseFloat(cart.cost.totalAmount.amount);
+                const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
+                const progress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+                const hasFreeShipping = remaining === 0;
+
+                const hasOneMonth = cart.lines.some(l => l.merchandise.title?.includes("1 Month"));
+                const hasTwoMonths = cart.lines.some(l => l.merchandise.title?.includes("2 Month") && !l.merchandise.title?.includes("3"));
+                const showUpgradeNudge = hasOneMonth || hasTwoMonths;
+                const upgradeSaving = hasOneMonth ? 18 : 6;
+
+                return (
                 <div className="flex h-full flex-col overflow-hidden">
+
+                  {/* Free shipping progress bar */}
+                  <div className="px-6 py-3 bg-[#fef8dd]">
+                    {hasFreeShipping ? (
+                      <p className="flex items-center gap-1.5 text-xs font-semibold text-green-700">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        You&apos;ve unlocked free shipping!
+                      </p>
+                    ) : (
+                      <>
+                        <p className="mb-1.5 text-xs text-[#5A3493]">
+                          Add <span className="font-bold">${remaining.toFixed(2)}</span> more for <span className="font-bold">free shipping</span>
+                        </p>
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#EDE9F8]">
+                          <div
+                            className="h-full rounded-full bg-[#5A3493] transition-all duration-500"
+                            style={{ width: `${progress}%` }}
+                          />
+                        </div>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Upgrade nudge */}
+                  {showUpgradeNudge && (
+                    <div className="mx-4 mt-3 flex items-center justify-between gap-3 rounded-[10px] bg-[#EDE9F8] px-4 py-3">
+                      <div>
+                        <p className="text-xs font-bold text-[#5A3493]">Save ${upgradeSaving} — upgrade to 3 Months</p>
+                        <p className="text-[10px] text-[#5A3493]/70">Ships free every 3 months · Cancel anytime</p>
+                      </div>
+                      <Link
+                        href="/products/focus-without-caffeine"
+                        onClick={closeCart}
+                        className="shrink-0 rounded-full bg-[#5A3493] px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white"
+                      >
+                        Upgrade
+                      </Link>
+                    </div>
+                  )}
+
                   {/* Items */}
                   <ul className="flex-1 overflow-y-auto px-6 py-4">
                     {cart.lines
@@ -187,13 +239,29 @@ export default function CartModal() {
                         currencyCode={cart.cost.totalAmount.currencyCode}
                       />
                     </div>
-                    <p className="mb-4 text-xs text-gray-400">Shipping & taxes calculated at checkout</p>
+                    <p className="mb-3 text-xs text-gray-400">Shipping & taxes calculated at checkout</p>
+
+                    {/* Trust rail */}
+                    <div className="mb-4 flex items-center justify-center gap-4 border-y border-gray-100 py-3">
+                      {[
+                        { icon: "🛡️", label: "30-Day Guarantee" },
+                        { icon: "🔒", label: "Secure Checkout" },
+                        { icon: "🚚", label: "Fast Shipping" },
+                      ].map((b) => (
+                        <div key={b.label} className="flex items-center gap-1">
+                          <span className="text-xs">{b.icon}</span>
+                          <span className="text-[10px] font-medium text-gray-500">{b.label}</span>
+                        </div>
+                      ))}
+                    </div>
+
                     <form action={redirectToCheckout}>
                       <CheckoutButton />
                     </form>
                   </div>
                 </div>
-              )}
+                );
+              })()}
             </Dialog.Panel>
           </Transition.Child>
         </Dialog>
