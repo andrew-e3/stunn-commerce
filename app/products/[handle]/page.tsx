@@ -34,31 +34,23 @@ export async function generateMetadata(props: {
 const ingredients = [
   {
     name: "Lion's Mane",
-    emoji: "🍄",
-    benefit: "Focus + Clarity",
-    description:
-      "Supports focus, memory, and mental clarity so you can stay sharp without feeling wired.",
+    img: `${CDN}img-lions-mane_1.png`,
+    description: "Supports focus, memory, and mental clarity so you can stay sharp without feeling wired.",
   },
   {
     name: "Rhodiola",
-    emoji: "🌿",
-    benefit: "Stress + Energy",
-    description:
-      "Helps reduce stress and mental fatigue while supporting steady energy throughout the day.",
+    img: `${CDN}img-rhodiola_1.png`,
+    description: "Helps reduce stress and mental fatigue while supporting steady energy throughout the day.",
   },
   {
     name: "Cordyceps",
-    emoji: "⚡",
-    benefit: "Endurance + Drive",
-    description:
-      "Boosts natural energy and endurance without overstimulation or crashes.",
+    img: `${CDN}img-cordyceps_1.png`,
+    description: "Boosts natural energy and endurance without overstimulation or crashes.",
   },
   {
-    name: "L-Theanine",
-    emoji: "🧘",
-    benefit: "Calm + Alert",
-    description:
-      "Promotes calm focus and smooths out the edges, helping you stay relaxed and alert at the same time.",
+    name: "L'theanine",
+    img: `${CDN}img-lteanine_1.png`,
+    description: "Promotes calm focus and smooths out the edges, helping you stay relaxed and alert at the same time.",
   },
 ];
 
@@ -242,41 +234,90 @@ export default async function ProductPage(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
 
-      {/* ── HERO: sticky right panel + scrollable left mosaic ── */}
+      {/* ── HERO: sticky right panel + image + benefit cards ── */}
       <div className="relative lg:flex lg:items-start">
-        {/* Left: image mosaic */}
-        <div className="lg:w-1/2">
-          {/* Hero image — full width */}
-          <div className="relative aspect-square w-full bg-[#EDE9F8]">
+        {/* Left: product image + vertical benefit strip */}
+        <div className="flex lg:w-[55%]">
+          {/* Main product image */}
+          <div className="relative min-h-[360px] flex-1 bg-[#EDE9F8] lg:min-h-[640px]">
             <Image
-              src={MOSAIC_IMAGES[0]!.src}
-              alt={MOSAIC_IMAGES[0]!.alt}
+              src={`${CDN}img-all-the-edge-none-of-the-jitters-stunn-coffee-benefits_95c6e424-1565-46f6-b269-24a86114b866.webp`}
+              alt="STUNN — All the Edge, None of the Jitters"
               fill
               className="object-cover"
               priority
             />
           </div>
-          {/* 2-col grid of remaining images */}
-          <div className="grid grid-cols-2">
-            {MOSAIC_IMAGES.slice(1).map((img) => (
-              <div key={img.src} className="relative aspect-square bg-gray-100">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className="object-cover"
-                />
+
+          {/* Benefit icon cards — vertical strip */}
+          <div className="hidden flex-shrink-0 flex-col border-l border-gray-200 bg-white sm:flex" style={{ width: "38%" }}>
+            {[
+              {
+                label: "Cleaner Focus",
+                icon: (
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="6" />
+                    <circle cx="12" cy="12" r="2" />
+                  </svg>
+                ),
+              },
+              {
+                label: "Steady Energy",
+                icon: (
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13 2L4.5 13.5H11L9 22L19.5 10.5H13L13 2Z" />
+                  </svg>
+                ),
+              },
+              {
+                label: "No Jitters",
+                icon: (
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
+                    <path d="M8 15s1.5-2 4-2 4 2 4 2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" strokeWidth="2" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" strokeWidth="2" />
+                  </svg>
+                ),
+              },
+              {
+                label: "Sleep Friendly",
+                icon: (
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </svg>
+                ),
+              },
+            ].map((b) => (
+              <div
+                key={b.label}
+                className="flex flex-1 flex-col items-center justify-center gap-3 border-b border-gray-100 px-4 py-6 last:border-0"
+              >
+                <div className="text-[#5A3493]">{b.icon}</div>
+                <span className="text-center text-[11px] font-bold uppercase tracking-widest text-[#5A3493]">
+                  {b.label}
+                </span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Right: sticky purchase panel */}
-        <div id="purchase" className="lg:w-1/2 lg:sticky lg:top-0 lg:max-h-screen lg:overflow-y-auto">
+        <div id="purchase" className="lg:w-[45%] lg:sticky lg:top-0 lg:max-h-screen lg:overflow-y-auto">
           <Suspense fallback={<div className="h-screen animate-pulse bg-gray-50" />}>
             <StunnPurchasePanel product={product} />
           </Suspense>
         </div>
+      </div>
+
+      {/* ── IMAGE MOSAIC (below hero) ── */}
+      <div className="grid grid-cols-2 md:grid-cols-4">
+        {MOSAIC_IMAGES.slice(1, 5).map((img) => (
+          <div key={img.src} className="relative aspect-square bg-gray-100">
+            <Image src={img.src} alt={img.alt} fill className="object-cover" />
+          </div>
+        ))}
       </div>
 
       {/* ── LIFESTYLE PHOTO STRIP ── */}
@@ -362,16 +403,21 @@ export default async function ProductPage(props: {
             {ingredients.map((ing) => (
               <div
                 key={ing.name}
-                className="flex flex-col rounded-[10px] border-t-4 border-t-[#5A3493] border-x border-b border-gray-200 bg-white p-6"
+                className="flex flex-col border border-[#5A3493]/70 px-8 py-10"
               >
-                <div className="mb-3 text-4xl">{ing.emoji}</div>
-                <span className="mb-1 inline-block rounded-full bg-[#EDE9F8] px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#5A3493]">
-                  {ing.benefit}
-                </span>
-                <h3 className="mb-3 font-[family-name:var(--font-anton)] text-xl uppercase text-[#5A3493]">
+                <h3 className="mb-8 font-[family-name:var(--font-anton)] text-[clamp(1.8rem,2.8vw,2.4rem)] uppercase leading-tight text-[#5A3493]">
                   {ing.name}
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600">{ing.description}</p>
+                <div className="flex flex-1 items-center justify-center py-4">
+                  <Image
+                    src={ing.img}
+                    alt={ing.name}
+                    width={240}
+                    height={200}
+                    className="max-h-[200px] w-full object-contain"
+                  />
+                </div>
+                <p className="mt-8 text-center text-xs leading-relaxed text-[#5A3493]/70">{ing.description}</p>
               </div>
             ))}
           </div>
