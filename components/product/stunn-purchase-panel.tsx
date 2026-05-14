@@ -187,12 +187,26 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* One-time purchase — secondary, clearly below ATC */}
-      <p className="mb-5 text-center text-xs text-gray-500">
-        Or{" "}
-        <span className="cursor-pointer font-semibold underline text-gray-700">
-          One-Time Purchase — ${display.retailPrice.toFixed(2)} (${display.retailPerDay}/day)
-        </span>
-      </p>
+      <form
+        className="mb-5"
+        action={async () => {
+          if (selectedVariant) {
+            addCartItem(selectedVariant, product);
+            addItemAction();
+          }
+        }}
+      >
+        <button
+          type="submit"
+          disabled={!selectedVariant}
+          className="w-full text-center text-xs text-gray-500 disabled:opacity-50"
+        >
+          Or{" "}
+          <span className="font-semibold underline text-gray-700">
+            One-Time Purchase — ${display.retailPrice.toFixed(2)} (${display.retailPerDay}/day)
+          </span>
+        </button>
+      </form>
 
       {/* Trust badges */}
       <div className="mb-4 grid grid-cols-3 gap-2">
