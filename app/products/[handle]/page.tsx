@@ -389,63 +389,67 @@ export default async function ProductPage(props: {
 
       {/* ── COMPARISON TABLE ── */}
       <section className="border-t border-gray-100 py-20">
-        <div className="mx-auto max-w-5xl px-6 lg:px-8">
-          <div className="mb-10 flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <div className="mb-3 inline-flex items-center rounded-full border border-gray-300 px-3 py-1 text-xs font-medium text-gray-600">
+        <div className="mx-auto max-w-6xl px-6 lg:px-8">
+          <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-16">
+            {/* Left: heading + CTA */}
+            <div className="flex flex-col lg:w-[300px] lg:flex-shrink-0 lg:pt-16">
+              <div className="mb-4 inline-flex w-fit items-center rounded-full border border-gray-300 px-3 py-1 text-xs font-medium text-gray-600">
                 STUNN vs Regular Coffee
               </div>
-              <h2 className="font-[family-name:var(--font-anton)] text-4xl uppercase text-[#5A3493] md:text-5xl">
-                Why Switch
-                <br />
-                to STUNN?
+              <h2 className="mb-4 font-[family-name:var(--font-anton)] text-5xl uppercase leading-tight text-[#5A3493] md:text-6xl">
+                Why Switch<br />to STUNN?
               </h2>
+              <p className="mb-8 text-sm leading-relaxed text-gray-600">
+                <strong>STUNN</strong> gives you the ritual, flavor, and focus you love,{" "}
+                <strong>without the jitters, crashes</strong>, or extra cost of regular coffee.
+              </p>
+              <a
+                href="#purchase"
+                className="inline-flex w-fit items-center gap-2 rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[#fef8dd] shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
+              >
+                Start Your Ritual →
+              </a>
+              <p className="mt-3 text-xs text-gray-500">From $33.99/mo · Cancel anytime</p>
             </div>
-            <p className="max-w-sm text-sm text-gray-600">
-              <strong>STUNN</strong> gives you the ritual, flavor, and focus you love,{" "}
-              <strong>without the jitters, crashes</strong>, or extra cost of regular coffee.
-            </p>
-          </div>
 
-          <div className="overflow-hidden rounded-[10px] border border-gray-200">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="py-4 pl-6 text-left text-xs font-bold uppercase tracking-wider text-gray-500" />
-                  <th className="bg-[#5A3493] py-4 text-center">
-                    <span className="font-[family-name:var(--font-anton)] text-2xl text-white">STUNN+</span>
-                  </th>
-                  <th className="py-4 pr-6 text-center text-xs font-bold uppercase tracking-wider text-gray-400">
-                    Regular Coffee
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {comparisonRows.map((row) => (
-                  <tr key={row.label}>
-                    <td className="py-4 pl-6 text-xs font-bold uppercase tracking-wider text-gray-700">
-                      {row.label}
-                    </td>
-                    <td className="bg-[#5A3493]/5 py-4 text-center font-semibold text-[#5A3493]">
-                      {row.stunn}
-                    </td>
-                    <td className="py-4 pr-6 text-center text-sm text-gray-500">
-                      {row.competitor}
-                    </td>
+            {/* Right: table */}
+            <div className="flex-1 overflow-x-auto">
+              <table className="w-full min-w-[420px] text-sm">
+                <thead>
+                  <tr>
+                    <th className="w-[36%] pb-5" />
+                    <th className="w-[32%] rounded-t-[14px] bg-[#5A3493] pb-5 pt-6 text-center">
+                      <span className="font-[family-name:var(--font-anton)] text-2xl tracking-wide text-white">STUNN+</span>
+                    </th>
+                    <th className="w-[32%] pb-5 text-center text-xs font-bold uppercase tracking-wider text-[#5A3493]">
+                      Regular Coffee
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="mt-10 text-center">
-            <a
-              href="#purchase"
-              className="inline-flex items-center gap-2 rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[#fef8dd] shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
-            >
-              Start Your Ritual →
-            </a>
-            <p className="mt-2 text-xs text-gray-500">From $33.99/mo · Cancel anytime</p>
+                </thead>
+                <tbody>
+                  {comparisonRows.map((row, i) => {
+                    const isLast = i === comparisonRows.length - 1;
+                    return (
+                      <tr key={row.label} className="border-t border-gray-200">
+                        <td className="py-5 pr-4 text-xs font-bold uppercase tracking-wider text-[#5A3493]">
+                          {row.label}
+                        </td>
+                        <td className={`bg-[#5A3493] py-5 text-center text-sm font-medium text-white ${isLast ? "rounded-b-[14px]" : ""}`}>
+                          {row.type === "stars" ? (
+                            <span className="text-lg leading-none text-[#EFAF00]">{row.stunn}</span>
+                          ) : row.stunn}
+                        </td>
+                        <td className="py-5 text-center text-sm text-[#5A3493]/70">
+                          {row.type === "stars" ? (
+                            <span className="text-lg leading-none text-[#EFAF00]/60">{row.competitor}</span>
+                          ) : row.competitor}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
