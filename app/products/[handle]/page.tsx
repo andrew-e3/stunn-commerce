@@ -189,61 +189,46 @@ export default async function ProductPage(props: {
               className="object-cover"
               priority
             />
-            {/* Floating benefit callout cards — like Create's style */}
-            {/* Left column */}
-            <div className="absolute left-3 top-1/2 flex -translate-y-1/2 flex-col gap-3 sm:left-4">
+            {/* Benefit callout pills — bottom corners, horizontal layout */}
+            {/* Bottom-left */}
+            <div className="absolute bottom-5 left-4 flex flex-col gap-2">
               {[
                 {
                   label: "Calm Focus",
-                  icon: (
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="1.8" strokeLinecap="round">
-                      <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
-                    </svg>
-                  ),
+                  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#5A3493" stroke="none"/></svg>,
                 },
                 {
                   label: "No Jitters",
-                  icon: (
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
-                      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-                      <line x1="9" y1="9" x2="9.01" y2="9" strokeWidth="2.5" />
-                      <line x1="15" y1="9" x2="15.01" y2="9" strokeWidth="2.5" />
-                    </svg>
-                  ),
+                  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="9" r="1" fill="#5A3493" stroke="none"/><circle cx="15" cy="9" r="1" fill="#5A3493" stroke="none"/></svg>,
                 },
               ].map((b) => (
-                <div key={b.label} className="flex flex-col items-center gap-1.5 rounded-2xl bg-white/90 px-3 py-3 shadow-lg backdrop-blur-sm sm:px-4">
-                  {b.icon}
-                  <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wide text-[#5A3493] sm:text-xs">
+                <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
+                  <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
+                    {b.icon}
+                  </div>
+                  <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
                     {b.label}
                   </span>
                 </div>
               ))}
             </div>
-            {/* Right column */}
-            <div className="absolute right-3 top-1/2 flex -translate-y-1/2 flex-col gap-3 sm:right-4">
+            {/* Bottom-right */}
+            <div className="absolute bottom-5 right-4 flex flex-col gap-2 items-end">
               {[
                 {
                   label: "Steady Energy",
-                  icon: (
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#5A3493">
-                      <path d="M13 2L4.5 13.5H11L9 22L19.5 10.5H13L13 2Z" />
-                    </svg>
-                  ),
+                  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#5A3493"><path d="M13 2L4.5 13.5H11L9 22L19.5 10.5H13L13 2Z"/></svg>,
                 },
                 {
                   label: "Sleep Friendly",
-                  icon: (
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="1.8" strokeLinecap="round">
-                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                    </svg>
-                  ),
+                  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
                 },
               ].map((b) => (
-                <div key={b.label} className="flex flex-col items-center gap-1.5 rounded-2xl bg-white/90 px-3 py-3 shadow-lg backdrop-blur-sm sm:px-4">
-                  {b.icon}
-                  <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wide text-[#5A3493] sm:text-xs">
+                <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
+                  <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
+                    {b.icon}
+                  </div>
+                  <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
                     {b.label}
                   </span>
                 </div>
