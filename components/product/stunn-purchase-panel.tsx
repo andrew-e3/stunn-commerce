@@ -1,0 +1,285 @@
+"use client";
+
+import { addItem } from "components/cart/actions";
+import { useCart } from "components/cart/cart-context";
+import { Product, ProductVariant } from "lib/shopify/types";
+import Image from "next/image";
+import { useActionState, useState } from "react";
+
+const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
+
+const VARIANTS_DISPLAY = [
+  {
+    duration: "3 Months",
+    count: 270,
+    retailPrice: 119.97,
+    subPrice: 101.97,
+    subPerDay: "1.13",
+    retailPerDay: "1.33",
+    saving: 18.0,
+    popular: true,
+    boxImg: `${CDN}3_e644de60-d3c2-46f8-8f0c-a3ff6cdc08ce.svg`,
+  },
+  {
+    duration: "2 Months",
+    count: 180,
+    retailPrice: 79.98,
+    subPrice: 67.98,
+    subPerDay: "1.19",
+    retailPerDay: "1.33",
+    saving: 12.0,
+    popular: false,
+    boxImg: `${CDN}2_285eb8bf-bd05-4b30-9fe2-102fc163df41.svg`,
+  },
+  {
+    duration: "1 Month",
+    count: 90,
+    retailPrice: 39.99,
+    subPrice: 33.99,
+    subPerDay: "1.22",
+    retailPerDay: "1.33",
+    saving: 6.0,
+    popular: false,
+    boxImg: `${CDN}1_f8453072-0eb1-4a97-b211-2dca94f998b6.svg`,
+  },
+];
+
+function CheckCircleIcon() {
+  return (
+    <svg className="h-3 w-3 flex-shrink-0 text-[#5A3493]" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.78 6.28-4.5 4.5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47 3.97-3.97a.75.75 0 0 1 1.06 1.06z" />
+    </svg>
+  );
+}
+
+export function StunnPurchasePanel({ product }: { product: Product }) {
+  const [selectedDuration, setSelectedDuration] = useState("3 Months");
+  const { addCartItem } = useCart();
+  const [, formAction] = useActionState(addItem, null);
+
+  const display = VARIANTS_DISPLAY.find((v) => v.duration === selectedDuration)!;
+
+  const selectedVariant = product.variants.find((v: ProductVariant) =>
+    v.selectedOptions.some(
+      (o) => o.name === "Duration" && o.value === selectedDuration,
+    ),
+  );
+
+  const addItemAction = formAction.bind(null, selectedVariant?.id);
+
+  return (
+    <div className="px-6 py-8 lg:px-10">
+      {/* Stars */}
+      <div className="mb-2 flex items-center gap-2">
+        <span className="text-lg leading-none text-[#EFAF00]">★★★★★</span>
+        <span className="text-sm font-bold text-gray-900">5.0</span>
+        <span className="text-sm text-gray-500">Excellent</span>
+      </div>
+
+      {/* Title */}
+      <h1 className="mb-1 font-[family-name:var(--font-anton)] text-4xl leading-tight text-[#5A3493]">
+        {product.title}
+      </h1>
+      <p className="mb-3 text-base text-gray-700">Decaf Coffee That Keeps You Sharp</p>
+
+      {/* Social proof avatars */}
+      <div className="mb-4 flex items-center gap-2">
+        <div className="flex -space-x-2">
+          {["img-avatar-3.jpg","img-avatar-4.jpg","img-avatar-5.jpg"].map((a) => (
+            <img key={a} src={`${CDN}${a}`} alt="" className="h-7 w-7 rounded-full border-2 border-white object-cover" />
+          ))}
+        </div>
+        <span className="text-xs text-gray-500">1,000+ Others Exploring Better Coffee</span>
+      </div>
+
+      <p className="mb-5 text-sm leading-relaxed text-gray-500">{product.description}</p>
+
+      {/* Variant selector label */}
+      <p className="mb-2 text-xs font-bold uppercase tracking-widest text-gray-700">
+        Choose how you want to start.
+      </p>
+
+      {/* Variant cards */}
+      <div className="mb-4 grid grid-cols-3 gap-2">
+        {VARIANTS_DISPLAY.map((v) => {
+          const isSelected = selectedDuration === v.duration;
+          return (
+            <button
+              key={v.duration}
+              type="button"
+              onClick={() => setSelectedDuration(v.duration)}
+              className={`relative flex flex-col items-center rounded-[12px] border-2 p-2 text-center transition-all ${
+                isSelected
+                  ? "border-[#5A3493] bg-white"
+                  : "border-gray-200 bg-white hover:border-gray-300"
+              }`}
+            >
+              {v.popular && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#5A3493] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#fef8dd]">
+                  Most Popular
+                </span>
+              )}
+              <img
+                src={v.boxImg}
+                alt={`${v.duration} supply`}
+                className="mb-1 h-14 w-full object-contain"
+              />
+              <span className="text-xs font-bold text-gray-900">{v.duration}</span>
+              <span className="text-[10px] text-gray-500">{v.count} Count</span>
+              <span className="text-[10px] text-[#5A3493]">(${v.subPerDay} / Day)</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Autoship section */}
+      <div className="mb-3 rounded-[12px] border border-gray-200 bg-white p-4">
+        <div className="mb-1 flex items-center justify-between">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-bold text-gray-900">Autoship &</span>
+            <span className="rounded-full bg-[#C1D0A5] px-2 py-0.5 text-[10px] font-bold uppercase text-green-900">
+              SAVE 15%
+            </span>
+          </div>
+          <span className="rounded-full bg-[#5A3493] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#fef8dd]">
+            MOST POPULAR
+          </span>
+        </div>
+        <p className="mb-2 text-xs text-gray-500">
+          {display.duration} · {display.count} Count · ${display.subPerDay} / Day
+        </p>
+        <div className="mb-3 flex items-baseline gap-2">
+          <span className="text-sm text-gray-400 line-through">
+            ${display.retailPrice.toFixed(2)}
+          </span>
+          <span className="text-2xl font-bold text-gray-900">
+            ${display.subPrice.toFixed(2)}
+          </span>
+          <span className="text-xs text-gray-500">
+            You&apos;re saving ${display.saving.toFixed(2)}
+          </span>
+        </div>
+
+        <form
+          action={async () => {
+            if (selectedVariant) {
+              addCartItem(selectedVariant, product);
+              addItemAction();
+            }
+          }}
+        >
+          <button
+            type="submit"
+            disabled={!selectedVariant}
+            className="w-full rounded-[10px] bg-[#F9CEE1] py-4 text-sm font-bold uppercase tracking-widest text-[#5A3493] shadow-[0_5px_0_0_#C1D0A5] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#C1D0A5] active:translate-y-[4px] active:shadow-[0_1px_0_0_#C1D0A5] disabled:opacity-50"
+          >
+            ADD TO CART
+          </button>
+        </form>
+
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-1">
+          {[
+            "Ships FREE every three months",
+            "VIP discounts & perks",
+            "Pause, edit, or cancel anytime",
+          ].map((b) => (
+            <span key={b} className="flex items-center gap-1 text-[10px] text-gray-600">
+              <CheckCircleIcon />
+              {b}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* One-time purchase */}
+      <p className="mb-4 text-center text-xs text-gray-600">
+        <span className="cursor-pointer underline">
+          One-Time Purchase – ${display.retailPrice.toFixed(2)} (${display.retailPerDay} / Day)
+        </span>
+      </p>
+
+      {/* Trust badges */}
+      <div className="mb-4 grid grid-cols-3 gap-2">
+        {[
+          { icon: `${CDN}icon-truck.svg`, label: "Ships Within\n1 Business Day" },
+          { icon: `${CDN}icon-smile.svg`, label: "Over 1000+\nHappy Customers" },
+          { icon: `${CDN}icon-check-tag.svg`, label: "30-Day Money Back\nGuarantee" },
+        ].map((b) => (
+          <div
+            key={b.label}
+            className="flex flex-col items-center gap-2 rounded-[10px] bg-[#C1D0A5] px-2 py-4 text-center"
+          >
+            <Image
+              src={b.icon}
+              alt={b.label.replace("\n", " ")}
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
+            <span className="whitespace-pre-line text-[10px] font-semibold text-[#5A3493]">
+              {b.label}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Payment icons */}
+      <div className="mb-6 rounded-[10px] border border-gray-200 p-3 text-center">
+        <p className="mb-2 text-xs text-gray-400">We accept:</p>
+        <Image
+          src={`${CDN}icon-payment-mode-logos.svg`}
+          alt="Visa, Apple Pay, Mastercard and more"
+          width={300}
+          height={24}
+          className="mx-auto h-5 w-auto"
+        />
+      </div>
+
+      {/* Accordions */}
+      <Accordion title="INGREDIENTS" defaultOpen>
+        <p className="text-sm leading-relaxed text-gray-600">
+          <strong className="text-gray-900">STUNN</strong> is crafted with a clean, functional blend of Lion&apos;s Mane, Rhodiola, Cordyceps, and L-Theanine to support focus, balance, and steady energy. Each ingredient is chosen to work with your body, helping you stay sharp, calm, and in control without the usual coffee side effects.
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-gray-600">
+          Together, they deliver a smoother coffee experience with no jitters, no crashes, and no compromise on how you feel. Just clear thinking, sustained energy, and a ritual you can enjoy anytime of the day.
+        </p>
+      </Accordion>
+      <Accordion title="WHY STUNN?">
+        <p className="text-sm leading-relaxed text-gray-600">
+          Most coffees give you energy and anxiety together. STUNN separates them — delivering the focus and ritual you love, without the spike, crash, or dependency. Powered by adaptogens and nootropics, not caffeine.
+        </p>
+      </Accordion>
+      <Accordion title="DIRECTIONS">
+        <p className="text-sm leading-relaxed text-gray-600">
+          Mix one sachet into 8–12 oz of hot or cold water. Stir or shake well. Enjoy morning, afternoon, or evening — no cutoff time needed.
+        </p>
+      </Accordion>
+      <Accordion title="BENEFITS">
+        <ul className="space-y-2 text-sm text-gray-600">
+          {["Calm, sustained focus without jitters","No afternoon crash","Sleep-friendly — drink it any time of day","Gentle on the stomach","30-day money back guarantee"].map(b => (
+            <li key={b} className="flex items-start gap-2">
+              <span className="mt-0.5 text-[#5A3493]">✓</span>{b}
+            </li>
+          ))}
+        </ul>
+      </Accordion>
+    </div>
+  );
+}
+
+function Accordion({ title, children, defaultOpen = false }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border-t border-gray-200">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between py-3 text-left"
+      >
+        <span className="text-xs font-bold uppercase tracking-widest text-gray-800">{title}</span>
+        <span className="text-lg text-gray-400">{open ? "−" : "+"}</span>
+      </button>
+      {open && <div className="pb-4">{children}</div>}
+    </div>
+  );
+}

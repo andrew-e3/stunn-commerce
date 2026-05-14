@@ -1,8 +1,7 @@
 "use client";
 
-import clsx from "clsx";
 import { Dialog, Transition } from "@headlessui/react";
-import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import LoadingDots from "components/loading-dots";
 import Price from "components/price";
 import { DEFAULT_OPTION } from "lib/constants";
@@ -17,9 +16,22 @@ import { DeleteItemButton } from "./delete-item-button";
 import { EditItemQuantityButton } from "./edit-item-quantity-button";
 import OpenCart from "./open-cart";
 
-type MerchandiseSearchParams = {
-  [key: string]: string;
-};
+type MerchandiseSearchParams = { [key: string]: string };
+
+function EmptyBox() {
+  return (
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="16" y="36" width="48" height="36" rx="3" fill="#E8E3F5" />
+      <rect x="16" y="36" width="48" height="36" rx="3" stroke="#5A3493" strokeWidth="2" />
+      <path d="M16 44h48" stroke="#5A3493" strokeWidth="2" />
+      <path d="M32 44v28" stroke="#5A3493" strokeWidth="1.5" strokeDasharray="3 3" />
+      <path d="M48 44v28" stroke="#5A3493" strokeWidth="1.5" strokeDasharray="3 3" />
+      <path d="M28 36V28a12 12 0 0 1 24 0v8" stroke="#5A3493" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="40" cy="20" r="3" fill="#5A3493" />
+      <path d="M40 8v4M40 28v4M52 16l-3 3M31 29l-3 3M52 24l-3-3M31 11l-3-3" stroke="#C1D0A5" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 export default function CartModal() {
   const { cart, updateCartItem } = useCart();
@@ -29,9 +41,7 @@ export default function CartModal() {
   const closeCart = () => setIsOpen(false);
 
   useEffect(() => {
-    if (!cart) {
-      createCartAndSetCookie();
-    }
+    if (!cart) createCartAndSetCookie();
   }, [cart]);
 
   useEffect(() => {
@@ -40,9 +50,7 @@ export default function CartModal() {
       cart?.totalQuantity !== quantityRef.current &&
       cart?.totalQuantity > 0
     ) {
-      if (!isOpen) {
-        setIsOpen(true);
-      }
+      if (!isOpen) setIsOpen(true);
       quantityRef.current = cart?.totalQuantity;
     }
   }, [isOpen, cart?.totalQuantity, quantityRef]);
@@ -57,14 +65,15 @@ export default function CartModal() {
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
-            enterFrom="opacity-0 backdrop-blur-none"
-            enterTo="opacity-100 backdrop-blur-[.5px]"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
             leave="transition-all ease-in-out duration-200"
-            leaveFrom="opacity-100 backdrop-blur-[.5px]"
-            leaveTo="opacity-0 backdrop-blur-none"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+            <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
           </Transition.Child>
+
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -74,150 +83,115 @@ export default function CartModal() {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 p-6 text-black backdrop-blur-xl md:w-[390px] dark:border-neutral-700 dark:bg-black/80 dark:text-white">
-              <div className="flex items-center justify-between">
-                <p className="text-lg font-semibold">My Cart</p>
-                <button aria-label="Close cart" onClick={closeCart}>
-                  <CloseCart />
+            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col bg-white md:w-[420px]">
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-5">
+                <p className="font-[family-name:var(--font-anton)] text-2xl uppercase text-[#5A3493]">
+                  Your cart
+                </p>
+                <button
+                  aria-label="Close cart"
+                  onClick={closeCart}
+                  className="flex h-8 w-8 items-center justify-center text-gray-400 hover:text-gray-600"
+                >
+                  <XMarkIcon className="h-5 w-5" />
                 </button>
               </div>
+              <div className="h-px bg-gray-100" />
 
               {!cart || cart.lines.length === 0 ? (
-                <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
-                  <ShoppingCartIcon className="h-16" />
-                  <p className="mt-6 text-center text-2xl font-bold">
-                    Your cart is empty.
+                /* Empty state */
+                <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
+                  <EmptyBox />
+                  <p className="mt-6 font-[family-name:var(--font-anton)] text-2xl uppercase text-[#5A3493]">
+                    Your cart is empty
+                  </p>
+                  <Link
+                    href="/products/focus-without-caffeine"
+                    onClick={closeCart}
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#5A3493] px-8 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#3d1c8f] transition-all hover:translate-y-px hover:shadow-[0_3px_0_0_#3d1c8f]"
+                  >
+                    Continue shopping →
+                  </Link>
+                  <p className="mt-5 text-sm text-gray-500">
+                    Have an account?{" "}
+                    <Link href="/account" className="text-[#5A3493] underline">
+                      Log in
+                    </Link>{" "}
+                    to check out faster.
                   </p>
                 </div>
               ) : (
-                <div className="flex h-full flex-col justify-between overflow-hidden p-1">
-                  <ul className="grow overflow-auto py-4">
+                <div className="flex h-full flex-col overflow-hidden">
+                  {/* Items */}
+                  <ul className="flex-1 overflow-y-auto px-6 py-4">
                     {cart.lines
                       .sort((a, b) =>
-                        a.merchandise.product.title.localeCompare(
-                          b.merchandise.product.title,
-                        ),
+                        a.merchandise.product.title.localeCompare(b.merchandise.product.title)
                       )
                       .map((item, i) => {
-                        const merchandiseSearchParams =
-                          {} as MerchandiseSearchParams;
-
-                        item.merchandise.selectedOptions.forEach(
-                          ({ name, value }) => {
-                            if (value !== DEFAULT_OPTION) {
-                              merchandiseSearchParams[name.toLowerCase()] =
-                                value;
-                            }
-                          },
+                        const params = {} as MerchandiseSearchParams;
+                        item.merchandise.selectedOptions.forEach(({ name, value }) => {
+                          if (value !== DEFAULT_OPTION) params[name.toLowerCase()] = value;
+                        });
+                        const url = createUrl(
+                          `/products/${item.merchandise.product.handle}`,
+                          new URLSearchParams(params)
                         );
-
-                        const merchandiseUrl = createUrl(
-                          `/product/${item.merchandise.product.handle}`,
-                          new URLSearchParams(merchandiseSearchParams),
-                        );
-
                         return (
-                          <li
-                            key={i}
-                            className="flex w-full flex-col border-b border-neutral-300 dark:border-neutral-700"
-                          >
-                            <div className="relative flex w-full flex-row justify-between px-1 py-4">
-                              <div className="absolute z-40 -ml-1 -mt-2">
-                                <DeleteItemButton
-                                  item={item}
-                                  optimisticUpdate={updateCartItem}
-                                />
-                              </div>
-                              <div className="flex flex-row">
-                                <div className="relative h-16 w-16 overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                                  <Image
-                                    className="h-full w-full object-cover"
-                                    width={64}
-                                    height={64}
-                                    alt={
-                                      item.merchandise.product.featuredImage
-                                        .altText ||
-                                      item.merchandise.product.title
-                                    }
-                                    src={
-                                      item.merchandise.product.featuredImage.url
-                                    }
-                                  />
+                          <li key={i} className="flex gap-4 border-b border-gray-100 py-4">
+                            <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border border-gray-100 bg-[#EDE9F8]">
+                              <DeleteItemButton item={item} optimisticUpdate={updateCartItem} />
+                              <Image
+                                className="h-full w-full object-cover"
+                                width={80}
+                                height={80}
+                                alt={item.merchandise.product.featuredImage?.altText || item.merchandise.product.title}
+                                src={item.merchandise.product.featuredImage?.url}
+                              />
+                            </div>
+                            <div className="flex flex-1 flex-col justify-between">
+                              <Link href={url} onClick={closeCart}>
+                                <p className="text-sm font-semibold text-gray-900 leading-tight">
+                                  {item.merchandise.product.title}
+                                </p>
+                                {item.merchandise.title !== DEFAULT_OPTION && (
+                                  <p className="mt-0.5 text-xs text-gray-500">{item.merchandise.title}</p>
+                                )}
+                              </Link>
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center rounded-full border border-gray-200">
+                                  <EditItemQuantityButton item={item} type="minus" optimisticUpdate={updateCartItem} />
+                                  <span className="w-6 text-center text-sm">{item.quantity}</span>
+                                  <EditItemQuantityButton item={item} type="plus" optimisticUpdate={updateCartItem} />
                                 </div>
-                                <Link
-                                  href={merchandiseUrl}
-                                  onClick={closeCart}
-                                  className="z-30 ml-2 flex flex-row space-x-4"
-                                >
-                                  <div className="flex flex-1 flex-col text-base">
-                                    <span className="leading-tight">
-                                      {item.merchandise.product.title}
-                                    </span>
-                                    {item.merchandise.title !==
-                                    DEFAULT_OPTION ? (
-                                      <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                                        {item.merchandise.title}
-                                      </p>
-                                    ) : null}
-                                  </div>
-                                </Link>
-                              </div>
-                              <div className="flex h-16 flex-col justify-between">
                                 <Price
-                                  className="flex justify-end space-y-2 text-right text-sm"
+                                  className="text-sm font-semibold text-[#5A3493]"
                                   amount={item.cost.totalAmount.amount}
-                                  currencyCode={
-                                    item.cost.totalAmount.currencyCode
-                                  }
+                                  currencyCode={item.cost.totalAmount.currencyCode}
                                 />
-                                <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
-                                  <EditItemQuantityButton
-                                    item={item}
-                                    type="minus"
-                                    optimisticUpdate={updateCartItem}
-                                  />
-                                  <p className="w-6 text-center">
-                                    <span className="w-full text-sm">
-                                      {item.quantity}
-                                    </span>
-                                  </p>
-                                  <EditItemQuantityButton
-                                    item={item}
-                                    type="plus"
-                                    optimisticUpdate={updateCartItem}
-                                  />
-                                </div>
                               </div>
                             </div>
                           </li>
                         );
                       })}
                   </ul>
-                  <div className="py-4 text-sm text-neutral-500 dark:text-neutral-400">
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 dark:border-neutral-700">
-                      <p>Taxes</p>
+
+                  {/* Footer */}
+                  <div className="border-t border-gray-100 px-6 pb-8 pt-4">
+                    <div className="mb-2 flex justify-between text-sm text-gray-500">
+                      <span>Subtotal</span>
                       <Price
-                        className="text-right text-base text-black dark:text-white"
-                        amount={cart.cost.totalTaxAmount.amount}
-                        currencyCode={cart.cost.totalTaxAmount.currencyCode}
-                      />
-                    </div>
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
-                      <p>Shipping</p>
-                      <p className="text-right">Calculated at checkout</p>
-                    </div>
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
-                      <p>Total</p>
-                      <Price
-                        className="text-right text-base text-black dark:text-white"
+                        className="font-semibold text-gray-900"
                         amount={cart.cost.totalAmount.amount}
                         currencyCode={cart.cost.totalAmount.currencyCode}
                       />
                     </div>
+                    <p className="mb-4 text-xs text-gray-400">Shipping & taxes calculated at checkout</p>
+                    <form action={redirectToCheckout}>
+                      <CheckoutButton />
+                    </form>
                   </div>
-                  <form action={redirectToCheckout}>
-                    <CheckoutButton />
-                  </form>
                 </div>
               )}
             </Dialog.Panel>
@@ -228,29 +202,15 @@ export default function CartModal() {
   );
 }
 
-function CloseCart({ className }: { className?: string }) {
-  return (
-    <div className="relative flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white">
-      <XMarkIcon
-        className={clsx(
-          "h-6 transition-all ease-in-out hover:scale-110",
-          className,
-        )}
-      />
-    </div>
-  );
-}
-
 function CheckoutButton() {
   const { pending } = useFormStatus();
-
   return (
     <button
-      className="block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100"
+      className="w-full rounded-full bg-[#5A3493] py-3.5 text-sm font-bold text-white shadow-[0_4px_0_0_#3d1c8f] transition-all hover:translate-y-px hover:shadow-[0_3px_0_0_#3d1c8f] disabled:opacity-60"
       type="submit"
       disabled={pending}
     >
-      {pending ? <LoadingDots className="bg-white" /> : "Proceed to Checkout"}
+      {pending ? <LoadingDots className="bg-white" /> : "Proceed to Checkout →"}
     </button>
   );
 }

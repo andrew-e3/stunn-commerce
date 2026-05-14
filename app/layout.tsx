@@ -1,6 +1,5 @@
 import { CartProvider } from "components/cart/cart-context";
 import { Navbar } from "components/layout/navbar";
-import { WelcomeToast } from "components/welcome-toast";
 import { Anton, Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
 import { ReactNode } from "react";
@@ -34,8 +33,8 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${anton.variable} ${inter.variable}`}>
-      <body className="bg-[#F0F0F0] font-[family-name:var(--font-inter)] text-gray-900">
-        <div className="bg-[#F0F0F0] py-2 text-center text-sm text-[#5A3493] font-medium">
+      <body className="bg-[#EDEAEF] font-[family-name:var(--font-inter)] text-gray-900">
+        <div className="bg-[#fef8dd] py-2 pr-6 text-right text-sm text-[#5A3493] font-medium">
           Upgrade your coffee ritual — get 15% off + free shipping →
         </div>
         <CartProvider cartPromise={cart}>
@@ -43,7 +42,6 @@ export default async function RootLayout({
           <main>
             {children}
             <Toaster closeButton />
-            <WelcomeToast />
           </main>
         </CartProvider>
       </body>
