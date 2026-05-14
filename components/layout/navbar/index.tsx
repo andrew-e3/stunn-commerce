@@ -1,9 +1,12 @@
 import CartModal from "components/cart/modal";
 import { getMenu } from "lib/shopify";
 import { Menu } from "lib/shopify/types";
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import MobileMenu from "./mobile-menu";
+
+const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
 export async function Navbar() {
   const menu = await getMenu("next-js-frontend-header-menu");
@@ -19,10 +22,15 @@ export async function Navbar() {
 
       {/* Logo - left */}
       <div className="flex w-1/3 items-center">
-        <Link href="/" prefetch={true} className="text-white">
-          <span className="font-[family-name:var(--font-anton)] text-2xl uppercase leading-none tracking-wide">
-            STUNN<sup className="text-sm">+</sup>
-          </span>
+        <Link href="/" prefetch={true}>
+          <Image
+            src={`${CDN}STUNN_LOGO-White.png`}
+            alt="STUNN"
+            width={120}
+            height={32}
+            className="h-7 w-auto"
+            priority
+          />
         </Link>
       </div>
 
