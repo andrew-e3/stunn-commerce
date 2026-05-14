@@ -176,10 +176,11 @@ export default async function ProductPage(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
 
-      {/* ── HERO: coffee lifestyle image + sticky purchase panel ── */}
+      {/* ── HERO: coffee lifestyle image + purchase panel ── */}
       <div className="relative lg:flex lg:items-start">
-        {/* Left: hero image (coffee cup first) + 2-col mosaic below */}
+        {/* Left: hero image (coffee cup first) + benefit callouts + 2-col mosaic below */}
         <div className="lg:w-1/2">
+          {/* Hero image with floating benefit cards */}
           <div className="relative aspect-square w-full bg-[#EDE9F8]">
             <Image
               src={MOSAIC_IMAGES[0]!.src}
@@ -188,7 +189,68 @@ export default async function ProductPage(props: {
               className="object-cover"
               priority
             />
+            {/* Floating benefit callout cards — like Create's style */}
+            {/* Left column */}
+            <div className="absolute left-3 top-1/2 flex -translate-y-1/2 flex-col gap-3 sm:left-4">
+              {[
+                {
+                  label: "Calm Focus",
+                  icon: (
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="1.8" strokeLinecap="round">
+                      <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
+                    </svg>
+                  ),
+                },
+                {
+                  label: "No Jitters",
+                  icon: (
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
+                      <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                      <line x1="9" y1="9" x2="9.01" y2="9" strokeWidth="2.5" />
+                      <line x1="15" y1="9" x2="15.01" y2="9" strokeWidth="2.5" />
+                    </svg>
+                  ),
+                },
+              ].map((b) => (
+                <div key={b.label} className="flex flex-col items-center gap-1.5 rounded-2xl bg-white/90 px-3 py-3 shadow-lg backdrop-blur-sm sm:px-4">
+                  {b.icon}
+                  <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wide text-[#5A3493] sm:text-xs">
+                    {b.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+            {/* Right column */}
+            <div className="absolute right-3 top-1/2 flex -translate-y-1/2 flex-col gap-3 sm:right-4">
+              {[
+                {
+                  label: "Steady Energy",
+                  icon: (
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="#5A3493">
+                      <path d="M13 2L4.5 13.5H11L9 22L19.5 10.5H13L13 2Z" />
+                    </svg>
+                  ),
+                },
+                {
+                  label: "Sleep Friendly",
+                  icon: (
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="1.8" strokeLinecap="round">
+                      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                  ),
+                },
+              ].map((b) => (
+                <div key={b.label} className="flex flex-col items-center gap-1.5 rounded-2xl bg-white/90 px-3 py-3 shadow-lg backdrop-blur-sm sm:px-4">
+                  {b.icon}
+                  <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wide text-[#5A3493] sm:text-xs">
+                    {b.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
+          {/* 2-col mosaic below hero */}
           <div className="grid grid-cols-2">
             {MOSAIC_IMAGES.slice(1).map((img) => (
               <div key={img.src} className="relative aspect-square bg-gray-100">
