@@ -34,25 +34,29 @@ export async function generateMetadata(props: {
 const ingredients = [
   {
     name: "Lion's Mane",
-    img: `${CDN}img-lions-mane_1.png`,
+    emoji: "🍄",
+    benefit: "Focus + Clarity",
     description:
       "Supports focus, memory, and mental clarity so you can stay sharp without feeling wired.",
   },
   {
     name: "Rhodiola",
-    img: `${CDN}img-rhodiola_1.png`,
+    emoji: "🌿",
+    benefit: "Stress + Energy",
     description:
       "Helps reduce stress and mental fatigue while supporting steady energy throughout the day.",
   },
   {
     name: "Cordyceps",
-    img: `${CDN}img-cordyceps_1.png`,
+    emoji: "⚡",
+    benefit: "Endurance + Drive",
     description:
       "Boosts natural energy and endurance without overstimulation or crashes.",
   },
   {
     name: "L-Theanine",
-    img: `${CDN}img-lteanine_1.png`,
+    emoji: "🧘",
+    benefit: "Calm + Alert",
     description:
       "Promotes calm focus and smooths out the edges, helping you stay relaxed and alert at the same time.",
   },
@@ -268,7 +272,7 @@ export default async function ProductPage(props: {
         </div>
 
         {/* Right: sticky purchase panel */}
-        <div className="lg:w-1/2 lg:sticky lg:top-0 lg:max-h-screen lg:overflow-y-auto">
+        <div id="purchase" className="lg:w-1/2 lg:sticky lg:top-0 lg:max-h-screen lg:overflow-y-auto">
           <Suspense fallback={<div className="h-screen animate-pulse bg-gray-50" />}>
             <StunnPurchasePanel product={product} />
           </Suspense>
@@ -308,7 +312,7 @@ export default async function ProductPage(props: {
                 caffeine.
               </p>
               <a
-                href="#"
+                href="#purchase"
                 className="inline-flex items-center gap-2 rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[#fef8dd] shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
               >
                 Start Your Ritual →
@@ -358,21 +362,22 @@ export default async function ProductPage(props: {
             {ingredients.map((ing) => (
               <div
                 key={ing.name}
-                className="flex flex-col rounded-[10px] border border-gray-200 bg-white p-6 text-center"
+                className="flex flex-col rounded-[10px] border-t-4 border-t-[#5A3493] border-x border-b border-gray-200 bg-white p-6"
               >
-                <h3 className="mb-4 font-[family-name:var(--font-anton)] text-xl uppercase text-[#5A3493]">
+                <div className="mb-3 text-4xl">{ing.emoji}</div>
+                <span className="mb-1 inline-block rounded-full bg-[#EDE9F8] px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#5A3493]">
+                  {ing.benefit}
+                </span>
+                <h3 className="mb-3 font-[family-name:var(--font-anton)] text-xl uppercase text-[#5A3493]">
                   {ing.name}
                 </h3>
-                <div className="relative mx-auto mb-4 h-40 w-full flex-1">
-                  <Image src={ing.img} alt={ing.name} fill className="object-contain" />
-                </div>
                 <p className="text-xs leading-relaxed text-gray-600">{ing.description}</p>
               </div>
             ))}
           </div>
           <div className="mt-10 text-center">
             <a
-              href="#"
+              href="#purchase"
               className="inline-flex items-center gap-2 rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[#fef8dd] shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
             >
               Start Your Ritual →
@@ -435,7 +440,7 @@ export default async function ProductPage(props: {
 
           <div className="mt-10 text-center">
             <a
-              href="#"
+              href="#purchase"
               className="inline-flex items-center gap-2 rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[#fef8dd] shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
             >
               Start Your Ritual →
@@ -525,7 +530,7 @@ export default async function ProductPage(props: {
               Questions, answered.
             </h2>
             <a
-              href="#"
+              href="#purchase"
               className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[#fef8dd] shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
             >
               Start Your Ritual →
@@ -579,7 +584,7 @@ export default async function ProductPage(props: {
               <span className="text-gray-500 font-sans font-normal normal-case tracking-normal text-xs">Founder, STUNN</span>
             </p>
             <a
-              href="#"
+              href="#purchase"
               className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[#fef8dd] shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
             >
               Start Your Ritual →
@@ -600,7 +605,7 @@ export default async function ProductPage(props: {
             The cup you reach for.<br />Without the cost you&apos;ve been paying.
           </h2>
           <a
-            href="#"
+            href="#purchase"
             className="mt-6 inline-flex items-center gap-2 rounded-[10px] bg-[#fef8dd] px-8 py-4 text-sm font-bold uppercase tracking-wider text-[#5A3493] shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
           >
             Get STUNN from $33.99
