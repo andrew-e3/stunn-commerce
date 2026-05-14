@@ -69,17 +69,11 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
 
   return (
     <div className="px-6 py-8 lg:px-10">
-      {/* Stars + In Stock */}
-      <div className="mb-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-lg leading-none text-[#EFAF00]">★★★★★</span>
-          <span className="text-sm font-bold text-gray-900">5.0</span>
-          <span className="text-sm text-gray-500">Excellent</span>
-        </div>
-        <span className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
-          <span className="h-2 w-2 rounded-full bg-green-500" />
-          In Stock
-        </span>
+      {/* Stars */}
+      <div className="mb-2 flex items-center gap-2">
+        <span className="text-lg leading-none text-[#EFAF00]">★★★★★</span>
+        <span className="text-sm font-bold text-gray-900">5.0</span>
+        <span className="text-sm text-gray-500">Excellent</span>
       </div>
 
       {/* Title */}
@@ -100,54 +94,42 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
 
       <p className="mb-5 text-sm leading-relaxed text-gray-500">{product.description}</p>
 
-      {/* Variant selector */}
-      <div className="mb-4">
-        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-gray-700">
-          Select Your Supply:
-          <span className="ml-1 font-semibold normal-case tracking-normal text-[#5A3493]">
-            {display.duration} · {display.count} Count
-          </span>
-        </p>
+      {/* Variant selector label */}
+      <p className="mb-2 text-xs font-bold uppercase tracking-widest text-gray-700">
+        Choose how you want to start.
+      </p>
 
-        {/* Duration pill tabs */}
-        <div className="mb-4 flex gap-2">
-          {VARIANTS_DISPLAY.map((v) => {
-            const isSelected = selectedDuration === v.duration;
-            return (
-              <button
-                key={v.duration}
-                type="button"
-                onClick={() => setSelectedDuration(v.duration)}
-                className={`relative flex-1 rounded-[10px] border-2 py-2 text-center text-sm font-bold transition-all ${
-                  isSelected
-                    ? "border-[#5A3493] bg-[#5A3493] text-white"
-                    : "border-gray-200 bg-white text-gray-700 hover:border-[#5A3493]/40"
-                }`}
-              >
-                {v.popular && (
-                  <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#F9CEE1] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#5A3493]">
-                    Popular
-                  </span>
-                )}
-                {v.duration}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Selected variant detail card */}
-        <div className="flex items-center gap-4 rounded-[12px] border border-gray-200 bg-gray-50 px-4 py-3">
-          <img
-            src={display.boxImg}
-            alt={`${display.duration} supply`}
-            className="h-14 w-14 flex-shrink-0 object-contain"
-          />
-          <div>
-            <p className="text-sm font-bold text-gray-900">{display.duration} Supply</p>
-            <p className="text-xs text-gray-500">{display.count} individual sachets</p>
-            <p className="text-xs font-semibold text-[#5A3493]">${display.subPerDay} / day with autoship</p>
-          </div>
-        </div>
+      {/* Variant cards */}
+      <div className="mb-4 grid grid-cols-3 gap-2">
+        {VARIANTS_DISPLAY.map((v) => {
+          const isSelected = selectedDuration === v.duration;
+          return (
+            <button
+              key={v.duration}
+              type="button"
+              onClick={() => setSelectedDuration(v.duration)}
+              className={`relative flex flex-col items-center rounded-[12px] border-2 p-2 text-center transition-all ${
+                isSelected
+                  ? "border-[#5A3493] bg-white"
+                  : "border-gray-200 bg-white hover:border-gray-300"
+              }`}
+            >
+              {v.popular && (
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#5A3493] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#fef8dd]">
+                  Most Popular
+                </span>
+              )}
+              <img
+                src={v.boxImg}
+                alt={`${v.duration} supply`}
+                className="mb-1 h-14 w-full object-contain"
+              />
+              <span className="text-xs font-bold text-gray-900">{v.duration}</span>
+              <span className="text-[10px] text-gray-500">{v.count} Count</span>
+              <span className="text-[10px] text-[#5A3493]">(${v.subPerDay} / Day)</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Autoship section */}
