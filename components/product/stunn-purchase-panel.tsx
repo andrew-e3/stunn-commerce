@@ -201,7 +201,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           { icon: `${CDN}icon-smile.svg`, label: "Over 1000+\nHappy Customers" },
           { icon: `${CDN}icon-check-tag.svg`, label: "30-Day Money Back\nGuarantee" },
         ].map((b) => (
-          <div key={b.label} className="flex flex-col items-center gap-2 rounded-[10px] bg-[#C1D0A5] px-2 py-4 text-center">
+          <div key={b.label} className="flex flex-col items-center gap-2 rounded-[10px] bg-[#EDE9F8] px-2 py-4 text-center">
             <Image src={b.icon} alt={b.label.replace("\n", " ")} width={32} height={32} className="h-8 w-8" />
             <span className="whitespace-pre-line text-[10px] font-semibold text-[#5A3493]">{b.label}</span>
           </div>
