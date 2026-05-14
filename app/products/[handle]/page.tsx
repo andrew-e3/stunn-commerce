@@ -198,8 +198,8 @@ export default async function ProductPage(props: {
           </div>
         </div>
 
-        {/* Right: sticky purchase panel */}
-        <div id="purchase" className="lg:w-1/2 lg:sticky lg:top-0 lg:max-h-screen lg:overflow-y-auto">
+        {/* Right: purchase panel */}
+        <div id="purchase" className="lg:w-1/2">
           <Suspense fallback={<div className="h-screen animate-pulse bg-gray-50" />}>
             <StunnPurchasePanel product={product} />
           </Suspense>
