@@ -1,4 +1,5 @@
 import { StunnPurchasePanel } from "components/product/stunn-purchase-panel";
+import { ImageGallery } from "components/product/image-gallery";
 import Footer from "components/layout/footer";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { getProduct } from "lib/shopify";
@@ -178,71 +179,39 @@ export default async function ProductPage(props: {
 
       {/* ── HERO: coffee lifestyle image + purchase panel ── */}
       <div className="relative lg:flex lg:items-start">
-        {/* Left: hero image (coffee cup first) + benefit callouts + 2-col mosaic below */}
+        {/* Left: expandable image gallery with benefit pills baked into hero */}
         <div className="lg:w-1/2">
-          {/* Hero image with floating benefit cards */}
-          <div className="relative aspect-square w-full bg-[#EDE9F8]">
-            <Image
-              src={MOSAIC_IMAGES[0]!.src}
-              alt={MOSAIC_IMAGES[0]!.alt}
-              fill
-              className="object-cover"
-              priority
-            />
-            {/* Benefit callout pills — bottom corners, horizontal layout */}
-            {/* Bottom-left */}
-            <div className="absolute bottom-5 left-4 flex flex-col gap-2">
-              {[
-                {
-                  label: "Calm Focus",
-                  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#5A3493" stroke="none"/></svg>,
-                },
-                {
-                  label: "No Jitters",
-                  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="9" r="1" fill="#5A3493" stroke="none"/><circle cx="15" cy="9" r="1" fill="#5A3493" stroke="none"/></svg>,
-                },
-              ].map((b) => (
-                <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
-                  <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
-                    {b.icon}
-                  </div>
-                  <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
-                    {b.label}
-                  </span>
+          <ImageGallery
+            images={MOSAIC_IMAGES}
+            heroOverlay={
+              <>
+                {/* Bottom-left pills */}
+                <div className="absolute bottom-5 left-4 flex flex-col gap-2">
+                  {[
+                    { label: "Calm Focus",  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#5A3493" stroke="none"/></svg> },
+                    { label: "No Jitters",  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="9" r="1" fill="#5A3493" stroke="none"/><circle cx="15" cy="9" r="1" fill="#5A3493" stroke="none"/></svg> },
+                  ].map((b) => (
+                    <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
+                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">{b.icon}</div>
+                      <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">{b.label}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            {/* Bottom-right */}
-            <div className="absolute bottom-5 right-4 flex flex-col gap-2 items-end">
-              {[
-                {
-                  label: "Steady Energy",
-                  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#5A3493"><path d="M13 2L4.5 13.5H11L9 22L19.5 10.5H13L13 2Z"/></svg>,
-                },
-                {
-                  label: "Sleep Friendly",
-                  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
-                },
-              ].map((b) => (
-                <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
-                  <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
-                    {b.icon}
-                  </div>
-                  <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
-                    {b.label}
-                  </span>
+                {/* Bottom-right pills */}
+                <div className="absolute bottom-5 right-4 flex flex-col items-end gap-2">
+                  {[
+                    { label: "Steady Energy",  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#5A3493"><path d="M13 2L4.5 13.5H11L9 22L19.5 10.5H13L13 2Z"/></svg> },
+                    { label: "Sleep Friendly", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> },
+                  ].map((b) => (
+                    <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
+                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">{b.icon}</div>
+                      <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">{b.label}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-          {/* 2-col mosaic below hero */}
-          <div className="grid grid-cols-2">
-            {MOSAIC_IMAGES.slice(1).map((img) => (
-              <div key={img.src} className="relative aspect-square bg-gray-100">
-                <Image src={img.src} alt={img.alt} fill className="object-cover" />
-              </div>
-            ))}
-          </div>
+              </>
+            }
+          />
         </div>
 
         {/* Right: purchase panel */}
