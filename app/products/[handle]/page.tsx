@@ -60,13 +60,6 @@ const ingredients = [
   },
 ];
 
-const timeline = [
-  { label: "20-30 mins", heading: "Clearer head.", description: "The mental fog starts lifting before your second sip." },
-  { label: "1 hour", heading: "Focused state.", description: "You're in it — no false starts, no jitter tax." },
-  { label: "3-4 hours", heading: "Sustained output.", description: "The kind you'd normally trade for a crash." },
-  { label: "Evening", heading: "No crash. Normal sleep.", description: "You actually close the loop today." },
-];
-
 const comparisonRows = [
   { label: "Cost Per Serving", stunn: "From $0.38", competitor: "$3.99+", type: "text" },
   { label: "Taste", stunn: "★★★★★", competitor: "★★", type: "stars" },
@@ -241,6 +234,72 @@ export default async function ProductPage(props: {
         </div>
       </section>
 
+      {/* ── WHAT TO EXPECT — photo timeline ── */}
+      <section className="bg-white py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#5A3493]/60">The timeline</p>
+            <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2rem,5vw,3.5rem)] uppercase leading-tight text-[#5A3493]">
+              What to expect after<br />switching to STUNN
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            {[
+              {
+                time: "After 30 Minutes",
+                icon: (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2" strokeLinecap="round">
+                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+                  </svg>
+                ),
+                headline: "Smooth, steady clarity.",
+                copy: "No jitters, no crash — just clean focus from the first sip.",
+                img: `${CDN}img-a-man-sipping-a-cup-of-coffee-while-holding-stunn-sachet_1.webp`,
+                alt: "Man focused with STUNN coffee",
+              },
+              {
+                time: "After 14 Days",
+                icon: (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2" strokeLinecap="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                ),
+                headline: "Balanced all day.",
+                copy: "No 3PM crash, no irritability. Just steady, natural energy that lasts.",
+                img: `${CDN}img-stunn-decaf-coffee-after-two-week-effect.webp`,
+                alt: "After 2 weeks of STUNN",
+              },
+              {
+                time: "After 30 Days",
+                icon: (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2" strokeLinecap="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </svg>
+                ),
+                headline: "Better nights, better mornings.",
+                copy: "Deep, restorative sleep — wake up reset and truly refreshed.",
+                img: `${CDN}img-stunn-decaf-coffee-what-to-expect-after-use.webp`,
+                alt: "What to expect after 30 days with STUNN",
+              },
+            ].map((step) => (
+              <div key={step.time} className="flex flex-col">
+                <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[16px]">
+                  <Image src={step.img} alt={step.alt} fill className="object-cover object-top" />
+                </div>
+                <div className="pt-6">
+                  <div className="mb-2 flex items-center gap-2">
+                    {step.icon}
+                    <span className="text-xs font-bold uppercase tracking-widest text-[#5A3493]">{step.time}</span>
+                  </div>
+                  <p className="mb-1 font-[family-name:var(--font-anton)] text-xl uppercase text-gray-900">{step.headline}</p>
+                  <p className="text-sm leading-relaxed text-gray-500">{step.copy}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── PHOTO + CONTENT GALLERY ── */}
       <section className="overflow-hidden">
         {/* Panel A: Ingredients */}
@@ -273,40 +332,6 @@ export default async function ProductPage(props: {
                     {ing.benefit}
                   </span>
                   <p className="text-xs leading-relaxed text-gray-600">{ing.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Panel B: Timeline */}
-        <div className="flex flex-col lg:flex-row-reverse">
-          <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-1/2 lg:min-h-[500px]">
-            <Image
-              src={`${CDN}img-man-drinking-stunn-coffee.webp`}
-              alt="Person enjoying STUNN coffee"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="flex flex-col justify-center bg-white px-8 py-14 lg:w-1/2 lg:px-16">
-            <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#5A3493]/60">
-              What you'll feel · timeline
-            </span>
-            <h2 className="mb-8 font-[family-name:var(--font-anton)] text-[clamp(2rem,4vw,3.5rem)] uppercase leading-tight text-[#5A3493]">
-              This isn't 'no caffeine.'<br />It's a different system.
-            </h2>
-            <div className="relative space-y-8">
-              <div className="absolute left-[1.65rem] top-4 bottom-4 w-px border-l-2 border-dashed border-[#5A3493]/20" />
-              {timeline.map((t) => (
-                <div key={t.label} className="flex gap-5">
-                  <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-[#5A3493] text-center text-[9px] font-bold uppercase leading-tight tracking-wide text-[#fef8dd]">
-                    {t.label.split(" ").map((w, i) => <span key={i} className="block">{w}</span>)}
-                  </div>
-                  <div className="pt-2">
-                    <p className="font-[family-name:var(--font-anton)] text-lg uppercase text-[#5A3493]">{t.heading}</p>
-                    <p className="text-sm text-gray-500">{t.description}</p>
-                  </div>
                 </div>
               ))}
             </div>
