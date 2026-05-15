@@ -24,6 +24,7 @@ function perDay(price: number, days: number) {
 }
 
 // Each tier = N single boxes. Shopify automatic discounts should apply the real discount.
+// Keep the ladder visibly stepped so the 3-box tier reads as the clear best value.
 const SUPPLY_TIERS = [
   {
     qty: 3,
@@ -46,7 +47,7 @@ const SUPPLY_TIERS = [
     shipLabel: "2 boxes (60 sachets) · ships every 2 months",
     count: 60,
     retailPrice: roundMoney(RETAIL_PER_BOX * 2),
-    subDiscountPct: 23,
+    subDiscountPct: 21,
     oneTimeDiscountPct: ONE_TIME_DISCOUNT_PCT,
     popular: false,
     boxImg: `${CDN}2_285eb8bf-bd05-4b30-9fe2-102fc163df41.svg`,
