@@ -174,27 +174,28 @@ const PERSONA_CARDS = [
   },
 ];
 
-// Mosaic images — coffee cup hero first (Matt's note), then product shots
+// Mosaic images — calm ritual first, then clean product/packaging proof.
+// Keep paid-social infographic assets out of the hero gallery so the PDP feels premium.
 const MOSAIC_IMAGES = [
   {
     src: `${CDN}img-a-man-sipping-a-cup-of-coffee-while-holding-stunn-sachet_1.webp`,
     alt: "A man enjoying STUNN decaf coffee",
   },
   {
-    src: `${CDN}img-stunn-decaf-coffee-after-two-week-effect.webp`,
-    alt: "In 2 Weeks, Say Goodbye To Jitters",
+    src: `${CDN}mockup-stunn-box.webp`,
+    alt: "STUNN decaf coffee box",
   },
   {
-    src: `${CDN}img-stunn-decaf-coffee-what-to-expect-after-use.webp`,
-    alt: "What to expect after switching to STUNN",
+    src: `${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`,
+    alt: "STUNN sachet with adaptogens and nootropics",
   },
   {
     src: `${CDN}3-boxes-of-stunn-1080x1080.webp`,
     alt: "3 boxes of STUNN",
   },
   {
-    src: `${CDN}img-all-the-edge-none-of-the-jitters-stunn-coffee-benefits_95c6e424-1565-46f6-b269-24a86114b866.webp`,
-    alt: "All the Edge, None of the Jitters",
+    src: `${CDN}img-s-11.webp`,
+    alt: "STUNN coffee ritual",
   },
 ];
 
