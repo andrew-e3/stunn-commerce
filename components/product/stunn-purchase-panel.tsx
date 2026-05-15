@@ -70,12 +70,22 @@ const BENEFIT_CHIPS = [
 function CheckCircleIcon() {
   return (
     <svg
-      className="h-3 w-3 flex-shrink-0 text-[#5A3493]"
+      className="h-4 w-4 flex-shrink-0 text-[#5A3493]"
       viewBox="0 0 16 16"
       fill="currentColor"
     >
       <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.78 6.28-4.5 4.5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47 3.97-3.97a.75.75 0 0 1 1.06 1.06z" />
     </svg>
+  );
+}
+
+function DarkCheckIcon() {
+  return (
+    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-900 text-white">
+      <svg className="h-3 w-3" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M6.4 10.9 3.2 7.7l1.1-1.1 2.1 2.1 5.3-5.3 1.1 1.1z" />
+      </svg>
+    </span>
   );
 }
 
@@ -149,8 +159,8 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Quantity selector */}
-      <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gray-700">
-        Choose your supply
+      <p className="mb-3 text-sm font-extrabold text-gray-900">
+        1. Select Your Size:
       </p>
       <div className="mb-5 grid grid-cols-3 gap-2">
         {SUPPLY_TIERS.map((v) => {
@@ -160,87 +170,100 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               key={v.qty}
               type="button"
               onClick={() => setSelectedQty(v.qty)}
-              className={`relative flex flex-col items-center rounded-[12px] border-2 p-2 text-center transition-all ${
+              className={`relative flex min-h-[82px] items-center gap-2 rounded-[10px] border p-2 text-left transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(90,52,147,0.12)] ${
                 isSelected
-                  ? "border-[#5A3493] bg-[#EDE9F8]"
-                  : "border-gray-200 bg-white hover:border-[#5A3493]/40"
+                  ? "border-2 border-gray-900 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.08)]"
+                  : "border-gray-300 bg-white hover:border-[#5A3493]/60"
               }`}
             >
               {v.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#5A3493] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#fef8dd]">
-                  Most Popular
+                <span className="absolute -top-2 left-3 whitespace-nowrap rounded-[3px] bg-gray-900 px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wide text-white">
+                  Best Value
                 </span>
               )}
               <img
                 src={v.boxImg}
                 alt={`${v.qty} box supply`}
-                className="mb-1 h-14 w-full object-contain"
+                className="h-14 w-14 shrink-0 object-contain"
               />
-              <span className="text-xs font-bold text-gray-900">
-                {v.display}
-              </span>
-              <span className="text-[10px] text-gray-500">
-                {v.count} Sachets
-              </span>
-              <span className="mt-0.5 text-xs font-semibold text-[#5A3493]">
-                ${v.subPerDay}/day
-              </span>
+              <div className="min-w-0">
+                <span className="block text-sm font-extrabold leading-tight text-gray-900">
+                  {v.label}
+                </span>
+                <span className="block text-[11px] leading-tight text-gray-500">
+                  {v.count} Count
+                </span>
+                <span className="mt-0.5 block text-[11px] font-medium leading-tight text-gray-500">
+                  (${v.subPerDay} / Day)
+                </span>
+              </div>
             </button>
           );
         })}
       </div>
 
-      {/* Price — visible before ATC */}
-      <div className="mb-1 flex items-baseline gap-3">
-        <span className="text-3xl font-bold text-gray-900">
-          ${display.subPrice.toFixed(2)}
-        </span>
-        <span className="text-base text-gray-400 line-through">
-          ${display.retailPrice.toFixed(2)}
-        </span>
-        <span className="rounded-full bg-[#EDE9F8] px-2 py-0.5 text-xs font-bold text-[#5A3493]">
-          SAVE ${display.saving.toFixed(0)}
-        </span>
-      </div>
-      <p className="mb-4 text-xs text-gray-500">
-        {display.shipLabel} · discount applied at checkout
-      </p>
+      {/* Autoship offer card */}
+      <div className="mb-5 rounded-[12px] bg-white p-4 shadow-[0_12px_32px_rgba(90,52,147,0.14)]">
+        <div className="mb-3 flex items-start justify-between gap-4">
+          <div>
+            <div className="mb-1 flex flex-wrap items-center gap-2">
+              <h2 className="text-lg font-extrabold leading-none text-gray-900">
+                Autoship
+              </h2>
+              <span className="rounded-full bg-[#5A3493] px-2 py-1 text-[11px] font-extrabold uppercase leading-none text-white">
+                Save 15%
+              </span>
+            </div>
+            <p className="text-xs text-gray-900">
+              <strong>{display.label}</strong>{" "}
+              <span>{display.count} Count</span>{" "}
+              <span>${display.subPerDay} / Day</span>
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-gray-400 line-through">
+              ${display.retailPrice.toFixed(0)}
+            </p>
+            <p className="text-xl font-extrabold leading-none text-gray-900">
+              ${display.subPrice.toFixed(0)}
+            </p>
+            <p className="mt-1 text-xs text-gray-700">
+              You&apos;re saving ${display.saving.toFixed(0)}
+            </p>
+          </div>
+        </div>
 
-      {/* ADD TO CART — solid purple, primary action */}
-      <button
-        type="button"
-        disabled={!oneBoxVariant || addPending}
-        onClick={() => {
-          if (!oneBoxVariant) return;
-          addCartItem(oneBoxVariant, product, display.qty);
-          startAddTransition(async () => {
-            await addItem(null, oneBoxVariant.id, display.qty);
-          });
-        }}
-        className="mb-2 w-full rounded-[10px] bg-[#5A3493] py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f] active:translate-y-[4px] active:shadow-[0_1px_0_0_#3d1c8f] disabled:opacity-50"
-      >
-        {addPending ? "ADDING..." : "ADD TO CART"}
-      </button>
+        <button
+          type="button"
+          disabled={!oneBoxVariant || addPending}
+          onClick={() => {
+            if (!oneBoxVariant) return;
+            addCartItem(oneBoxVariant, product, display.qty);
+            startAddTransition(async () => {
+              await addItem(null, oneBoxVariant.id, display.qty);
+            });
+          }}
+          className="mb-4 w-full rounded-[8px] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-all hover:-translate-y-0.5 hover:bg-[#4A2A78] hover:shadow-[0_10px_22px_rgba(90,52,147,0.22)] active:translate-y-0 disabled:opacity-50"
+        >
+          {addPending ? "ADDING..." : "ADD TO CART"}
+        </button>
 
-      {/* Autoship perks — dynamic cadence */}
-      <div className="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-        {[
-          `Ships FREE ${display.shipEvery}`,
-          "VIP discounts & perks",
-          "Cancel anytime",
-        ].map((b) => (
-          <span
-            key={b}
-            className="flex items-center gap-1 text-[10px] text-gray-500"
-          >
-            <CheckCircleIcon />
-            {b}
-          </span>
-        ))}
+        <div className="grid gap-2 text-[11px] text-gray-700 sm:grid-cols-3">
+          {[
+            `Ships FREE ${display.shipEvery}`,
+            "VIP discounts & perks",
+            "Pause, edit or cancel anytime",
+          ].map((b) => (
+            <span key={b} className="flex items-center gap-2">
+              <DarkCheckIcon />
+              {b}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* One-time purchase — secondary, clearly below ATC */}
-      <div className="mb-5 text-center">
+      <div className="mb-6 text-center">
         <button
           type="button"
           disabled={!oneBoxVariant || otpPending}
@@ -253,18 +276,21 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           }}
           className="text-xs text-gray-500 disabled:opacity-50"
         >
-          Or{" "}
           <span className="font-semibold underline text-gray-700">
             {otpPending
               ? "Adding…"
-              : `One-Time Purchase — $${display.retailPrice.toFixed(2)} ($${display.retailPerDay}/day)`}
+              : `One-Time Purchase — $${display.retailPrice.toFixed(0)} ($${display.retailPerDay} / Day)`}
           </span>
         </button>
       </div>
 
       {/* Trust badges */}
-      <div className="mb-4 grid grid-cols-3 gap-2">
+      <div className="mb-5 grid grid-cols-3 gap-6 text-center">
         {[
+          {
+            icon: `${CDN}icon-check-tag.svg`,
+            label: "30-Day Money Back\nGuarantee",
+          },
           {
             icon: `${CDN}icon-truck.svg`,
             label: "Ships Within\n1 Business Day",
@@ -273,23 +299,19 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             icon: `${CDN}icon-smile.svg`,
             label: "Over 1000+\nHappy Customers",
           },
-          {
-            icon: `${CDN}icon-check-tag.svg`,
-            label: "30-Day Money Back\nGuarantee",
-          },
         ].map((b) => (
           <div
             key={b.label}
-            className="flex flex-col items-center gap-2 rounded-[10px] bg-[#EDE9F8] px-2 py-4 text-center"
+            className="flex flex-col items-center gap-2 text-center"
           >
             <Image
               src={b.icon}
               alt={b.label.replace("\n", " ")}
               width={32}
               height={32}
-              className="h-8 w-8"
+              className="h-7 w-7 brightness-0"
             />
-            <span className="whitespace-pre-line text-[10px] font-semibold text-[#5A3493]">
+            <span className="whitespace-pre-line text-xs font-extrabold leading-tight text-gray-900">
               {b.label}
             </span>
           </div>
