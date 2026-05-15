@@ -162,17 +162,17 @@ const pdpFaqs = [
 const PERSONA_CARDS = [
   {
     eyebrow: "For the side-effect done crowd",
-    title: "No jitters. No crash. No anxious second cup.",
-    copy: "For the people who still want the workday lift, but are tired of paying for it with tension, irritability, and the afternoon drop.",
+    title: "A cleaner cup for the same ambitious day.",
+    copy: "For the people who still want the workday ritual, without paying for it with tension, irritability, and the afternoon drop.",
   },
   {
     eyebrow: "For the optimizer",
-    title: "Keep the edge without making caffeine your identity.",
-    copy: "For founders, operators, and senior ICs who want the productivity cue of coffee without needing a stimulant to feel switched on.",
+    title: "Keep your edge without the stimulant dependency.",
+    copy: "For founders, operators, and senior ICs who want the productivity cue of coffee while staying calm, clear, and in control.",
   },
   {
     eyebrow: "For the coffee lover",
-    title: "The ritual stays. The stimulant goes.",
+    title: "The ritual stays. The rest gets lighter.",
     copy: "For anyone who misses coffee more than caffeine: the cup, the pause, the warmth, and the moment before the day starts again.",
   },
 ];
@@ -307,17 +307,17 @@ export default async function ProductPage(props: {
           <div className="grid gap-12 lg:grid-cols-[0.95fr_0.9fr_1fr] lg:items-center">
             <div>
               <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-[#111111]/50">
-                The caffeine loop
+                The STUNN shift
               </p>
               <h2 className="mb-7 font-[family-name:var(--font-anton)] text-[clamp(2.5rem,5vw,5.2rem)] uppercase leading-[0.95] text-[#111111]">
-                You don&apos;t have low energy.
+                Keep the ritual.
                 <br />
-                You&apos;re overstimulated.
+                Feel clear again.
               </h2>
               <p className="max-w-md text-base leading-relaxed text-[#111111]/68">
-                Caffeine can make tired feel productive for a few hours. Then
-                the bill shows up as tension, a crash, worse sleep, and the need
-                for another cup tomorrow.
+                STUNN gives coffee lovers a calmer way back to the cup: real
+                decaf coffee, functional support, and none of the stimulant
+                tradeoff that can make the day feel harder than it needs to.
               </p>
             </div>
 
@@ -336,20 +336,20 @@ export default async function ProductPage(props: {
               <div className="absolute bottom-4 left-[11px] top-4 w-px bg-[#111111]/25" />
               {[
                 {
-                  title: "Spike",
-                  copy: "A fast lift that feels like energy, but often comes with tension.",
+                  title: "Ritual",
+                  copy: "The taste, warmth, and daily coffee cue stay intact.",
                 },
                 {
-                  title: "Crash",
-                  copy: "Adenosine rebounds. Focus drops. The next cup starts calling.",
+                  title: "Clarity",
+                  copy: "Adaptogens and nootropics support calm focus without the wired edge.",
                 },
                 {
-                  title: "Poor sleep",
-                  copy: "Even earlier caffeine can disrupt the depth of your rest.",
+                  title: "Control",
+                  copy: "No caffeine dependency deciding when you can think, work, or wind down.",
                 },
                 {
-                  title: "Tolerance",
-                  copy: "Yesterday's dose becomes today's baseline.",
+                  title: "Rest",
+                  copy: "A sleep-friendly cup that fits the afternoon without stealing the night.",
                 },
               ].map((step, index) => (
                 <div key={step.title} className="relative pb-9 last:pb-0">
