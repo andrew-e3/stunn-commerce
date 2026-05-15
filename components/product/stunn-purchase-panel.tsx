@@ -306,29 +306,59 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       <div className="mb-5 grid grid-cols-3 gap-6 text-center">
         {[
           {
-            icon: `${CDN}icon-check-tag.svg`,
+            icon: (
+              <svg
+                viewBox="0 0 24 24"
+                className="h-7 w-7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M12 3 20 7v6c0 5-3.4 7.5-8 8-4.6-.5-8-3-8-8V7l8-4Z" />
+                <path d="m8.5 12 2.2 2.2 4.8-5" />
+              </svg>
+            ),
             label: "30-Day Money Back\nGuarantee",
           },
           {
-            icon: `${CDN}icon-truck.svg`,
+            icon: (
+              <svg
+                viewBox="0 0 24 24"
+                className="h-7 w-7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M3 7h11v10H3z" />
+                <path d="M14 10h4l3 3v4h-7z" />
+                <circle cx="7" cy="18" r="2" />
+                <circle cx="18" cy="18" r="2" />
+              </svg>
+            ),
             label: "Ships Within\n1 Business Day",
           },
           {
-            icon: `${CDN}icon-smile.svg`,
+            icon: (
+              <svg
+                viewBox="0 0 24 24"
+                className="h-7 w-7"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M8 14.5c1 1.2 2.3 1.8 4 1.8s3-.6 4-1.8" />
+                <path d="M9 9.5h.01M15 9.5h.01" />
+              </svg>
+            ),
             label: "Over 1000+\nHappy Customers",
           },
         ].map((b) => (
           <div
             key={b.label}
-            className="flex flex-col items-center gap-2 text-center"
+            className="flex flex-col items-center gap-2 text-center text-[#111111]"
           >
-            <Image
-              src={b.icon}
-              alt={b.label.replace("\n", " ")}
-              width={32}
-              height={32}
-              className="h-7 w-7 brightness-0"
-            />
+            {b.icon}
             <span className="whitespace-pre-line text-xs font-extrabold leading-tight text-[#111111]">
               {b.label}
             </span>
