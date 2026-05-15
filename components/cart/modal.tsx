@@ -20,9 +20,15 @@ type MerchandiseSearchParams = { [key: string]: string };
 type VariantInfo = { id: string; title: string; selectedOptions: { name: string; value: string }[] };
 
 const DURATION_TIERS = [
-  { label: "1 Month",  perDay: "$1.22/day" },
-  { label: "2 Months", perDay: "$1.19/day" },
-  { label: "3 Months", perDay: "$1.13/day" },
+  { label: "1 Month",  display: "BUY 1 MO.",  saving: "SAVE 15%", perDay: "$1.22/day", best: false },
+  { label: "2 Months", display: "BUY 2 MO.",  saving: "SAVE 15%", perDay: "$1.19/day", best: false },
+  { label: "3 Months", display: "BUY 3 MO.",  saving: "BEST VALUE", perDay: "$1.13/day", best: true },
+];
+
+const FREQUENCY_OPTIONS = [
+  { label: "Every 1 month",  value: "1" },
+  { label: "Every 2 months", value: "2" },
+  { label: "Every 3 months – SAVE 15%", value: "3", highlight: true },
 ];
 
 function EmptyBox() {
@@ -164,13 +170,13 @@ export default function CartModal() {
                 <div className="flex h-full flex-col overflow-hidden">
 
                   {/* Free shipping banner */}
-                  <div className={`px-6 py-2.5 text-center text-xs font-semibold ${hasFreeShipping ? "bg-[#d4edda] text-green-800" : "bg-[#EDE9F8] text-[#5A3493]"}`}>
+                  <div className={`px-6 py-3 text-center text-xs font-semibold ${hasFreeShipping ? "bg-[#E8F5E9] text-green-800" : "bg-[#EDE9F8] text-[#5A3493]"}`}>
                     {hasFreeShipping ? (
-                      "🎉 Congrats, you've unlocked Free Shipping!"
+                      <span className="font-bold">🎉 Congrats, you&apos;ve unlocked <span className="underline">Free Shipping!</span></span>
                     ) : (
                       <span>Add <strong>${remaining.toFixed(2)}</strong> more for <strong>Free Shipping</strong></span>
                     )}
-                    <div className="mt-1.5 h-1 w-full overflow-hidden rounded-full bg-[#5A3493]/20">
+                    <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#5A3493]/15">
                       <div className="h-full rounded-full bg-[#5A3493] transition-all duration-500" style={{ width: `${progress}%` }} />
                     </div>
                   </div>
@@ -252,40 +258,48 @@ export default function CartModal() {
                                     />
                                   </div>
 
-                                  {/* Duration tier switcher */}
+                                  {/* Duration tier switcher + frequency dropdown */}
                                   {(() => {
                                     const durationOpt = item.merchandise.selectedOptions.find(o => o.name === "Duration");
                                     const variants = productVariants[item.merchandise.product.handle];
                                     if (!durationOpt || !variants) return null;
                                     return (
-                                      <div className="mt-3 grid grid-cols-3 gap-1.5">
-                                        {DURATION_TIERS.map((tier) => {
-                                          const isSelected = durationOpt.value === tier.label;
-                                          const targetVariant = variants.find(v =>
-                                            v.selectedOptions.some(o => o.name === "Duration" && o.value === tier.label)
-                                          );
-                                          return (
-                                            <button
-                                              key={tier.label}
-                                              disabled={isSelected || swapping}
-                                              onClick={() => {
-                                                if (!targetVariant) return;
-                                                startSwapTransition(async () => {
-                                                  await removeItem(null, item.merchandise.id);
-                                                  await addItem(null, targetVariant.id);
-                                                });
-                                              }}
-                                              className={`rounded-[8px] px-1 py-2 text-center transition-all disabled:cursor-default ${
-                                                isSelected
-                                                  ? "bg-[#5A3493] text-white"
-                                                  : "border border-gray-200 bg-white text-gray-700 hover:border-[#5A3493]/40 hover:bg-[#EDE9F8]"
-                                              }`}
-                                            >
-                                              <span className="block text-[10px] font-bold uppercase tracking-wide">{tier.label}</span>
-                                              <span className={`block text-[9px] ${isSelected ? "text-white/70" : "text-gray-400"}`}>{tier.perDay}</span>
-                                            </button>
-                                          );
-                                        })}
+                                      <div className="mt-3 space-y-2">
+                                        {/* Tier buttons */}
+                                        <div className="grid grid-cols-3 gap-1.5">
+                                          {DURATION_TIERS.map((tier) => {
+                                            const isSelected = durationOpt.value === tier.label;
+                                            const targetVariant = variants.find(v =>
+                                              v.selectedOptions.some(o => o.name === "Duration" && o.value === tier.label)
+                                            );
+                                            return (
+                                              <button
+                                                key={tier.label}
+                                                disabled={isSelected || swapping}
+                                                onClick={() => {
+                                                  if (!targetVariant) return;
+                                                  startSwapTransition(async () => {
+                                                    await removeItem(null, item.merchandise.id);
+                                                    await addItem(null, targetVariant.id);
+                                                  });
+                                                }}
+                                                className={`rounded-[8px] px-1 py-2.5 text-center transition-all disabled:cursor-default ${
+                                                  isSelected
+                                                    ? "bg-[#5A3493] text-white shadow-sm"
+                                                    : tier.best
+                                                    ? "border-2 border-[#5A3493] bg-white text-[#5A3493] hover:bg-[#EDE9F8]"
+                                                    : "border border-gray-200 bg-white text-gray-600 hover:border-[#5A3493]/40"
+                                                }`}
+                                              >
+                                                <span className="block text-[10px] font-extrabold uppercase tracking-wide">{tier.display}</span>
+                                                <span className={`mt-0.5 block text-[9px] font-semibold ${isSelected ? "text-white/80" : tier.best ? "text-[#5A3493]" : "text-gray-400"}`}>{tier.saving}</span>
+                                              </button>
+                                            );
+                                          })}
+                                        </div>
+
+                                        {/* Subscription frequency dropdown */}
+                                        <FrequencyDropdown />
                                       </div>
                                     );
                                   })()}
@@ -360,5 +374,46 @@ function CheckoutButton() {
     >
       {pending ? <LoadingDots className="bg-[#5A3493]" /> : "Checkout →"}
     </button>
+  );
+}
+
+function FrequencyDropdown() {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(FREQUENCY_OPTIONS[2]!);
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className="flex w-full items-center justify-between rounded-[10px] border border-gray-200 bg-white px-3 py-2.5 text-left"
+      >
+        <span className="text-xs font-semibold text-gray-800">{selected.label.replace(" – SAVE 15%", "")}</span>
+        <div className="flex items-center gap-2">
+          {selected.highlight && (
+            <span className="rounded-full bg-[#EDE9F8] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#5A3493]">SAVE 15%</span>
+          )}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}>
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+      </button>
+      {open && (
+        <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[10px] border border-gray-200 bg-white shadow-lg">
+          {FREQUENCY_OPTIONS.map(opt => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => { setSelected(opt); setOpen(false); }}
+              className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#EDE9F8] ${selected.value === opt.value ? "font-bold text-[#5A3493]" : "text-gray-700"}`}
+            >
+              <span>{opt.label.replace(" – SAVE 15%", "")}</span>
+              {opt.highlight && (
+                <span className="rounded-full bg-[#EDE9F8] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#5A3493]">SAVE 15%</span>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
