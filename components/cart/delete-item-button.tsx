@@ -1,6 +1,5 @@
 "use client";
 
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { removeItem } from "components/cart/actions";
 import type { CartItem } from "lib/shopify/types";
 import { useActionState } from "react";
@@ -26,9 +25,9 @@ export function DeleteItemButton({
       <button
         type="submit"
         aria-label="Remove cart item"
-        className="shrink-0 text-[10px] font-bold uppercase tracking-widest text-gray-400 hover:text-gray-700 transition-colors"
+        className="shrink-0 border-b border-gray-900 text-[10px] font-medium uppercase tracking-normal text-gray-900 transition-opacity hover:opacity-60"
       >
-        Remove
+        REMOVE
       </button>
       <p aria-live="polite" className="sr-only" role="status">
         {message}
