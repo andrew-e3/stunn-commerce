@@ -219,9 +219,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         }}
         className="mb-2 w-full rounded-[10px] bg-[#5A3493] py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f] active:translate-y-[4px] active:shadow-[0_1px_0_0_#3d1c8f] disabled:opacity-50"
       >
-        {addPending
-          ? "ADDING..."
-          : `ADD ${display.qty} ${display.qty === 1 ? "BOX" : "BOXES"} TO CART`}
+        {addPending ? "ADDING..." : "ADD TO CART"}
       </button>
 
       {/* Autoship perks — dynamic cadence */}
