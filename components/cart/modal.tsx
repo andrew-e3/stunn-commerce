@@ -10,19 +10,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useEffect, useRef, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
-import { addItem, createCartAndSetCookie, redirectToCheckout, removeItem } from "./actions";
+import { addItem, createCartAndSetCookie, redirectToCheckout, updateItemQuantity } from "./actions";
 import { useCart } from "./cart-context";
 import { DeleteItemButton } from "./delete-item-button";
 import { EditItemQuantityButton } from "./edit-item-quantity-button";
 import OpenCart from "./open-cart";
 
 type MerchandiseSearchParams = { [key: string]: string };
-type VariantInfo = { id: string; title: string; selectedOptions: { name: string; value: string }[] };
 
-const DURATION_TIERS = [
-  { label: "1 Month",  display: "BUY 1 MO.",  saving: "SAVE 15%", perDay: "$1.22/day", best: false },
-  { label: "2 Months", display: "BUY 2 MO.",  saving: "SAVE 15%", perDay: "$1.19/day", best: false },
-  { label: "3 Months", display: "BUY 3 MO.",  saving: "BEST VALUE", perDay: "$1.13/day", best: true },
+const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
+
+const QTY_TIERS = [
+  { qty: 1, display: "1 MONTH",  saving: "–",          perDay: "$1.33/day", best: false },
+  { qty: 2, display: "2 MONTHS", saving: "SAVE 10%",   perDay: "$1.19/day", best: false },
+  { qty: 3, display: "3 MONTHS", saving: "BEST VALUE",  perDay: "$1.13/day", best: true  },
 ];
 
 const FREQUENCY_OPTIONS = [
@@ -52,8 +53,7 @@ export default function CartModal() {
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
-  const [productVariants, setProductVariants] = useState<Record<string, VariantInfo[]>>({});
-  const [swapping, startSwapTransition] = useTransition();
+  const [qtyChanging, startQtyTransition] = useTransition();
 
   useEffect(() => {
     if (!cart) createCartAndSetCookie();
@@ -69,24 +69,6 @@ export default function CartModal() {
       quantityRef.current = cart?.totalQuantity;
     }
   }, [isOpen, cart?.totalQuantity, quantityRef]);
-
-  // Fetch variant info for products in cart that have a Duration option
-  useEffect(() => {
-    if (!cart || cart.lines.length === 0) return;
-    const handles = [...new Set(
-      cart.lines
-        .filter(l => l.merchandise.selectedOptions.some(o => o.name === "Duration"))
-        .map(l => l.merchandise.product.handle)
-    )];
-    handles.forEach(async (handle) => {
-      if (productVariants[handle]) return;
-      try {
-        const res = await fetch(`/api/product-variants?handle=${handle}`);
-        const data = await res.json();
-        if (data.variants) setProductVariants(prev => ({ ...prev, [handle]: data.variants }));
-      } catch {}
-    });
-  }, [cart?.lines.length]);
 
   return (
     <>
@@ -161,199 +143,169 @@ export default function CartModal() {
                 const progress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
                 const hasFreeShipping = remaining === 0;
 
-                const hasOneMonth = cart.lines.some(l => l.merchandise.title?.includes("1 Month"));
-                const hasTwoMonths = cart.lines.some(l => l.merchandise.title?.includes("2 Month") && !l.merchandise.title?.includes("3"));
-                const showUpgradeNudge = hasOneMonth || hasTwoMonths;
-                const upgradeSaving = hasOneMonth ? 18 : 6;
-
                 return (
-                <div className="flex h-full flex-col overflow-hidden">
+                  <div className="flex h-full flex-col overflow-hidden">
 
-                  {/* Free shipping banner */}
-                  <div className={`px-6 py-3 text-center text-xs font-semibold ${hasFreeShipping ? "bg-[#E8F5E9] text-green-800" : "bg-[#EDE9F8] text-[#5A3493]"}`}>
-                    {hasFreeShipping ? (
-                      <span className="font-bold">🎉 Congrats, you&apos;ve unlocked <span className="underline">Free Shipping!</span></span>
-                    ) : (
-                      <span>Add <strong>${remaining.toFixed(2)}</strong> more for <strong>Free Shipping</strong></span>
-                    )}
-                    <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#5A3493]/15">
-                      <div className="h-full rounded-full bg-[#5A3493] transition-all duration-500" style={{ width: `${progress}%` }} />
-                    </div>
-                  </div>
-
-                  {/* Scrollable area */}
-                  <div className="flex-1 overflow-y-auto">
-
-                    {/* Upgrade nudge */}
-                    {showUpgradeNudge && (
-                      <div className="mx-4 mt-4 flex items-center justify-between gap-3 rounded-[10px] border border-[#5A3493]/20 bg-[#EDE9F8] px-4 py-3">
-                        <div>
-                          <p className="text-xs font-bold text-[#5A3493]">Save ${upgradeSaving} — upgrade to 3 Months</p>
-                          <p className="text-[10px] text-[#5A3493]/70">Ships free every 3 months · Cancel anytime</p>
-                        </div>
-                        <Link
-                          href="/products/focus-without-caffeine"
-                          onClick={closeCart}
-                          className="shrink-0 rounded-full bg-[#5A3493] px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-white"
-                        >
-                          Upgrade
-                        </Link>
+                    {/* Free shipping banner — always light purple */}
+                    <div className="bg-[#EDE9F8] px-6 py-3 text-center text-xs font-semibold text-[#5A3493]">
+                      {hasFreeShipping ? (
+                        <span className="font-bold">🎉 You&apos;ve unlocked <span className="underline">Free Shipping!</span></span>
+                      ) : (
+                        <span>Add <strong>${remaining.toFixed(2)}</strong> more for <strong>Free Shipping</strong></span>
+                      )}
+                      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#5A3493]/15">
+                        <div className="h-full rounded-full bg-[#5A3493] transition-all duration-500" style={{ width: `${progress}%` }} />
                       </div>
-                    )}
-
-                    {/* Items */}
-                    <ul className="px-4 py-2">
-                      {cart.lines
-                        .sort((a, b) =>
-                          a.merchandise.product.title.localeCompare(b.merchandise.product.title)
-                        )
-                        .map((item, i) => {
-                          const params = {} as MerchandiseSearchParams;
-                          item.merchandise.selectedOptions.forEach(({ name, value }) => {
-                            if (value !== DEFAULT_OPTION) params[name.toLowerCase()] = value;
-                          });
-                          const url = createUrl(
-                            `/products/${item.merchandise.product.handle}`,
-                            new URLSearchParams(params)
-                          );
-                          return (
-                            <li key={i} className="border-b border-gray-100 py-4">
-                              <div className="flex gap-3">
-                                {/* Image */}
-                                <Link href={url} onClick={closeCart} className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-[10px] bg-[#EDE9F8]">
-                                  <Image
-                                    className="h-full w-full object-cover"
-                                    width={80}
-                                    height={80}
-                                    alt={item.merchandise.product.featuredImage?.altText || item.merchandise.product.title}
-                                    src={item.merchandise.product.featuredImage?.url}
-                                  />
-                                </Link>
-
-                                {/* Details */}
-                                <div className="flex flex-1 flex-col gap-1">
-                                  <div className="flex items-start justify-between gap-2">
-                                    <Link href={url} onClick={closeCart}>
-                                      <p className="text-sm font-bold leading-tight text-gray-900">
-                                        {item.merchandise.product.title}
-                                      </p>
-                                      {item.merchandise.title !== DEFAULT_OPTION && (
-                                        <p className="mt-0.5 text-xs text-gray-500">{item.merchandise.title}</p>
-                                      )}
-                                    </Link>
-                                    <DeleteItemButton item={item} optimisticUpdate={updateCartItem} />
-                                  </div>
-
-                                  <div className="mt-auto flex items-center justify-between pt-2">
-                                    {/* Quantity stepper */}
-                                    <div className="flex items-center gap-0 rounded-full border-2 border-[#5A3493] overflow-hidden">
-                                      <EditItemQuantityButton item={item} type="minus" optimisticUpdate={updateCartItem} />
-                                      <span className="w-8 text-center text-sm font-bold text-[#5A3493]">{item.quantity}</span>
-                                      <EditItemQuantityButton item={item} type="plus" optimisticUpdate={updateCartItem} />
-                                    </div>
-                                    <Price
-                                      className="text-base font-bold text-gray-900"
-                                      amount={item.cost.totalAmount.amount}
-                                      currencyCode={item.cost.totalAmount.currencyCode}
-                                    />
-                                  </div>
-
-                                  {/* Duration tier switcher + frequency dropdown */}
-                                  {(() => {
-                                    const durationOpt = item.merchandise.selectedOptions.find(o => o.name === "Duration");
-                                    const variants = productVariants[item.merchandise.product.handle];
-                                    if (!durationOpt || !variants) return null;
-                                    return (
-                                      <div className="mt-3 space-y-2">
-                                        {/* Tier buttons */}
-                                        <div className="grid grid-cols-3 gap-1.5">
-                                          {DURATION_TIERS.map((tier) => {
-                                            const isSelected = durationOpt.value === tier.label;
-                                            const targetVariant = variants.find(v =>
-                                              v.selectedOptions.some(o => o.name === "Duration" && o.value === tier.label)
-                                            );
-                                            return (
-                                              <button
-                                                key={tier.label}
-                                                disabled={isSelected || swapping}
-                                                onClick={() => {
-                                                  if (!targetVariant) return;
-                                                  startSwapTransition(async () => {
-                                                    await removeItem(null, item.merchandise.id);
-                                                    await addItem(null, targetVariant.id);
-                                                  });
-                                                }}
-                                                className={`rounded-[8px] px-1 py-2.5 text-center transition-all disabled:cursor-default ${
-                                                  isSelected
-                                                    ? "bg-[#5A3493] text-white shadow-sm"
-                                                    : tier.best
-                                                    ? "border-2 border-[#5A3493] bg-white text-[#5A3493] hover:bg-[#EDE9F8]"
-                                                    : "border border-gray-200 bg-white text-gray-600 hover:border-[#5A3493]/40"
-                                                }`}
-                                              >
-                                                <span className="block text-[10px] font-extrabold uppercase tracking-wide">{tier.display}</span>
-                                                <span className={`mt-0.5 block text-[9px] font-semibold ${isSelected ? "text-white/80" : tier.best ? "text-[#5A3493]" : "text-gray-400"}`}>{tier.saving}</span>
-                                              </button>
-                                            );
-                                          })}
-                                        </div>
-
-                                        {/* Subscription frequency dropdown */}
-                                        <FrequencyDropdown />
-                                      </div>
-                                    );
-                                  })()}
-                                </div>
-                              </div>
-                            </li>
-                          );
-                        })}
-                    </ul>
-                  </div>
-
-                  {/* Sticky footer */}
-                  <div className="bg-[#5A3493] px-6 pb-6 pt-4">
-                    {/* Scrolling trust ticker */}
-                    {(() => {
-                      const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
-                      const items = [
-                        { icon: `${CDN}icon-return.svg`,    label: "30-Day Money Back Guarantee" },
-                        { icon: `${CDN}icon-truck.svg`,     label: "Ships Within 1 Business Day" },
-                        { icon: `${CDN}icon-check-tag.svg`, label: "Cancel Anytime" },
-                        { icon: `${CDN}icon-lock.svg`,      label: "Secure Checkout" },
-                      ];
-                      const doubled = [...items, ...items];
-                      return (
-                        <div className="mb-4 overflow-hidden border-b border-white/20 pb-4">
-                          <div className="animate-marquee" style={{ animationDuration: "20s" }}>
-                            {doubled.map((item, i) => (
-                              <span key={i} className="flex shrink-0 items-center gap-2 px-5 text-[10px] font-bold uppercase tracking-widest text-white/80">
-                                <img src={item.icon} alt="" className="h-4 w-4 shrink-0" style={{ filter: "brightness(0) invert(1)" }} />
-                                {item.label}
-                                <span className="ml-3 text-white/30">·</span>
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                    })()}
-
-                    {/* Subtotal row */}
-                    <div className="mb-3 flex items-center justify-between">
-                      <span className="text-sm font-semibold text-white/80">Subtotal</span>
-                      <Price
-                        className="text-xl font-bold text-white"
-                        amount={cart.cost.totalAmount.amount}
-                        currencyCode={cart.cost.totalAmount.currencyCode}
-                      />
                     </div>
 
-                    <form action={redirectToCheckout}>
-                      <CheckoutButton />
-                    </form>
-                    <p className="mt-2 text-center text-[10px] text-white/50">Taxes & shipping calculated at checkout</p>
+                    {/* Scrollable area */}
+                    <div className="flex-1 overflow-y-auto">
+                      <ul className="divide-y divide-gray-100 px-5">
+                        {cart.lines
+                          .sort((a, b) =>
+                            a.merchandise.product.title.localeCompare(b.merchandise.product.title)
+                          )
+                          .map((item, i) => {
+                            const params = {} as MerchandiseSearchParams;
+                            item.merchandise.selectedOptions.forEach(({ name, value }) => {
+                              if (value !== DEFAULT_OPTION) params[name.toLowerCase()] = value;
+                            });
+                            const url = createUrl(
+                              `/products/${item.merchandise.product.handle}`,
+                              new URLSearchParams(params)
+                            );
+                            return (
+                              <li key={i} className="py-5">
+                                {/* Row 1: image + name/variant + remove */}
+                                <div className="flex gap-4">
+                                  <Link href={url} onClick={closeCart} className="h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-[10px] bg-[#EDE9F8]">
+                                    <Image
+                                      className="h-full w-full object-cover"
+                                      width={72}
+                                      height={72}
+                                      alt={item.merchandise.product.featuredImage?.altText || item.merchandise.product.title}
+                                      src={item.merchandise.product.featuredImage?.url}
+                                    />
+                                  </Link>
+
+                                  <div className="flex flex-1 flex-col">
+                                    {/* Name + Remove */}
+                                    <div className="flex items-start justify-between gap-2">
+                                      <div>
+                                        <p className="text-sm font-bold leading-tight text-gray-900">
+                                          {item.merchandise.product.title}
+                                        </p>
+                                        {item.merchandise.title !== DEFAULT_OPTION && (
+                                          <p className="mt-0.5 text-xs text-gray-400">{item.merchandise.title}</p>
+                                        )}
+                                      </div>
+                                      <DeleteItemButton item={item} optimisticUpdate={updateCartItem} />
+                                    </div>
+
+                                    {/* Qty stepper + price */}
+                                    <div className="mt-3 flex items-center justify-between">
+                                      <div className="flex items-center overflow-hidden rounded-full border-2 border-[#5A3493]">
+                                        <EditItemQuantityButton item={item} type="minus" optimisticUpdate={updateCartItem} />
+                                        <span className="w-8 text-center text-sm font-bold text-[#5A3493]">{item.quantity}</span>
+                                        <EditItemQuantityButton item={item} type="plus" optimisticUpdate={updateCartItem} />
+                                      </div>
+                                      <Price
+                                        className="text-base font-bold text-gray-900"
+                                        amount={item.cost.totalAmount.amount}
+                                        currencyCode={item.cost.totalAmount.currencyCode}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Row 2: Qty tier buttons */}
+                                <div className="mt-3 grid grid-cols-3 gap-2">
+                                  {QTY_TIERS.map((tier) => {
+                                    const isSelected = item.quantity === tier.qty;
+                                    return (
+                                      <button
+                                        key={tier.qty}
+                                        type="button"
+                                        disabled={isSelected || qtyChanging}
+                                        onClick={() => {
+                                          startQtyTransition(async () => {
+                                            await updateItemQuantity(null, {
+                                              merchandiseId: item.merchandise.id,
+                                              quantity: tier.qty,
+                                            });
+                                          });
+                                        }}
+                                        className={`rounded-[10px] py-2.5 text-center transition-all disabled:cursor-default ${
+                                          isSelected
+                                            ? "bg-[#5A3493] text-white"
+                                            : tier.best
+                                            ? "border-2 border-[#5A3493] bg-white text-[#5A3493] hover:bg-[#EDE9F8]"
+                                            : "border border-gray-200 bg-white text-gray-600 hover:border-[#5A3493]/40"
+                                        }`}
+                                      >
+                                        <span className="block text-[10px] font-extrabold uppercase tracking-wide leading-none">
+                                          {tier.display}
+                                        </span>
+                                        <span className={`mt-1 block text-[9px] font-semibold leading-none ${
+                                          isSelected ? "text-white/75" : tier.best ? "text-[#5A3493]" : "text-gray-400"
+                                        }`}>
+                                          {tier.saving}
+                                        </span>
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+
+                                {/* Row 3: Subscription frequency dropdown */}
+                                <div className="mt-2">
+                                  <FrequencyDropdown />
+                                </div>
+                              </li>
+                            );
+                          })}
+                      </ul>
+                    </div>
+
+                    {/* Sticky footer */}
+                    <div className="bg-[#5A3493] px-6 pb-6 pt-4">
+                      {/* Scrolling trust ticker */}
+                      <div className="mb-4 overflow-hidden border-b border-white/20 pb-4">
+                        <div className="animate-marquee" style={{ animationDuration: "20s" }}>
+                          {[
+                            { icon: `${CDN}icon-return.svg`,    label: "30-Day Money Back Guarantee" },
+                            { icon: `${CDN}icon-truck.svg`,     label: "Ships Within 1 Business Day" },
+                            { icon: `${CDN}icon-check-tag.svg`, label: "Cancel Anytime" },
+                            { icon: `${CDN}icon-lock.svg`,      label: "Secure Checkout" },
+                            { icon: `${CDN}icon-return.svg`,    label: "30-Day Money Back Guarantee" },
+                            { icon: `${CDN}icon-truck.svg`,     label: "Ships Within 1 Business Day" },
+                            { icon: `${CDN}icon-check-tag.svg`, label: "Cancel Anytime" },
+                            { icon: `${CDN}icon-lock.svg`,      label: "Secure Checkout" },
+                          ].map((t, i) => (
+                            <span key={i} className="flex shrink-0 items-center gap-2 px-5 text-[10px] font-bold uppercase tracking-widest text-white/80">
+                              <img src={t.icon} alt="" className="h-4 w-4 shrink-0" style={{ filter: "brightness(0) invert(1)" }} />
+                              {t.label}
+                              <span className="ml-3 text-white/30">·</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Subtotal row */}
+                      <div className="mb-3 flex items-center justify-between">
+                        <span className="text-sm font-semibold text-white/80">Subtotal</span>
+                        <Price
+                          className="text-xl font-bold text-white"
+                          amount={cart.cost.totalAmount.amount}
+                          currencyCode={cart.cost.totalAmount.currencyCode}
+                        />
+                      </div>
+
+                      <form action={redirectToCheckout}>
+                        <CheckoutButton />
+                      </form>
+                      <p className="mt-2 text-center text-[10px] text-white/50">Taxes &amp; shipping calculated at checkout</p>
+                    </div>
                   </div>
-                </div>
                 );
               })()}
             </Dialog.Panel>
