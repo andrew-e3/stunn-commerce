@@ -110,66 +110,32 @@ const BENEFITS = [
   {
     label: "Calm Focus",
     desc: "Focus that feels grounded, not wired.",
-    icon: (
-      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M18 28c0 0-8-5-8-13a8 8 0 0 1 16 0c0 8-8 13-8 13z" />
-        <path d="M18 15c-3 0-5 2-5 5" />
-        <path d="M18 15c3 0 5 2 5 5" />
-        <path d="M10 10c-3 1-5 4-5 8" />
-        <path d="M26 10c3 1 5 4 5 8" />
-      </svg>
-    ),
+    icon: <img src={`${CDN}icon-focus.svg`} alt="" className="h-11 w-11" />,
   },
   {
     label: "Steady Energy",
     desc: "Smooth clarity that lasts for hours.",
-    icon: (
-      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 6L13 20h7l-5 10 13-16h-8l5-8z" />
-      </svg>
-    ),
+    icon: <img src={`${CDN}icon-energy.svg`} alt="" className="h-11 w-11" />,
   },
   {
     label: "No Jitters",
     desc: "Clean energy without the overstimulation.",
-    icon: (
-      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round">
-        <path d="M8 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
-        <path d="M8 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
-        <path d="M8 26c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
-      </svg>
-    ),
+    icon: <img src={`${CDN}icon-smile.svg`} alt="" className="h-11 w-11" />,
   },
   {
     label: "No Crash",
     desc: "No afternoon slump or sudden drop-off.",
-    icon: (
-      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M25 13a9 9 0 1 0 1.6 5" />
-        <polyline points="26 8 26 14 20 14" />
-      </svg>
-    ),
+    icon: <img src={`${CDN}icon-return.svg`} alt="" className="h-11 w-11" />,
   },
   {
     label: "Sleep Friendly",
     desc: "Drink it late and still sleep deeply.",
-    icon: (
-      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round">
-        <path d="M27 20a10 10 0 1 1-11-11 7 7 0 0 0 11 11z" />
-        <path d="M24 10l1.5-1.5M27 13l1.5-.5" />
-      </svg>
-    ),
+    icon: <img src={`${CDN}icon-sleep.svg`} alt="" className="h-11 w-11" />,
   },
   {
     label: "Gentle on Stomach",
     desc: "Easier on digestion than traditional coffee.",
-    icon: (
-      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M18 28V16" />
-        <path d="M18 20c0 0-6-4-6-9a6 6 0 0 1 6-3" />
-        <path d="M18 20c0 0 6-4 6-9a6 6 0 0 0-6-3" />
-      </svg>
-    ),
+    icon: <img src={`${CDN}icon-leaf.svg`} alt="" className="h-11 w-11" />,
   },
 ];
 
@@ -239,11 +205,13 @@ export default async function ProductPage(props: {
                 {/* Bottom-left pills */}
                 <div className="absolute bottom-5 left-4 flex flex-col gap-2">
                   {[
-                    { label: "Calm Focus",  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#5A3493" stroke="none"/></svg> },
-                    { label: "No Jitters",  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="9" r="1" fill="#5A3493" stroke="none"/><circle cx="15" cy="9" r="1" fill="#5A3493" stroke="none"/></svg> },
+                    { label: "Calm Focus",  icon: `${CDN}icon-focus.svg` },
+                    { label: "No Jitters",  icon: `${CDN}icon-smile.svg` },
                   ].map((b) => (
                     <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
-                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">{b.icon}</div>
+                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
+                        <img src={b.icon} alt="" className="h-4 w-4" />
+                      </div>
                       <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">{b.label}</span>
                     </div>
                   ))}
@@ -251,11 +219,13 @@ export default async function ProductPage(props: {
                 {/* Bottom-right pills */}
                 <div className="absolute bottom-5 right-4 flex flex-col items-end gap-2">
                   {[
-                    { label: "Steady Energy",  icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="#5A3493"><path d="M13 2L4.5 13.5H11L9 22L19.5 10.5H13L13 2Z"/></svg> },
-                    { label: "Sleep Friendly", icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2.2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> },
+                    { label: "Steady Energy",  icon: `${CDN}icon-energy.svg` },
+                    { label: "Sleep Friendly", icon: `${CDN}icon-sleep.svg` },
                   ].map((b) => (
                     <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
-                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">{b.icon}</div>
+                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
+                        <img src={b.icon} alt="" className="h-4 w-4" />
+                      </div>
                       <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">{b.label}</span>
                     </div>
                   ))}

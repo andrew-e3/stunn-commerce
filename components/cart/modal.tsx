@@ -235,26 +235,29 @@ export default function CartModal() {
                   {/* Sticky footer */}
                   <div className="bg-[#5A3493] px-6 pb-6 pt-4">
                     {/* Scrolling trust ticker */}
-                    <div className="mb-4 overflow-hidden border-b border-white/20 pb-4">
-                      <div className="animate-marquee gap-0" style={{ animationDuration: "18s" }}>
-                        {[
-                          { icon: "✓", label: "30-Day Money Back Guarantee" },
-                          { icon: "🚚", label: "Ships Within 1 Business Day" },
-                          { icon: "✓", label: "Cancel Anytime" },
-                          { icon: "🔒", label: "Secure Checkout" },
-                          { icon: "✓", label: "30-Day Money Back Guarantee" },
-                          { icon: "🚚", label: "Ships Within 1 Business Day" },
-                          { icon: "✓", label: "Cancel Anytime" },
-                          { icon: "🔒", label: "Secure Checkout" },
-                        ].map((item, i) => (
-                          <span key={i} className="flex shrink-0 items-center gap-1.5 px-5 text-[10px] font-bold uppercase tracking-widest text-white/80">
-                            <span className="text-white/60">{item.icon}</span>
-                            {item.label}
-                            <span className="ml-4 text-white/30">·</span>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    {(() => {
+                      const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
+                      const items = [
+                        { icon: `${CDN}icon-return.svg`,    label: "30-Day Money Back Guarantee" },
+                        { icon: `${CDN}icon-truck.svg`,     label: "Ships Within 1 Business Day" },
+                        { icon: `${CDN}icon-check-tag.svg`, label: "Cancel Anytime" },
+                        { icon: `${CDN}icon-lock.svg`,      label: "Secure Checkout" },
+                      ];
+                      const doubled = [...items, ...items];
+                      return (
+                        <div className="mb-4 overflow-hidden border-b border-white/20 pb-4">
+                          <div className="animate-marquee" style={{ animationDuration: "20s" }}>
+                            {doubled.map((item, i) => (
+                              <span key={i} className="flex shrink-0 items-center gap-2 px-5 text-[10px] font-bold uppercase tracking-widest text-white/80">
+                                <img src={item.icon} alt="" className="h-4 w-4 shrink-0" style={{ filter: "brightness(0) invert(1)" }} />
+                                {item.label}
+                                <span className="ml-3 text-white/30">·</span>
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })()}
 
                     {/* Subtotal row */}
                     <div className="mb-3 flex items-center justify-between">
