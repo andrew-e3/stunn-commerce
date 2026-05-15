@@ -462,6 +462,7 @@ export default async function ProductPage(props: {
                 copy: "Deep, restorative sleep — wake up reset and truly refreshed.",
                 img: `${CDN}img-stunn-coffee-and-bread-background-desktop.webp`,
                 alt: "A calm morning coffee ritual with STUNN",
+                objectPosition: "left bottom",
               },
             ].map((step) => (
               <div key={step.time} className="flex flex-col">
@@ -471,6 +472,9 @@ export default async function ProductPage(props: {
                     alt={step.alt}
                     fill
                     className="object-cover object-top"
+                    style={{
+                      objectPosition: step.objectPosition || "center top",
+                    }}
                   />
                 </div>
                 <div className="pt-6">
