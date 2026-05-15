@@ -70,8 +70,22 @@ export function ImageGallery({
         )}
       </button>
 
-      {/* 2-col mosaic */}
-      <div className="grid grid-cols-2">
+      {/* Mobile thumbnail rail: keeps the buying section close to the first viewport. */}
+      <div className="flex gap-2 overflow-x-auto border-b border-black/10 bg-white px-4 py-3 lg:hidden">
+        {images.slice(1).map((img, i) => (
+          <button
+            key={img.src}
+            onClick={() => open(i + 1)}
+            className="relative h-20 w-20 shrink-0 cursor-zoom-in overflow-hidden rounded-[8px] bg-[#EDE9F8]"
+            aria-label={`View image: ${img.alt}`}
+          >
+            <Image src={img.src} alt={img.alt} fill className="object-cover" />
+          </button>
+        ))}
+      </div>
+
+      {/* Desktop 2-col mosaic */}
+      <div className="hidden grid-cols-2 lg:grid">
         {images.slice(1).map((img, i) => (
           <button
             key={img.src}

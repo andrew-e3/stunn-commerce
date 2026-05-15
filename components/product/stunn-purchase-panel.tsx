@@ -131,7 +131,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
     product.variants[0];
 
   return (
-    <div className="px-6 py-8 lg:px-10">
+    <div className="px-6 py-6 pb-28 lg:px-10 lg:py-8">
       {/* Stars */}
       <div className="mb-4 flex w-full items-center gap-3">
         <div className="flex min-w-0 items-center gap-2">
@@ -159,14 +159,14 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Title */}
-      <h1 className="mb-2 flex flex-wrap items-start gap-x-2 font-[family-name:var(--font-anton)] text-[clamp(3.4rem,5vw,5.8rem)] uppercase leading-[0.86] tracking-normal text-[#111111]">
+      <h1 className="mb-2 flex flex-wrap items-start gap-x-2 font-[family-name:var(--font-anton)] text-[clamp(3rem,12vw,5.8rem)] uppercase leading-[0.86] tracking-normal text-[#111111]">
         <span>Decaf Coffee</span>
-        <span className="relative -top-1 inline-flex text-[#7C3AED]">
+        <span className="relative -top-1 inline-flex text-[0.7em] text-[#7C3AED]">
           <span>+</span>
           <span className="-ml-1">−</span>
         </span>
       </h1>
-      <p className="mb-5 max-w-lg text-lg font-medium leading-snug text-[#111111]/75">
+      <p className="mb-5 max-w-lg text-base font-medium leading-snug text-[#111111]/75 lg:text-lg">
         Quit caffeine. Keep the edge. Everything you love about coffee. None of
         what you don&apos;t: no jitters, no crash, no dependency.
       </p>
@@ -206,7 +206,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       <p className="mb-3 text-sm font-extrabold text-[#111111]">
         1. Select Your Size:
       </p>
-      <div className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
+      <div className="mb-5 grid grid-cols-3 gap-2">
         {SUPPLY_TIERS.map((v) => {
           const isSelected = selectedQty === v.qty;
           return (
@@ -228,16 +228,16 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               <img
                 src={v.boxImg}
                 alt={`${v.qty} box supply`}
-                className="h-14 w-14 shrink-0 object-contain"
+                className="h-10 w-10 shrink-0 object-contain sm:h-14 sm:w-14"
               />
               <div className="min-w-0">
-                <span className="block text-sm font-extrabold leading-tight text-[#111111]">
+                <span className="block text-xs font-extrabold leading-tight text-[#111111] sm:text-sm">
                   {v.label}
                 </span>
-                <span className="block text-[11px] leading-tight text-[#111111]/55">
+                <span className="block text-[10px] leading-tight text-[#111111]/55 sm:text-[11px]">
                   {v.count} Count
                 </span>
-                <span className="mt-0.5 block text-[11px] font-medium leading-tight text-[#111111]/55">
+                <span className="mt-0.5 block text-[10px] font-medium leading-tight text-[#111111]/55 sm:text-[11px]">
                   ($
                   {perDay(
                     priceAfterDiscount(v.retailPrice, v.subDiscountPct),

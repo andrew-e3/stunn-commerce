@@ -40,23 +40,32 @@ export function StickyAtc({ product }: { product: Product }) {
   );
 
   useEffect(() => {
+    const isMobile = () => window.matchMedia("(max-width: 1023px)").matches;
+    const onScroll = () => {
+      if (isMobile()) setIsVisible(window.scrollY > 520);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     const purchase = document.getElementById("purchase");
     if (!purchase) {
-      const onScroll = () => setIsVisible(window.scrollY > 700);
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
       return () => window.removeEventListener("scroll", onScroll);
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(!entry?.isIntersecting && window.scrollY > 260);
+        if (!isMobile()) {
+          setIsVisible(!entry?.isIntersecting && window.scrollY > 260);
+        }
       },
       { threshold: 0.08 },
     );
 
     observer.observe(purchase);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   const addBestValue = () => {
@@ -76,7 +85,7 @@ export function StickyAtc({ product }: { product: Product }) {
       }`}
       aria-hidden={!isVisible}
     >
-      <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 py-2.5 lg:px-8 lg:py-3">
         <div className="hidden items-center gap-3 sm:flex">
           <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[8px] bg-[#EDE9F8]">
             <Image
@@ -104,18 +113,18 @@ export function StickyAtc({ product }: { product: Product }) {
 
         <div className="min-w-0 flex-1 lg:text-right">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 lg:justify-end">
-            <span className="text-sm font-extrabold text-[#111111]">
+            <span className="text-xs font-extrabold text-[#111111] sm:text-sm">
               Autoship
             </span>
             <span className="rounded-full bg-[#7C3AED] px-2 py-1 text-[10px] font-extrabold uppercase leading-none text-white">
               Save {SUBSCRIPTION_DISCOUNT_PCT}%
             </span>
             <span className="text-sm text-[#111111]/35 line-through">$120</span>
-            <span className="text-lg font-extrabold leading-none text-[#111111]">
+            <span className="text-base font-extrabold leading-none text-[#111111] sm:text-lg">
               ${SUBSCRIPTION_PRICE}
             </span>
           </div>
-          <p className="mt-1 truncate text-xs text-[#111111]/60">
+          <p className="mt-1 truncate text-[11px] text-[#111111]/60 sm:text-xs">
             3 boxes every 3 months · ${SUBSCRIPTION_PER_DAY}/day · free shipping
           </p>
         </div>
@@ -124,7 +133,7 @@ export function StickyAtc({ product }: { product: Product }) {
           type="button"
           disabled={!oneBoxVariant || pending}
           onClick={addBestValue}
-          className="shrink-0 rounded-[8px] bg-[#7C3AED] px-5 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_0_#5B21B6] transition-all hover:translate-y-[1px] hover:bg-[#6D28D9] hover:shadow-[0_3px_0_0_#5B21B6] active:translate-y-[3px] active:shadow-none disabled:opacity-50 sm:px-8 lg:min-w-[190px] lg:text-sm"
+          className="shrink-0 rounded-[8px] bg-[#7C3AED] px-4 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_0_#5B21B6] transition-all hover:translate-y-[1px] hover:bg-[#6D28D9] hover:shadow-[0_3px_0_0_#5B21B6] active:translate-y-[3px] active:shadow-none disabled:opacity-50 sm:px-8 lg:min-w-[190px] lg:text-sm"
         >
           {pending ? "Adding..." : "Add to cart"}
         </button>
