@@ -22,7 +22,17 @@ export async function addItem(
   }
 
   try {
-    await addToCart([{ merchandiseId: selectedVariantId, quantity }]);
+    const cart = await getCart();
+
+    if (!cart) {
+      const newCart = await createCart([
+        { merchandiseId: selectedVariantId, quantity },
+      ]);
+      (await cookies()).set("cartId", newCart.id!);
+    } else {
+      await addToCart([{ merchandiseId: selectedVariantId, quantity }]);
+    }
+
     updateTag(TAGS.cart);
   } catch (e) {
     return "Error adding item to cart";
