@@ -8,15 +8,22 @@ import { DEFAULT_OPTION } from "lib/constants";
 import { createUrl } from "lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
-import { createCartAndSetCookie, redirectToCheckout } from "./actions";
+import { addItem, createCartAndSetCookie, redirectToCheckout, removeItem } from "./actions";
 import { useCart } from "./cart-context";
 import { DeleteItemButton } from "./delete-item-button";
 import { EditItemQuantityButton } from "./edit-item-quantity-button";
 import OpenCart from "./open-cart";
 
 type MerchandiseSearchParams = { [key: string]: string };
+type VariantInfo = { id: string; title: string; selectedOptions: { name: string; value: string }[] };
+
+const DURATION_TIERS = [
+  { label: "1 Month",  perDay: "$1.22/day" },
+  { label: "2 Months", perDay: "$1.19/day" },
+  { label: "3 Months", perDay: "$1.13/day" },
+];
 
 function EmptyBox() {
   return (
@@ -39,6 +46,8 @@ export default function CartModal() {
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
+  const [productVariants, setProductVariants] = useState<Record<string, VariantInfo[]>>({});
+  const [swapping, startSwapTransition] = useTransition();
 
   useEffect(() => {
     if (!cart) createCartAndSetCookie();
@@ -54,6 +63,24 @@ export default function CartModal() {
       quantityRef.current = cart?.totalQuantity;
     }
   }, [isOpen, cart?.totalQuantity, quantityRef]);
+
+  // Fetch variant info for products in cart that have a Duration option
+  useEffect(() => {
+    if (!cart || cart.lines.length === 0) return;
+    const handles = [...new Set(
+      cart.lines
+        .filter(l => l.merchandise.selectedOptions.some(o => o.name === "Duration"))
+        .map(l => l.merchandise.product.handle)
+    )];
+    handles.forEach(async (handle) => {
+      if (productVariants[handle]) return;
+      try {
+        const res = await fetch(`/api/product-variants?handle=${handle}`);
+        const data = await res.json();
+        if (data.variants) setProductVariants(prev => ({ ...prev, [handle]: data.variants }));
+      } catch {}
+    });
+  }, [cart?.lines.length]);
 
   return (
     <>
@@ -224,6 +251,44 @@ export default function CartModal() {
                                       currencyCode={item.cost.totalAmount.currencyCode}
                                     />
                                   </div>
+
+                                  {/* Duration tier switcher */}
+                                  {(() => {
+                                    const durationOpt = item.merchandise.selectedOptions.find(o => o.name === "Duration");
+                                    const variants = productVariants[item.merchandise.product.handle];
+                                    if (!durationOpt || !variants) return null;
+                                    return (
+                                      <div className="mt-3 grid grid-cols-3 gap-1.5">
+                                        {DURATION_TIERS.map((tier) => {
+                                          const isSelected = durationOpt.value === tier.label;
+                                          const targetVariant = variants.find(v =>
+                                            v.selectedOptions.some(o => o.name === "Duration" && o.value === tier.label)
+                                          );
+                                          return (
+                                            <button
+                                              key={tier.label}
+                                              disabled={isSelected || swapping}
+                                              onClick={() => {
+                                                if (!targetVariant) return;
+                                                startSwapTransition(async () => {
+                                                  await removeItem(null, item.merchandise.id);
+                                                  await addItem(null, targetVariant.id);
+                                                });
+                                              }}
+                                              className={`rounded-[8px] px-1 py-2 text-center transition-all disabled:cursor-default ${
+                                                isSelected
+                                                  ? "bg-[#5A3493] text-white"
+                                                  : "border border-gray-200 bg-white text-gray-700 hover:border-[#5A3493]/40 hover:bg-[#EDE9F8]"
+                                              }`}
+                                            >
+                                              <span className="block text-[10px] font-bold uppercase tracking-wide">{tier.label}</span>
+                                              <span className={`block text-[9px] ${isSelected ? "text-white/70" : "text-gray-400"}`}>{tier.perDay}</span>
+                                            </button>
+                                          );
+                                        })}
+                                      </div>
+                                    );
+                                  })()}
                                 </div>
                               </div>
                             </li>
