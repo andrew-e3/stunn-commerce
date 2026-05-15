@@ -234,18 +234,26 @@ export default function CartModal() {
 
                   {/* Sticky footer */}
                   <div className="bg-[#5A3493] px-6 pb-6 pt-4">
-                    {/* Trust strip */}
-                    <div className="mb-4 flex items-center justify-between border-b border-white/20 pb-4">
-                      {[
-                        { icon: "🚚", label: "Ships in 1 Business Day" },
-                        { icon: "↩️", label: "30-Day Money Back" },
-                        { icon: "✕", label: "Cancel Anytime" },
-                      ].map((b) => (
-                        <div key={b.label} className="flex flex-col items-center gap-0.5 text-center">
-                          <span className="text-sm">{b.icon}</span>
-                          <span className="text-[9px] font-semibold uppercase tracking-wide text-white/70">{b.label}</span>
-                        </div>
-                      ))}
+                    {/* Scrolling trust ticker */}
+                    <div className="mb-4 overflow-hidden border-b border-white/20 pb-4">
+                      <div className="animate-marquee gap-0" style={{ animationDuration: "18s" }}>
+                        {[
+                          { icon: "✓", label: "30-Day Money Back Guarantee" },
+                          { icon: "🚚", label: "Ships Within 1 Business Day" },
+                          { icon: "✓", label: "Cancel Anytime" },
+                          { icon: "🔒", label: "Secure Checkout" },
+                          { icon: "✓", label: "30-Day Money Back Guarantee" },
+                          { icon: "🚚", label: "Ships Within 1 Business Day" },
+                          { icon: "✓", label: "Cancel Anytime" },
+                          { icon: "🔒", label: "Secure Checkout" },
+                        ].map((item, i) => (
+                          <span key={i} className="flex shrink-0 items-center gap-1.5 px-5 text-[10px] font-bold uppercase tracking-widest text-white/80">
+                            <span className="text-white/60">{item.icon}</span>
+                            {item.label}
+                            <span className="ml-4 text-white/30">·</span>
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
                     {/* Subtotal row */}

@@ -111,7 +111,7 @@ const BENEFITS = [
     label: "Calm Focus",
     desc: "Focus that feels grounded, not wired.",
     icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M18 28c0 0-8-5-8-13a8 8 0 0 1 16 0c0 8-8 13-8 13z" />
         <path d="M18 15c-3 0-5 2-5 5" />
         <path d="M18 15c3 0 5 2 5 5" />
@@ -124,7 +124,7 @@ const BENEFITS = [
     label: "Steady Energy",
     desc: "Smooth clarity that lasts for hours.",
     icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 6L13 20h7l-5 10 13-16h-8l5-8z" />
       </svg>
     ),
@@ -133,7 +133,7 @@ const BENEFITS = [
     label: "No Jitters",
     desc: "Clean energy without the overstimulation.",
     icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round">
+      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round">
         <path d="M8 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
         <path d="M8 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
         <path d="M8 26c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
@@ -144,7 +144,7 @@ const BENEFITS = [
     label: "No Crash",
     desc: "No afternoon slump or sudden drop-off.",
     icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M25 13a9 9 0 1 0 1.6 5" />
         <polyline points="26 8 26 14 20 14" />
       </svg>
@@ -154,7 +154,7 @@ const BENEFITS = [
     label: "Sleep Friendly",
     desc: "Drink it late and still sleep deeply.",
     icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round">
+      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round">
         <path d="M27 20a10 10 0 1 1-11-11 7 7 0 0 0 11 11z" />
         <path d="M24 10l1.5-1.5M27 13l1.5-.5" />
       </svg>
@@ -164,7 +164,7 @@ const BENEFITS = [
     label: "Gentle on Stomach",
     desc: "Easier on digestion than traditional coffee.",
     icon: (
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="44" height="44" viewBox="0 0 36 36" fill="none" stroke="#5A3493" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M18 28V16" />
         <path d="M18 20c0 0-6-4-6-9a6 6 0 0 1 6-3" />
         <path d="M18 20c0 0 6-4 6-9a6 6 0 0 0-6-3" />
@@ -274,29 +274,24 @@ export default async function ProductPage(props: {
       </div>
 
       {/* ── BENEFITS GRID ── */}
-      <section className="bg-[#EDE9F8] py-16">
+      <section className="bg-[#EEEAF8] py-16">
         <div className="mx-auto max-w-5xl px-6 lg:px-8">
-          <p className="mb-8 text-center text-xs font-bold uppercase tracking-widest text-[#5A3493]/60">
+          <p className="mb-8 text-center text-xs font-bold uppercase tracking-widest text-[#5A3493]/50">
             What you get with every cup
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 border border-[#5A3493]/15 rounded-[16px] overflow-hidden">
-            {BENEFITS.map((b, i) => (
-              <div
-                key={b.label}
-                className={`flex flex-col items-center bg-[#EDE9F8] px-6 py-10 text-center
-                  ${i % 3 !== 2 ? "md:border-r border-[#5A3493]/15" : ""}
-                  ${i % 2 !== 1 ? "border-r md:border-r-0 border-[#5A3493]/15" : ""}
-                  ${i < 3 ? "border-b border-[#5A3493]/15" : ""}
-                `}
-              >
-                <div className="mb-4">{b.icon}</div>
-                <p className="mb-2 font-[family-name:var(--font-anton)] text-[clamp(1.1rem,2vw,1.4rem)] uppercase leading-tight text-[#5A3493]">
-                  {b.label}
-                </p>
-                <div className="mb-3 h-px w-8 bg-[#5A3493]/40" />
-                <p className="text-sm leading-relaxed text-[#5A3493]/70">{b.desc}</p>
-              </div>
-            ))}
+          <div className="overflow-hidden rounded-[16px] border border-[#5A3493]/12">
+            <div className="grid grid-cols-2 divide-x divide-y divide-[#5A3493]/12 md:grid-cols-3">
+              {BENEFITS.map((b) => (
+                <div key={b.label} className="flex flex-col items-center bg-[#EEEAF8] px-6 py-10 text-center">
+                  <div className="mb-5 text-[#5A3493]">{b.icon}</div>
+                  <p className="mb-2 text-[clamp(1rem,1.8vw,1.25rem)] font-extrabold uppercase tracking-wide text-[#5A3493]">
+                    {b.label}
+                  </p>
+                  <div className="mb-3 h-0.5 w-8 rounded-full bg-[#5A3493]/40" />
+                  <p className="text-sm leading-relaxed text-[#5A3493]/65">{b.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
