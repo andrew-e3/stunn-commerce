@@ -160,11 +160,14 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Title */}
-      <h1 className="mb-2 flex flex-wrap items-start gap-x-2 font-[family-name:var(--font-anton)] text-[clamp(3rem,12vw,5.8rem)] uppercase leading-[0.86] tracking-normal text-[#111111]">
-        <span>Decaf Coffee</span>
-        <span className="relative -top-1 inline-flex text-[0.7em] text-[#7C3AED]">
-          <span>+</span>
-          <span className="-ml-1">−</span>
+      <h1 className="mb-2 font-[family-name:var(--font-anton)] text-[clamp(2.35rem,9vw,4.5rem)] uppercase leading-[0.9] tracking-normal text-[#111111]">
+        <span>Decaf </span>
+        <span className="whitespace-nowrap">
+          Coffee
+          <span className="ml-1 inline-flex -translate-y-[0.04em] flex-col items-center justify-center align-top text-[0.46em] leading-[0.58] text-[#7C3AED]">
+            <span>+</span>
+            <span>−</span>
+          </span>
         </span>
       </h1>
       <p className="mb-5 max-w-lg text-base font-medium leading-snug text-[#111111]/75 lg:text-lg">
