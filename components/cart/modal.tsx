@@ -23,7 +23,7 @@ type MerchandiseSearchParams = { [key: string]: string };
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
-const BRAND_PURPLE = "#5A3493";
+const BRAND_PURPLE = "#7C3AED";
 const BRAND_LIGHT_PURPLE = "#EDE9F8";
 
 // Retail price per box (no discount). Discount is applied by Shopify Automatic Discounts.
@@ -81,32 +81,32 @@ function EmptyBox() {
         width="48"
         height="36"
         rx="3"
-        stroke="#5A3493"
+        stroke="#7C3AED"
         strokeWidth="2"
       />
-      <path d="M16 44h48" stroke="#5A3493" strokeWidth="2" />
+      <path d="M16 44h48" stroke="#7C3AED" strokeWidth="2" />
       <path
         d="M32 44v28"
-        stroke="#5A3493"
+        stroke="#7C3AED"
         strokeWidth="1.5"
         strokeDasharray="3 3"
       />
       <path
         d="M48 44v28"
-        stroke="#5A3493"
+        stroke="#7C3AED"
         strokeWidth="1.5"
         strokeDasharray="3 3"
       />
       <path
         d="M28 36V28a12 12 0 0 1 24 0v8"
-        stroke="#5A3493"
+        stroke="#7C3AED"
         strokeWidth="2"
         strokeLinecap="round"
       />
-      <circle cx="40" cy="20" r="3" fill="#5A3493" />
+      <circle cx="40" cy="20" r="3" fill="#7C3AED" />
       <path
         d="M40 8v4M40 28v4M52 16l-3 3M31 29l-3 3M52 24l-3-3M31 11l-3-3"
-        stroke="#5A3493"
+        stroke="#7C3AED"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
@@ -190,13 +190,13 @@ export default function CartModal() {
                 /* ── Empty state ── */
                 <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
                   <EmptyBox />
-                  <p className="mt-6 font-[family-name:var(--font-anton)] text-2xl uppercase text-[#5A3493]">
+                  <p className="mt-6 font-[family-name:var(--font-anton)] text-2xl uppercase text-[#7C3AED]">
                     Your cart is empty
                   </p>
                   <Link
                     href="/products/focus-without-caffeine"
                     onClick={closeCart}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#5A3493] px-8 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#3d1c8f] transition-all hover:translate-y-px hover:shadow-[0_3px_0_0_#3d1c8f]"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#7C3AED] px-8 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#5B21B6] transition-all hover:translate-y-px hover:shadow-[0_3px_0_0_#5B21B6]"
                   >
                     Shop now →
                   </Link>
@@ -233,11 +233,11 @@ export default function CartModal() {
                     <div className="flex h-full flex-col overflow-hidden">
                       {/* ── Free shipping banner ── */}
                       <div
-                        className="px-6 py-4 text-center text-xs font-medium text-[#5A3493]"
+                        className="px-6 py-4 text-center text-xs font-medium text-[#7C3AED]"
                         style={{ backgroundColor: BRAND_LIGHT_PURPLE }}
                       >
                         {cartSavings > 0 && (
-                          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[#5A3493]">
+                          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[#7C3AED]">
                             <span>Estimated savings</span>
                             <span>
                               ${cartSavings.toFixed(2)} / {cartSavePct}% off
@@ -376,7 +376,7 @@ export default function CartModal() {
                                     </div>
                                   </div>
 
-                                  <div className="mt-4 flex items-center justify-between rounded-[5px] border border-[#5A3493]/15 bg-[#EDE9F8] px-3 py-2 text-[#5A3493]">
+                                  <div className="mt-4 flex items-center justify-between rounded-[5px] border border-[#7C3AED]/15 bg-[#EDE9F8] px-3 py-2 text-[#7C3AED]">
                                     <span className="text-[11px] font-bold uppercase tracking-wide">
                                       Buy more, save more
                                     </span>
@@ -407,13 +407,13 @@ export default function CartModal() {
                                           }}
                                           className={`rounded-[5px] border py-3 text-center transition-all disabled:cursor-default ${
                                             isSelected
-                                              ? "border-[#5A3493]/20 bg-[#EDE9F8] text-[#5A3493]"
-                                              : "border-[#5A3493] bg-[#5A3493] text-white hover:bg-[#4A2A78]"
+                                              ? "border-[#7C3AED]/20 bg-[#EDE9F8] text-[#7C3AED]"
+                                              : "border-[#7C3AED] bg-[#7C3AED] text-white hover:bg-[#6D28D9]"
                                           }`}
                                           style={{
                                             boxShadow:
                                               tier.best && !isSelected
-                                                ? "0 0 0 2px rgba(90,52,147,0.18)"
+                                                ? "0 0 0 2px rgba(124,58,237,0.18)"
                                                 : undefined,
                                           }}
                                         >
@@ -587,7 +587,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between rounded-[5px] border border-[#5A3493] bg-white px-3 py-3 text-left"
+        className="flex w-full items-center justify-between rounded-[5px] border border-[#7C3AED] bg-white px-3 py-3 text-left"
       >
         <span className="text-sm font-extrabold text-[#111111]">
           Delivers {selected.label.toLowerCase()}
@@ -615,7 +615,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
         </div>
       </button>
       {open && (
-        <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[5px] border border-[#5A3493] bg-white shadow-lg">
+        <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[5px] border border-[#7C3AED] bg-white shadow-lg">
           {FREQUENCY_OPTIONS.map((opt) => {
             const pct = Math.max(0, (Number(opt.value) - 1) * 5);
             return (

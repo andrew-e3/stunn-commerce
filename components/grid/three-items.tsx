@@ -63,9 +63,7 @@ export async function ThreeItemGrid() {
       {secondProduct && (
         <ThreeItemGridItem size="half" item={secondProduct} priority={true} />
       )}
-      {thirdProduct && (
-        <ThreeItemGridItem size="half" item={thirdProduct} />
-      )}
+      {thirdProduct && <ThreeItemGridItem size="half" item={thirdProduct} />}
     </section>
   );
 }

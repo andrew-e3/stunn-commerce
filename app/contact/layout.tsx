@@ -5,6 +5,10 @@ export const metadata: Metadata = {
   description: "Get in touch with the STUNN team. We're here to help.",
 };
 
-export default function ContactLayout({ children }: { children: React.ReactNode }) {
+export default function ContactLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <>{children}</>;
 }

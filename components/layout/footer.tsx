@@ -40,11 +40,11 @@ export default function Footer() {
             <input
               type="email"
               placeholder="YOUR EMAIL"
-              className="min-w-0 flex-1 border border-black/20 bg-white px-4 py-3 font-[family-name:var(--font-anton)] text-sm uppercase tracking-wider text-[#111111] placeholder-[#111111]/45 outline-none focus:border-[#5A3493]"
+              className="min-w-0 flex-1 border border-black/20 bg-white px-4 py-3 font-[family-name:var(--font-anton)] text-sm uppercase tracking-wider text-[#111111] placeholder-[#111111]/45 outline-none focus:border-[#7C3AED]"
             />
             <button
               type="submit"
-              className="shrink-0 border border-[#5A3493] bg-[#5A3493] px-5 py-3 font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-white transition-opacity hover:opacity-90"
+              className="shrink-0 border border-[#7C3AED] bg-[#7C3AED] px-5 py-3 font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-white transition-opacity hover:opacity-90"
             >
               SUBMIT
             </button>

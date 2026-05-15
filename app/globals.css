@@ -32,8 +32,12 @@ button {
 }
 
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
@@ -43,5 +47,9 @@ button {
   will-change: transform;
 }
 
-details summary::-webkit-details-marker { display: none; }
-details summary { list-style: none; }
+details summary::-webkit-details-marker {
+  display: none;
+}
+details summary {
+  list-style: none;
+}

@@ -18,7 +18,9 @@ export function ImageGallery({
   const close = () => setLightboxIndex(null);
 
   const prev = useCallback(() => {
-    setLightboxIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length));
+    setLightboxIndex((i) =>
+      i === null ? null : (i - 1 + images.length) % images.length,
+    );
   }, [images.length]);
 
   const next = useCallback(() => {
@@ -40,7 +42,9 @@ export function ImageGallery({
   // Lock body scroll when open
   useEffect(() => {
     document.body.style.overflow = lightboxIndex !== null ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [lightboxIndex]);
 
   return (
@@ -60,7 +64,9 @@ export function ImageGallery({
         />
         {/* Benefit pills or any overlay content */}
         {heroOverlay && (
-          <div className="pointer-events-none absolute inset-0">{heroOverlay}</div>
+          <div className="pointer-events-none absolute inset-0">
+            {heroOverlay}
+          </div>
         )}
       </button>
 
@@ -109,30 +115,65 @@ export function ImageGallery({
             className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20"
             aria-label="Close"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
 
           {/* Prev */}
           {images.length > 1 && (
             <button
-              onClick={(e) => { e.stopPropagation(); prev(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                prev();
+              }}
               className="absolute left-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20"
               aria-label="Previous image"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="15 18 9 12 15 6" /></svg>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
             </button>
           )}
 
           {/* Next */}
           {images.length > 1 && (
             <button
-              onClick={(e) => { e.stopPropagation(); next(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                next();
+              }}
               className="absolute right-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20"
               aria-label="Next image"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="9 18 15 12 9 6" /></svg>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
             </button>
           )}
 
@@ -141,7 +182,10 @@ export function ImageGallery({
             {images.map((_, i) => (
               <button
                 key={i}
-                onClick={(e) => { e.stopPropagation(); setLightboxIndex(i); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex(i);
+                }}
                 className={`h-1.5 rounded-full transition-all ${i === lightboxIndex ? "w-6 bg-white" : "w-1.5 bg-white/40"}`}
                 aria-label={`Go to image ${i + 1}`}
               />

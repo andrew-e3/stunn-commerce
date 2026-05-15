@@ -21,7 +21,7 @@ function CtaBtn({
   const base =
     "inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-bold transition-all";
   const styles = {
-    primary: `${base} bg-[#5A3493] text-white hover:bg-[#4a2a78]`,
+    primary: `${base} bg-[#7C3AED] text-white hover:bg-[#6D28D9]`,
     outline: `${base} border-2 border-white text-white hover:bg-white hover:text-[#111111]`,
     white: `${base} bg-white text-[#111111] hover:bg-white/90`,
   };
@@ -653,7 +653,7 @@ export default function HomePage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#5A3493]/15" />
+          <div className="absolute inset-0 bg-[#7C3AED]/15" />
           <div className="relative flex min-h-[500px] flex-col items-center justify-center px-6 py-16 text-center text-white lg:min-h-[560px]">
             <Tag light>Time to Upgrade Your Coffee</Tag>
             <h2 className="mb-4 font-[family-name:var(--font-anton)] text-[clamp(32px,6vw,64px)] uppercase leading-tight">

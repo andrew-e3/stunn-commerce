@@ -42,7 +42,7 @@ export function Navbar() {
             prefetch={true}
             className={
               item.highlighted
-                ? "rounded-full bg-[#5A3493] px-4 py-2 text-[13px] font-extrabold uppercase tracking-[0.08em] text-white transition-opacity hover:opacity-85"
+                ? "rounded-full bg-[#7C3AED] px-4 py-2 text-[13px] font-extrabold uppercase tracking-[0.08em] text-white transition-opacity hover:opacity-85"
                 : "text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60"
             }
           >

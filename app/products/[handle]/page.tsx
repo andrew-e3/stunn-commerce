@@ -353,7 +353,7 @@ export default async function ProductPage(props: {
                 },
               ].map((step, index) => (
                 <div key={step.title} className="relative pb-9 last:pb-0">
-                  <span className="absolute -left-[34px] top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#5A3493] text-[10px] font-bold text-white">
+                  <span className="absolute -left-[34px] top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#7C3AED] text-[10px] font-bold text-white">
                     {index + 1}
                   </span>
                   <h3 className="mb-2 font-[family-name:var(--font-anton)] text-3xl uppercase leading-none text-[#111111]">
@@ -407,7 +407,7 @@ export default async function ProductPage(props: {
                     height="16"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#5A3493"
+                    stroke="#7C3AED"
                     strokeWidth="2"
                     strokeLinecap="round"
                   >
@@ -428,7 +428,7 @@ export default async function ProductPage(props: {
                     height="16"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#5A3493"
+                    stroke="#7C3AED"
                     strokeWidth="2"
                     strokeLinecap="round"
                   >
@@ -451,7 +451,7 @@ export default async function ProductPage(props: {
                     height="16"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#5A3493"
+                    stroke="#7C3AED"
                     strokeWidth="2"
                     strokeLinecap="round"
                   >
@@ -524,11 +524,11 @@ export default async function ProductPage(props: {
               underneath to support calm focus without the caffeine loop.
             </p>
 
-            <div className="border-y border-[#5A3493]/20">
+            <div className="border-y border-[#7C3AED]/20">
               {ingredients.map((ing) => (
                 <div
                   key={ing.name}
-                  className="grid grid-cols-[1fr_auto] gap-4 border-b border-[#5A3493]/15 py-4 last:border-b-0"
+                  className="grid grid-cols-[1fr_auto] gap-4 border-b border-[#7C3AED]/15 py-4 last:border-b-0"
                 >
                   <div>
                     <p className="font-[family-name:var(--font-anton)] text-xl uppercase leading-none text-[#111111]">
@@ -578,7 +578,7 @@ export default async function ProductPage(props: {
                 <thead>
                   <tr>
                     <th className="w-[34%] pb-4" />
-                    <th className="w-[33%] rounded-t-[10px] bg-[#5A3493] px-1 pb-4 pt-4 text-center">
+                    <th className="w-[33%] rounded-t-[10px] bg-[#7C3AED] px-1 pb-4 pt-4 text-center">
                       <span className="font-[family-name:var(--font-anton)] text-base text-white sm:text-lg">
                         STUNN+
                       </span>
@@ -594,13 +594,13 @@ export default async function ProductPage(props: {
                     return (
                       <tr
                         key={row.label}
-                        className="border-t border-[#5A3493]/10"
+                        className="border-t border-[#7C3AED]/10"
                       >
                         <td className="py-3 pr-2 text-[10px] font-bold uppercase tracking-wider text-[#111111] sm:text-[11px]">
                           {row.label}
                         </td>
                         <td
-                          className={`bg-[#5A3493] px-2 py-3 text-center text-[11px] font-medium leading-tight text-white sm:text-xs ${isLast ? "rounded-b-[10px]" : ""}`}
+                          className={`bg-[#7C3AED] px-2 py-3 text-center text-[11px] font-medium leading-tight text-white sm:text-xs ${isLast ? "rounded-b-[10px]" : ""}`}
                         >
                           {row.type === "stars" ? (
                             <span className="text-base text-[#EFAF00]">
@@ -627,7 +627,7 @@ export default async function ProductPage(props: {
             </div>
             <a
               href="#purchase"
-              className="mt-8 inline-flex w-fit items-center gap-2 rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
+              className="mt-8 inline-flex w-fit items-center gap-2 rounded-[10px] bg-[#7C3AED] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#5B21B6] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#5B21B6]"
             >
               Start Your Ritual →
             </a>
@@ -677,7 +677,7 @@ export default async function ProductPage(props: {
             />
           </div>
           <div className="flex flex-col justify-center px-8 py-12 lg:px-14">
-            <span className="mb-3 inline-block rounded-full border border-[#5A3493]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
+            <span className="mb-3 inline-block rounded-full border border-[#7C3AED]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
               The Founder
             </span>
             <h2 className="mb-3 font-[family-name:var(--font-anton)] text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#111111]">
@@ -703,7 +703,7 @@ export default async function ProductPage(props: {
             </p>
             <a
               href="#purchase"
-              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
+              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#7C3AED] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#5B21B6] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#5B21B6]"
             >
               Start Your Ritual →
             </a>
@@ -715,7 +715,7 @@ export default async function ProductPage(props: {
       <section className="bg-white py-12 lg:py-16">
         <div className="mx-auto max-w-screen-xl px-6 lg:grid lg:grid-cols-[2fr_3fr] lg:gap-16 lg:px-8">
           <div className="mb-10 flex flex-col justify-start lg:mb-0">
-            <span className="mb-3 inline-block rounded-full border border-[#5A3493]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
+            <span className="mb-3 inline-block rounded-full border border-[#7C3AED]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
               Frequently Asked Questions
             </span>
             <h2 className="mb-6 font-[family-name:var(--font-anton)] text-[clamp(36px,5vw,64px)] uppercase leading-tight text-[#111111]">
@@ -725,12 +725,12 @@ export default async function ProductPage(props: {
             </h2>
             <a
               href="#purchase"
-              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f]"
+              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#7C3AED] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#5B21B6] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#5B21B6]"
             >
               Start Your Ritual →
             </a>
           </div>
-          <div className="divide-y divide-[#5A3493]/15">
+          <div className="divide-y divide-[#7C3AED]/15">
             {pdpFaqs.map((faq) => (
               <details key={faq.question} className="group py-4">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
@@ -780,7 +780,7 @@ export default async function ProductPage(props: {
           </h2>
           <a
             href="#purchase"
-            className="inline-flex items-center gap-2 rounded-[10px] bg-[#5A3493] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_rgba(255,255,255,0.18)] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_rgba(255,255,255,0.18)]"
+            className="inline-flex items-center gap-2 rounded-[10px] bg-[#7C3AED] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_rgba(255,255,255,0.18)] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_rgba(255,255,255,0.18)]"
           >
             Get STUNN from $1.13/day
           </a>
