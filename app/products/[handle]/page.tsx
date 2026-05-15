@@ -36,52 +36,88 @@ export async function generateMetadata(props: {
 const ingredients = [
   {
     name: "Lion's Mane",
+    dose: "300mg",
     benefit: "Focus + Clarity",
     img: `${CDN}img-lions-mane_1.png`,
-    description: "Supports focus, memory, and mental clarity so you can stay sharp without feeling wired.",
+    description:
+      "Supports focus, memory, and mental clarity so you can stay sharp without feeling wired.",
   },
   {
     name: "Rhodiola",
+    dose: "250mg",
     benefit: "Stress + Energy",
     img: `${CDN}img-rhodiola_1.png`,
-    description: "Helps reduce stress and mental fatigue while supporting steady energy throughout the day.",
+    description:
+      "Helps reduce stress and mental fatigue while supporting steady energy throughout the day.",
   },
   {
     name: "Cordyceps",
+    dose: "100mg",
     benefit: "Endurance + Drive",
     img: `${CDN}img-cordyceps_1.png`,
-    description: "Boosts natural energy and endurance without overstimulation or crashes.",
+    description:
+      "Boosts natural energy and endurance without overstimulation or crashes.",
   },
   {
     name: "L-Theanine",
+    dose: "100mg",
     benefit: "Calm + Alert",
     img: `${CDN}img-lteanine_1.png`,
-    description: "Promotes calm focus and smooths out the edges, helping you stay relaxed and alert.",
+    description:
+      "Promotes calm focus and smooths out the edges, helping you stay relaxed and alert.",
   },
 ];
 
 const comparisonRows = [
-  { label: "Cost Per Serving", stunn: "From $0.38", competitor: "$3.99+", type: "text" },
-  { label: "Taste", stunn: "★★★★★", competitor: "★★", type: "stars" },
-  { label: "Jitters", stunn: "None", competitor: "Often jitters or anxiety", type: "text" },
-  { label: "Digestive Friendly", stunn: "Gentle on stomach", competitor: "Can be acidic or harsh", type: "text" },
-  { label: "Convenience", stunn: "Instant sachet, on-the-go", competitor: "Brewing Required", type: "text" },
-  { label: "Routine Friendly", stunn: "Morning, afternoon, or evening", competitor: "Best only in morning for many", type: "text" },
+  {
+    label: "Coffee Ritual",
+    stunn: "Still intact",
+    competitor: "Still intact",
+    type: "text",
+  },
+  {
+    label: "Caffeine",
+    stunn: "0mg",
+    competitor: "High stimulant load",
+    type: "text",
+  },
+  { label: "Jitters", stunn: "None", competitor: "Common", type: "text" },
+  {
+    label: "Crash",
+    stunn: "No adenosine rebound",
+    competitor: "Afternoon drop-off",
+    type: "text",
+  },
+  {
+    label: "Sleep",
+    stunn: "Sleep-friendly",
+    competitor: "Can disrupt sleep",
+    type: "text",
+  },
+  {
+    label: "Daily Format",
+    stunn: "Single sachet",
+    competitor: "Brew, queue, repeat",
+    type: "text",
+  },
 ];
 
 const testimonials = [
   {
-    quote: "I quit caffeine a few months ago but missed my morning ritual. STUNN changed everything — I get the taste of coffee without the jitters or crashes. It's calm, focused energy in a cup.",
+    quote:
+      "I quit caffeine a few months ago but missed my morning ritual. STUNN changed everything — I get the taste of coffee without the jitters or crashes. It's calm, focused energy in a cup.",
     name: "Sarah M.",
     age: "34",
   },
   {
-    quote: "Coffee used to make me anxious, but STUNN lets me enjoy my favorite ritual without the racing heart. I feel alert, productive, and surprisingly relaxed at the same time.",
+    quote:
+      "Coffee used to make me anxious, but STUNN lets me enjoy my favorite ritual without the racing heart. I feel alert, productive, and surprisingly relaxed at the same time.",
     name: "James T.",
     age: "29",
   },
   {
-    quote: "I love coffee, but a 3 PM cup always messed with my sleep. With STUNN, I can enjoy my afternoon ritual and still sleep well. Smooth energy that lasts without the crash.",
+    quote:
+      "I love coffee, but a 3 PM cup always messed with my sleep. With STUNN, I can enjoy my afternoon ritual and still sleep well. Smooth energy that lasts without the crash.",
     name: "Emma L.",
     age: "41",
   },
@@ -89,53 +125,52 @@ const testimonials = [
 
 const pdpFaqs = [
   {
-    question: "What makes STUNN different from regular coffee?",
-    answer: "STUNN gives you the experience of coffee without the usual downsides. It's decaf, but enhanced with functional ingredients like Lion's Mane, Rhodiola, Cordyceps, and L-Theanine to support focus, calm, and steady energy. Instead of spikes and crashes, you get a smoother, more controlled way to enjoy coffee.",
+    question: "Will I still feel focused without caffeine?",
+    answer:
+      "STUNN is designed for calm focus, not stimulant intensity. The formula combines decaf coffee with Lion's Mane, Rhodiola, Cordyceps, and L-Theanine so you can keep the coffee ritual while stepping away from caffeine dependency.",
   },
   {
-    question: "How do I prepare STUNN?",
-    answer: "Simply mix one sachet with hot/cold water, stir, and enjoy. You can also customize it with milk or your preferred sweetener. It's quick, easy, and designed to fit seamlessly into your daily routine.",
+    question: "Is STUNN a supplement or coffee?",
+    answer:
+      "STUNN is coffee first: a premium decaf instant coffee ritual with functional ingredients added for support. It should not feel like swallowing a supplement stack or replacing the emotional comfort of coffee.",
+  },
+  {
+    question: "Can I drink it if caffeine makes me anxious?",
+    answer:
+      "Yes. STUNN was made for people who love coffee but are done with the side effects: jitters, anxious energy, crashes, and disrupted sleep. It contains decaf coffee, not caffeine as the driver.",
+  },
+  {
+    question: "Does it taste like coffee?",
+    answer:
+      "Yes. STUNN is built around decaf instant coffee, so the ritual still starts with a real coffee base. It is functional, but it should still feel like a cup of coffee.",
   },
   {
     question: "When can I drink STUNN?",
-    answer: "STUNN is made to be enjoyed anytime — morning, mid-day, or late at night. Since it's decaf, it won't disrupt your sleep or leave you feeling wired.",
+    answer:
+      "Morning, afternoon, or evening. Since STUNN is decaf, it is designed to be sleep-friendly and does not force the usual coffee cutoff time.",
   },
   {
-    question: "How long does one box last?",
-    answer: "One box typically lasts 2-4 weeks depending on how often you drink it. If you enjoy one cup daily, it lasts close to a month.",
+    question: "How do I prepare STUNN?",
+    answer:
+      "Mix one sachet with hot or cold water, stir, and drink. You can add milk or your preferred sweetener if that is part of your ritual.",
   },
 ];
 
-const BENEFITS = [
+const PERSONA_CARDS = [
   {
-    label: "Calm Focus",
-    desc: "Focus that feels grounded, not wired.",
-    icon: <img src={`${CDN}icon-focus.svg`} alt="" className="h-11 w-11" />,
+    eyebrow: "For the side-effect done crowd",
+    title: "No jitters. No crash. No anxious second cup.",
+    copy: "For the people who still want the workday lift, but are tired of paying for it with tension, irritability, and the afternoon drop.",
   },
   {
-    label: "Steady Energy",
-    desc: "Smooth clarity that lasts for hours.",
-    icon: <img src={`${CDN}icon-energy.svg`} alt="" className="h-11 w-11" />,
+    eyebrow: "For the optimizer",
+    title: "Keep the edge without making caffeine your identity.",
+    copy: "For founders, operators, and senior ICs who want the productivity cue of coffee without needing a stimulant to feel switched on.",
   },
   {
-    label: "No Jitters",
-    desc: "Clean energy without the overstimulation.",
-    icon: <img src={`${CDN}icon-smile.svg`} alt="" className="h-11 w-11" />,
-  },
-  {
-    label: "No Crash",
-    desc: "No afternoon slump or sudden drop-off.",
-    icon: <img src={`${CDN}icon-return.svg`} alt="" className="h-11 w-11" />,
-  },
-  {
-    label: "Sleep Friendly",
-    desc: "Drink it late and still sleep deeply.",
-    icon: <img src={`${CDN}icon-sleep.svg`} alt="" className="h-11 w-11" />,
-  },
-  {
-    label: "Gentle on Stomach",
-    desc: "Easier on digestion than traditional coffee.",
-    icon: <img src={`${CDN}icon-leaf.svg`} alt="" className="h-11 w-11" />,
+    eyebrow: "For the coffee lover",
+    title: "The ritual stays. The stimulant goes.",
+    copy: "For anyone who misses coffee more than caffeine: the cup, the pause, the warmth, and the moment before the day starts again.",
   },
 ];
 
@@ -205,28 +240,38 @@ export default async function ProductPage(props: {
                 {/* Bottom-left pills */}
                 <div className="absolute bottom-5 left-4 flex flex-col gap-2">
                   {[
-                    { label: "Calm Focus",  icon: `${CDN}icon-focus.svg` },
-                    { label: "No Jitters",  icon: `${CDN}icon-smile.svg` },
+                    { label: "Calm Focus", icon: `${CDN}icon-focus.svg` },
+                    { label: "No Jitters", icon: `${CDN}icon-smile.svg` },
                   ].map((b) => (
-                    <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
+                    <div
+                      key={b.label}
+                      className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md"
+                    >
                       <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
                         <img src={b.icon} alt="" className="h-4 w-4" />
                       </div>
-                      <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">{b.label}</span>
+                      <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
+                        {b.label}
+                      </span>
                     </div>
                   ))}
                 </div>
                 {/* Bottom-right pills */}
                 <div className="absolute bottom-5 right-4 flex flex-col items-end gap-2">
                   {[
-                    { label: "Steady Energy",  icon: `${CDN}icon-energy.svg` },
+                    { label: "Steady Energy", icon: `${CDN}icon-energy.svg` },
                     { label: "Sleep Friendly", icon: `${CDN}icon-sleep.svg` },
                   ].map((b) => (
-                    <div key={b.label} className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md">
+                    <div
+                      key={b.label}
+                      className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md"
+                    >
                       <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
                         <img src={b.icon} alt="" className="h-4 w-4" />
                       </div>
-                      <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">{b.label}</span>
+                      <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
+                        {b.label}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -237,32 +282,54 @@ export default async function ProductPage(props: {
 
         {/* Right: purchase panel */}
         <div id="purchase" className="lg:w-1/2">
-          <Suspense fallback={<div className="h-screen animate-pulse bg-gray-50" />}>
+          <Suspense
+            fallback={<div className="h-screen animate-pulse bg-gray-50" />}
+          >
             <StunnPurchasePanel product={product} />
           </Suspense>
         </div>
       </div>
 
-      {/* ── BENEFITS GRID ── */}
-      <section className="bg-[#EEEAF8] py-16">
-        <div className="mx-auto max-w-5xl px-6 lg:px-8">
-          <p className="mb-8 text-center text-xs font-bold uppercase tracking-widest text-[#5A3493]/50">
-            What you get with every cup
-          </p>
-          <div className="overflow-hidden rounded-[16px] border border-[#5A3493]/12">
-            <div className="grid grid-cols-2 divide-x divide-y divide-[#5A3493]/12 md:grid-cols-3">
-              {BENEFITS.map((b) => (
-                <div key={b.label} className="flex flex-col items-center bg-[#EEEAF8] px-6 py-10 text-center">
-                  <div className="mb-5 text-[#5A3493]">{b.icon}</div>
-                  <p className="mb-2 text-[clamp(1rem,1.8vw,1.25rem)] font-extrabold uppercase tracking-wide text-[#5A3493]">
-                    {b.label}
-                  </p>
-                  <div className="mb-3 h-0.5 w-8 rounded-full bg-[#5A3493]/40" />
-                  <p className="text-sm leading-relaxed text-[#5A3493]/65">{b.desc}</p>
-                </div>
-              ))}
-            </div>
+      {/* ── IDENTITY REFRAME ── */}
+      <section className="bg-[#EEEAF8] py-16 lg:py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:px-8">
+          <div>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#5A3493]/55">
+              The caffeine loop
+            </p>
+            <h2 className="mb-6 max-w-3xl font-[family-name:var(--font-anton)] text-[clamp(2.7rem,6vw,5.8rem)] uppercase leading-[0.95] text-[#5A3493]">
+              You don&apos;t have low energy. You&apos;re overstimulated.
+            </h2>
           </div>
+          <div className="border-l border-[#5A3493]/20 pl-6">
+            <p className="mb-5 text-base leading-relaxed text-[#5A3493]/75">
+              Coffee is not the problem. The caffeine loop is: the cortisol
+              spike, the adenosine rebound, the sleep disruption, and the
+              tolerance creep that makes each cup feel less optional.
+            </p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#5A3493]">
+              STUNN keeps the ritual and removes the stimulant dependency.
+            </p>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-14 grid max-w-7xl gap-px px-6 lg:grid-cols-3 lg:px-8">
+          {PERSONA_CARDS.map((card) => (
+            <div
+              key={card.eyebrow}
+              className="border border-[#5A3493]/15 bg-[#EEEAF8] p-7 lg:p-9"
+            >
+              <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#5A3493]/50">
+                {card.eyebrow}
+              </p>
+              <h3 className="mb-4 text-xl font-extrabold leading-tight text-[#5A3493]">
+                {card.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-[#5A3493]/68">
+                {card.copy}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -270,9 +337,13 @@ export default async function ProductPage(props: {
       <section className="bg-white py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#5A3493]/60">The timeline</p>
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#5A3493]/60">
+              The timeline
+            </p>
             <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2rem,5vw,3.5rem)] uppercase leading-tight text-[#5A3493]">
-              What to expect after<br />switching to STUNN
+              What to expect after
+              <br />
+              switching to STUNN
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -280,8 +351,17 @@ export default async function ProductPage(props: {
               {
                 time: "After 30 Minutes",
                 icon: (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2" strokeLinecap="round">
-                    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#5A3493"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
                   </svg>
                 ),
                 headline: "Smooth, steady clarity.",
@@ -292,8 +372,19 @@ export default async function ProductPage(props: {
               {
                 time: "After 14 Days",
                 icon: (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2" strokeLinecap="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#5A3493"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
                   </svg>
                 ),
                 headline: "Balanced all day.",
@@ -304,7 +395,15 @@ export default async function ProductPage(props: {
               {
                 time: "After 30 Days",
                 icon: (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2" strokeLinecap="round">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#5A3493"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  >
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                   </svg>
                 ),
@@ -316,15 +415,26 @@ export default async function ProductPage(props: {
             ].map((step) => (
               <div key={step.time} className="flex flex-col">
                 <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[16px]">
-                  <Image src={step.img} alt={step.alt} fill className="object-cover object-top" />
+                  <Image
+                    src={step.img}
+                    alt={step.alt}
+                    fill
+                    className="object-cover object-top"
+                  />
                 </div>
                 <div className="pt-6">
                   <div className="mb-2 flex items-center gap-2">
                     {step.icon}
-                    <span className="text-xs font-bold uppercase tracking-widest text-[#5A3493]">{step.time}</span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-[#5A3493]">
+                      {step.time}
+                    </span>
                   </div>
-                  <p className="mb-1 font-[family-name:var(--font-anton)] text-xl uppercase text-gray-900">{step.headline}</p>
-                  <p className="text-sm leading-relaxed text-gray-500">{step.copy}</p>
+                  <p className="mb-1 font-[family-name:var(--font-anton)] text-xl uppercase text-gray-900">
+                    {step.headline}
+                  </p>
+                  <p className="text-sm leading-relaxed text-gray-500">
+                    {step.copy}
+                  </p>
                 </div>
               </div>
             ))}
@@ -349,21 +459,32 @@ export default async function ProductPage(props: {
               What's inside
             </span>
             <h2 className="mb-8 font-[family-name:var(--font-anton)] text-[clamp(2rem,4vw,3.5rem)] uppercase leading-tight text-[#5A3493]">
-              4 functional ingredients.<br />One ritual.
+              A coffee ritual with
+              <br />a functional backbone.
             </h2>
             <div className="grid grid-cols-2 gap-4">
               {ingredients.map((ing) => (
                 <div key={ing.name} className="flex flex-col gap-1">
                   <div className="relative h-20 w-full">
-                    <Image src={ing.img} alt={ing.name} fill className="object-contain object-left" />
+                    <Image
+                      src={ing.img}
+                      alt={ing.name}
+                      fill
+                      className="object-contain object-left"
+                    />
                   </div>
                   <p className="font-[family-name:var(--font-anton)] text-lg uppercase text-[#5A3493]">
                     {ing.name}
                   </p>
+                  <p className="text-xs font-extrabold uppercase tracking-widest text-[#5A3493]">
+                    {ing.dose}
+                  </p>
                   <span className="inline-block rounded-full bg-[#5A3493]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#5A3493]">
                     {ing.benefit}
                   </span>
-                  <p className="text-xs leading-relaxed text-gray-600">{ing.description}</p>
+                  <p className="text-xs leading-relaxed text-gray-600">
+                    {ing.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -382,10 +503,12 @@ export default async function ProductPage(props: {
           </div>
           <div className="flex flex-col justify-center bg-[#EDE9F8] px-8 py-14 lg:w-1/2 lg:px-16">
             <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#5A3493]/60">
-              STUNN vs Regular Coffee
+              STUNN vs the caffeine loop
             </span>
             <h2 className="mb-8 font-[family-name:var(--font-anton)] text-[clamp(2rem,4vw,3.5rem)] uppercase leading-tight text-[#5A3493]">
-              Why switch<br />to STUNN?
+              Keep the cup.
+              <br />
+              Lose the cost.
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full min-w-[340px] text-sm">
@@ -393,10 +516,12 @@ export default async function ProductPage(props: {
                   <tr>
                     <th className="w-[40%] pb-4" />
                     <th className="w-[30%] rounded-t-[10px] bg-[#5A3493] pb-4 pt-4 text-center">
-                      <span className="font-[family-name:var(--font-anton)] text-lg text-white">STUNN+</span>
+                      <span className="font-[family-name:var(--font-anton)] text-lg text-white">
+                        STUNN+
+                      </span>
                     </th>
                     <th className="w-[30%] pb-4 text-center text-[10px] font-bold uppercase tracking-wider text-[#5A3493]/60">
-                      Regular Coffee
+                      Caffeine Loop
                     </th>
                   </tr>
                 </thead>
@@ -404,13 +529,32 @@ export default async function ProductPage(props: {
                   {comparisonRows.map((row, i) => {
                     const isLast = i === comparisonRows.length - 1;
                     return (
-                      <tr key={row.label} className="border-t border-[#5A3493]/10">
-                        <td className="py-3 pr-3 text-[11px] font-bold uppercase tracking-wider text-[#5A3493]">{row.label}</td>
-                        <td className={`bg-[#5A3493] py-3 text-center text-xs font-medium text-white ${isLast ? "rounded-b-[10px]" : ""}`}>
-                          {row.type === "stars" ? <span className="text-base text-[#EFAF00]">{row.stunn}</span> : row.stunn}
+                      <tr
+                        key={row.label}
+                        className="border-t border-[#5A3493]/10"
+                      >
+                        <td className="py-3 pr-3 text-[11px] font-bold uppercase tracking-wider text-[#5A3493]">
+                          {row.label}
+                        </td>
+                        <td
+                          className={`bg-[#5A3493] py-3 text-center text-xs font-medium text-white ${isLast ? "rounded-b-[10px]" : ""}`}
+                        >
+                          {row.type === "stars" ? (
+                            <span className="text-base text-[#EFAF00]">
+                              {row.stunn}
+                            </span>
+                          ) : (
+                            row.stunn
+                          )}
                         </td>
                         <td className="py-3 text-center text-xs text-[#5A3493]/50">
-                          {row.type === "stars" ? <span className="text-base text-[#EFAF00]/50">{row.competitor}</span> : row.competitor}
+                          {row.type === "stars" ? (
+                            <span className="text-base text-[#EFAF00]/50">
+                              {row.competitor}
+                            </span>
+                          ) : (
+                            row.competitor
+                          )}
                         </td>
                       </tr>
                     );
@@ -432,14 +576,25 @@ export default async function ProductPage(props: {
       <section className="bg-[#5A3493] py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mb-10 text-center">
-            <div className="mb-2 text-lg leading-none text-[#EFAF00]">★★★★★</div>
-            <span className="text-sm font-bold text-white/80">5.0 · Over 1,000 happy customers</span>
+            <div className="mb-2 text-lg leading-none text-[#EFAF00]">
+              ★★★★★
+            </div>
+            <span className="text-sm font-bold text-white/80">
+              5.0 · Over 1,000 happy customers
+            </span>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {testimonials.map((t) => (
-              <div key={t.name} className="flex flex-col gap-4 border-t border-white/20 pt-6">
-                <p className="text-sm leading-relaxed text-white/90">&ldquo;{t.quote}&rdquo;</p>
-                <p className="text-sm font-bold text-white">{t.name}, {t.age}</p>
+              <div
+                key={t.name}
+                className="flex flex-col gap-4 border-t border-white/20 pt-6"
+              >
+                <p className="text-sm leading-relaxed text-white/90">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <p className="text-sm font-bold text-white">
+                  {t.name}, {t.age}
+                </p>
               </div>
             ))}
           </div>
@@ -465,14 +620,22 @@ export default async function ProductPage(props: {
               Why I Created STUNN
             </h2>
             <p className="mb-2 text-sm font-semibold text-gray-700">
-              Because coffee shouldn&apos;t leave you feeling worse than before
+              I didn&apos;t want to quit coffee. I wanted to quit what caffeine
+              was doing to me.
             </p>
             <p className="mb-7 text-base leading-relaxed text-gray-600">
-              I&apos;ve always loved coffee, but I didn&apos;t love how it made me feel. The jitters, the crashes, and the nights where sleep just wouldn&apos;t come. So I decided to create a better option. STUNN is built to keep everything we love about coffee, while removing what we don&apos;t.
+              I&apos;ve always loved the ritual: the first cup, the reset, the
+              feeling that the day is about to start properly. I just
+              didn&apos;t love the jitters, the crash, or the nights where sleep
+              felt like a negotiation. STUNN is built to keep everything we love
+              about coffee, while removing what we don&apos;t.
             </p>
             <p className="mb-6 font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-[#5A3493]">
-              ANDREW JENNINGS<br />
-              <span className="font-sans text-xs font-normal normal-case tracking-normal text-gray-500">Founder, STUNN</span>
+              ANDREW JENNINGS
+              <br />
+              <span className="font-sans text-xs font-normal normal-case tracking-normal text-gray-500">
+                Founder, STUNN
+              </span>
             </p>
             <a
               href="#purchase"
@@ -492,7 +655,9 @@ export default async function ProductPage(props: {
               Frequently Asked Questions
             </span>
             <h2 className="mb-6 font-[family-name:var(--font-anton)] text-[clamp(36px,5vw,64px)] uppercase leading-tight text-[#5A3493]">
-              Questions,<br />answered.
+              Questions,
+              <br />
+              answered.
             </h2>
             <a
               href="#purchase"
@@ -509,12 +674,21 @@ export default async function ProductPage(props: {
                     {faq.question}
                   </span>
                   <span className="shrink-0 text-[#5A3493] transition-transform duration-200 group-open:rotate-180">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
                       <polyline points="6 9 12 15 18 9" />
                     </svg>
                   </span>
                 </summary>
-                <p className="mt-3 text-sm leading-relaxed text-gray-600">{faq.answer}</p>
+                <p className="mt-3 text-sm leading-relaxed text-gray-600">
+                  {faq.answer}
+                </p>
               </details>
             ))}
           </div>
@@ -523,13 +697,22 @@ export default async function ProductPage(props: {
 
       {/* ── FINAL CTA RAIL ── */}
       <section className="relative overflow-hidden bg-[#5A3493]">
-        <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
         <div className="relative mx-auto max-w-screen-xl px-6 py-16 text-center lg:py-24">
           <span className="mb-4 inline-block rounded-full border border-white/30 px-3 py-1 text-xs font-medium tracking-widest text-white/80">
             Start your ritual.
           </span>
           <h2 className="mb-6 font-[family-name:var(--font-anton)] text-[clamp(36px,6vw,72px)] uppercase leading-tight text-white">
-            The cup you reach for.<br />Without the cost you&apos;ve been paying.
+            The cup you reach for.
+            <br />
+            Without the cost you&apos;ve been paying.
           </h2>
           <a
             href="#purchase"

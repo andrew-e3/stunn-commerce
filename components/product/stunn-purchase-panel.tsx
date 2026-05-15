@@ -121,10 +121,11 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
 
       {/* Title */}
       <h1 className="mb-1 font-[family-name:var(--font-anton)] text-4xl uppercase leading-tight tracking-wide text-[#5A3493]">
-        {product.title}
+        Quit caffeine. Keep the edge.
       </h1>
       <p className="mb-5 max-w-md text-base leading-relaxed text-gray-600">
-        Everything you love about coffee. None of what you don&apos;t.
+        Everything you love about coffee. None of what you don&apos;t: no
+        jitters, no crash, no dependency.
       </p>
 
       {/* Benefit chips */}
@@ -334,15 +335,15 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       <Accordion title="INGREDIENTS" defaultOpen>
         <p className="text-sm leading-relaxed text-gray-600">
           <strong className="text-gray-900">STUNN</strong> is crafted with a
-          clean, functional blend of Lion&apos;s Mane, Rhodiola, Cordyceps, and
-          L-Theanine to support focus, balance, and steady energy.
+          clean, functional blend of Lion&apos;s Mane 300mg, Rhodiola 250mg,
+          Cordyceps 100mg, L-Theanine 100mg, and Decaf Instant Coffee 1500mg.
         </p>
       </Accordion>
       <Accordion title="WHY STUNN?">
         <p className="text-sm leading-relaxed text-gray-600">
-          Most coffees give you energy and anxiety together. STUNN separates
-          them — delivering the focus and ritual you love, without the spike,
-          crash, or dependency.
+          Most coffee gives you ritual and side effects together. STUNN keeps
+          the ritual and removes the caffeine loop: the spike, crash, disrupted
+          sleep, and tolerance creep.
         </p>
       </Accordion>
       <Accordion title="DIRECTIONS">
