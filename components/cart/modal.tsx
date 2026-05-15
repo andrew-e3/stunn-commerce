@@ -20,10 +20,11 @@ type MerchandiseSearchParams = { [key: string]: string };
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
+// Each tier = N boxes shipped every N months on autoship
 const QTY_TIERS = [
-  { qty: 1, display: "1 MONTH",  saving: "–",          perDay: "$1.33/day", best: false },
-  { qty: 2, display: "2 MONTHS", saving: "SAVE 10%",   perDay: "$1.19/day", best: false },
-  { qty: 3, display: "3 MONTHS", saving: "BEST VALUE",  perDay: "$1.13/day", best: true  },
+  { qty: 1, display: "1 BOX",   sub: "ships monthly",    saving: "–",          best: false },
+  { qty: 2, display: "2 BOXES", sub: "every 2 months",   saving: "SAVE 10%",   best: false },
+  { qty: 3, display: "3 BOXES", sub: "every 3 months",   saving: "BEST VALUE", best: true  },
 ];
 
 const FREQUENCY_OPTIONS = [
@@ -195,9 +196,10 @@ export default function CartModal() {
                                         <p className="text-sm font-bold leading-tight text-gray-900">
                                           {item.merchandise.product.title}
                                         </p>
-                                        {item.merchandise.title !== DEFAULT_OPTION && (
-                                          <p className="mt-0.5 text-xs text-gray-400">{item.merchandise.title}</p>
-                                        )}
+                                        {/* Cadence line: N boxes · ships every N months */}
+                                        <p className="mt-0.5 text-xs text-gray-400">
+                                          {item.quantity} {item.quantity === 1 ? "box" : "boxes"} · ships {item.quantity === 1 ? "every month" : `every ${item.quantity} months`}
+                                        </p>
                                       </div>
                                       <DeleteItemButton item={item} optimisticUpdate={updateCartItem} />
                                     </div>
@@ -246,19 +248,26 @@ export default function CartModal() {
                                         <span className="block text-[10px] font-extrabold uppercase tracking-wide leading-none">
                                           {tier.display}
                                         </span>
-                                        <span className={`mt-1 block text-[9px] font-semibold leading-none ${
-                                          isSelected ? "text-white/75" : tier.best ? "text-[#5A3493]" : "text-gray-400"
+                                        <span className={`mt-0.5 block text-[9px] font-medium leading-none ${
+                                          isSelected ? "text-white/70" : "text-gray-400"
                                         }`}>
-                                          {tier.saving}
+                                          {tier.sub}
                                         </span>
+                                        {tier.saving !== "–" && (
+                                          <span className={`mt-0.5 block text-[8px] font-bold uppercase leading-none ${
+                                            isSelected ? "text-white/90" : tier.best ? "text-[#5A3493]" : "text-gray-500"
+                                          }`}>
+                                            {tier.saving}
+                                          </span>
+                                        )}
                                       </button>
                                     );
                                   })}
                                 </div>
 
-                                {/* Row 3: Subscription frequency dropdown */}
+                                {/* Row 3: Subscription frequency — synced to qty */}
                                 <div className="mt-2">
-                                  <FrequencyDropdown />
+                                  <FrequencyDropdown currentQty={item.quantity} />
                                 </div>
                               </li>
                             );
@@ -329,9 +338,19 @@ function CheckoutButton() {
   );
 }
 
-function FrequencyDropdown() {
+function FrequencyDropdown({ currentQty }: { currentQty: number }) {
+  const defaultOpt = currentQty >= 3 ? FREQUENCY_OPTIONS[2]! : currentQty >= 2 ? FREQUENCY_OPTIONS[1]! : FREQUENCY_OPTIONS[0]!;
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(FREQUENCY_OPTIONS[2]!);
+  const [selected, setSelected] = useState(defaultOpt);
+
+  // Sync dropdown when tier buttons change the qty
+  const prevQty = useRef(currentQty);
+  useEffect(() => {
+    if (prevQty.current !== currentQty) {
+      prevQty.current = currentQty;
+      setSelected(currentQty >= 3 ? FREQUENCY_OPTIONS[2]! : currentQty >= 2 ? FREQUENCY_OPTIONS[1]! : FREQUENCY_OPTIONS[0]!);
+    }
+  }, [currentQty]);
   return (
     <div className="relative">
       <button

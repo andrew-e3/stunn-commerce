@@ -8,9 +8,13 @@ import { useActionState, useState, useTransition } from "react";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
+// Each tier = N boxes shipped every N months on autoship
 const VARIANTS_DISPLAY = [
   {
     duration: "3 Months",
+    qty: 3,
+    shipEvery: "every 3 months",
+    shipLabel: "3 boxes · ships every 3 months",
     count: 270,
     retailPrice: 119.97,
     subPrice: 101.97,
@@ -22,6 +26,9 @@ const VARIANTS_DISPLAY = [
   },
   {
     duration: "2 Months",
+    qty: 2,
+    shipEvery: "every 2 months",
+    shipLabel: "2 boxes · ships every 2 months",
     count: 180,
     retailPrice: 79.98,
     subPrice: 67.98,
@@ -33,6 +40,9 @@ const VARIANTS_DISPLAY = [
   },
   {
     duration: "1 Month",
+    qty: 1,
+    shipEvery: "every month",
+    shipLabel: "1 box · ships every month",
     count: 90,
     retailPrice: 39.99,
     subPrice: 33.99,
@@ -116,7 +126,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
 
       {/* Variant selector */}
       <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gray-700">
-        Choose how you want to start.
+        Choose your supply.
       </p>
       <div className="mb-5 grid grid-cols-3 gap-2">
         {VARIANTS_DISPLAY.map((v) => {
@@ -137,10 +147,9 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
                   Most Popular
                 </span>
               )}
-              <img src={v.boxImg} alt={`${v.duration} supply`} className="mb-1 h-14 w-full object-contain" />
-              <span className="text-xs font-bold text-gray-900">{v.duration}</span>
-              <span className="text-[10px] text-gray-500">{v.count} Count</span>
-              {/* $/day now readable */}
+              <img src={v.boxImg} alt={`${v.qty} box supply`} className="mb-1 h-14 w-full object-contain" />
+              <span className="text-xs font-bold text-gray-900">{v.qty} {v.qty === 1 ? "Box" : "Boxes"}</span>
+              <span className="text-[10px] text-gray-500">{v.count} Sachets</span>
               <span className="mt-0.5 text-xs font-semibold text-[#5A3493]">${v.subPerDay}/day</span>
             </button>
           );
@@ -156,7 +165,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         </span>
       </div>
       <p className="mb-4 text-xs text-gray-500">
-        {display.duration} · {display.count} sachets · ${display.subPerDay}/day with autoship
+        {display.shipLabel} · ${display.subPerDay}/day with autoship
       </p>
 
       {/* ADD TO CART — solid purple, primary action */}
@@ -177,9 +186,9 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         </button>
       </form>
 
-      {/* Autoship perks */}
+      {/* Autoship perks — dynamic cadence */}
       <div className="mb-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-        {["Ships FREE every 3 months", "VIP discounts & perks", "Cancel anytime"].map((b) => (
+        {[`Ships FREE ${display.shipEvery}`, "VIP discounts & perks", "Cancel anytime"].map((b) => (
           <span key={b} className="flex items-center gap-1 text-[10px] text-gray-500">
             <CheckCircleIcon />
             {b}
