@@ -556,14 +556,6 @@ export default async function ProductPage(props: {
 
         {/* Panel C: Comparison */}
         <div className="flex flex-col lg:flex-row">
-          <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-1/2 lg:min-h-[500px]">
-            <Image
-              src={`${CDN}img-s-6.webp`}
-              alt="STUNN vs regular coffee"
-              fill
-              className="object-cover"
-            />
-          </div>
           <div className="flex flex-col justify-center bg-[#EDE9F8] px-8 py-14 lg:w-1/2 lg:px-16">
             <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
               STUNN vs the caffeine loop
@@ -631,6 +623,14 @@ export default async function ProductPage(props: {
             >
               Start Your Ritual →
             </a>
+          </div>
+          <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-1/2 lg:min-h-[500px]">
+            <Image
+              src={`${CDN}img-s-6.webp`}
+              alt="STUNN vs regular coffee"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </section>
