@@ -23,39 +23,14 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-black/10 bg-white">
+    <footer className="bg-[#7C3AED] text-white">
       {/* ── Top: Newsletter + Nav ── */}
-      <div className="mx-auto flex max-w-screen-xl flex-col gap-16 px-6 py-16 lg:flex-row lg:gap-24 lg:px-8 lg:py-20">
-        {/* Newsletter */}
-        <div className="flex flex-col gap-6 lg:w-[42%] lg:flex-shrink-0">
-          <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2rem,3vw,3.2rem)] uppercase leading-tight text-[#111111]">
-            {`DON'T MISS OUT ON`}
-            <br />
-            STUNN UPDATES
-          </h2>
-          <p className="text-sm font-semibold text-[#111111]/70">
-            Exclusive perks, early access, and better coffee — join the list.
-          </p>
-          <form className="flex gap-2">
-            <input
-              type="email"
-              placeholder="YOUR EMAIL"
-              className="min-w-0 flex-1 border border-black/20 bg-white px-4 py-3 font-[family-name:var(--font-anton)] text-sm uppercase tracking-wider text-[#111111] placeholder-[#111111]/45 outline-none focus:border-[#7C3AED]"
-            />
-            <button
-              type="submit"
-              className="shrink-0 border border-[#7C3AED] bg-[#7C3AED] px-5 py-3 font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-white transition-opacity hover:opacity-90"
-            >
-              SUBMIT
-            </button>
-          </form>
-        </div>
-
+      <div className="mx-auto grid max-w-screen-xl gap-12 px-6 py-12 lg:grid-cols-[1.25fr_0.9fr] lg:gap-16 lg:px-8 lg:py-14">
         {/* Nav columns + social */}
-        <nav className="flex flex-wrap gap-x-16 gap-y-10 lg:flex-1 lg:justify-end">
+        <nav className="grid gap-8 sm:grid-cols-3">
           {/* Store */}
           <div className="flex flex-col gap-4">
-            <p className="text-xs uppercase tracking-widest text-[#111111]/45">
+            <p className="border-b border-white/70 pb-3 text-sm font-extrabold text-white">
               STORE
             </p>
             <ul className="flex flex-col gap-3">
@@ -63,7 +38,7 @@ export default function Footer() {
                 <li key={l.label}>
                   <Link
                     href={l.href}
-                    className="text-sm text-[#111111]/70 hover:text-[#111111]"
+                    className="text-sm font-bold uppercase tracking-wide text-white/90 hover:text-white"
                   >
                     {l.label}
                   </Link>
@@ -74,7 +49,7 @@ export default function Footer() {
 
           {/* Help */}
           <div className="flex flex-col gap-4">
-            <p className="text-xs uppercase tracking-widest text-[#111111]/45">
+            <p className="border-b border-white/70 pb-3 text-sm font-extrabold text-white">
               HELP
             </p>
             <ul className="flex flex-col gap-3">
@@ -82,7 +57,7 @@ export default function Footer() {
                 <li key={l.label}>
                   <Link
                     href={l.href}
-                    className="text-sm text-[#111111]/70 hover:text-[#111111]"
+                    className="text-sm font-bold uppercase tracking-wide text-white/90 hover:text-white"
                   >
                     {l.label}
                   </Link>
@@ -93,8 +68,8 @@ export default function Footer() {
 
           {/* Follow Us */}
           <div className="flex flex-col gap-4">
-            <p className="text-xs uppercase tracking-widest text-[#111111]/45">
-              Follow Us
+            <p className="border-b border-white/70 pb-3 text-sm font-extrabold text-white">
+              FOLLOW US
             </p>
             <div className="flex gap-3">
               <a
@@ -102,11 +77,11 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="text-[#111111]/70 hover:text-[#111111]"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
               >
                 <svg
-                  width="22"
-                  height="22"
+                  width="19"
+                  height="19"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -118,11 +93,11 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="text-[#111111]/70 hover:text-[#111111]"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
               >
                 <svg
-                  width="22"
-                  height="22"
+                  width="19"
+                  height="19"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -134,11 +109,11 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X"
-                className="text-[#111111]/70 hover:text-[#111111]"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
               >
                 <svg
-                  width="22"
-                  height="22"
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -148,12 +123,42 @@ export default function Footer() {
             </div>
           </div>
         </nav>
+
+        {/* Newsletter */}
+        <div className="flex flex-col gap-5 lg:pl-4">
+          <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2.4rem,4vw,4rem)] uppercase leading-[0.95] text-white">
+            Sign up for
+            <br />
+            STUNN updates
+          </h2>
+          <p className="max-w-md text-sm font-semibold leading-relaxed text-white/90">
+            Ritual notes, product drops, and subscriber-only perks for calmer
+            coffee days.
+          </p>
+          <form className="flex gap-2">
+            <input
+              type="email"
+              placeholder="E-mail"
+              className="min-w-0 flex-1 rounded-[6px] border border-white bg-transparent px-4 py-3 text-sm font-bold text-white placeholder-white/75 outline-none focus:bg-white/10"
+            />
+            <button
+              type="submit"
+              className="shrink-0 rounded-[6px] bg-white px-5 py-3 text-sm font-extrabold uppercase tracking-wide text-[#111111] transition-transform hover:-translate-y-0.5"
+            >
+              Sign up
+            </button>
+          </form>
+          <p className="text-[9px] font-medium leading-relaxed text-white/70">
+            By joining, you&apos;ll receive STUNN updates and can unsubscribe
+            anytime.
+          </p>
+        </div>
       </div>
 
       {/* ── STUNN white logo ── */}
-      <div className="px-6 py-4 lg:px-8">
+      <div className="mx-auto border-t border-white/70 px-6 py-10 lg:max-w-screen-xl lg:px-8 lg:py-12">
         <Image
-          src={`${CDN}STUNN_LOGO-Purple.png`}
+          src={`${CDN}STUNN_LOGO-White.png`}
           alt="STUNN"
           width={1400}
           height={120}
@@ -162,24 +167,28 @@ export default function Footer() {
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="flex flex-col gap-3 px-6 py-5 text-xs text-[#111111]/55 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-        <span>
-          © {year},{" "}
-          <Link href="/" className="hover:text-[#111111]">
+      <div className="mx-auto flex flex-col gap-3 px-6 pb-5 text-xs text-white/85 sm:flex-row sm:items-center sm:justify-between lg:max-w-screen-xl lg:px-8">
+        <div className="flex flex-wrap gap-x-5 gap-y-2">
+          <Link href="/privacy-policy" className="underline hover:text-white">
+            Privacy Policy
+          </Link>
+          <Link href="/terms" className="underline hover:text-white">
+            Terms & Conditions
+          </Link>
+          <Link href="/refund-policy" className="underline hover:text-white">
+            Return Policy
+          </Link>
+        </div>
+        <span className="font-medium">
+          © {year}{" "}
+          <Link href="/" className="hover:text-white">
             STUNN
           </Link>
         </span>
-        <Image
-          src={`${CDN}icon-payment-mode-logos.svg`}
-          alt="Visa, Apple Pay, Mastercard and more"
-          width={240}
-          height={20}
-          className="h-4 w-auto opacity-60"
-        />
       </div>
 
       {/* ── FDA Disclaimer ── */}
-      <div className="px-6 py-6 text-center text-[10px] italic leading-relaxed text-[#111111]/35 lg:px-16">
+      <div className="mx-auto px-6 pb-8 pt-3 text-center text-[10px] italic leading-relaxed text-white/55 lg:max-w-screen-xl lg:px-8">
         <p>{DISCLAIMER}</p>
       </div>
     </footer>
