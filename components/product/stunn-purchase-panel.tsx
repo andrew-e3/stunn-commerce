@@ -139,12 +139,16 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Title */}
-      <h1 className="mb-2 font-[family-name:var(--font-anton)] text-[clamp(3rem,4.2vw,4.5rem)] uppercase leading-[0.94] tracking-normal text-[#111111]">
-        Quit caffeine. Keep the edge.
+      <h1 className="mb-2 flex flex-wrap items-start gap-x-2 font-[family-name:var(--font-anton)] text-[clamp(3.4rem,5vw,5.8rem)] uppercase leading-[0.86] tracking-normal text-[#111111]">
+        <span>Decaf Coffee</span>
+        <span className="relative -top-1 inline-flex text-[#7C3AED]">
+          <span>+</span>
+          <span className="-ml-1">−</span>
+        </span>
       </h1>
       <p className="mb-5 max-w-lg text-lg font-medium leading-snug text-[#111111]/75">
-        Everything you love about coffee. None of what you don&apos;t: no
-        jitters, no crash, no dependency.
+        Quit caffeine. Keep the edge. Everything you love about coffee. None of
+        what you don&apos;t: no jitters, no crash, no dependency.
       </p>
 
       {/* Benefit chips */}
