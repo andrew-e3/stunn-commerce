@@ -24,8 +24,8 @@ type MerchandiseSearchParams = { [key: string]: string };
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
-const CREATE_ORANGE = "#FF7A1A";
-const CREATE_SOFT = "#FBE6D6";
+const BRAND_PURPLE = "#5A3493";
+const BRAND_LIGHT_PURPLE = "#EDE9F8";
 
 // Retail price per box (no discount). Discount is applied by Shopify Automatic Discounts.
 const RETAIL_PER_BOX = 39.99;
@@ -213,8 +213,8 @@ export default function CartModal() {
                     <div className="flex h-full flex-col overflow-hidden">
                       {/* ── Free shipping banner ── */}
                       <div
-                        className="px-6 py-4 text-center text-xs font-medium text-gray-900"
-                        style={{ backgroundColor: CREATE_SOFT }}
+                        className="px-6 py-4 text-center text-xs font-medium text-[#5A3493]"
+                        style={{ backgroundColor: BRAND_LIGHT_PURPLE }}
                       >
                         {hasFreeShipping ? (
                           <span>
@@ -227,12 +227,12 @@ export default function CartModal() {
                             for <strong>Free Shipping</strong>
                           </span>
                         )}
-                        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/70">
+                        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/80">
                           <div
                             className="h-full rounded-full transition-all duration-500"
                             style={{
                               width: `${progress}%`,
-                              backgroundColor: CREATE_ORANGE,
+                              backgroundColor: BRAND_PURPLE,
                             }}
                           />
                         </div>
@@ -387,11 +387,16 @@ export default function CartModal() {
                                               });
                                             });
                                           }}
-                                          className="rounded-[5px] py-3 text-center text-white transition-all disabled:cursor-default disabled:opacity-60"
+                                          className={`rounded-[5px] border py-3 text-center transition-all disabled:cursor-default ${
+                                            isSelected
+                                              ? "border-[#5A3493]/20 bg-[#EDE9F8] text-[#5A3493]"
+                                              : "border-[#5A3493] bg-[#5A3493] text-white hover:bg-[#4A2A78]"
+                                          }`}
                                           style={{
-                                            backgroundColor: isSelected
-                                              ? "#B8B8B8"
-                                              : CREATE_ORANGE,
+                                            boxShadow:
+                                              tier.best && !isSelected
+                                                ? "0 0 0 2px rgba(90,52,147,0.18)"
+                                                : undefined,
                                           }}
                                         >
                                           <span className="block text-[12px] font-extrabold uppercase leading-none">
@@ -411,8 +416,7 @@ export default function CartModal() {
 
                                   <button
                                     type="button"
-                                    className="mt-8 w-full rounded-[5px] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-opacity hover:opacity-90"
-                                    style={{ backgroundColor: CREATE_ORANGE }}
+                                    className="mt-8 w-full rounded-[5px] border border-[#5A3493] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-colors hover:bg-[#4A2A78]"
                                   >
                                     Add a Gift Message
                                   </button>
@@ -425,10 +429,10 @@ export default function CartModal() {
                       {/* ── Sticky footer ── */}
                       <div
                         className="px-6 pb-6 pt-0"
-                        style={{ backgroundColor: CREATE_ORANGE }}
+                        style={{ backgroundColor: BRAND_PURPLE }}
                       >
                         {/* Scrolling trust ticker */}
-                        <div className="-mx-6 mb-4 overflow-hidden bg-black py-3">
+                        <div className="-mx-6 mb-4 overflow-hidden bg-[#1F1530] py-3">
                           <div
                             className="animate-marquee"
                             style={{ animationDuration: "22s" }}
@@ -492,7 +496,7 @@ export default function CartModal() {
                             {cartSavePct > 0 && (
                               <span
                                 className="rounded-[4px] bg-white px-2 py-1 text-[11px] font-extrabold uppercase tracking-wide"
-                                style={{ color: CREATE_ORANGE }}
+                                style={{ color: BRAND_PURPLE }}
                               >
                                 {cartSavePct}% OFF
                               </span>
@@ -568,7 +572,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between rounded-[5px] border border-gray-900 bg-white px-3 py-3 text-left"
+        className="flex w-full items-center justify-between rounded-[5px] border border-[#5A3493] bg-white px-3 py-3 text-left"
       >
         <span className="text-sm font-extrabold text-gray-900">
           Delivers {selected.label.toLowerCase()}
@@ -577,7 +581,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
           {savePct > 0 && (
             <span
               className="text-xs font-bold uppercase tracking-wide"
-              style={{ color: CREATE_ORANGE }}
+              style={{ color: BRAND_PURPLE }}
             >
               SAVE {savePct}%
             </span>
@@ -596,7 +600,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
         </div>
       </button>
       {open && (
-        <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[5px] border border-gray-900 bg-white shadow-lg">
+        <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[5px] border border-[#5A3493] bg-white shadow-lg">
           {FREQUENCY_OPTIONS.map((opt) => {
             const pct = Math.max(0, (Number(opt.value) - 1) * 5);
             return (
@@ -607,7 +611,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
                   setSelected(opt);
                   setOpen(false);
                 }}
-                className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#FBE6D6] ${
+                className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#EDE9F8] ${
                   selected.value === opt.value
                     ? "font-bold text-gray-900"
                     : "text-gray-700"
@@ -617,7 +621,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
                 {pct > 0 && (
                   <span
                     className="text-[9px] font-bold uppercase tracking-wide"
-                    style={{ color: CREATE_ORANGE }}
+                    style={{ color: BRAND_PURPLE }}
                   >
                     SAVE {pct}%
                   </span>
