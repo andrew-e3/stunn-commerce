@@ -302,63 +302,85 @@ export default async function ProductPage(props: {
       </div>
 
       {/* ── IDENTITY REFRAME ── */}
-      <section className="bg-[#EEEAF8] py-16 lg:py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="max-w-5xl">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#111111]/55">
-              The caffeine loop
-            </p>
-            <h2 className="mb-6 max-w-3xl font-[family-name:var(--font-anton)] text-[clamp(2.7rem,6vw,5.8rem)] uppercase leading-[0.95] text-[#111111]">
-              You don&apos;t have low energy. You&apos;re overstimulated.
-            </h2>
-            <p className="max-w-2xl text-base leading-relaxed text-[#111111]/68">
-              Coffee is not the problem. The loop is: a spike, a crash, worse
-              sleep, then needing more caffeine to feel normal again.
-            </p>
-          </div>
-
-          <div className="mt-12 border-y border-black/10 py-6">
-            <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:items-center">
-              {["Spike", "Crash", "Poor sleep", "Tolerance"].map(
-                (step, index) => (
-                  <div key={step} className="contents">
-                    <div className="flex items-baseline gap-3">
-                      <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#111111]/35">
-                        0{index + 1}
-                      </span>
-                      <span className="font-[family-name:var(--font-anton)] text-[clamp(1.8rem,3vw,3rem)] uppercase leading-none text-[#111111]">
-                        {step}
-                      </span>
-                    </div>
-                    {index < 3 ? (
-                      <span className="hidden text-xl font-bold text-[#5A3493] md:block">
-                        →
-                      </span>
-                    ) : null}
-                  </div>
-                ),
-              )}
-            </div>
-            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#111111]/70">
-              STUNN keeps the ritual. Removes the stimulant dependency.
-            </p>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-12 grid max-w-7xl gap-px px-6 lg:grid-cols-3 lg:px-8">
-          {PERSONA_CARDS.map((card) => (
-            <div
-              key={card.eyebrow}
-              className="border border-black/10 bg-[#EEEAF8] p-6 lg:p-7"
-            >
-              <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[#111111]/45">
-                {card.eyebrow}
+      <section className="bg-white px-4 py-16 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl rounded-[28px] bg-[#EEEAF8] px-6 py-12 lg:px-16 lg:py-16">
+          <div className="grid gap-12 lg:grid-cols-[0.95fr_0.9fr_1fr] lg:items-center">
+            <div>
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-[#111111]/50">
+                The caffeine loop
               </p>
-              <h3 className="font-[family-name:var(--font-anton)] text-2xl uppercase leading-[1.02] tracking-normal text-[#111111]">
-                {card.title}
-              </h3>
+              <h2 className="mb-7 font-[family-name:var(--font-anton)] text-[clamp(2.5rem,5vw,5.2rem)] uppercase leading-[0.95] text-[#111111]">
+                You don&apos;t have low energy.
+                <br />
+                You&apos;re overstimulated.
+              </h2>
+              <p className="max-w-md text-base leading-relaxed text-[#111111]/68">
+                Caffeine can make tired feel productive for a few hours. Then
+                the bill shows up as tension, a crash, worse sleep, and the need
+                for another cup tomorrow.
+              </p>
             </div>
-          ))}
+
+            <div className="relative mx-auto flex aspect-square w-full max-w-[340px] items-center justify-center">
+              <div className="absolute inset-6 rounded-full bg-white/70 blur-2xl" />
+              <Image
+                src={`${CDN}mockup-stunn-box.webp`}
+                alt="STUNN decaf coffee box"
+                width={420}
+                height={420}
+                className="relative z-10 h-full w-full object-contain drop-shadow-[0_24px_35px_rgba(17,17,17,0.14)]"
+              />
+            </div>
+
+            <div className="relative pl-8">
+              <div className="absolute bottom-4 left-[11px] top-4 w-px bg-[#111111]/25" />
+              {[
+                {
+                  title: "Spike",
+                  copy: "A fast lift that feels like energy, but often comes with tension.",
+                },
+                {
+                  title: "Crash",
+                  copy: "Adenosine rebounds. Focus drops. The next cup starts calling.",
+                },
+                {
+                  title: "Poor sleep",
+                  copy: "Even earlier caffeine can disrupt the depth of your rest.",
+                },
+                {
+                  title: "Tolerance",
+                  copy: "Yesterday's dose becomes today's baseline.",
+                },
+              ].map((step, index) => (
+                <div key={step.title} className="relative pb-9 last:pb-0">
+                  <span className="absolute -left-[34px] top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#5A3493] text-[10px] font-bold text-white">
+                    {index + 1}
+                  </span>
+                  <h3 className="mb-2 font-[family-name:var(--font-anton)] text-3xl uppercase leading-none text-[#111111]">
+                    {step.title}
+                  </h3>
+                  <p className="max-w-sm text-sm leading-relaxed text-[#111111]/65">
+                    {step.copy}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-12 border-t border-black/15 pt-8">
+            <div className="grid gap-8 md:grid-cols-3">
+              {PERSONA_CARDS.map((card) => (
+                <div key={card.eyebrow}>
+                  <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#111111]/42">
+                    {card.eyebrow}
+                  </p>
+                  <h3 className="font-[family-name:var(--font-anton)] text-2xl uppercase leading-[1.02] tracking-normal text-[#111111]">
+                    {card.title}
+                  </h3>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
