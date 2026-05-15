@@ -8,6 +8,15 @@ import Image from "next/image";
 import { useEffect, useMemo, useState, useTransition } from "react";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
+const RETAIL_THREE_BOXES = 119.97;
+const SUBSCRIPTION_DISCOUNT_PCT = 23;
+const SUBSCRIPTION_PRICE = Math.round(
+  RETAIL_THREE_BOXES * (1 - SUBSCRIPTION_DISCOUNT_PCT / 100),
+);
+const SUBSCRIPTION_PER_DAY = (
+  (RETAIL_THREE_BOXES * (1 - SUBSCRIPTION_DISCOUNT_PCT / 100)) /
+  90
+).toFixed(2);
 
 export function StickyAtc({ product }: { product: Product }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -99,15 +108,15 @@ export function StickyAtc({ product }: { product: Product }) {
               Autoship
             </span>
             <span className="rounded-full bg-[#7C3AED] px-2 py-1 text-[10px] font-extrabold uppercase leading-none text-white">
-              Save 15%
+              Save {SUBSCRIPTION_DISCOUNT_PCT}%
             </span>
             <span className="text-sm text-[#111111]/35 line-through">$120</span>
             <span className="text-lg font-extrabold leading-none text-[#111111]">
-              $102
+              ${SUBSCRIPTION_PRICE}
             </span>
           </div>
           <p className="mt-1 truncate text-xs text-[#111111]/60">
-            3 boxes every 3 months · $1.13/day · free shipping
+            3 boxes every 3 months · ${SUBSCRIPTION_PER_DAY}/day · free shipping
           </p>
         </div>
 

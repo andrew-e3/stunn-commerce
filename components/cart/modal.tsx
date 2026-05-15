@@ -29,27 +29,25 @@ const BRAND_LIGHT_PURPLE = "#EDE9F8";
 // Retail price per box (no discount). Discount is applied by Shopify Automatic Discounts.
 const RETAIL_PER_BOX = 39.99;
 
-// Qty tiers — savings shown in the button label, cadence in the sub-label
-// savePct reflects Shopify Automatic Discount thresholds: buy 2 = 10%, buy 3 = 15%
+// Qty tiers — savings shown in the button label, cadence in the sub-label.
+// Shopify Automatic Discounts should mirror this model at checkout:
+// 1 box subscription = 20% off, 2+ boxes subscription = 23% off.
 const QTY_TIERS = [
-  { qty: 3, label: "BUY 3", savePct: 15, sub: "every 3 months", best: false },
-  { qty: 4, label: "BUY 4", savePct: 20, sub: "every 4 months", best: false },
-  { qty: 5, label: "BUY 5", savePct: 25, sub: "every 5 months", best: true },
+  { qty: 1, label: "BUY 1", savePct: 20, sub: "every month", best: false },
+  { qty: 2, label: "BUY 2", savePct: 23, sub: "every 2 months", best: false },
+  { qty: 3, label: "BUY 3", savePct: 23, sub: "every 3 months", best: true },
 ];
 
 const FREQUENCY_OPTIONS = [
   { label: "Every 1 month", value: "1" },
   { label: "Every 2 months", value: "2" },
   { label: "Every 3 months", value: "3" },
-  { label: "Every 4 months", value: "4" },
-  { label: "Every 5 months", value: "5" },
 ];
 
 function getTierForQuantity(quantity: number) {
-  return (
-    QTY_TIERS.find((tier) => tier.qty === quantity) ??
-    QTY_TIERS.find((tier) => tier.qty === 3)!
-  );
+  if (quantity <= 1) return QTY_TIERS[0]!;
+  if (quantity === 2) return QTY_TIERS[1]!;
+  return QTY_TIERS[2]!;
 }
 
 function getSavingsForQuantity(quantity: number) {
@@ -203,31 +201,34 @@ export default function CartModal() {
                 </div>
               ) : (
                 (() => {
-                  // ── Shipping progress ──
+                  // ── Displayed cart economics. Shopify checkout remains the source of truth.
                   const FREE_SHIPPING_THRESHOLD = 60;
-                  const subtotal = parseFloat(cart.cost.totalAmount.amount);
-                  const remaining = Math.max(
-                    0,
-                    FREE_SHIPPING_THRESHOLD - subtotal,
-                  );
-                  const progress = Math.min(
-                    100,
-                    (subtotal / FREE_SHIPPING_THRESHOLD) * 100,
-                  );
-                  const hasFreeShipping = remaining === 0;
-
-                  // ── Overall cart savings estimate from the displayed tier strategy.
-                  // Shopify Automatic Discounts remain the source of truth at checkout.
-                  const cartSavings = cart.lines.reduce(
+                  const totalRetail = cart.lines.reduce(
                     (sum, line) =>
-                      sum + getSavingsForQuantity(line.quantity).savings,
+                      sum + getSavingsForQuantity(line.quantity).retail,
                     0,
                   );
-                  const totalRetail = subtotal + cartSavings;
+                  const discountedSubtotal = cart.lines.reduce(
+                    (sum, line) =>
+                      sum + getSavingsForQuantity(line.quantity).discounted,
+                    0,
+                  );
+                  const cartSavings = totalRetail - discountedSubtotal;
                   const cartSavePct =
                     totalRetail > 0
                       ? Math.round((cartSavings / totalRetail) * 100)
                       : 0;
+
+                  // ── Shipping progress ──
+                  const remaining = Math.max(
+                    0,
+                    FREE_SHIPPING_THRESHOLD - totalRetail,
+                  );
+                  const progress = Math.min(
+                    100,
+                    (totalRetail / FREE_SHIPPING_THRESHOLD) * 100,
+                  );
+                  const hasFreeShipping = remaining === 0;
 
                   return (
                     <div className="flex h-full flex-col overflow-hidden">
@@ -518,7 +519,7 @@ export default function CartModal() {
                               </span>
                             )}
                             <span className="text-xl font-extrabold text-white">
-                              ${(totalRetail - cartSavings).toFixed(2)}
+                              ${discountedSubtotal.toFixed(2)}
                             </span>
                           </div>
                         </div>

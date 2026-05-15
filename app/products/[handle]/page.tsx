@@ -782,7 +782,7 @@ export default async function ProductPage(props: {
                 href="#purchase"
                 className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-[#7C3AED] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#5B21B6] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#5B21B6]"
               >
-                Get STUNN from $1.13/day
+                Get STUNN from $1.03/day
               </a>
               <div className="flex items-center gap-2 text-sm text-[#111111]/60">
                 <span className="text-[#EFAF00]">★★★★★</span>
@@ -795,8 +795,8 @@ export default async function ProductPage(props: {
           </div>
           <div className="relative order-first aspect-[4/3] lg:order-last lg:aspect-auto">
             <Image
-              src={`${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`}
-              alt="STUNN sachet poured into a cup of coffee"
+              src={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
+              alt="Friends enjoying a calm coffee ritual with STUNN"
               fill
               className="object-cover"
             />

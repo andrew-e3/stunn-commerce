@@ -8,6 +8,20 @@ import Image from "next/image";
 import { useState, useTransition } from "react";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
+const RETAIL_PER_BOX = 39.99;
+const ONE_TIME_DISCOUNT_PCT = 7.2;
+
+function roundMoney(value: number) {
+  return Math.round(value * 100) / 100;
+}
+
+function priceAfterDiscount(retail: number, discountPct: number) {
+  return roundMoney(retail * (1 - discountPct / 100));
+}
+
+function perDay(price: number, days: number) {
+  return (price / days).toFixed(2);
+}
 
 // Each tier = N single boxes. Shopify automatic discounts should apply the real discount.
 const SUPPLY_TIERS = [
@@ -18,11 +32,9 @@ const SUPPLY_TIERS = [
     shipEvery: "every 3 months",
     shipLabel: "3 boxes (90 sachets) · ships every 3 months",
     count: 90,
-    retailPrice: 119.97,
-    subPrice: 101.97,
-    subPerDay: "1.13",
-    retailPerDay: "1.33",
-    saving: 18.0,
+    retailPrice: roundMoney(RETAIL_PER_BOX * 3),
+    subDiscountPct: 23,
+    oneTimeDiscountPct: ONE_TIME_DISCOUNT_PCT,
     popular: true,
     boxImg: `${CDN}3_e644de60-d3c2-46f8-8f0c-a3ff6cdc08ce.svg`,
   },
@@ -33,11 +45,9 @@ const SUPPLY_TIERS = [
     shipEvery: "every 2 months",
     shipLabel: "2 boxes (60 sachets) · ships every 2 months",
     count: 60,
-    retailPrice: 79.98,
-    subPrice: 67.98,
-    subPerDay: "1.19",
-    retailPerDay: "1.33",
-    saving: 12.0,
+    retailPrice: roundMoney(RETAIL_PER_BOX * 2),
+    subDiscountPct: 23,
+    oneTimeDiscountPct: ONE_TIME_DISCOUNT_PCT,
     popular: false,
     boxImg: `${CDN}2_285eb8bf-bd05-4b30-9fe2-102fc163df41.svg`,
   },
@@ -48,11 +58,9 @@ const SUPPLY_TIERS = [
     shipEvery: "every month",
     shipLabel: "1 box (30 sachets) · ships every month",
     count: 30,
-    retailPrice: 39.99,
-    subPrice: 33.99,
-    subPerDay: "1.22",
-    retailPerDay: "1.33",
-    saving: 6.0,
+    retailPrice: RETAIL_PER_BOX,
+    subDiscountPct: 20,
+    oneTimeDiscountPct: ONE_TIME_DISCOUNT_PCT,
     popular: false,
     boxImg: `${CDN}1_f8453072-0eb1-4a97-b211-2dca94f998b6.svg`,
   },
@@ -96,6 +104,18 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
   const [otpPending, startOtpTransition] = useTransition();
 
   const display = SUPPLY_TIERS.find((v) => v.qty === selectedQty)!;
+  const subPrice = priceAfterDiscount(
+    display.retailPrice,
+    display.subDiscountPct,
+  );
+  const oneTimePrice = priceAfterDiscount(
+    display.retailPrice,
+    display.oneTimeDiscountPct,
+  );
+  const subSaving = roundMoney(display.retailPrice - subPrice);
+  const oneTimeSaving = roundMoney(display.retailPrice - oneTimePrice);
+  const subPerDay = perDay(subPrice, display.count);
+  const oneTimePerDay = perDay(oneTimePrice, display.count);
 
   const oneBoxVariant =
     product.variants.find(
@@ -218,7 +238,12 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
                   {v.count} Count
                 </span>
                 <span className="mt-0.5 block text-[11px] font-medium leading-tight text-[#111111]/55">
-                  (${v.subPerDay} / Day)
+                  ($
+                  {perDay(
+                    priceAfterDiscount(v.retailPrice, v.subDiscountPct),
+                    v.count,
+                  )}{" "}
+                  / Day)
                 </span>
               </div>
             </button>
@@ -235,13 +260,12 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
                 Autoship
               </h2>
               <span className="rounded-full bg-[#7C3AED] px-2 py-1 text-[11px] font-extrabold uppercase leading-none text-white">
-                Save 15%
+                Save {display.subDiscountPct}%
               </span>
             </div>
             <p className="text-xs text-[#111111]">
               <strong>{display.label}</strong>{" "}
-              <span>{display.count} Count</span>{" "}
-              <span>${display.subPerDay} / Day</span>
+              <span>{display.count} Count</span> <span>${subPerDay} / Day</span>
             </p>
           </div>
           <div className="text-right">
@@ -249,10 +273,10 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               ${display.retailPrice.toFixed(0)}
             </p>
             <p className="text-xl font-extrabold leading-none text-[#111111]">
-              ${display.subPrice.toFixed(0)}
+              ${subPrice.toFixed(0)}
             </p>
             <p className="mt-1 text-xs text-[#111111]/65">
-              You&apos;re saving ${display.saving.toFixed(0)}
+              You&apos;re saving ${subSaving.toFixed(0)}
             </p>
           </div>
         </div>
@@ -300,11 +324,22 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           }}
           className="text-xs text-[#111111]/60 disabled:opacity-50"
         >
-          <span className="font-semibold underline text-[#111111]/82">
-            {otpPending
-              ? "Adding…"
-              : `One-Time Purchase — $${display.retailPrice.toFixed(0)} ($${display.retailPerDay} / Day)`}
-          </span>
+          {otpPending ? (
+            <span className="font-semibold underline text-[#111111]/82">
+              Adding…
+            </span>
+          ) : (
+            <span className="font-semibold underline text-[#111111]/82">
+              One-Time Purchase —{" "}
+              <span className="text-[#111111]/35 line-through">
+                ${display.retailPrice.toFixed(0)}
+              </span>{" "}
+              ${oneTimePrice.toFixed(0)} (${oneTimePerDay} / Day)
+              <span className="ml-1 text-[#111111]/45">
+                Save ${oneTimeSaving.toFixed(0)}
+              </span>
+            </span>
+          )}
         </button>
       </div>
 
