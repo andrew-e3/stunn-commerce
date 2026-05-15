@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useEffect, useRef, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
-import { addItem, createCartAndSetCookie, redirectToCheckout, updateItemQuantity } from "./actions";
+import { createCartAndSetCookie, redirectToCheckout, updateItemQuantity } from "./actions";
 import { useCart } from "./cart-context";
 import { DeleteItemButton } from "./delete-item-button";
 import { EditItemQuantityButton } from "./edit-item-quantity-button";
@@ -20,17 +20,21 @@ type MerchandiseSearchParams = { [key: string]: string };
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
-// Each tier = N boxes shipped every N months on autoship
+// Retail price per box (no discount). Discount is applied by Shopify Automatic Discounts.
+const RETAIL_PER_BOX = 39.99;
+
+// Qty tiers — savings shown in the button label, cadence in the sub-label
+// savePct reflects Shopify Automatic Discount thresholds: buy 2 = 10%, buy 3 = 15%
 const QTY_TIERS = [
-  { qty: 1, display: "1 BOX",   sub: "ships monthly",    saving: "–",          best: false },
-  { qty: 2, display: "2 BOXES", sub: "every 2 months",   saving: "SAVE 10%",   best: false },
-  { qty: 3, display: "3 BOXES", sub: "every 3 months",   saving: "BEST VALUE", best: true  },
+  { qty: 1, label: "BUY 1", savePct: 0,  sub: "ships every month",   best: false },
+  { qty: 2, label: "BUY 2", savePct: 10, sub: "every 2 months",      best: false },
+  { qty: 3, label: "BUY 3", savePct: 15, sub: "every 3 months",      best: true  },
 ];
 
 const FREQUENCY_OPTIONS = [
   { label: "Every 1 month",  value: "1" },
   { label: "Every 2 months", value: "2" },
-  { label: "Every 3 months – SAVE 15%", value: "3", highlight: true },
+  { label: "Every 3 months", value: "3", highlight: true },
 ];
 
 function EmptyBox() {
@@ -99,128 +103,140 @@ export default function CartModal() {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col bg-white md:w-[420px]">
-              {/* Header */}
+            {/* Wider panel — matches Create.co proportions */}
+            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col bg-white md:w-[520px]">
+
+              {/* ── Header ── */}
               <div className="flex items-center justify-between px-6 py-5">
                 <p className="font-[family-name:var(--font-anton)] text-2xl uppercase text-[#5A3493]">
-                  Your Cart {cart && cart.lines.length > 0 && <span className="text-[#5A3493]/50">({cart.totalQuantity})</span>}
+                  Your Cart{cart && cart.lines.length > 0 && <span className="ml-1 text-[#5A3493]/50">({cart.totalQuantity})</span>}
                 </p>
-                <button
-                  aria-label="Close cart"
-                  onClick={closeCart}
-                  className="flex h-8 w-8 items-center justify-center text-gray-400 hover:text-gray-600"
-                >
+                <button aria-label="Close cart" onClick={closeCart} className="flex h-8 w-8 items-center justify-center text-gray-400 hover:text-gray-600">
                   <XMarkIcon className="h-5 w-5" />
                 </button>
               </div>
               <div className="h-px bg-gray-100" />
 
               {!cart || cart.lines.length === 0 ? (
-                /* Empty state */
+                /* ── Empty state ── */
                 <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
                   <EmptyBox />
-                  <p className="mt-6 font-[family-name:var(--font-anton)] text-2xl uppercase text-[#5A3493]">
-                    Your cart is empty
-                  </p>
+                  <p className="mt-6 font-[family-name:var(--font-anton)] text-2xl uppercase text-[#5A3493]">Your cart is empty</p>
                   <Link
                     href="/products/focus-without-caffeine"
                     onClick={closeCart}
                     className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#5A3493] px-8 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#3d1c8f] transition-all hover:translate-y-px hover:shadow-[0_3px_0_0_#3d1c8f]"
                   >
-                    Continue shopping →
+                    Shop now →
                   </Link>
-                  <p className="mt-5 text-sm text-gray-500">
-                    Have an account?{" "}
-                    <Link href="/account" className="text-[#5A3493] underline">
-                      Log in
-                    </Link>{" "}
-                    to check out faster.
-                  </p>
                 </div>
               ) : (() => {
+                // ── Shipping progress ──
                 const FREE_SHIPPING_THRESHOLD = 60;
                 const subtotal = parseFloat(cart.cost.totalAmount.amount);
                 const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
                 const progress = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
                 const hasFreeShipping = remaining === 0;
 
+                // ── Overall cart savings (retail vs actual) ──
+                const totalRetail = cart.lines.reduce((sum, l) => sum + l.quantity * RETAIL_PER_BOX, 0);
+                const cartSavePct = totalRetail > 0 ? Math.round(((totalRetail - subtotal) / totalRetail) * 100) : 0;
+
                 return (
                   <div className="flex h-full flex-col overflow-hidden">
 
-                    {/* Free shipping banner — always light purple */}
+                    {/* ── Free shipping banner ── */}
                     <div className="bg-[#EDE9F8] px-6 py-3 text-center text-xs font-semibold text-[#5A3493]">
-                      {hasFreeShipping ? (
-                        <span className="font-bold">🎉 You&apos;ve unlocked <span className="underline">Free Shipping!</span></span>
-                      ) : (
-                        <span>Add <strong>${remaining.toFixed(2)}</strong> more for <strong>Free Shipping</strong></span>
-                      )}
+                      {hasFreeShipping
+                        ? <span className="font-bold">🎉 You&apos;ve unlocked <span className="underline">Free Shipping!</span></span>
+                        : <span>Add <strong>${remaining.toFixed(2)}</strong> more for <strong>Free Shipping</strong></span>
+                      }
                       <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#5A3493]/15">
                         <div className="h-full rounded-full bg-[#5A3493] transition-all duration-500" style={{ width: `${progress}%` }} />
                       </div>
                     </div>
 
-                    {/* Scrollable area */}
+                    {/* ── Scrollable items ── */}
                     <div className="flex-1 overflow-y-auto">
                       <ul className="divide-y divide-gray-100 px-5">
                         {cart.lines
-                          .sort((a, b) =>
-                            a.merchandise.product.title.localeCompare(b.merchandise.product.title)
-                          )
+                          .sort((a, b) => a.merchandise.product.title.localeCompare(b.merchandise.product.title))
                           .map((item, i) => {
                             const params = {} as MerchandiseSearchParams;
                             item.merchandise.selectedOptions.forEach(({ name, value }) => {
                               if (value !== DEFAULT_OPTION) params[name.toLowerCase()] = value;
                             });
-                            const url = createUrl(
-                              `/products/${item.merchandise.product.handle}`,
-                              new URLSearchParams(params)
-                            );
+                            const url = createUrl(`/products/${item.merchandise.product.handle}`, new URLSearchParams(params));
+
+                            // Per-item savings: retail vs what Shopify is charging
+                            const itemRetail = item.quantity * RETAIL_PER_BOX;
+                            const itemActual = parseFloat(item.cost.totalAmount.amount);
+                            const itemSaveAmt = Math.max(0, itemRetail - itemActual);
+                            const itemSavePct = itemRetail > 0 ? Math.round((itemSaveAmt / itemRetail) * 100) : 0;
+
+                            // Current tier for this item
+                            const currentTier = QTY_TIERS.find(t => t.qty === item.quantity) ?? QTY_TIERS[0]!;
+
                             return (
                               <li key={i} className="py-5">
-                                {/* Row 1: image + name/variant + remove */}
+
+                                {/* ── Product row ── */}
                                 <div className="flex gap-4">
-                                  <Link href={url} onClick={closeCart} className="h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-[10px] bg-[#EDE9F8]">
+                                  {/* Image */}
+                                  <Link href={url} onClick={closeCart} className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-[10px] bg-[#EDE9F8]">
                                     <Image
                                       className="h-full w-full object-cover"
-                                      width={72}
-                                      height={72}
+                                      width={80} height={80}
                                       alt={item.merchandise.product.featuredImage?.altText || item.merchandise.product.title}
                                       src={item.merchandise.product.featuredImage?.url}
                                     />
                                   </Link>
 
-                                  <div className="flex flex-1 flex-col">
-                                    {/* Name + Remove */}
+                                  {/* Details */}
+                                  <div className="flex flex-1 flex-col gap-0.5">
+                                    {/* Name + REMOVE */}
                                     <div className="flex items-start justify-between gap-2">
-                                      <div>
-                                        <p className="text-sm font-bold leading-tight text-gray-900">
-                                          {item.merchandise.product.title}
-                                        </p>
-                                        {/* Cadence line: N boxes · ships every N months */}
-                                        <p className="mt-0.5 text-xs text-gray-400">
-                                          {item.quantity} {item.quantity === 1 ? "box" : "boxes"} · ships {item.quantity === 1 ? "every month" : `every ${item.quantity} months`}
-                                        </p>
-                                      </div>
+                                      <p className="text-sm font-bold leading-tight text-gray-900">{item.merchandise.product.title}</p>
                                       <DeleteItemButton item={item} optimisticUpdate={updateCartItem} />
                                     </div>
 
-                                    {/* Qty stepper + price */}
-                                    <div className="mt-3 flex items-center justify-between">
+                                    {/* Cadence subtitle */}
+                                    <p className="text-xs text-gray-400">
+                                      {item.quantity} {item.quantity === 1 ? "box" : "boxes"} · {currentTier.sub}
+                                    </p>
+
+                                    {/* Qty stepper + prices */}
+                                    <div className="mt-2 flex items-center gap-3">
+                                      {/* Qty stepper */}
                                       <div className="flex items-center overflow-hidden rounded-full border-2 border-[#5A3493]">
                                         <EditItemQuantityButton item={item} type="minus" optimisticUpdate={updateCartItem} />
                                         <span className="w-8 text-center text-sm font-bold text-[#5A3493]">{item.quantity}</span>
                                         <EditItemQuantityButton item={item} type="plus" optimisticUpdate={updateCartItem} />
                                       </div>
-                                      <Price
-                                        className="text-base font-bold text-gray-900"
-                                        amount={item.cost.totalAmount.amount}
-                                        currencyCode={item.cost.totalAmount.currencyCode}
-                                      />
+
+                                      {/* Prices */}
+                                      <div className="flex items-baseline gap-2">
+                                        {itemSavePct > 0 && (
+                                          <span className="text-sm text-gray-400 line-through">${itemRetail.toFixed(2)}</span>
+                                        )}
+                                        <Price
+                                          className="text-base font-bold text-gray-900"
+                                          amount={item.cost.totalAmount.amount}
+                                          currencyCode={item.cost.totalAmount.currencyCode}
+                                        />
+                                      </div>
+
+                                      {/* Live savings badge */}
+                                      {itemSavePct > 0 && (
+                                        <span className="ml-auto rounded-full bg-[#EDE9F8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#5A3493]">
+                                          SAVE {itemSavePct}%
+                                        </span>
+                                      )}
                                     </div>
                                   </div>
                                 </div>
 
-                                {/* Row 2: Qty tier buttons */}
+                                {/* ── Qty tier buttons ── */}
                                 <div className="mt-3 grid grid-cols-3 gap-2">
                                   {QTY_TIERS.map((tier) => {
                                     const isSelected = item.quantity === tier.qty;
@@ -237,35 +253,38 @@ export default function CartModal() {
                                             });
                                           });
                                         }}
-                                        className={`rounded-[10px] py-2.5 text-center transition-all disabled:cursor-default ${
+                                        className={`rounded-[10px] py-3 text-center transition-all disabled:cursor-default ${
                                           isSelected
-                                            ? "bg-[#5A3493] text-white"
+                                            ? "bg-[#5A3493] text-white shadow-sm"
                                             : tier.best
                                             ? "border-2 border-[#5A3493] bg-white text-[#5A3493] hover:bg-[#EDE9F8]"
                                             : "border border-gray-200 bg-white text-gray-600 hover:border-[#5A3493]/40"
                                         }`}
                                       >
-                                        <span className="block text-[10px] font-extrabold uppercase tracking-wide leading-none">
-                                          {tier.display}
+                                        {/* "BUY N" */}
+                                        <span className="block text-[11px] font-extrabold uppercase tracking-wide leading-none">
+                                          {tier.label}
                                         </span>
+                                        {/* "SAVE X%" — only when there's an actual discount */}
+                                        {tier.savePct > 0 && (
+                                          <span className={`mt-1 block text-[9px] font-bold uppercase leading-none tracking-wide ${
+                                            isSelected ? "text-white/80" : tier.best ? "text-[#5A3493]" : "text-gray-500"
+                                          }`}>
+                                            SAVE {tier.savePct}%
+                                          </span>
+                                        )}
+                                        {/* Cadence sub-label */}
                                         <span className={`mt-0.5 block text-[9px] font-medium leading-none ${
-                                          isSelected ? "text-white/70" : "text-gray-400"
+                                          isSelected ? "text-white/60" : "text-gray-400"
                                         }`}>
                                           {tier.sub}
                                         </span>
-                                        {tier.saving !== "–" && (
-                                          <span className={`mt-0.5 block text-[8px] font-bold uppercase leading-none ${
-                                            isSelected ? "text-white/90" : tier.best ? "text-[#5A3493]" : "text-gray-500"
-                                          }`}>
-                                            {tier.saving}
-                                          </span>
-                                        )}
                                       </button>
                                     );
                                   })}
                                 </div>
 
-                                {/* Row 3: Subscription frequency — synced to qty */}
+                                {/* ── Frequency dropdown ── */}
                                 <div className="mt-2">
                                   <FrequencyDropdown currentQty={item.quantity} />
                                 </div>
@@ -275,20 +294,21 @@ export default function CartModal() {
                       </ul>
                     </div>
 
-                    {/* Sticky footer */}
+                    {/* ── Sticky footer ── */}
                     <div className="bg-[#5A3493] px-6 pb-6 pt-4">
+
                       {/* Scrolling trust ticker */}
                       <div className="mb-4 overflow-hidden border-b border-white/20 pb-4">
-                        <div className="animate-marquee" style={{ animationDuration: "20s" }}>
+                        <div className="animate-marquee" style={{ animationDuration: "22s" }}>
                           {[
                             { icon: `${CDN}icon-return.svg`,    label: "30-Day Money Back Guarantee" },
                             { icon: `${CDN}icon-truck.svg`,     label: "Ships Within 1 Business Day" },
                             { icon: `${CDN}icon-check-tag.svg`, label: "Cancel Anytime" },
-                            { icon: `${CDN}icon-lock.svg`,      label: "Secure Checkout" },
+                            { icon: `${CDN}icon-lock.svg`,      label: "Discount Auto-Applied" },
                             { icon: `${CDN}icon-return.svg`,    label: "30-Day Money Back Guarantee" },
                             { icon: `${CDN}icon-truck.svg`,     label: "Ships Within 1 Business Day" },
                             { icon: `${CDN}icon-check-tag.svg`, label: "Cancel Anytime" },
-                            { icon: `${CDN}icon-lock.svg`,      label: "Secure Checkout" },
+                            { icon: `${CDN}icon-lock.svg`,      label: "Discount Auto-Applied" },
                           ].map((t, i) => (
                             <span key={i} className="flex shrink-0 items-center gap-2 px-5 text-[10px] font-bold uppercase tracking-widest text-white/80">
                               <img src={t.icon} alt="" className="h-4 w-4 shrink-0" style={{ filter: "brightness(0) invert(1)" }} />
@@ -299,21 +319,32 @@ export default function CartModal() {
                         </div>
                       </div>
 
-                      {/* Subtotal row */}
-                      <div className="mb-3 flex items-center justify-between">
+                      {/* Subtotal: [X% OFF] $old  $new — matches Create.co pattern */}
+                      <div className="mb-3 flex items-center justify-between gap-3">
                         <span className="text-sm font-semibold text-white/80">Subtotal</span>
-                        <Price
-                          className="text-xl font-bold text-white"
-                          amount={cart.cost.totalAmount.amount}
-                          currencyCode={cart.cost.totalAmount.currencyCode}
-                        />
+                        <div className="flex items-center gap-2">
+                          {cartSavePct > 0 && (
+                            <span className="rounded-full bg-white/20 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                              {cartSavePct}% OFF
+                            </span>
+                          )}
+                          {cartSavePct > 0 && (
+                            <span className="text-sm text-white/50 line-through">${totalRetail.toFixed(2)}</span>
+                          )}
+                          <Price
+                            className="text-xl font-bold text-white"
+                            amount={cart.cost.totalAmount.amount}
+                            currencyCode={cart.cost.totalAmount.currencyCode}
+                          />
+                        </div>
                       </div>
 
                       <form action={redirectToCheckout}>
                         <CheckoutButton />
                       </form>
-                      <p className="mt-2 text-center text-[10px] text-white/50">Taxes &amp; shipping calculated at checkout</p>
+                      <p className="mt-2 text-center text-[10px] text-white/50">Taxes &amp; shipping and discounts calculated at checkout</p>
                     </div>
+
                   </div>
                 );
               })()}
@@ -333,7 +364,7 @@ function CheckoutButton() {
       type="submit"
       disabled={pending}
     >
-      {pending ? <LoadingDots className="bg-[#5A3493]" /> : "Checkout →"}
+      {pending ? <LoadingDots className="bg-[#5A3493]" /> : "CHECKOUT →"}
     </button>
   );
 }
@@ -342,15 +373,17 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
   const defaultOpt = currentQty >= 3 ? FREQUENCY_OPTIONS[2]! : currentQty >= 2 ? FREQUENCY_OPTIONS[1]! : FREQUENCY_OPTIONS[0]!;
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(defaultOpt);
-
-  // Sync dropdown when tier buttons change the qty
   const prevQty = useRef(currentQty);
+
   useEffect(() => {
     if (prevQty.current !== currentQty) {
       prevQty.current = currentQty;
       setSelected(currentQty >= 3 ? FREQUENCY_OPTIONS[2]! : currentQty >= 2 ? FREQUENCY_OPTIONS[1]! : FREQUENCY_OPTIONS[0]!);
     }
   }, [currentQty]);
+
+  const savePct = selected.value === "3" ? 15 : selected.value === "2" ? 10 : 0;
+
   return (
     <div className="relative">
       <button
@@ -358,10 +391,12 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
         onClick={() => setOpen(o => !o)}
         className="flex w-full items-center justify-between rounded-[10px] border border-gray-200 bg-white px-3 py-2.5 text-left"
       >
-        <span className="text-xs font-semibold text-gray-800">{selected.label.replace(" – SAVE 15%", "")}</span>
+        <span className="text-xs font-semibold text-gray-800">{selected.label}</span>
         <div className="flex items-center gap-2">
-          {selected.highlight && (
-            <span className="rounded-full bg-[#EDE9F8] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#5A3493]">SAVE 15%</span>
+          {savePct > 0 && (
+            <span className="rounded-full bg-[#EDE9F8] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#5A3493]">
+              SAVE {savePct}%
+            </span>
           )}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}>
             <polyline points="6 9 12 15 18 9" />
@@ -370,19 +405,24 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
       </button>
       {open && (
         <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[10px] border border-gray-200 bg-white shadow-lg">
-          {FREQUENCY_OPTIONS.map(opt => (
-            <button
-              key={opt.value}
-              type="button"
-              onClick={() => { setSelected(opt); setOpen(false); }}
-              className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#EDE9F8] ${selected.value === opt.value ? "font-bold text-[#5A3493]" : "text-gray-700"}`}
-            >
-              <span>{opt.label.replace(" – SAVE 15%", "")}</span>
-              {opt.highlight && (
-                <span className="rounded-full bg-[#EDE9F8] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#5A3493]">SAVE 15%</span>
-              )}
-            </button>
-          ))}
+          {FREQUENCY_OPTIONS.map(opt => {
+            const pct = opt.value === "3" ? 15 : opt.value === "2" ? 10 : 0;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => { setSelected(opt); setOpen(false); }}
+                className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#EDE9F8] ${selected.value === opt.value ? "font-bold text-[#5A3493]" : "text-gray-700"}`}
+              >
+                <span>{opt.label}</span>
+                {pct > 0 && (
+                  <span className="rounded-full bg-[#EDE9F8] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#5A3493]">
+                    SAVE {pct}%
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
