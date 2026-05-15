@@ -460,8 +460,8 @@ export default async function ProductPage(props: {
                 ),
                 headline: "Better nights, better mornings.",
                 copy: "Deep, restorative sleep — wake up reset and truly refreshed.",
-                img: `${CDN}img-s-11.webp`,
-                alt: "STUNN daily coffee ritual",
+                img: `${CDN}img-stunn-coffee-and-bread-background-desktop.webp`,
+                alt: "A calm morning coffee ritual with STUNN",
               },
             ].map((step) => (
               <div key={step.time} className="flex flex-col">
