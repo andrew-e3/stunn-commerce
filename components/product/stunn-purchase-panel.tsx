@@ -87,7 +87,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Title */}
-      <h1 className="mb-1 font-[family-name:var(--font-anton)] text-4xl leading-tight text-[#5A3493]">
+      <h1 className="mb-1 font-[family-name:var(--font-anton)] text-4xl uppercase leading-tight tracking-wide text-[#5A3493]">
         {product.title}
       </h1>
       <p className="mb-4 text-base text-gray-600">Decaf Coffee That Keeps You Sharp</p>
