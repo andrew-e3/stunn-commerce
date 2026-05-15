@@ -9,7 +9,6 @@ import { useState, useTransition } from "react";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const RETAIL_PER_BOX = 39.99;
-const ONE_TIME_DISCOUNT_PCT = 7.2;
 
 function roundMoney(value: number) {
   return Math.round(value * 100) / 100;
@@ -35,7 +34,6 @@ const SUPPLY_TIERS = [
     count: 90,
     retailPrice: roundMoney(RETAIL_PER_BOX * 3),
     subDiscountPct: 25,
-    oneTimeDiscountPct: ONE_TIME_DISCOUNT_PCT,
     popular: true,
     boxImg: `${CDN}3_e644de60-d3c2-46f8-8f0c-a3ff6cdc08ce.svg`,
   },
@@ -48,7 +46,6 @@ const SUPPLY_TIERS = [
     count: 60,
     retailPrice: roundMoney(RETAIL_PER_BOX * 2),
     subDiscountPct: 23,
-    oneTimeDiscountPct: ONE_TIME_DISCOUNT_PCT,
     popular: false,
     boxImg: `${CDN}2_285eb8bf-bd05-4b30-9fe2-102fc163df41.svg`,
   },
@@ -61,7 +58,6 @@ const SUPPLY_TIERS = [
     count: 30,
     retailPrice: RETAIL_PER_BOX,
     subDiscountPct: 20,
-    oneTimeDiscountPct: ONE_TIME_DISCOUNT_PCT,
     popular: false,
     boxImg: `${CDN}1_f8453072-0eb1-4a97-b211-2dca94f998b6.svg`,
   },
@@ -109,14 +105,9 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
     display.retailPrice,
     display.subDiscountPct,
   );
-  const oneTimePrice = priceAfterDiscount(
-    display.retailPrice,
-    display.oneTimeDiscountPct,
-  );
   const subSaving = roundMoney(display.retailPrice - subPrice);
-  const oneTimeSaving = roundMoney(display.retailPrice - oneTimePrice);
   const subPerDay = perDay(subPrice, display.count);
-  const oneTimePerDay = perDay(oneTimePrice, display.count);
+  const oneTimePerDay = perDay(display.retailPrice, display.count);
 
   const oneBoxVariant =
     product.variants.find(
@@ -335,13 +326,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           ) : (
             <span className="font-semibold underline text-[#111111]/82">
               One-Time Purchase —{" "}
-              <span className="text-[#111111]/35 line-through">
-                ${display.retailPrice.toFixed(0)}
-              </span>{" "}
-              ${oneTimePrice.toFixed(0)} (${oneTimePerDay} / Day)
-              <span className="ml-1 text-[#111111]/45">
-                Save ${oneTimeSaving.toFixed(0)}
-              </span>
+              ${display.retailPrice.toFixed(0)} (${oneTimePerDay} / Day)
             </span>
           )}
         </button>
