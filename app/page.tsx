@@ -203,7 +203,7 @@ export default function HomePage() {
             {/* Star badge — pill with avatars */}
             <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#fef8dd] px-4 py-2">
               <span className="text-[#EFAF00]">★★★★★</span>
-              <span className="text-sm font-bold text-[#111111]">5.0</span>
+              <span className="text-sm font-bold text-[#111111]">4.8</span>
               <span className="text-sm text-[#111111]/65">Excellent</span>
               <div className="flex -space-x-2">
                 {AVATARS.slice(0, 3).map((a) => (
@@ -569,7 +569,7 @@ export default function HomePage() {
           <div className="mb-10 text-center">
             <div className="mb-3 flex items-center justify-center gap-1">
               <span className="text-[#EFAF00]">★★★★★</span>
-              <span className="ml-1 text-sm font-bold text-[#111111]">5.0</span>
+              <span className="ml-1 text-sm font-bold text-[#111111]">4.8</span>
             </div>
             <span className="mb-3 inline-block text-xs font-bold uppercase tracking-widest text-[#111111]/50">
               What People Are Saying

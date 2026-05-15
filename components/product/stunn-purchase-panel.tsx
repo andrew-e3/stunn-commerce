@@ -115,7 +115,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       {/* Stars */}
       <div className="mb-4 flex items-center gap-2">
         <span className="text-lg leading-none text-[#EFAF00]">★★★★★</span>
-        <span className="text-sm font-bold text-[#111111]">5.0</span>
+        <span className="text-sm font-bold text-[#111111]">4.8</span>
         <span className="text-sm text-[#111111]/55">Excellent</span>
       </div>
 

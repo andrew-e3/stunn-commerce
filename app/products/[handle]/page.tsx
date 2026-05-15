@@ -639,7 +639,7 @@ export default async function ProductPage(props: {
               ★★★★★
             </div>
             <span className="text-sm font-bold text-[#111111]/70">
-              5.0 · Over 1,000 happy customers
+              4.8 · Over 1,000 happy customers
             </span>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
