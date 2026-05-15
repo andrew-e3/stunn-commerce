@@ -3,7 +3,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import LoadingDots from "components/loading-dots";
-import Price from "components/price";
 import { DEFAULT_OPTION } from "lib/constants";
 import { createUrl } from "lib/utils";
 import Image from "next/image";
@@ -45,6 +44,26 @@ const FREQUENCY_OPTIONS = [
   { label: "Every 4 months", value: "4" },
   { label: "Every 5 months", value: "5" },
 ];
+
+function getTierForQuantity(quantity: number) {
+  return (
+    QTY_TIERS.find((tier) => tier.qty === quantity) ??
+    QTY_TIERS.find((tier) => tier.qty === 3)!
+  );
+}
+
+function getSavingsForQuantity(quantity: number) {
+  const tier = getTierForQuantity(quantity);
+  const retail = quantity * RETAIL_PER_BOX;
+  const savings = retail * (tier.savePct / 100);
+  return {
+    retail,
+    savings,
+    discounted: retail - savings,
+    savePct: tier.savePct,
+    tier,
+  };
+}
 
 function EmptyBox() {
   return (
@@ -197,16 +216,17 @@ export default function CartModal() {
                   );
                   const hasFreeShipping = remaining === 0;
 
-                  // ── Overall cart savings (retail vs actual) ──
-                  const totalRetail = cart.lines.reduce(
-                    (sum, l) => sum + l.quantity * RETAIL_PER_BOX,
+                  // ── Overall cart savings estimate from the displayed tier strategy.
+                  // Shopify Automatic Discounts remain the source of truth at checkout.
+                  const cartSavings = cart.lines.reduce(
+                    (sum, line) =>
+                      sum + getSavingsForQuantity(line.quantity).savings,
                     0,
                   );
+                  const totalRetail = subtotal + cartSavings;
                   const cartSavePct =
                     totalRetail > 0
-                      ? Math.round(
-                          ((totalRetail - subtotal) / totalRetail) * 100,
-                        )
+                      ? Math.round((cartSavings / totalRetail) * 100)
                       : 0;
 
                   return (
@@ -216,6 +236,14 @@ export default function CartModal() {
                         className="px-6 py-4 text-center text-xs font-medium text-[#5A3493]"
                         style={{ backgroundColor: BRAND_LIGHT_PURPLE }}
                       >
+                        {cartSavings > 0 && (
+                          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[#5A3493]">
+                            <span>Estimated savings</span>
+                            <span>
+                              ${cartSavings.toFixed(2)} / {cartSavePct}% off
+                            </span>
+                          </div>
+                        )}
                         {hasFreeShipping ? (
                           <span>
                             Congrats, you&apos;ve unlocked{" "}
@@ -260,25 +288,13 @@ export default function CartModal() {
                                 new URLSearchParams(params),
                               );
 
-                              // Per-item savings: retail vs what Shopify is charging
-                              const itemRetail = item.quantity * RETAIL_PER_BOX;
-                              const itemActual = parseFloat(
-                                item.cost.totalAmount.amount,
-                              );
-                              const itemSaveAmt = Math.max(
-                                0,
-                                itemRetail - itemActual,
-                              );
-                              const itemSavePct =
-                                itemRetail > 0
-                                  ? Math.round((itemSaveAmt / itemRetail) * 100)
-                                  : 0;
-
-                              // Current tier for this item
-                              const currentTier =
-                                QTY_TIERS.find(
-                                  (t) => t.qty === item.quantity,
-                                ) ?? QTY_TIERS[0]!;
+                              const {
+                                retail: itemRetail,
+                                savings: itemSaveAmt,
+                                discounted: itemDiscounted,
+                                savePct: itemSavePct,
+                                tier: currentTier,
+                              } = getSavingsForQuantity(item.quantity);
 
                               return (
                                 <li key={i} className="py-5">
@@ -352,20 +368,22 @@ export default function CartModal() {
                                               ${itemRetail.toFixed(2)}
                                             </span>
                                           )}
-                                          <Price
-                                            className="text-base font-bold text-gray-900"
-                                            amount={
-                                              item.cost.totalAmount.amount
-                                            }
-                                            currencyCode={
-                                              item.cost.totalAmount.currencyCode
-                                            }
-                                          />
+                                          <span className="text-base font-bold text-gray-900">
+                                            ${itemDiscounted.toFixed(2)}
+                                          </span>
                                         </div>
-
-                                        {/* Live savings badge */}
                                       </div>
                                     </div>
+                                  </div>
+
+                                  <div className="mt-4 flex items-center justify-between rounded-[5px] border border-[#5A3493]/15 bg-[#EDE9F8] px-3 py-2 text-[#5A3493]">
+                                    <span className="text-[11px] font-bold uppercase tracking-wide">
+                                      Buy more, save more
+                                    </span>
+                                    <span className="text-[11px] font-extrabold uppercase tracking-wide">
+                                      Save ${itemSaveAmt.toFixed(2)} (
+                                      {itemSavePct}%)
+                                    </span>
                                   </div>
 
                                   {/* ── Qty tier buttons ── */}
@@ -413,13 +431,6 @@ export default function CartModal() {
                                       currentQty={item.quantity}
                                     />
                                   </div>
-
-                                  <button
-                                    type="button"
-                                    className="mt-8 w-full rounded-[5px] border border-[#5A3493] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-colors hover:bg-[#4A2A78]"
-                                  >
-                                    Add a Gift Message
-                                  </button>
                                 </li>
                               );
                             })}
@@ -493,7 +504,7 @@ export default function CartModal() {
                             Subtotal
                           </span>
                           <div className="flex items-center gap-2">
-                            {cartSavePct > 0 && (
+                            {cartSavings > 0 && (
                               <span
                                 className="rounded-[4px] bg-white px-2 py-1 text-[11px] font-extrabold uppercase tracking-wide"
                                 style={{ color: BRAND_PURPLE }}
@@ -501,18 +512,22 @@ export default function CartModal() {
                                 {cartSavePct}% OFF
                               </span>
                             )}
-                            {cartSavePct > 0 && (
+                            {cartSavings > 0 && (
                               <span className="text-sm text-white/50 line-through">
                                 ${totalRetail.toFixed(2)}
                               </span>
                             )}
-                            <Price
-                              className="text-xl font-extrabold text-white"
-                              amount={cart.cost.totalAmount.amount}
-                              currencyCode={cart.cost.totalAmount.currencyCode}
-                            />
+                            <span className="text-xl font-extrabold text-white">
+                              ${(totalRetail - cartSavings).toFixed(2)}
+                            </span>
                           </div>
                         </div>
+
+                        {cartSavings > 0 && (
+                          <p className="-mt-1 mb-3 text-right text-xs font-semibold text-white/75">
+                            You save ${cartSavings.toFixed(2)} today
+                          </p>
+                        )}
 
                         <form action={redirectToCheckout}>
                           <CheckoutButton />
