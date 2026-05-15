@@ -78,26 +78,26 @@ const comparisonRows = [
   {
     label: "Caffeine",
     stunn: "0mg",
-    competitor: "High stimulant load",
+    competitor: "High caffeine",
     type: "text",
   },
   { label: "Jitters", stunn: "None", competitor: "Common", type: "text" },
   {
     label: "Crash",
-    stunn: "No adenosine rebound",
-    competitor: "Afternoon drop-off",
+    stunn: "No rebound",
+    competitor: "Afternoon crash",
     type: "text",
   },
   {
     label: "Sleep",
     stunn: "Sleep-friendly",
-    competitor: "Can disrupt sleep",
+    competitor: "Can disrupt",
     type: "text",
   },
   {
     label: "Daily Format",
     stunn: "Single sachet",
-    competitor: "Brew, queue, repeat",
+    competitor: "Brew + queue",
     type: "text",
   },
 ];
@@ -367,7 +367,7 @@ export default async function ProductPage(props: {
                 ),
                 headline: "Smooth, steady clarity.",
                 copy: "No jitters, no crash — just clean focus from the first sip.",
-                img: `${CDN}img-a-man-sipping-a-cup-of-coffee-while-holding-stunn-sachet_1.webp`,
+                img: "/images/stunn-hero-brand-mug-v2.webp",
                 alt: "Man focused with STUNN coffee",
               },
               {
@@ -390,8 +390,8 @@ export default async function ProductPage(props: {
                 ),
                 headline: "Balanced all day.",
                 copy: "No 3PM crash, no irritability. Just steady, natural energy that lasts.",
-                img: `${CDN}img-stunn-decaf-coffee-after-two-week-effect.webp`,
-                alt: "After 2 weeks of STUNN",
+                img: `${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`,
+                alt: "STUNN sachet poured into coffee",
               },
               {
                 time: "After 30 Days",
@@ -410,8 +410,8 @@ export default async function ProductPage(props: {
                 ),
                 headline: "Better nights, better mornings.",
                 copy: "Deep, restorative sleep — wake up reset and truly refreshed.",
-                img: `${CDN}img-stunn-decaf-coffee-what-to-expect-after-use.webp`,
-                alt: "What to expect after 30 days with STUNN",
+                img: `${CDN}img-s-11.webp`,
+                alt: "STUNN daily coffee ritual",
               },
             ].map((step) => (
               <div key={step.time} className="flex flex-col">
@@ -511,17 +511,17 @@ export default async function ProductPage(props: {
               <br />
               Lose the cost.
             </h2>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[340px] text-sm">
+            <div>
+              <table className="w-full table-fixed text-sm">
                 <thead>
                   <tr>
-                    <th className="w-[40%] pb-4" />
-                    <th className="w-[30%] rounded-t-[10px] bg-[#5A3493] pb-4 pt-4 text-center">
-                      <span className="font-[family-name:var(--font-anton)] text-lg text-white">
+                    <th className="w-[34%] pb-4" />
+                    <th className="w-[33%] rounded-t-[10px] bg-[#5A3493] px-1 pb-4 pt-4 text-center">
+                      <span className="font-[family-name:var(--font-anton)] text-base text-white sm:text-lg">
                         STUNN+
                       </span>
                     </th>
-                    <th className="w-[30%] pb-4 text-center text-[10px] font-bold uppercase tracking-wider text-[#5A3493]/60">
+                    <th className="w-[33%] px-1 pb-4 text-center text-[9px] font-bold uppercase tracking-wider text-[#5A3493]/60 sm:text-[10px]">
                       Caffeine Loop
                     </th>
                   </tr>
@@ -534,11 +534,11 @@ export default async function ProductPage(props: {
                         key={row.label}
                         className="border-t border-[#5A3493]/10"
                       >
-                        <td className="py-3 pr-3 text-[11px] font-bold uppercase tracking-wider text-[#5A3493]">
+                        <td className="py-3 pr-2 text-[10px] font-bold uppercase tracking-wider text-[#5A3493] sm:text-[11px]">
                           {row.label}
                         </td>
                         <td
-                          className={`bg-[#5A3493] py-3 text-center text-xs font-medium text-white ${isLast ? "rounded-b-[10px]" : ""}`}
+                          className={`bg-[#5A3493] px-2 py-3 text-center text-[11px] font-medium leading-tight text-white sm:text-xs ${isLast ? "rounded-b-[10px]" : ""}`}
                         >
                           {row.type === "stars" ? (
                             <span className="text-base text-[#EFAF00]">
@@ -548,7 +548,7 @@ export default async function ProductPage(props: {
                             row.stunn
                           )}
                         </td>
-                        <td className="py-3 text-center text-xs text-[#5A3493]/50">
+                        <td className="px-2 py-3 text-center text-[11px] leading-tight text-[#5A3493]/50 sm:text-xs">
                           {row.type === "stars" ? (
                             <span className="text-base text-[#EFAF00]/50">
                               {row.competitor}
@@ -607,10 +607,11 @@ export default async function ProductPage(props: {
         <div className="mx-auto max-w-screen-xl px-0 lg:grid lg:grid-cols-2">
           <div className="relative min-h-[400px] overflow-hidden lg:min-h-[560px]">
             <Image
-              src={`${CDN}img-andrew-jennings-stunn-founder.webp`}
+              src="/images/stunn-founder.webp"
               alt="Andrew Jennings, founder of STUNN"
               fill
-              className="object-cover object-top"
+              className="object-cover object-center"
+              priority
             />
           </div>
           <div className="flex flex-col justify-center px-8 py-12 lg:px-14">

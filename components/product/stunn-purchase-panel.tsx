@@ -163,7 +163,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       <p className="mb-3 text-sm font-extrabold text-gray-900">
         1. Select Your Size:
       </p>
-      <div className="mb-5 grid grid-cols-3 gap-2">
+      <div className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
         {SUPPLY_TIERS.map((v) => {
           const isSelected = selectedQty === v.qty;
           return (
