@@ -85,7 +85,7 @@ export function StickyAtc({ product }: { product: Product }) {
       }`}
       aria-hidden={!isVisible}
     >
-      <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 py-2.5 lg:px-8 lg:py-3">
+      <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 py-3 lg:px-8">
         <div className="hidden items-center gap-3 sm:flex">
           <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[8px] bg-[#EDE9F8]">
             <Image
@@ -113,18 +113,20 @@ export function StickyAtc({ product }: { product: Product }) {
 
         <div className="min-w-0 flex-1 lg:text-right">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 lg:justify-end">
-            <span className="text-xs font-extrabold text-[#111111] sm:text-sm">
+            <span className="text-[11px] font-extrabold uppercase tracking-wide text-[#111111] sm:text-sm sm:normal-case sm:tracking-normal">
               Autoship
             </span>
             <span className="rounded-full bg-[#7C3AED] px-2 py-1 text-[10px] font-extrabold uppercase leading-none text-white">
               Save {SUBSCRIPTION_DISCOUNT_PCT}%
             </span>
-            <span className="text-sm text-[#111111]/35 line-through">$120</span>
+            <span className="hidden text-sm text-[#111111]/35 line-through sm:inline">
+              $120
+            </span>
             <span className="text-base font-extrabold leading-none text-[#111111] sm:text-lg">
               ${SUBSCRIPTION_PRICE}
             </span>
           </div>
-          <p className="mt-1 truncate text-[11px] text-[#111111]/60 sm:text-xs">
+          <p className="mt-1 hidden truncate text-[11px] text-[#111111]/60 sm:block sm:text-xs">
             3 boxes every 3 months · ${SUBSCRIPTION_PER_DAY}/day · free shipping
           </p>
         </div>
