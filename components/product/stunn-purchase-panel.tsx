@@ -113,13 +113,13 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
   return (
     <div className="px-6 py-8 lg:px-10">
       {/* Stars */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
+      <div className="mb-4 flex w-full items-center gap-3">
+        <div className="flex min-w-0 items-center gap-2">
           <span className="text-lg leading-none text-[#EFAF00]">★★★★★</span>
           <span className="text-sm font-bold text-[#111111]">4.8</span>
           <span className="text-sm text-[#111111]/55">Excellent</span>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#111111] px-3 py-1.5 text-[11px] font-bold text-white">
+        <span className="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#111111] px-3 py-1.5 text-[11px] font-bold text-white">
           <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white text-[#111111]">
             <svg
               width="11"
