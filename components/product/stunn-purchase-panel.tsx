@@ -120,10 +120,10 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Title */}
-      <h1 className="mb-1 font-[family-name:var(--font-anton)] text-4xl uppercase leading-tight tracking-wide text-[#5A3493]">
+      <h1 className="mb-2 font-[family-name:var(--font-anton)] text-[clamp(3rem,4.2vw,4.5rem)] uppercase leading-[0.94] tracking-normal text-[#5A3493]">
         Quit caffeine. Keep the edge.
       </h1>
-      <p className="mb-5 max-w-md text-base leading-relaxed text-gray-600">
+      <p className="mb-5 max-w-lg text-lg font-medium leading-snug text-[#2F2540]/75">
         Everything you love about coffee. None of what you don&apos;t: no
         jitters, no crash, no dependency.
       </p>
@@ -133,7 +133,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         {BENEFIT_CHIPS.slice(0, 4).map((chip) => (
           <span
             key={chip}
-            className="rounded-full border border-[#5A3493]/20 bg-[#EDE9F8] px-3 py-1 text-xs font-semibold text-[#5A3493]"
+            className="rounded-full border border-[#5A3493]/20 bg-[#EDE9F8] px-3 py-1 text-xs font-bold text-[#5A3493]"
           >
             {chip}
           </span>

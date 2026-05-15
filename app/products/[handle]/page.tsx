@@ -235,53 +235,9 @@ export default async function ProductPage(props: {
 
       {/* ── HERO: coffee lifestyle image + purchase panel ── */}
       <div className="relative lg:flex lg:items-start">
-        {/* Left: expandable image gallery with benefit pills baked into hero */}
+        {/* Left: expandable image gallery */}
         <div className="lg:w-1/2">
-          <ImageGallery
-            images={MOSAIC_IMAGES}
-            heroOverlay={
-              <>
-                {/* Bottom-left pills */}
-                <div className="absolute bottom-5 left-4 flex flex-col gap-2">
-                  {[
-                    { label: "Calm Focus", icon: `${CDN}icon-focus.svg` },
-                    { label: "No Jitters", icon: `${CDN}icon-smile.svg` },
-                  ].map((b) => (
-                    <div
-                      key={b.label}
-                      className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md"
-                    >
-                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
-                        <img src={b.icon} alt="" className="h-4 w-4" />
-                      </div>
-                      <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
-                        {b.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                {/* Bottom-right pills */}
-                <div className="absolute bottom-5 right-4 flex flex-col items-end gap-2">
-                  {[
-                    { label: "Steady Energy", icon: `${CDN}icon-energy.svg` },
-                    { label: "Sleep Friendly", icon: `${CDN}icon-sleep.svg` },
-                  ].map((b) => (
-                    <div
-                      key={b.label}
-                      className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md"
-                    >
-                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#EDE9F8]">
-                        <img src={b.icon} alt="" className="h-4 w-4" />
-                      </div>
-                      <span className="whitespace-nowrap font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
-                        {b.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            }
-          />
+          <ImageGallery images={MOSAIC_IMAGES} />
         </div>
 
         {/* Right: purchase panel */}
@@ -326,7 +282,7 @@ export default async function ProductPage(props: {
               <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#5A3493]/50">
                 {card.eyebrow}
               </p>
-              <h3 className="mb-4 text-xl font-extrabold leading-tight text-[#5A3493]">
+              <h3 className="mb-4 font-[family-name:var(--font-anton)] text-2xl uppercase leading-[1.02] tracking-normal text-[#5A3493]">
                 {card.title}
               </h3>
               <p className="text-sm leading-relaxed text-[#5A3493]/68">
@@ -418,7 +374,7 @@ export default async function ProductPage(props: {
               },
             ].map((step) => (
               <div key={step.time} className="flex flex-col">
-                <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[16px]">
+                <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[8px]">
                   <Image
                     src={step.img}
                     alt={step.alt}
@@ -433,7 +389,7 @@ export default async function ProductPage(props: {
                       {step.time}
                     </span>
                   </div>
-                  <p className="mb-1 font-[family-name:var(--font-anton)] text-xl uppercase text-gray-900">
+                  <p className="mb-1 font-[family-name:var(--font-anton)] text-2xl uppercase leading-none tracking-normal text-gray-900">
                     {step.headline}
                   </p>
                   <p className="text-sm leading-relaxed text-gray-500">
