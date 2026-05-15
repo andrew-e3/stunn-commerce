@@ -164,7 +164,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         <span>Decaf </span>
         <span className="whitespace-nowrap">
           Coffee
-          <span className="ml-1 inline-flex -translate-y-[0.04em] flex-col items-center justify-center align-top text-[0.46em] leading-[0.58] text-[#7C3AED]">
+          <span className="ml-1.5 inline-flex -translate-y-[0.03em] flex-col items-center justify-center align-top text-[0.58em] leading-[0.52] text-[#111111]">
             <span>+</span>
             <span>−</span>
           </span>
