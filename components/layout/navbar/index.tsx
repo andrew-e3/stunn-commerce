@@ -1,6 +1,4 @@
 import CartModal from "components/cart/modal";
-import { getMenu } from "lib/shopify";
-import { Menu } from "lib/shopify/types";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -8,70 +6,68 @@ import MobileMenu from "./mobile-menu";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
-export async function Navbar() {
-  const menu = await getMenu("next-js-frontend-header-menu");
+const LEFT_LINKS = [
+  { label: "Shop", href: "/products/focus-without-caffeine" },
+  { label: "Learn", href: "/about-us" },
+];
 
+const RIGHT_LINKS = [
+  { label: "About", href: "/about-us" },
+  { label: "Contact", href: "/contact" },
+];
+
+export function Navbar() {
   return (
-    <nav className="relative flex items-center justify-between border-b border-black/10 bg-white px-6 py-4">
+    <nav className="relative grid min-h-[68px] grid-cols-[1fr_auto_1fr] items-center border-b border-black/10 bg-white px-4 md:px-8">
       {/* Mobile menu */}
-      <div className="block flex-none md:hidden">
+      <div className="flex items-center justify-start md:hidden">
         <Suspense fallback={null}>
-          <MobileMenu menu={menu} />
+          <MobileMenu menu={[...LEFT_LINKS, ...RIGHT_LINKS]} />
         </Suspense>
       </div>
 
-      {/* Logo - left */}
-      <div className="flex w-1/3 items-center">
+      {/* Left nav — Create-style primary links */}
+      <div className="hidden items-center gap-8 md:flex">
+        {LEFT_LINKS.map((item) => (
+          <Link
+            key={item.label}
+            href={item.href}
+            prefetch={true}
+            className="text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+
+      {/* Centered logo */}
+      <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">
         <Link href="/" prefetch={true}>
           <Image
             src={`${CDN}STUNN_LOGO-Purple.png`}
             alt="STUNN"
-            width={120}
+            width={132}
             height={32}
-            className="h-7 w-auto"
+            className="h-8 w-auto"
             priority
           />
         </Link>
       </div>
 
-      {/* Nav links - center */}
-      <div className="hidden w-1/3 items-center justify-center md:flex">
-        {menu.length ? (
-          <ul className="flex gap-8 text-sm">
-            {menu.map((item: Menu) => (
-              <li key={item.title}>
-                <Link
-                  href={item.path}
-                  prefetch={true}
-                  className="font-semibold uppercase tracking-widest text-[#111111]/70 hover:text-[#111111]"
-                >
-                  {item.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul className="flex gap-8 text-sm">
-            {["Shop", "About Us", "Contact"].map((label) => (
-              <li key={label}>
-                <Link
-                  href={
-                    label === "Shop"
-                      ? "/products/focus-without-caffeine"
-                      : `/${label.toLowerCase().replace(" ", "-")}`
-                  }
-                  className="font-semibold uppercase tracking-widest text-[#111111]/70 hover:text-[#111111]"
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      {/* Cart - right */}
-      <div className="flex w-1/3 justify-end">
+      {/* Right utility links + cart */}
+      <div className="col-start-3 flex items-center justify-end gap-6">
+        <div className="hidden items-center gap-8 md:flex">
+          {RIGHT_LINKS.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              prefetch={true}
+              className="text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
         <CartModal />
       </div>
     </nav>
