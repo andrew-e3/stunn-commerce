@@ -12,7 +12,7 @@ export async function Navbar() {
   const menu = await getMenu("next-js-frontend-header-menu");
 
   return (
-    <nav className="relative flex items-center justify-between bg-[#5A3493] px-6 py-4">
+    <nav className="relative flex items-center justify-between border-b border-black/10 bg-white px-6 py-4">
       {/* Mobile menu */}
       <div className="block flex-none md:hidden">
         <Suspense fallback={null}>
@@ -24,7 +24,7 @@ export async function Navbar() {
       <div className="flex w-1/3 items-center">
         <Link href="/" prefetch={true}>
           <Image
-            src={`${CDN}STUNN_LOGO-White.png`}
+            src={`${CDN}STUNN_LOGO-Purple.png`}
             alt="STUNN"
             width={120}
             height={32}
@@ -43,7 +43,7 @@ export async function Navbar() {
                 <Link
                   href={item.path}
                   prefetch={true}
-                  className="font-semibold uppercase tracking-widest text-white/80 hover:text-white"
+                  className="font-semibold uppercase tracking-widest text-[#111111]/70 hover:text-[#111111]"
                 >
                   {item.title}
                 </Link>
@@ -55,8 +55,12 @@ export async function Navbar() {
             {["Shop", "About Us", "Contact"].map((label) => (
               <li key={label}>
                 <Link
-                  href={label === "Shop" ? "/products/focus-without-caffeine" : `/${label.toLowerCase().replace(" ", "-")}`}
-                  className="font-semibold uppercase tracking-widest text-white/80 hover:text-white"
+                  href={
+                    label === "Shop"
+                      ? "/products/focus-without-caffeine"
+                      : `/${label.toLowerCase().replace(" ", "-")}`
+                  }
+                  className="font-semibold uppercase tracking-widest text-[#111111]/70 hover:text-[#111111]"
                 >
                   {label}
                 </Link>

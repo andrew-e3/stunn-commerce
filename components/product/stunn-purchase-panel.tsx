@@ -70,7 +70,7 @@ const BENEFIT_CHIPS = [
 function CheckCircleIcon() {
   return (
     <svg
-      className="h-4 w-4 flex-shrink-0 text-[#5A3493]"
+      className="h-4 w-4 flex-shrink-0 text-[#111111]"
       viewBox="0 0 16 16"
       fill="currentColor"
     >
@@ -115,15 +115,15 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       {/* Stars */}
       <div className="mb-4 flex items-center gap-2">
         <span className="text-lg leading-none text-[#EFAF00]">★★★★★</span>
-        <span className="text-sm font-bold text-[#2F2540]">5.0</span>
-        <span className="text-sm text-[#5A3493]/55">Excellent</span>
+        <span className="text-sm font-bold text-[#111111]">5.0</span>
+        <span className="text-sm text-[#111111]/55">Excellent</span>
       </div>
 
       {/* Title */}
-      <h1 className="mb-2 font-[family-name:var(--font-anton)] text-[clamp(3rem,4.2vw,4.5rem)] uppercase leading-[0.94] tracking-normal text-[#5A3493]">
+      <h1 className="mb-2 font-[family-name:var(--font-anton)] text-[clamp(3rem,4.2vw,4.5rem)] uppercase leading-[0.94] tracking-normal text-[#111111]">
         Quit caffeine. Keep the edge.
       </h1>
-      <p className="mb-5 max-w-lg text-lg font-medium leading-snug text-[#2F2540]/75">
+      <p className="mb-5 max-w-lg text-lg font-medium leading-snug text-[#111111]/75">
         Everything you love about coffee. None of what you don&apos;t: no
         jitters, no crash, no dependency.
       </p>
@@ -133,7 +133,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         {BENEFIT_CHIPS.slice(0, 4).map((chip) => (
           <span
             key={chip}
-            className="rounded-full border border-[#5A3493]/20 bg-[#EDE9F8] px-3 py-1 text-xs font-bold text-[#5A3493]"
+            className="rounded-full border border-[#5A3493]/20 bg-[#EDE9F8] px-3 py-1 text-xs font-bold text-[#111111]"
           >
             {chip}
           </span>
@@ -154,13 +154,13 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             ),
           )}
         </div>
-        <span className="text-xs text-[#5A3493]/55">
+        <span className="text-xs text-[#111111]/55">
           1,000+ Others Exploring Better Coffee
         </span>
       </div>
 
       {/* Quantity selector */}
-      <p className="mb-3 text-sm font-extrabold text-[#2F2540]">
+      <p className="mb-3 text-sm font-extrabold text-[#111111]">
         1. Select Your Size:
       </p>
       <div className="mb-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
@@ -188,13 +188,13 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
                 className="h-14 w-14 shrink-0 object-contain"
               />
               <div className="min-w-0">
-                <span className="block text-sm font-extrabold leading-tight text-[#2F2540]">
+                <span className="block text-sm font-extrabold leading-tight text-[#111111]">
                   {v.label}
                 </span>
-                <span className="block text-[11px] leading-tight text-[#5A3493]/55">
+                <span className="block text-[11px] leading-tight text-[#111111]/55">
                   {v.count} Count
                 </span>
-                <span className="mt-0.5 block text-[11px] font-medium leading-tight text-[#5A3493]/55">
+                <span className="mt-0.5 block text-[11px] font-medium leading-tight text-[#111111]/55">
                   (${v.subPerDay} / Day)
                 </span>
               </div>
@@ -208,27 +208,27 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         <div className="mb-3 flex items-start justify-between gap-4">
           <div>
             <div className="mb-1 flex flex-wrap items-center gap-2">
-              <h2 className="text-lg font-extrabold leading-none text-[#2F2540]">
+              <h2 className="text-lg font-extrabold leading-none text-[#111111]">
                 Autoship
               </h2>
               <span className="rounded-full bg-[#5A3493] px-2 py-1 text-[11px] font-extrabold uppercase leading-none text-white">
                 Save 15%
               </span>
             </div>
-            <p className="text-xs text-[#2F2540]">
+            <p className="text-xs text-[#111111]">
               <strong>{display.label}</strong>{" "}
               <span>{display.count} Count</span>{" "}
               <span>${display.subPerDay} / Day</span>
             </p>
           </div>
           <div className="text-right">
-            <p className="text-sm text-[#5A3493]/35 line-through">
+            <p className="text-sm text-[#111111]/35 line-through">
               ${display.retailPrice.toFixed(0)}
             </p>
-            <p className="text-xl font-extrabold leading-none text-[#2F2540]">
+            <p className="text-xl font-extrabold leading-none text-[#111111]">
               ${display.subPrice.toFixed(0)}
             </p>
-            <p className="mt-1 text-xs text-[#5A3493]/65">
+            <p className="mt-1 text-xs text-[#111111]/65">
               You&apos;re saving ${display.saving.toFixed(0)}
             </p>
           </div>
@@ -249,7 +249,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           {addPending ? "ADDING..." : "ADD TO CART"}
         </button>
 
-        <div className="grid gap-2 text-[11px] text-[#2F2540]/72 sm:grid-cols-3">
+        <div className="grid gap-2 text-[11px] text-[#111111]/72 sm:grid-cols-3">
           {[
             `Ships FREE ${display.shipEvery}`,
             "VIP discounts & perks",
@@ -275,9 +275,9 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               await addItem(null, oneBoxVariant.id, display.qty);
             });
           }}
-          className="text-xs text-[#5A3493]/60 disabled:opacity-50"
+          className="text-xs text-[#111111]/60 disabled:opacity-50"
         >
-          <span className="font-semibold underline text-[#2F2540]/82">
+          <span className="font-semibold underline text-[#111111]/82">
             {otpPending
               ? "Adding…"
               : `One-Time Purchase — $${display.retailPrice.toFixed(0)} ($${display.retailPerDay} / Day)`}
@@ -312,7 +312,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               height={32}
               className="h-7 w-7 brightness-0"
             />
-            <span className="whitespace-pre-line text-xs font-extrabold leading-tight text-[#2F2540]">
+            <span className="whitespace-pre-line text-xs font-extrabold leading-tight text-[#111111]">
               {b.label}
             </span>
           </div>
@@ -321,7 +321,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
 
       {/* Payment icons */}
       <div className="mb-6 rounded-[10px] border border-[#5A3493]/10 p-3 text-center">
-        <p className="mb-2 text-xs text-[#5A3493]/45">We accept:</p>
+        <p className="mb-2 text-xs text-[#111111]/45">We accept:</p>
         <Image
           src={`${CDN}icon-payment-mode-logos.svg`}
           alt="Visa, Apple Pay, Mastercard and more"
@@ -333,27 +333,27 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
 
       {/* Accordions */}
       <Accordion title="INGREDIENTS" defaultOpen>
-        <p className="text-sm leading-relaxed text-[#5A3493]/68">
-          <strong className="text-[#2F2540]">STUNN</strong> is crafted with a
+        <p className="text-sm leading-relaxed text-[#111111]/68">
+          <strong className="text-[#111111]">STUNN</strong> is crafted with a
           clean, functional blend of Lion&apos;s Mane 300mg, Rhodiola 250mg,
           Cordyceps 100mg, L-Theanine 100mg, and Decaf Instant Coffee 1500mg.
         </p>
       </Accordion>
       <Accordion title="WHY STUNN?">
-        <p className="text-sm leading-relaxed text-[#5A3493]/68">
+        <p className="text-sm leading-relaxed text-[#111111]/68">
           Most coffee gives you ritual and side effects together. STUNN keeps
           the ritual and removes the caffeine loop: the spike, crash, disrupted
           sleep, and tolerance creep.
         </p>
       </Accordion>
       <Accordion title="DIRECTIONS">
-        <p className="text-sm leading-relaxed text-[#5A3493]/68">
+        <p className="text-sm leading-relaxed text-[#111111]/68">
           Mix one sachet into 8–12 oz of hot or cold water. Stir or shake well.
           Enjoy morning, afternoon, or evening — no cutoff time needed.
         </p>
       </Accordion>
       <Accordion title="BENEFITS">
-        <ul className="space-y-2 text-sm text-[#5A3493]/68">
+        <ul className="space-y-2 text-sm text-[#111111]/68">
           {[
             "Calm, sustained focus without jitters",
             "No afternoon crash",
@@ -362,7 +362,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             "30-day money back guarantee",
           ].map((b) => (
             <li key={b} className="flex items-start gap-2">
-              <span className="mt-0.5 text-[#5A3493]">✓</span>
+              <span className="mt-0.5 text-[#111111]">✓</span>
               {b}
             </li>
           ))}
@@ -389,10 +389,10 @@ function Accordion({
         onClick={() => setOpen(!open)}
         className="flex w-full items-center justify-between py-3 text-left"
       >
-        <span className="text-xs font-bold uppercase tracking-widest text-[#2F2540]">
+        <span className="text-xs font-bold uppercase tracking-widest text-[#111111]">
           {title}
         </span>
-        <span className="text-lg text-[#5A3493]/45">{open ? "−" : "+"}</span>
+        <span className="text-lg text-[#111111]/45">{open ? "−" : "+"}</span>
       </button>
       {open && <div className="pb-4">{children}</div>}
     </div>

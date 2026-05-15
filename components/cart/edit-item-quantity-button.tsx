@@ -14,7 +14,7 @@ function SubmitButton({ type }: { type: "plus" | "minus" }) {
         type === "plus" ? "Increase item quantity" : "Reduce item quantity"
       }
       className={clsx(
-        "ease flex h-full min-w-[38px] max-w-[38px] flex-none items-center justify-center p-2 text-gray-900 transition-all duration-200 hover:bg-gray-50",
+        "ease flex h-full min-w-[38px] max-w-[38px] flex-none items-center justify-center p-2 text-[#111111] transition-all duration-200 hover:bg-gray-50",
         {
           "ml-auto": type === "minus",
         },

@@ -106,7 +106,7 @@ function EmptyBox() {
       <circle cx="40" cy="20" r="3" fill="#5A3493" />
       <path
         d="M40 8v4M40 28v4M52 16l-3 3M31 29l-3 3M52 24l-3-3M31 11l-3-3"
-        stroke="#C1D0A5"
+        stroke="#5A3493"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
@@ -169,10 +169,10 @@ export default function CartModal() {
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col overflow-hidden rounded-none bg-white shadow-2xl md:w-[520px] md:rounded-l-[20px]">
               {/* ── Header ── */}
               <div className="flex items-center justify-between px-6 py-5">
-                <p className="text-lg font-extrabold tracking-tight text-gray-900">
+                <p className="text-lg font-extrabold tracking-tight text-[#111111]">
                   Your Cart{" "}
                   {cart && cart.lines.length > 0 && (
-                    <span className="text-gray-900">
+                    <span className="text-[#111111]">
                       ({cart.totalQuantity})
                     </span>
                   )}
@@ -180,7 +180,7 @@ export default function CartModal() {
                 <button
                   aria-label="Close cart"
                   onClick={closeCart}
-                  className="flex h-9 w-9 items-center justify-center text-gray-900 hover:text-gray-600"
+                  className="flex h-9 w-9 items-center justify-center text-[#111111] hover:text-[#111111]/65"
                 >
                   <XMarkIcon className="h-6 w-6 stroke-2" />
                 </button>
@@ -326,7 +326,7 @@ export default function CartModal() {
                                     <div className="flex min-w-0 flex-1 flex-col">
                                       {/* Name + REMOVE */}
                                       <div className="flex items-start justify-between gap-2">
-                                        <p className="text-base font-extrabold leading-tight text-gray-900">
+                                        <p className="text-base font-extrabold leading-tight text-[#111111]">
                                           {item.merchandise.product.title}
                                         </p>
                                         <DeleteItemButton
@@ -336,7 +336,7 @@ export default function CartModal() {
                                       </div>
 
                                       {/* Cadence subtitle */}
-                                      <p className="mt-1 text-sm text-gray-600">
+                                      <p className="mt-1 text-sm text-[#111111]/65">
                                         {item.quantity}{" "}
                                         {item.quantity === 1 ? "box" : "boxes"}{" "}
                                         · {currentTier.sub}
@@ -345,13 +345,13 @@ export default function CartModal() {
                                       {/* Qty stepper + prices */}
                                       <div className="mt-4 flex items-center gap-3">
                                         {/* Qty stepper */}
-                                        <div className="flex h-9 items-center overflow-hidden rounded-[5px] border border-gray-900">
+                                        <div className="flex h-9 items-center overflow-hidden rounded-[5px] border border-[#111111]">
                                           <EditItemQuantityButton
                                             item={item}
                                             type="minus"
                                             optimisticUpdate={updateCartItem}
                                           />
-                                          <span className="w-10 text-center text-sm font-extrabold text-gray-900">
+                                          <span className="w-10 text-center text-sm font-extrabold text-[#111111]">
                                             {item.quantity}
                                           </span>
                                           <EditItemQuantityButton
@@ -364,11 +364,11 @@ export default function CartModal() {
                                         {/* Prices */}
                                         <div className="ml-auto flex items-baseline gap-2">
                                           {itemSavePct > 0 && (
-                                            <span className="text-sm text-gray-400 line-through">
+                                            <span className="text-sm text-[#111111]/40 line-through">
                                               ${itemRetail.toFixed(2)}
                                             </span>
                                           )}
-                                          <span className="text-base font-bold text-gray-900">
+                                          <span className="text-base font-bold text-[#111111]">
                                             ${itemDiscounted.toFixed(2)}
                                           </span>
                                         </div>
@@ -552,7 +552,7 @@ function CheckoutButton() {
   const { pending } = useFormStatus();
   return (
     <button
-      className="w-full rounded-[5px] bg-white py-4 text-base font-extrabold uppercase tracking-wide text-gray-900 transition-opacity hover:opacity-95 disabled:opacity-60"
+      className="w-full rounded-[5px] bg-white py-4 text-base font-extrabold uppercase tracking-wide text-[#111111] transition-opacity hover:opacity-95 disabled:opacity-60"
       type="submit"
       disabled={pending}
     >
@@ -589,7 +589,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
         onClick={() => setOpen((o) => !o)}
         className="flex w-full items-center justify-between rounded-[5px] border border-[#5A3493] bg-white px-3 py-3 text-left"
       >
-        <span className="text-sm font-extrabold text-gray-900">
+        <span className="text-sm font-extrabold text-[#111111]">
           Delivers {selected.label.toLowerCase()}
         </span>
         <div className="flex items-center gap-2">
@@ -608,7 +608,7 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="2.5"
-            className={`text-gray-900 transition-transform ${open ? "rotate-180" : ""}`}
+            className={`text-[#111111] transition-transform ${open ? "rotate-180" : ""}`}
           >
             <polyline points="6 9 12 15 18 9" />
           </svg>
@@ -628,8 +628,8 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
                 }}
                 className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#EDE9F8] ${
                   selected.value === opt.value
-                    ? "font-bold text-gray-900"
-                    : "text-gray-700"
+                    ? "font-bold text-[#111111]"
+                    : "text-[#111111]/75"
                 }`}
               >
                 <span>Delivers {opt.label.toLowerCase()}</span>

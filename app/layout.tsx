@@ -7,7 +7,11 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import { baseUrl } from "lib/utils";
 
-const anton = Anton({ weight: "400", subsets: ["latin"], variable: "--font-anton" });
+const anton = Anton({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-anton",
+});
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const { SITE_NAME } = process.env;
@@ -33,8 +37,8 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${anton.variable} ${inter.variable}`}>
-      <body className="bg-[#EDEAEF] font-[family-name:var(--font-inter)] text-gray-900">
-        <div className="bg-[#fef8dd] py-2 pr-6 text-right text-sm text-[#5A3493] font-medium">
+      <body className="bg-white font-[family-name:var(--font-inter)] text-[#111111]">
+        <div className="bg-[#5A3493] py-2 text-center text-sm font-semibold text-white">
           Upgrade your coffee ritual — get 15% off + free shipping →
         </div>
         <CartProvider cartPromise={cart}>

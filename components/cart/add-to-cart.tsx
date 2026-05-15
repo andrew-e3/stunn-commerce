@@ -16,7 +16,7 @@ function SubmitButton({
   selectedVariantId: string | undefined;
 }) {
   const buttonClasses =
-    "relative flex w-full items-center justify-center rounded-[10px] bg-[#F9CEE1] p-4 font-bold tracking-widest text-[#5A3493] uppercase shadow-[0_5px_0_0_#C1D0A5] transition-all hover:shadow-[0_3px_0_0_#C1D0A5] hover:translate-y-[2px] active:shadow-[0_1px_0_0_#C1D0A5] active:translate-y-[4px]";
+    "relative flex w-full items-center justify-center rounded-[10px] bg-[#5A3493] p-4 font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#3d1c8f] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#3d1c8f] active:translate-y-[4px] active:shadow-[0_1px_0_0_#3d1c8f]";
   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
 
   if (!availableForSale) {
