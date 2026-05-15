@@ -440,10 +440,10 @@ export default async function ProductPage(props: {
                       {step.time}
                     </span>
                   </div>
-                  <p className="mb-1 font-[family-name:var(--font-anton)] text-2xl uppercase leading-none tracking-normal text-gray-900">
+                  <p className="mb-1 font-[family-name:var(--font-anton)] text-2xl uppercase leading-none tracking-normal text-[#2F2540]">
                     {step.headline}
                   </p>
-                  <p className="text-sm leading-relaxed text-gray-500">
+                  <p className="text-sm leading-relaxed text-[#2F2540]/62">
                     {step.copy}
                   </p>
                 </div>
