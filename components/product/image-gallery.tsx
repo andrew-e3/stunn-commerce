@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type GalleryImage = { src: string; alt: string };
 
@@ -12,10 +12,22 @@ export function ImageGallery({
   images: GalleryImage[];
   heroOverlay?: React.ReactNode;
 }) {
+  const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const didSwipe = useRef(false);
 
   const open = (i: number) => setLightboxIndex(i);
   const close = () => setLightboxIndex(null);
+  const activeImage = images[activeIndex] || images[0]!;
+
+  const selectPrev = useCallback(() => {
+    setActiveIndex((i) => (i - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  const selectNext = useCallback(() => {
+    setActiveIndex((i) => (i + 1) % images.length);
+  }, [images.length]);
 
   const prev = useCallback(() => {
     setLightboxIndex((i) =>
@@ -51,19 +63,41 @@ export function ImageGallery({
     <>
       {/* Hero image */}
       <button
-        onClick={() => open(0)}
+        onClick={() => {
+          if (didSwipe.current) {
+            didSwipe.current = false;
+            return;
+          }
+          open(activeIndex);
+        }}
+        onTouchStart={(e) => {
+          touchStartX.current = e.touches[0]?.clientX ?? null;
+          didSwipe.current = false;
+        }}
+        onTouchEnd={(e) => {
+          if (touchStartX.current === null) return;
+          const endX = e.changedTouches[0]?.clientX ?? touchStartX.current;
+          const deltaX = endX - touchStartX.current;
+          touchStartX.current = null;
+
+          if (Math.abs(deltaX) < 45) return;
+          didSwipe.current = true;
+          if (deltaX < 0) selectNext();
+          else selectPrev();
+        }}
         className="relative block aspect-square w-full cursor-zoom-in overflow-hidden bg-[#EDE9F8]"
-        aria-label={`View image: ${images[0]?.alt}`}
+        aria-label={`View image: ${activeImage.alt}`}
       >
         <Image
-          src={images[0]!.src}
-          alt={images[0]!.alt}
+          key={activeImage.src}
+          src={activeImage.src}
+          alt={activeImage.alt}
           fill
           className="object-cover transition-transform duration-500 hover:scale-[1.02]"
           priority
         />
         {/* Benefit pills or any overlay content */}
-        {heroOverlay && (
+        {heroOverlay && activeIndex === 0 && (
           <div className="pointer-events-none absolute inset-0">
             {heroOverlay}
           </div>
@@ -72,12 +106,17 @@ export function ImageGallery({
 
       {/* Mobile thumbnail rail: keeps the buying section close to the first viewport. */}
       <div className="flex gap-2 overflow-x-auto border-b border-black/10 bg-white px-4 py-3 lg:hidden">
-        {images.slice(1).map((img, i) => (
+        {images.map((img, i) => (
           <button
             key={img.src}
-            onClick={() => open(i + 1)}
-            className="relative h-20 w-20 shrink-0 cursor-zoom-in overflow-hidden rounded-[8px] bg-[#EDE9F8]"
-            aria-label={`View image: ${img.alt}`}
+            onClick={() => setActiveIndex(i)}
+            className={`relative h-20 w-20 shrink-0 overflow-hidden rounded-[8px] bg-[#EDE9F8] transition-all ${
+              i === activeIndex
+                ? "ring-2 ring-[#111111] ring-offset-2"
+                : "opacity-[0.72] ring-1 ring-black/5"
+            }`}
+            aria-label={`Show image: ${img.alt}`}
+            aria-current={i === activeIndex}
           >
             <Image src={img.src} alt={img.alt} fill className="object-cover" />
           </button>
