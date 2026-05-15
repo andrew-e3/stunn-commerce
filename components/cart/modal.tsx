@@ -31,11 +31,11 @@ const RETAIL_PER_BOX = 39.99;
 
 // Qty tiers — savings shown in the button label, cadence in the sub-label.
 // Shopify Automatic Discounts should mirror this model at checkout:
-// 1 box subscription = 20% off, 2 boxes = 21% off, 3+ boxes = 23% off.
+// 1 box subscription = 20% off, 2 boxes = 23% off, 3+ boxes = 25% off.
 const QTY_TIERS = [
   { qty: 1, label: "BUY 1", savePct: 20, sub: "every month", best: false },
-  { qty: 2, label: "BUY 2", savePct: 21, sub: "every 2 months", best: false },
-  { qty: 3, label: "BUY 3", savePct: 23, sub: "every 3 months", best: true },
+  { qty: 2, label: "BUY 2", savePct: 23, sub: "every 2 months", best: false },
+  { qty: 3, label: "BUY 3", savePct: 25, sub: "every 3 months", best: true },
 ];
 
 const FREQUENCY_OPTIONS = [

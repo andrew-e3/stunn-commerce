@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState, useTransition } from "react";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const RETAIL_THREE_BOXES = 119.97;
-const SUBSCRIPTION_DISCOUNT_PCT = 23;
+const SUBSCRIPTION_DISCOUNT_PCT = 25;
 const SUBSCRIPTION_PRICE = Math.round(
   RETAIL_THREE_BOXES * (1 - SUBSCRIPTION_DISCOUNT_PCT / 100),
 );

@@ -229,7 +229,7 @@ export default function HomePage() {
               calm, steady focus, without overstimulating your nervous system.
             </p>
             <div className="mb-4">
-              <CtaBtn text="Try STUNN And Save 23% 🎁" />
+              <CtaBtn text="Try STUNN And Save 25% 🎁" />
             </div>
             <div className="space-y-1 text-sm text-[#111111]/50">
               <p>30 sachets • One month supply</p>
@@ -336,7 +336,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <CtaBtn text="Try STUNN And Save 23% 🎁" variant="outline" />
+            <CtaBtn text="Try STUNN And Save 25% 🎁" variant="outline" />
             <Guarantee light />
           </div>
         </div>
@@ -383,7 +383,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <CtaBtn text="Try STUNN And Save 23% 🎁" />
+            <CtaBtn text="Try STUNN And Save 25% 🎁" />
             <Guarantee />
           </div>
 
@@ -473,7 +473,7 @@ export default function HomePage() {
               STUNN gives you everything you love about coffee — the flavor, the
               warmth, the ritual — but none of the downsides.
             </p>
-            <CtaBtn text="Try STUNN And Save 23% 🎁" />
+            <CtaBtn text="Try STUNN And Save 25% 🎁" />
             <p className="mt-2 text-xs text-[#111111]/50">
               Your coffee ritual, upgraded. Anytime.
             </p>
@@ -520,7 +520,7 @@ export default function HomePage() {
             One box gives you 30 sachets of smooth, functional decaf coffee
             delivered straight to your door.
           </p>
-          <CtaBtn text="Try STUNN And Save 23% 🎁" />
+          <CtaBtn text="Try STUNN And Save 25% 🎁" />
           <Guarantee />
         </div>
       </section>
@@ -538,7 +538,7 @@ export default function HomePage() {
             image: `${CDN}img-stunn-coffee-product-shot.png`,
             heading: "Stay Sharp, Calm, and Energized",
             button: "Fuel Your Day Today",
-            subtext: "23% OFF on subscription orders. Cancel anytime.",
+            subtext: "25% OFF on subscription orders. Cancel anytime.",
           },
         ].map((panel) => (
           <div
@@ -663,7 +663,7 @@ export default function HomePage() {
               Stop settling for coffee that spikes your heart rate and crashes
               your day.
             </p>
-            <CtaBtn text="Try STUNN And Save 23% 🎁" variant="white" />
+            <CtaBtn text="Try STUNN And Save 25% 🎁" variant="white" />
             <Guarantee light />
           </div>
         </div>
@@ -682,7 +682,7 @@ export default function HomePage() {
               {
                 icon: `${CDN}icon-exchange.svg`,
                 heading: "Subscription Made Easy",
-                text: "Never run out. Save up to 23% with subscription orders, and cancel anytime.",
+                text: "Never run out. Save up to 25% with subscription orders, and cancel anytime.",
               },
               {
                 icon: `${CDN}icon-bolt-circle.svg`,

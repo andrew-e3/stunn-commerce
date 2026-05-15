@@ -15,7 +15,7 @@ const iconColumns = [
   {
     icon: `${CDN}icon-exchange.svg`,
     heading: "Subscription Made Easy",
-    text: "Never run out. Save up to 23% with subscription orders, and cancel anytime.",
+    text: "Never run out. Save up to 25% with subscription orders, and cancel anytime.",
   },
   {
     icon: `${CDN}icon-bolt-circle.svg`,
