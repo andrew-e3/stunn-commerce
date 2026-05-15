@@ -237,7 +237,58 @@ export default async function ProductPage(props: {
       <div className="relative lg:flex lg:items-start">
         {/* Left: expandable image gallery */}
         <div className="lg:w-1/2">
-          <ImageGallery images={MOSAIC_IMAGES} />
+          <ImageGallery
+            images={MOSAIC_IMAGES}
+            heroOverlay={
+              <>
+                <div className="absolute bottom-5 left-4 flex flex-col gap-2">
+                  {[
+                    { label: "Calm Focus", icon: "icon-focus.svg" },
+                    { label: "No Jitters", icon: "icon-smile.svg" },
+                  ].map((pill) => (
+                    <div
+                      key={pill.label}
+                      className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md"
+                    >
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EDE9F8]">
+                        <img
+                          src={`${CDN}${pill.icon}`}
+                          alt=""
+                          className="h-4 w-4"
+                        />
+                      </span>
+                      <span className="font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
+                        {pill.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="absolute bottom-5 right-4 flex flex-col gap-2">
+                  {[
+                    { label: "Steady Energy", icon: "icon-energy.svg" },
+                    { label: "Sleep Friendly", icon: "icon-sleep.svg" },
+                  ].map((pill) => (
+                    <div
+                      key={pill.label}
+                      className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md"
+                    >
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EDE9F8]">
+                        <img
+                          src={`${CDN}${pill.icon}`}
+                          alt=""
+                          className="h-4 w-4"
+                        />
+                      </span>
+                      <span className="font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#5A3493]">
+                        {pill.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            }
+          />
         </div>
 
         {/* Right: purchase panel */}
@@ -326,8 +377,8 @@ export default async function ProductPage(props: {
                 ),
                 headline: "Smooth, steady clarity.",
                 copy: "No jitters, no crash — just clean focus from the first sip.",
-                img: "/images/stunn-hero-brand-mug-v2.webp",
-                alt: "Man focused with STUNN coffee",
+                img: `${CDN}img-s-6.webp`,
+                alt: "STUNN coffee ritual without caffeine",
               },
               {
                 time: "After 14 Days",
