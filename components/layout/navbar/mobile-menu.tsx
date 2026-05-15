@@ -10,6 +10,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 type MobileMenuItem = {
   label: string;
   href: string;
+  external?: boolean;
 };
 
 export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
@@ -81,13 +82,19 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
                         className="py-5 text-2xl font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60"
                         key={item.label}
                       >
-                        <Link
-                          href={item.href}
-                          prefetch={true}
-                          onClick={closeMobileMenu}
-                        >
-                          {item.label}
-                        </Link>
+                        {item.external ? (
+                          <a href={item.href} onClick={closeMobileMenu}>
+                            {item.label}
+                          </a>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            prefetch={true}
+                            onClick={closeMobileMenu}
+                          >
+                            {item.label}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>

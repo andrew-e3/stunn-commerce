@@ -5,15 +5,17 @@ import { Suspense } from "react";
 import MobileMenu from "./mobile-menu";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
+const ACCOUNT_URL = process.env.SHOPIFY_STORE_DOMAIN
+  ? `https://${process.env.SHOPIFY_STORE_DOMAIN}/account/login`
+  : "/account";
 
 const LEFT_LINKS = [
-  { label: "Shop", href: "/products/focus-without-caffeine" },
-  { label: "Learn", href: "/about-us" },
-];
-
-const RIGHT_LINKS = [
+  {
+    label: "Shop",
+    href: "/products/focus-without-caffeine",
+    highlighted: true,
+  },
   { label: "About", href: "/about-us" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
@@ -22,7 +24,12 @@ export function Navbar() {
       {/* Mobile menu */}
       <div className="flex items-center justify-start md:hidden">
         <Suspense fallback={null}>
-          <MobileMenu menu={[...LEFT_LINKS, ...RIGHT_LINKS]} />
+          <MobileMenu
+            menu={[
+              ...LEFT_LINKS,
+              { label: "Account", href: ACCOUNT_URL, external: true },
+            ]}
+          />
         </Suspense>
       </div>
 
@@ -33,7 +40,11 @@ export function Navbar() {
             key={item.label}
             href={item.href}
             prefetch={true}
-            className="text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60"
+            className={
+              item.highlighted
+                ? "rounded-full bg-[#5A3493] px-4 py-2 text-[13px] font-extrabold uppercase tracking-[0.08em] text-white transition-opacity hover:opacity-85"
+                : "text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60"
+            }
           >
             {item.label}
           </Link>
@@ -56,18 +67,12 @@ export function Navbar() {
 
       {/* Right utility links + cart */}
       <div className="col-start-3 flex items-center justify-end gap-6">
-        <div className="hidden items-center gap-8 md:flex">
-          {RIGHT_LINKS.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              prefetch={true}
-              className="text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
+        <a
+          href={ACCOUNT_URL}
+          className="hidden text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60 md:inline-flex"
+        >
+          Account
+        </a>
         <CartModal />
       </div>
     </nav>
