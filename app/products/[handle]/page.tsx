@@ -303,48 +303,43 @@ export default async function ProductPage(props: {
 
       {/* ── IDENTITY REFRAME ── */}
       <section className="bg-[#EEEAF8] py-16 lg:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8">
-          <div>
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="max-w-5xl">
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#111111]/55">
               The caffeine loop
             </p>
             <h2 className="mb-6 max-w-3xl font-[family-name:var(--font-anton)] text-[clamp(2.7rem,6vw,5.8rem)] uppercase leading-[0.95] text-[#111111]">
               You don&apos;t have low energy. You&apos;re overstimulated.
             </h2>
-            <p className="max-w-xl text-base leading-relaxed text-[#111111]/68">
+            <p className="max-w-2xl text-base leading-relaxed text-[#111111]/68">
               Coffee is not the problem. The loop is: a spike, a crash, worse
               sleep, then needing more caffeine to feel normal again.
             </p>
           </div>
 
-          <div className="rounded-[18px] border border-black/10 bg-white p-5 shadow-[0_18px_45px_rgba(17,17,17,0.06)]">
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <div className="mt-12 border-y border-black/10 py-6">
+            <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:items-center">
               {["Spike", "Crash", "Poor sleep", "Tolerance"].map(
                 (step, index) => (
-                  <div
-                    key={step}
-                    className="relative min-h-[132px] rounded-[14px] border border-black/10 bg-[#EEEAF8] p-4"
-                  >
-                    <p className="mb-9 text-[11px] font-bold uppercase tracking-[0.18em] text-[#111111]/45">
-                      0{index + 1}
-                    </p>
-                    <p className="font-[family-name:var(--font-anton)] text-2xl uppercase leading-none text-[#111111]">
-                      {step}
-                    </p>
+                  <div key={step} className="contents">
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#111111]/35">
+                        0{index + 1}
+                      </span>
+                      <span className="font-[family-name:var(--font-anton)] text-[clamp(1.8rem,3vw,3rem)] uppercase leading-none text-[#111111]">
+                        {step}
+                      </span>
+                    </div>
                     {index < 3 ? (
-                      <span className="absolute right-4 top-4 text-lg font-bold text-[#5A3493]">
+                      <span className="hidden text-xl font-bold text-[#5A3493] md:block">
                         →
                       </span>
-                    ) : (
-                      <span className="absolute right-4 top-4 text-lg font-bold text-[#5A3493]">
-                        ↻
-                      </span>
-                    )}
+                    ) : null}
                   </div>
                 ),
               )}
             </div>
-            <p className="mt-5 text-center text-xs font-extrabold uppercase tracking-[0.18em] text-[#111111]">
+            <p className="mt-5 text-xs font-extrabold uppercase tracking-[0.18em] text-[#111111]/70">
               STUNN keeps the ritual. Removes the stimulant dependency.
             </p>
           </div>
