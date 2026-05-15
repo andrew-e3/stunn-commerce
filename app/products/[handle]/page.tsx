@@ -178,8 +178,8 @@ const PERSONA_CARDS = [
 // Keep paid-social infographic assets out of the hero gallery so the PDP feels premium.
 const MOSAIC_IMAGES = [
   {
-    src: `${CDN}img-a-man-sipping-a-cup-of-coffee-while-holding-stunn-sachet_1.webp`,
-    alt: "A man enjoying STUNN decaf coffee",
+    src: "/images/stunn-hero-brand-mug.webp",
+    alt: "A man enjoying STUNN decaf coffee from a soft lavender mug",
   },
   {
     src: `${CDN}mockup-stunn-box.webp`,
