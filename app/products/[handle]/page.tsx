@@ -760,30 +760,46 @@ export default async function ProductPage(props: {
       </section>
 
       {/* ── FINAL CTA RAIL ── */}
-      <section className="relative overflow-hidden bg-[#111111]">
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-        <div className="relative mx-auto max-w-screen-xl px-6 py-16 text-center lg:py-24">
-          <span className="mb-4 inline-block rounded-full border border-white/30 px-3 py-1 text-xs font-medium tracking-widest text-white/80">
-            Start your ritual.
-          </span>
-          <h2 className="mb-6 font-[family-name:var(--font-anton)] text-[clamp(36px,6vw,72px)] uppercase leading-tight text-white">
-            The cup you reach for.
-            <br />
-            Without the cost you&apos;ve been paying.
-          </h2>
-          <a
-            href="#purchase"
-            className="inline-flex items-center gap-2 rounded-[10px] bg-[#7C3AED] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_rgba(255,255,255,0.18)] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_rgba(255,255,255,0.18)]"
-          >
-            Get STUNN from $1.13/day
-          </a>
+      <section className="bg-white px-4 py-12 lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[28px] bg-[#EDE9F8] lg:grid-cols-[1fr_0.9fr]">
+          <div className="flex flex-col justify-center px-7 py-12 lg:px-14 lg:py-16">
+            <span className="mb-5 w-fit rounded-full border border-[#7C3AED]/25 bg-white/70 px-3 py-1 text-xs font-bold uppercase tracking-[0.22em] text-[#111111]/60">
+              Your next cup
+            </span>
+            <h2 className="mb-5 font-[family-name:var(--font-anton)] text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] text-[#111111]">
+              Everything you love about coffee.
+              <br />
+              None of what you don&apos;t.
+            </h2>
+            <p className="mb-8 max-w-xl text-base leading-relaxed text-[#111111]/68">
+              A daily coffee ritual for calm focus, steady energy, and better
+              evenings. Start with the best-value box and make the switch feel
+              effortless.
+            </p>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <a
+                href="#purchase"
+                className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-[#7C3AED] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#5B21B6] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#5B21B6]"
+              >
+                Get STUNN from $1.13/day
+              </a>
+              <div className="flex items-center gap-2 text-sm text-[#111111]/60">
+                <span className="text-[#EFAF00]">★★★★★</span>
+                <span>
+                  <strong className="text-[#111111]">4.8</strong> from 1,000+
+                  customers
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="relative order-first aspect-[4/3] lg:order-last lg:aspect-auto">
+            <Image
+              src={`${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`}
+              alt="STUNN sachet poured into a cup of coffee"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
