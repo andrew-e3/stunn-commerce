@@ -38,7 +38,6 @@ const ingredients = [
     name: "Lion's Mane",
     dose: "300mg",
     benefit: "Focus + Clarity",
-    img: `${CDN}img-lions-mane_1.png`,
     description:
       "Supports focus, memory, and mental clarity so you can stay sharp without feeling wired.",
   },
@@ -46,7 +45,6 @@ const ingredients = [
     name: "Rhodiola",
     dose: "250mg",
     benefit: "Stress + Energy",
-    img: `${CDN}img-rhodiola_1.png`,
     description:
       "Helps reduce stress and mental fatigue while supporting steady energy throughout the day.",
   },
@@ -54,7 +52,6 @@ const ingredients = [
     name: "Cordyceps",
     dose: "100mg",
     benefit: "Endurance + Drive",
-    img: `${CDN}img-cordyceps_1.png`,
     description:
       "Boosts natural energy and endurance without overstimulation or crashes.",
   },
@@ -62,9 +59,15 @@ const ingredients = [
     name: "L-Theanine",
     dose: "100mg",
     benefit: "Calm + Alert",
-    img: `${CDN}img-lteanine_1.png`,
     description:
       "Promotes calm focus and smooths out the edges, helping you stay relaxed and alert.",
+  },
+  {
+    name: "Decaf Instant Coffee",
+    dose: "1500mg",
+    benefit: "Coffee Ritual",
+    description:
+      "The real coffee base that keeps STUNN feeling like a cup, not a supplement stack.",
   },
 ];
 
@@ -445,50 +448,58 @@ export default async function ProductPage(props: {
 
       {/* ── PHOTO + CONTENT GALLERY ── */}
       <section className="overflow-hidden">
-        {/* Panel A: Ingredients */}
+        {/* Panel A: Formula */}
         <div className="flex flex-col lg:flex-row">
           <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-1/2 lg:min-h-[560px]">
             <Image
               src={`${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`}
-              alt="STUNN ingredients — adaptogens and nootropics"
+              alt="STUNN sachet poured into coffee"
               fill
               className="object-cover"
             />
           </div>
-          <div className="flex flex-col justify-center bg-[#EDE9F8] px-8 py-14 lg:w-1/2 lg:px-16">
+          <div className="flex flex-col justify-center bg-[#EDE9F8] px-7 py-14 lg:w-1/2 lg:px-16">
             <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#5A3493]/60">
-              What's inside
+              What makes it work
             </span>
-            <h2 className="mb-8 font-[family-name:var(--font-anton)] text-[clamp(2rem,4vw,3.5rem)] uppercase leading-tight text-[#5A3493]">
-              A coffee ritual with
-              <br />a functional backbone.
+            <h2 className="mb-5 font-[family-name:var(--font-anton)] text-[clamp(2.2rem,4vw,3.7rem)] uppercase leading-[0.95] text-[#5A3493]">
+              Coffee first.
+              <br />
+              Function underneath.
             </h2>
-            <div className="grid grid-cols-2 gap-4">
+            <p className="mb-8 max-w-xl text-sm leading-relaxed text-[#5A3493]/70">
+              STUNN is built like a daily coffee ritual, not a supplement stack.
+              Real decaf coffee carries the cup. The functional ingredients sit
+              underneath to support calm focus without the caffeine loop.
+            </p>
+
+            <div className="border-y border-[#5A3493]/20">
               {ingredients.map((ing) => (
-                <div key={ing.name} className="flex flex-col gap-1">
-                  <div className="relative h-20 w-full">
-                    <Image
-                      src={ing.img}
-                      alt={ing.name}
-                      fill
-                      className="object-contain object-left"
-                    />
+                <div
+                  key={ing.name}
+                  className="grid grid-cols-[1fr_auto] gap-4 border-b border-[#5A3493]/15 py-4 last:border-b-0"
+                >
+                  <div>
+                    <p className="font-[family-name:var(--font-anton)] text-xl uppercase leading-none text-[#5A3493]">
+                      {ing.name}
+                    </p>
+                    <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-[#5A3493]/55">
+                      {ing.benefit}
+                    </p>
                   </div>
-                  <p className="font-[family-name:var(--font-anton)] text-lg uppercase text-[#5A3493]">
-                    {ing.name}
-                  </p>
-                  <p className="text-xs font-extrabold uppercase tracking-widest text-[#5A3493]">
+                  <p className="pt-0.5 text-right text-sm font-extrabold uppercase tracking-widest text-[#5A3493]">
                     {ing.dose}
                   </p>
-                  <span className="inline-block rounded-full bg-[#5A3493]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[#5A3493]">
-                    {ing.benefit}
-                  </span>
-                  <p className="text-xs leading-relaxed text-gray-600">
+                  <p className="col-span-2 max-w-lg text-sm leading-relaxed text-[#5A3493]/68">
                     {ing.description}
                   </p>
                 </div>
               ))}
             </div>
+
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#5A3493]">
+              No caffeine. No proprietary blend. One sachet, every day.
+            </p>
           </div>
         </div>
 
