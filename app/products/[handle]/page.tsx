@@ -639,11 +639,11 @@ export default async function ProductPage(props: {
             <h2 className="mb-3 font-[family-name:var(--font-anton)] text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#5A3493]">
               Why I Created STUNN
             </h2>
-            <p className="mb-2 text-sm font-semibold text-gray-700">
+            <p className="mb-2 text-sm font-semibold text-[#2F2540]/82">
               I didn&apos;t want to quit coffee. I wanted to quit what caffeine
               was doing to me.
             </p>
-            <p className="mb-7 text-base leading-relaxed text-gray-600">
+            <p className="mb-7 text-base leading-relaxed text-[#5A3493]/70">
               I&apos;ve always loved the ritual: the first cup, the reset, the
               feeling that the day is about to start properly. I just
               didn&apos;t love the jitters, the crash, or the nights where sleep
@@ -653,7 +653,7 @@ export default async function ProductPage(props: {
             <p className="mb-6 font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-[#5A3493]">
               ANDREW JENNINGS
               <br />
-              <span className="font-sans text-xs font-normal normal-case tracking-normal text-gray-500">
+              <span className="font-sans text-xs font-normal normal-case tracking-normal text-[#5A3493]/55">
                 Founder, STUNN
               </span>
             </p>
@@ -706,7 +706,7 @@ export default async function ProductPage(props: {
                     </svg>
                   </span>
                 </summary>
-                <p className="mt-3 text-sm leading-relaxed text-gray-600">
+                <p className="mt-3 text-sm leading-relaxed text-[#5A3493]/68">
                   {faq.answer}
                 </p>
               </details>
