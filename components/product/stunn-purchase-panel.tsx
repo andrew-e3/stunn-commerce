@@ -117,6 +117,23 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         <span className="text-lg leading-none text-[#EFAF00]">★★★★★</span>
         <span className="text-sm font-bold text-[#111111]">4.8</span>
         <span className="text-sm text-[#111111]/55">Excellent</span>
+        <span className="ml-2 inline-flex items-center gap-1.5 rounded-full bg-[#111111] px-2.5 py-1 text-[11px] font-bold text-white">
+          <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white text-[#111111]">
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
+            </svg>
+          </span>
+          In Stock
+        </span>
       </div>
 
       {/* Title */}
