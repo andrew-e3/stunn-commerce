@@ -41,10 +41,9 @@ function Label({ children }: { children: React.ReactNode }) {
 }
 
 const BENEFITS = [
-  ["Steady focus", "Clean clarity without the caffeine spike."],
-  ["No jitters", "No racing pulse, shakes, or anxious edge."],
-  ["No crash", "No afternoon rebound after the morning lift."],
-  ["Sleep-friendly", "Coffee you can enjoy without watching the clock."],
+  ["0mg caffeine", "The cup without the stimulant loop."],
+  ["Functional dose", "Adaptogens and nootropics in a daily format."],
+  ["Coffee taste", "Actual decaf coffee, not a shaker routine."],
 ];
 
 const RITUAL_STEPS = [
@@ -120,16 +119,16 @@ export default function HomePage() {
               <span className="h-5 w-px bg-[#111111]/20" />
               <span>1,000+ Customers</span>
             </div>
-            <h1 className="mx-auto max-w-5xl text-[clamp(46px,10vw,124px)] font-black uppercase leading-[0.9] tracking-[-0.055em] text-[#111111]">
-              Coffee, without the consequences.
+            <h1 className="mx-auto max-w-5xl text-[clamp(48px,10vw,122px)] font-black uppercase leading-[0.9] tracking-[-0.055em] text-[#111111]">
+              The original coffee ritual, reworked.
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
-              Quit caffeine. Keep the edge. STUNN gives you the ritual, warmth, and focus cue of coffee without the stimulant tradeoff.
+              Everything you love about coffee, rebuilt without the stimulant tradeoff.
             </p>
             <div className="mx-auto mt-8 max-w-xl">
               <Cta>Shop now - save up to 25%</Cta>
             </div>
-            <div className="mx-auto mt-6 grid max-w-4xl grid-cols-2 gap-3 text-xs font-semibold text-[#111111]/60 sm:grid-cols-4 sm:text-sm">
+            <div className="mx-auto mt-6 grid max-w-3xl grid-cols-3 gap-3 text-xs font-semibold text-[#111111]/60 sm:text-sm">
               {BENEFITS.map(([title]) => (
                 <span key={title}>{title}</span>
               ))}
@@ -153,36 +152,80 @@ export default function HomePage() {
 
       <section className="bg-white px-5 py-14 sm:px-8 lg:py-24">
         <div className="mx-auto max-w-[1320px] text-center">
-          <h2 className="mx-auto max-w-5xl text-[clamp(42px,7vw,92px)] font-black uppercase leading-[0.92] tracking-[-0.05em] text-[#111111]">
-            All the edge. None of the jitters.
+          <h2 className="mx-auto max-w-5xl text-[clamp(40px,7vw,90px)] font-black uppercase leading-[0.92] tracking-[-0.05em] text-[#111111]">
+            How we're raising the bar for decaf.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
-            A cleaner daily cup for people who love coffee, but are done with the side effects.
+            STUNN is real decaf coffee with functional support, built for people who want the cup to feel easier on the body and the day.
           </p>
 
-          <div className="mx-auto mt-10 grid max-w-6xl overflow-hidden rounded-[22px] border border-[#111111]/10 bg-white text-left shadow-[0_18px_60px_rgba(17,17,17,0.04)] lg:grid-cols-[0.82fr_1.18fr]">
-            <div className="relative flex min-h-[320px] items-center justify-center bg-[#F4F0FB]">
+          <div className="mx-auto mt-10 inline-flex rounded-full bg-[#F4F0FB] p-1 shadow-[0_18px_50px_rgba(17,17,17,0.08)]">
+            <span className="rounded-full bg-[#111111] px-5 py-3 text-xs font-black uppercase tracking-wide text-white">
+              Decaf coffee
+            </span>
+            <span className="px-5 py-3 text-xs font-black uppercase tracking-wide text-[#111111]/35">
+              Functional support
+            </span>
+          </div>
+
+          <div className="mx-auto mt-10 grid max-w-md gap-3 lg:hidden">
+            <div className="relative flex min-h-[260px] items-center justify-center rounded-[26px] bg-[#F4F0FB]">
               <Image
                 src={`${CDN}mockup-stunn-box.webp`}
                 alt="STUNN box"
-                width={360}
-                height={360}
-                className="w-[260px] drop-shadow-[0_24px_50px_rgba(124,58,237,0.18)] lg:w-[330px]"
+                width={260}
+                height={260}
+                className="w-[230px] drop-shadow-[0_24px_50px_rgba(124,58,237,0.18)]"
               />
             </div>
-            <div className="grid divide-y divide-[#111111]/10 lg:grid-cols-2 lg:divide-x lg:divide-y-0">
-              {BENEFITS.map(([title, copy]) => (
-                <div key={title} className="p-6 sm:p-8">
-                  <p className="text-2xl font-black uppercase tracking-[-0.03em] text-[#111111]">
-                    {title}
-                  </p>
-                  <div className="my-4 h-px w-12 bg-[#111111]/25" />
-                  <p className="text-sm leading-relaxed text-[#111111]/62">
-                    {copy}
-                  </p>
-                </div>
+            <div className="grid grid-cols-2 gap-3 text-left">
+              {[
+                "Backed by ritual",
+                "Coffee taste",
+                "Clean daily format",
+                "No caffeine loop",
+              ].map((text) => (
+                <Link
+                  key={text}
+                  href={PDP}
+                  className="rounded-[18px] border border-[#111111]/10 bg-white p-4 text-xs font-black uppercase leading-tight tracking-[-0.01em] text-[#111111] shadow-[0_12px_30px_rgba(17,17,17,0.04)]"
+                >
+                  <span className="mb-3 flex h-7 w-7 items-center justify-center rounded-full bg-[#111111] text-base text-white">
+                    +
+                  </span>
+                  {text}
+                </Link>
               ))}
             </div>
+          </div>
+
+          <div className="relative mx-auto mt-10 hidden min-h-[560px] max-w-[980px] place-items-center lg:grid">
+            <div className="absolute h-[320px] w-[320px] rounded-full border-2 border-dotted border-[#111111]/38 sm:h-[460px] sm:w-[460px]" />
+            <Image
+              src={`${CDN}mockup-stunn-box.webp`}
+              alt="STUNN box"
+              width={300}
+              height={300}
+              className="relative z-10 w-[220px] drop-shadow-[0_24px_50px_rgba(124,58,237,0.18)] sm:w-[300px]"
+            />
+            {[
+              ["Backed by ritual", "left-0 top-12 text-left"],
+              ["Coffee taste", "right-0 top-20 text-right"],
+              ["Clean daily format", "bottom-18 left-0 text-left"],
+              ["No caffeine loop", "bottom-10 right-0 text-right"],
+            ].map(([text, pos]) => (
+              <Link
+                key={text}
+                href={PDP}
+                className={`absolute ${pos} max-w-[150px] text-sm font-black uppercase leading-tight tracking-[-0.02em] text-[#111111] sm:max-w-[190px] sm:text-lg`}
+              >
+                <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#111111] text-xl text-white">
+                  +
+                </span>
+                <br />
+                {text}
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -204,7 +247,7 @@ export default function HomePage() {
                   <p className="text-[clamp(44px,8vw,82px)] font-black leading-none tracking-[-0.055em] text-[#111111]">
                     {amount}
                   </p>
-                  <h3 className="mt-1 font-serif text-2xl text-[#111111]">{ingredient}</h3>
+                  <h3 className="mt-1 text-2xl font-black tracking-[-0.03em] text-[#111111]">{ingredient}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-[#111111]/62">{copy}</p>
                 </div>
               ))}
@@ -225,12 +268,12 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1440px] rounded-[28px] bg-[#F4F0FB] px-7 py-12 sm:px-10 lg:px-16 lg:py-18">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
             <div>
-            <Label>Why people switch</Label>
-            <h2 className="max-w-4xl text-[clamp(44px,7vw,108px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
-                The ritual stays. The stimulant goes.
-            </h2>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-[#111111]/68 sm:text-lg">
-                For ambitious coffee people who still want the cup, just without the tension, dependency, or sleep tradeoff.
+              <Label>Who it is for</Label>
+              <h2 className="max-w-4xl text-[clamp(44px,7vw,108px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
+                Different reasons. Same better cup.
+              </h2>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-[#111111]/68 sm:text-lg">
+                STUNN is for people who are not trying to quit coffee. They are trying to stop letting caffeine decide how the day feels.
               </p>
             </div>
             <div className="overflow-hidden rounded-[22px] border border-[#111111]/10 bg-white shadow-[0_24px_70px_rgba(17,17,17,0.08)]">
