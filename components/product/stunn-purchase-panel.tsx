@@ -6,6 +6,7 @@ import { DEFAULT_OPTION } from "lib/constants";
 import { Product } from "lib/shopify/types";
 import Image from "next/image";
 import { useState, useTransition } from "react";
+import { usePurchaseSelection } from "./purchase-selection-context";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const RETAIL_PER_BOX = 39.99;
@@ -95,7 +96,7 @@ function DarkCheckIcon() {
 }
 
 export function StunnPurchasePanel({ product }: { product: Product }) {
-  const [selectedQty, setSelectedQty] = useState(3);
+  const { selectedQty, setSelectedQty } = usePurchaseSelection();
   const { addCartItem } = useCart();
   const [addPending, startAddTransition] = useTransition();
   const [otpPending, startOtpTransition] = useTransition();

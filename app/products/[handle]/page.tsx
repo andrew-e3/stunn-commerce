@@ -1,6 +1,7 @@
 import { StunnPurchasePanel } from "components/product/stunn-purchase-panel";
 import { ImageGallery } from "components/product/image-gallery";
 import { StickyAtc } from "components/product/sticky-atc";
+import { PurchaseSelectionProvider } from "components/product/purchase-selection-context";
 import Footer from "components/layout/footer";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { getProduct } from "lib/shopify";
@@ -228,7 +229,7 @@ export default async function ProductPage(props: {
   };
 
   return (
-    <>
+    <PurchaseSelectionProvider>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
@@ -806,6 +807,6 @@ export default async function ProductPage(props: {
 
       <StickyAtc product={product} />
       <Footer />
-    </>
+    </PurchaseSelectionProvider>
   );
 }

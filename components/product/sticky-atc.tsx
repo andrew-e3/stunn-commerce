@@ -6,22 +6,53 @@ import { DEFAULT_OPTION } from "lib/constants";
 import { Product } from "lib/shopify/types";
 import Image from "next/image";
 import { useEffect, useMemo, useState, useTransition } from "react";
+import { usePurchaseSelection } from "./purchase-selection-context";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
-const RETAIL_THREE_BOXES = 119.97;
-const SUBSCRIPTION_DISCOUNT_PCT = 25;
-const SUBSCRIPTION_PRICE = Math.round(
-  RETAIL_THREE_BOXES * (1 - SUBSCRIPTION_DISCOUNT_PCT / 100),
-);
-const SUBSCRIPTION_PER_DAY = (
-  (RETAIL_THREE_BOXES * (1 - SUBSCRIPTION_DISCOUNT_PCT / 100)) /
-  90
-).toFixed(2);
+const RETAIL_PER_BOX = 39.99;
+
+function roundMoney(value: number) {
+  return Math.round(value * 100) / 100;
+}
+
+const SUPPLY_TIERS = [
+  {
+    qty: 3,
+    label: "3 boxes",
+    count: 90,
+    shipEvery: "every 3 months",
+    discountPct: 25,
+  },
+  {
+    qty: 2,
+    label: "2 boxes",
+    count: 60,
+    shipEvery: "every 2 months",
+    discountPct: 23,
+  },
+  {
+    qty: 1,
+    label: "1 box",
+    count: 30,
+    shipEvery: "every month",
+    discountPct: 20,
+  },
+];
 
 export function StickyAtc({ product }: { product: Product }) {
+  const { selectedQty } = usePurchaseSelection();
   const [isVisible, setIsVisible] = useState(false);
   const [pending, startTransition] = useTransition();
   const { addCartItem } = useCart();
+  const selectedTier =
+    SUPPLY_TIERS.find((tier) => tier.qty === selectedQty) || SUPPLY_TIERS[0]!;
+  const retailPrice = roundMoney(RETAIL_PER_BOX * selectedTier.qty);
+  const subscriptionPrice = roundMoney(
+    retailPrice * (1 - selectedTier.discountPct / 100),
+  );
+  const subscriptionPerDay = (subscriptionPrice / selectedTier.count).toFixed(
+    2,
+  );
 
   const oneBoxVariant = useMemo(
     () =>
@@ -68,11 +99,11 @@ export function StickyAtc({ product }: { product: Product }) {
     };
   }, []);
 
-  const addBestValue = () => {
+  const addSelectedOffer = () => {
     if (!oneBoxVariant) return;
-    addCartItem(oneBoxVariant, product, 3);
+    addCartItem(oneBoxVariant, product, selectedTier.qty);
     startTransition(async () => {
-      await addItem(null, oneBoxVariant.id, 3);
+      await addItem(null, oneBoxVariant.id, selectedTier.qty);
     });
   };
 
@@ -106,7 +137,7 @@ export function StickyAtc({ product }: { product: Product }) {
               STUNN Decaf Coffee
             </p>
             <p className="text-xs text-[#111111]/55">
-              3 boxes · 90 sachets · calm focus
+              {selectedTier.label} · {selectedTier.count} sachets · calm focus
             </p>
           </div>
         </div>
@@ -117,24 +148,25 @@ export function StickyAtc({ product }: { product: Product }) {
               Autoship
             </span>
             <span className="rounded-full bg-[#7C3AED] px-2 py-1 text-[10px] font-extrabold uppercase leading-none text-white">
-              Save {SUBSCRIPTION_DISCOUNT_PCT}%
+              Save {selectedTier.discountPct}%
             </span>
             <span className="hidden text-sm text-[#111111]/35 line-through sm:inline">
-              $120
+              ${retailPrice.toFixed(0)}
             </span>
             <span className="text-base font-extrabold leading-none text-[#111111] sm:text-lg">
-              ${SUBSCRIPTION_PRICE}
+              ${subscriptionPrice.toFixed(0)}
             </span>
           </div>
           <p className="mt-1 hidden truncate text-[11px] text-[#111111]/60 sm:block sm:text-xs">
-            3 boxes every 3 months · ${SUBSCRIPTION_PER_DAY}/day · free shipping
+            {selectedTier.label} {selectedTier.shipEvery} · $
+            {subscriptionPerDay}/day · free shipping
           </p>
         </div>
 
         <button
           type="button"
           disabled={!oneBoxVariant || pending}
-          onClick={addBestValue}
+          onClick={addSelectedOffer}
           className="shrink-0 rounded-[8px] bg-[#7C3AED] px-4 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_0_#5B21B6] transition-all hover:translate-y-[1px] hover:bg-[#6D28D9] hover:shadow-[0_3px_0_0_#5B21B6] active:translate-y-[3px] active:shadow-none disabled:opacity-50 sm:px-8 lg:min-w-[190px] lg:text-sm"
         >
           {pending ? "Adding..." : "Add to cart"}
