@@ -109,7 +109,7 @@ export function StickyAtc({ product }: { product: Product }) {
 
   return (
     <div
-      className={`fixed inset-x-0 z-40 border-black/10 bg-white shadow-[0_-8px_28px_rgba(0,0,0,0.12)] transition-transform duration-300 lg:bottom-auto lg:top-0 lg:border-b lg:shadow-[0_8px_28px_rgba(0,0,0,0.08)] ${
+      className={`fixed inset-x-0 z-30 border-black/10 bg-white shadow-[0_-8px_28px_rgba(0,0,0,0.12)] transition-transform duration-300 lg:bottom-auto lg:top-[100px] lg:border-b lg:shadow-[0_8px_28px_rgba(0,0,0,0.08)] ${
         isVisible
           ? "bottom-0 translate-y-0"
           : "bottom-0 translate-y-full lg:-translate-y-full"

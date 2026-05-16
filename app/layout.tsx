@@ -38,11 +38,13 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${anton.variable} ${inter.variable}`}>
       <body className="bg-white font-[family-name:var(--font-inter)] text-[#111111]">
-        <div className="bg-[#7C3AED] py-2 text-center text-sm font-semibold text-white">
-          Upgrade your coffee ritual — get up to 25% off + free shipping →
-        </div>
         <CartProvider cartPromise={cart}>
-          <Navbar />
+          <div className="sticky top-0 z-40">
+            <div className="bg-[#7C3AED] py-2 text-center text-sm font-semibold text-white">
+              Upgrade your coffee ritual — get up to 25% off + free shipping →
+            </div>
+            <Navbar />
+          </div>
           <main>
             {children}
             <Toaster closeButton />
