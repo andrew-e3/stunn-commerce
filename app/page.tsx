@@ -4,6 +4,8 @@ import Link from "next/link";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const PDP = "/products/focus-without-caffeine";
+const MORNING_FOCUS_IMAGE = "/images/stunn-morning-focus-generated.jpg";
+const EVENING_RITUAL_IMAGE = "/images/stunn-evening-ritual-generated.jpg";
 
 function Cta({
   children,
@@ -39,16 +41,16 @@ function Label({ children }: { children: React.ReactNode }) {
 }
 
 const BENEFITS = [
-  ["99.9% caffeine-free", "Keep coffee without the stimulant loop."],
-  ["Adaptogen support", "Lion's Mane, Rhodiola, Cordyceps, and L-Theanine."],
-  ["Coffee taste", "A real decaf coffee ritual, not a supplement chore."],
+  ["0mg caffeine", "The cup without the stimulant loop."],
+  ["Functional dose", "Adaptogens and nootropics in a daily format."],
+  ["Coffee taste", "Actual decaf coffee, not a shaker routine."],
 ];
 
 const RITUAL_STEPS = [
-  ["01", "Keep the cup", "The warmth, the pause, the start signal."],
-  ["02", "Remove the spike", "No caffeine surge, no nervous lift."],
-  ["03", "Hold the edge", "Calm focus that fits the workday."],
-  ["04", "Protect the evening", "A coffee habit that does not tax sleep."],
+  ["01", "Same cue", "The cup still marks the beginning of work."],
+  ["02", "Less tension", "No caffeine surge pushing the nervous system."],
+  ["03", "Cleaner pace", "Support for focus without the afternoon rebound."],
+  ["04", "Better cutoff", "A coffee habit that does not ask for perfect timing."],
 ];
 
 const PROOF_POINTS = [
@@ -60,18 +62,18 @@ const PROOF_POINTS = [
 const PERSONAS = [
   {
     label: "Done with side effects",
-    title: "No jitters. No crash. No anxious second cup.",
-    copy: "For Jamie: the ambitious professional who still wants lift, but not the tension and afternoon drop.",
+    title: "The workday lift without the tension.",
+    copy: "For Jamie: still ambitious, just finished with the shaky second cup and afternoon drop.",
   },
   {
     label: "The optimizer",
-    title: "Keep the edge without making caffeine your identity.",
-    copy: "For Sam: founders, operators, and senior ICs who want the cue of coffee without stimulant dependency.",
+    title: "Performance without dependency as a personality.",
+    copy: "For Sam: founders, operators, and senior ICs who want the coffee cue without needing caffeine to switch on.",
   },
   {
     label: "The coffee lover",
-    title: "The ritual stays. The stimulant goes.",
-    copy: "For Rachel: people who miss coffee more than caffeine and want the cup back on their terms.",
+    title: "The cup comes back into the day.",
+    copy: "For Rachel: people who miss the warmth, pause, and taste more than the stimulant.",
   },
 ];
 
@@ -118,10 +120,10 @@ export default function HomePage() {
               <span>1,000+ Customers</span>
             </div>
             <h1 className="mx-auto max-w-4xl font-serif text-[clamp(52px,11vw,132px)] leading-[0.95] tracking-[-0.06em]">
-              The decaf coffee for calm focus.
+              The original coffee ritual, reworked.
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
-              Everything you love about coffee. None of what you don't: no jitters, no crash, no stimulant dependency.
+              Everything you love about coffee, rebuilt without the stimulant tradeoff.
             </p>
             <div className="mx-auto mt-8 max-w-xl">
               <Cta>Shop now - save up to 25%</Cta>
@@ -154,7 +156,7 @@ export default function HomePage() {
             How we're raising the bar for decaf.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
-            STUNN is not a supplement pretending to be coffee. It is coffee redesigned for people who want the ritual without the stimulant cost.
+            STUNN is real decaf coffee with functional support, built for people who want the cup to feel easier on the body and the day.
           </p>
 
           <div className="mx-auto mt-10 inline-flex rounded-full bg-[#F4F0FB] p-1 shadow-[0_18px_50px_rgba(17,17,17,0.08)]">
@@ -231,12 +233,12 @@ export default function HomePage() {
       <section className="bg-white px-5 py-10 sm:px-8 lg:py-20">
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] border border-[#111111] bg-white lg:grid-cols-[0.86fr_1.14fr]">
           <div className="p-7 sm:p-10 lg:p-14">
-            <Label>Scientifically informed</Label>
+            <Label>Morning focus</Label>
             <h2 className="max-w-xl text-[clamp(42px,6vw,86px)] font-black uppercase leading-[0.94] tracking-[-0.045em] text-[#111111]">
-              Calm focus. Made easy.
+              Start sharp. Stay composed.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-[#111111]/68">
-              Caffeine can make tired feel productive for a few hours. STUNN keeps the coffee cue while supporting a steadier state.
+              A familiar coffee moment with a cleaner arc: steady attention, less edge, and no need to manage the crash later.
             </p>
 
             <div className="mt-9 space-y-6">
@@ -253,8 +255,8 @@ export default function HomePage() {
           </div>
           <div className="relative min-h-[560px] bg-[#F4F0FB]">
             <Image
-              src={`${CDN}img-a-man-sipping-a-cup-of-coffee-while-holding-stunn-sachet_1.webp`}
-              alt="Drinking STUNN coffee"
+              src={MORNING_FOCUS_IMAGE}
+              alt="Calm morning coffee ritual"
               fill
               className="object-cover object-center"
             />
@@ -266,12 +268,12 @@ export default function HomePage() {
         <div className="mx-auto max-w-[1440px] rounded-[28px] bg-[#F4F0FB] px-7 py-12 sm:px-10 lg:px-16 lg:py-18">
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
             <div>
-              <Label>The STUNN shift</Label>
+              <Label>Who it is for</Label>
               <h2 className="max-w-4xl text-[clamp(44px,7vw,108px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
-                Keep the ritual. Feel clear again.
+                Different reasons. Same better cup.
               </h2>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-[#111111]/68 sm:text-lg">
-                A positive reset for people who are not anti-coffee. They are just done letting caffeine set the terms.
+                STUNN is for people who are not trying to quit coffee. They are trying to stop letting caffeine decide how the day feels.
               </p>
             </div>
             <div className="overflow-hidden rounded-[22px] border border-[#111111]/10 bg-white shadow-[0_24px_70px_rgba(17,17,17,0.08)]">
@@ -383,16 +385,16 @@ export default function HomePage() {
       <section className="bg-white px-5 py-12 sm:px-8 lg:py-20">
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] bg-[#F4F0FB] lg:grid-cols-[1fr_0.82fr]">
           <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-16">
-            <Label>Start your ritual</Label>
+              <Label>Anytime coffee</Label>
             <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
-              Your next coffee ritual starts here.
+              The afternoon cup is back.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/65">
-              Save up to 25% on subscription and get STUNN delivered before the old habit pulls you back in.
+              Have coffee when you actually want it, not only when your sleep schedule can tolerate it.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Cta>Get STUNN from $1.00/cup</Cta>
-              <span className="text-sm font-semibold text-[#111111]/55">Free shipping on best value</span>
+              <span className="text-sm font-semibold text-[#111111]/55">Sleep-friendly by design</span>
             </div>
           </div>
           <Link
@@ -400,8 +402,8 @@ export default function HomePage() {
             className="relative min-h-[360px] overflow-hidden bg-white/45 lg:min-h-[560px]"
           >
             <img
-              src={`${CDN}3-boxes-of-stunn-1080x1080.webp`}
-              alt="STUNN boxes"
+              src={EVENING_RITUAL_IMAGE}
+              alt="Evening coffee ritual"
               className="absolute inset-0 h-full w-full object-cover object-bottom"
             />
           </Link>
