@@ -23,20 +23,16 @@ function Cta({
   return (
     <Link
       href={PDP}
-      className={`inline-flex min-h-12 items-center justify-center rounded-lg px-6 text-sm font-black transition-all ${styles[variant]}`}
+      className={`inline-flex min-h-12 w-full items-center justify-center rounded-lg px-6 text-sm font-black transition-all sm:w-auto ${styles[variant]}`}
     >
       {children}
     </Link>
   );
 }
 
-function Label({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <p
-      className={`mb-4 text-xs font-black uppercase tracking-[0.28em] ${
-        light ? "text-white/70" : "text-[#111111]/45"
-      }`}
-    >
+    <p className="mb-4 text-xs font-black uppercase tracking-[0.28em] text-[#111111]/45">
       {children}
     </p>
   );
@@ -113,22 +109,27 @@ export default function HomePage() {
   return (
     <>
       <section className="bg-white">
-        <div className="bg-[#7C3AED] px-5 py-10 text-white sm:px-8 lg:py-14">
+        <div className="px-5 py-16 text-[#111111] sm:px-8 lg:py-24">
           <div className="mx-auto max-w-[1440px] text-center">
-            <Label light>Your next cup</Label>
-            <h1 className="mx-auto max-w-5xl text-[clamp(48px,11vw,132px)] font-black uppercase leading-[0.9] tracking-[-0.055em]">
-              Coffee is back on your terms.
+            <div className="mb-7 flex items-center justify-center gap-3 text-sm font-semibold text-[#111111]/65">
+              <span className="text-[#EFAF00]">★★★★★</span>
+              <span>4.8 Stars</span>
+              <span className="h-5 w-px bg-[#111111]/20" />
+              <span>1,000+ Customers</span>
+            </div>
+            <h1 className="mx-auto max-w-4xl font-serif text-[clamp(52px,11vw,132px)] leading-[0.95] tracking-[-0.06em]">
+              The decaf coffee for calm focus.
             </h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/82 sm:text-xl">
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
               Everything you love about coffee. None of what you don't: no jitters, no crash, no stimulant dependency.
             </p>
-            <div className="mx-auto mt-7 grid max-w-4xl grid-cols-3 gap-3 text-xs font-semibold text-white/85 sm:text-sm">
+            <div className="mx-auto mt-8 max-w-xl">
+              <Cta>Shop now - save up to 25%</Cta>
+            </div>
+            <div className="mx-auto mt-6 grid max-w-3xl grid-cols-3 gap-3 text-xs font-semibold text-[#111111]/60 sm:text-sm">
               {BENEFITS.map(([title]) => (
                 <span key={title}>{title}</span>
               ))}
-            </div>
-            <div className="mx-auto mt-8 max-w-xl">
-              <Cta variant="light">Shop now - save up to 25%</Cta>
             </div>
           </div>
         </div>
@@ -157,7 +158,7 @@ export default function HomePage() {
           </p>
 
           <div className="mx-auto mt-10 inline-flex rounded-full bg-[#F4F0FB] p-1 shadow-[0_18px_50px_rgba(17,17,17,0.08)]">
-            <span className="rounded-full bg-[#7C3AED] px-5 py-3 text-xs font-black uppercase tracking-wide text-white">
+            <span className="rounded-full bg-[#111111] px-5 py-3 text-xs font-black uppercase tracking-wide text-white">
               Decaf coffee
             </span>
             <span className="px-5 py-3 text-xs font-black uppercase tracking-wide text-[#111111]/35">
@@ -187,7 +188,7 @@ export default function HomePage() {
                   href={PDP}
                   className="rounded-[18px] border border-[#111111]/10 bg-white p-4 text-xs font-black uppercase leading-tight tracking-[-0.01em] text-[#111111] shadow-[0_12px_30px_rgba(17,17,17,0.04)]"
                 >
-                  <span className="mb-3 flex h-7 w-7 items-center justify-center rounded-full bg-[#7C3AED] text-base text-white">
+                  <span className="mb-3 flex h-7 w-7 items-center justify-center rounded-full bg-[#111111] text-base text-white">
                     +
                   </span>
                   {text}
@@ -216,7 +217,7 @@ export default function HomePage() {
                 href={PDP}
                 className={`absolute ${pos} max-w-[150px] text-sm font-black uppercase leading-tight tracking-[-0.02em] text-[#111111] sm:max-w-[190px] sm:text-lg`}
               >
-                <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#7C3AED] text-xl text-white">
+                <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#111111] text-xl text-white">
                   +
                 </span>
                 <br />
@@ -241,7 +242,7 @@ export default function HomePage() {
             <div className="mt-9 space-y-6">
               {PROOF_POINTS.map(([amount, ingredient, copy]) => (
                 <div key={ingredient}>
-                  <p className="text-[clamp(44px,8vw,82px)] font-black leading-none tracking-[-0.055em] text-[#7C3AED]">
+                  <p className="text-[clamp(44px,8vw,82px)] font-black leading-none tracking-[-0.055em] text-[#111111]">
                     {amount}
                   </p>
                   <h3 className="mt-1 font-serif text-2xl text-[#111111]">{ingredient}</h3>
@@ -276,7 +277,7 @@ export default function HomePage() {
             <div className="overflow-hidden rounded-[22px] border border-[#111111]/10 bg-white shadow-[0_24px_70px_rgba(17,17,17,0.08)]">
               {RITUAL_STEPS.map(([number, title, copy]) => (
                 <div key={number} className="grid grid-cols-[48px_1fr] gap-4 border-b border-[#111111]/10 p-5 last:border-b-0">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#7C3AED] text-xs font-black text-white">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#111111] text-xs font-black text-white">
                     {number}
                   </span>
                   <div>
@@ -368,7 +369,7 @@ export default function HomePage() {
               <details key={faq.question} className="group rounded-[16px] border border-[#111111]/10 bg-white p-5 shadow-[0_12px_40px_rgba(17,17,17,0.04)]">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-5">
                   <span className="text-lg font-black text-[#111111]">{faq.question}</span>
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F4F0FB] text-[#7C3AED] transition-transform group-open:rotate-45">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F4F0FB] text-[#111111] transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>
