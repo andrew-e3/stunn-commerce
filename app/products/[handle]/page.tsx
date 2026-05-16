@@ -304,9 +304,9 @@ export default async function ProductPage(props: {
       </div>
 
       {/* ── IDENTITY REFRAME ── */}
-      <section className="bg-white px-4 py-16 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-7xl rounded-[28px] bg-[#EEEAF8] px-6 py-12 lg:px-16 lg:py-16">
-          <div className="grid gap-12 lg:grid-cols-[0.95fr_0.9fr_1fr] lg:items-center">
+      <section className="bg-white px-4 py-8 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl rounded-[28px] bg-[#EEEAF8] px-6 py-9 lg:px-16 lg:py-16">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_0.9fr_1fr] lg:items-center lg:gap-12">
             <div>
               <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-[#111111]/50">
                 The STUNN shift
@@ -369,8 +369,8 @@ export default async function ProductPage(props: {
             </div>
           </div>
 
-          <div className="mt-12 border-t border-black/15 pt-8">
-            <div className="grid gap-8 md:grid-cols-3">
+          <div className="mt-8 border-t border-black/15 pt-6 lg:mt-12 lg:pt-8">
+            <div className="grid gap-7 md:grid-cols-3 lg:gap-8">
               {PERSONA_CARDS.map((card) => (
                 <div key={card.eyebrow}>
                   <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#111111]/42">
@@ -387,9 +387,9 @@ export default async function ProductPage(props: {
       </section>
 
       {/* ── WHAT TO EXPECT — photo timeline ── */}
-      <section className="bg-white py-16 lg:py-24">
+      <section className="bg-white py-9 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-12 text-center">
+          <div className="mb-8 text-center lg:mb-12">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
               The timeline
             </p>

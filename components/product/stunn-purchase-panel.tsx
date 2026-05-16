@@ -124,7 +124,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
     product.variants[0];
 
   return (
-    <div className="px-6 py-6 pb-28 lg:px-10 lg:py-8">
+    <div className="px-6 py-6 pb-20 lg:px-10 lg:py-8 lg:pb-8">
       {/* Stars */}
       <div className="mb-4 flex w-full items-center gap-3">
         <div className="flex min-w-0 items-center gap-2">
