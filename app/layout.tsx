@@ -1,4 +1,5 @@
 import { CartProvider } from "components/cart/cart-context";
+import { KlaviyoOnsite } from "components/klaviyo-onsite";
 import { Navbar } from "components/layout/navbar";
 import { Anton, Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
@@ -38,6 +39,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${anton.variable} ${inter.variable}`}>
       <body className="bg-white font-[family-name:var(--font-inter)] text-[#111111]">
+        <KlaviyoOnsite />
         <CartProvider cartPromise={cart}>
           <div className="sticky top-0 z-40">
             <div className="bg-[#7C3AED] py-2 text-center text-sm font-semibold text-white">
