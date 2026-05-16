@@ -25,15 +25,15 @@ export default function Footer() {
   return (
     <footer className="bg-[#7C3AED] text-white">
       {/* ── Top: Newsletter + Nav ── */}
-      <div className="mx-auto grid max-w-screen-xl gap-12 px-6 py-12 lg:grid-cols-[1.25fr_0.9fr] lg:gap-16 lg:px-8 lg:py-14">
+      <div className="mx-auto grid max-w-screen-xl gap-8 px-6 py-8 lg:grid-cols-[1.25fr_0.9fr] lg:gap-14 lg:px-8 lg:py-10">
         {/* Nav columns + social */}
-        <nav className="grid gap-8 sm:grid-cols-3">
+        <nav className="grid gap-7 sm:grid-cols-3">
           {/* Store */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <p className="border-b border-white/70 pb-3 text-sm font-extrabold text-white">
               STORE
             </p>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-2.5">
               {STORE_LINKS.map((l) => (
                 <li key={l.label}>
                   <Link
@@ -48,11 +48,11 @@ export default function Footer() {
           </div>
 
           {/* Help */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <p className="border-b border-white/70 pb-3 text-sm font-extrabold text-white">
               HELP
             </p>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-2.5">
               {HELP_LINKS.map((l) => (
                 <li key={l.label}>
                   <Link
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
 
           {/* Follow Us */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <p className="border-b border-white/70 pb-3 text-sm font-extrabold text-white">
               FOLLOW US
             </p>
@@ -77,7 +77,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
               >
                 <svg
                   width="19"
@@ -93,7 +93,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
               >
                 <svg
                   width="19"
@@ -109,7 +109,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
               >
                 <svg
                   width="18"
@@ -125,8 +125,8 @@ export default function Footer() {
         </nav>
 
         {/* Newsletter */}
-        <div className="flex flex-col gap-5 lg:pl-4">
-          <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2.4rem,4vw,4rem)] uppercase leading-[0.95] text-white">
+        <div className="flex flex-col gap-4 lg:pl-4">
+          <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2rem,3.2vw,3.25rem)] uppercase leading-[0.95] text-white">
             Sign up for
             <br />
             STUNN updates
@@ -139,11 +139,11 @@ export default function Footer() {
             <input
               type="email"
               placeholder="E-mail"
-              className="min-w-0 flex-1 rounded-[6px] border border-white bg-transparent px-4 py-3 text-sm font-bold text-white placeholder-white/75 outline-none focus:bg-white/10"
+              className="min-w-0 flex-1 rounded-[6px] border border-white bg-transparent px-4 py-2.5 text-sm font-bold text-white placeholder-white/75 outline-none focus:bg-white/10"
             />
             <button
               type="submit"
-              className="shrink-0 rounded-[6px] bg-white px-5 py-3 text-sm font-extrabold uppercase tracking-wide text-[#111111] transition-transform hover:-translate-y-0.5"
+              className="shrink-0 rounded-[6px] bg-white px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-[#111111] transition-transform hover:-translate-y-0.5"
             >
               Sign up
             </button>
@@ -156,18 +156,19 @@ export default function Footer() {
       </div>
 
       {/* ── STUNN white logo ── */}
-      <div className="mx-auto border-t border-white/70 px-6 py-10 lg:max-w-screen-xl lg:px-8 lg:py-12">
+      <div className="mx-auto border-t border-white/70 px-6 py-5 lg:max-w-screen-xl lg:px-8 lg:py-6">
         <Image
           src={`${CDN}STUNN_LOGO-White.png`}
           alt="STUNN"
-          width={1400}
-          height={120}
-          className="w-full"
+          width={3533}
+          height={1099}
+          className="mx-auto h-auto w-full max-w-[760px] object-contain lg:max-w-[840px]"
+          priority
         />
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="mx-auto flex flex-col gap-3 px-6 pb-5 text-xs text-white/85 sm:flex-row sm:items-center sm:justify-between lg:max-w-screen-xl lg:px-8">
+      <div className="mx-auto flex flex-col gap-3 px-6 pb-4 text-xs text-white/85 sm:flex-row sm:items-center sm:justify-between lg:max-w-screen-xl lg:px-8">
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           <Link href="/privacy-policy" className="underline hover:text-white">
             Privacy Policy
@@ -188,7 +189,7 @@ export default function Footer() {
       </div>
 
       {/* ── FDA Disclaimer ── */}
-      <div className="mx-auto px-6 pb-8 pt-3 text-center text-[10px] italic leading-relaxed text-white/55 lg:max-w-screen-xl lg:px-8">
+      <div className="mx-auto px-6 pb-5 pt-1 text-center text-[9px] italic leading-snug text-white/50 lg:max-w-screen-xl lg:px-8">
         <p>{DISCLAIMER}</p>
       </div>
     </footer>
