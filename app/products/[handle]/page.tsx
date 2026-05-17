@@ -4,6 +4,7 @@ import { StickyAtc } from "components/product/sticky-atc";
 import { PurchaseSelectionProvider } from "components/product/purchase-selection-context";
 import Footer from "components/layout/footer";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
+import { BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
 import { getProduct } from "lib/shopify";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -694,7 +695,7 @@ export default async function ProductPage(props: {
               src="/images/stunn-founder.webp"
               alt="Andrew Jennings, founder of STUNN"
               fill
-              className="object-cover object-[center_35%]"
+              className="scale-[1.12] object-cover object-[52%_30%]"
               priority
             />
           </div>
@@ -831,7 +832,7 @@ export default async function ProductPage(props: {
                 href="#purchase"
                 className="inline-flex items-center justify-center gap-2 rounded-[10px] bg-[#5A3493] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F] transition-all hover:bg-[#111111] hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F]"
               >
-                Get STUNN from $1.03/day
+                Get STUNN from {BEST_VALUE_PER_DAY_LABEL}
               </a>
               <div className="flex items-center gap-2 text-sm text-[#111111]/60">
                 <span className="text-[#EFAF00]">★★★★★</span>

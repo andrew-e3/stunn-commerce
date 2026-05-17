@@ -1,6 +1,6 @@
 import AnimatedNumber from "components/animated-number";
 import Footer from "components/layout/footer";
-import { BEST_VALUE_PER_DAY } from "lib/pricing";
+import { BEST_VALUE_PER_DAY, BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
@@ -127,7 +127,7 @@ const FAQS = [
   {
     question: "What is the best value?",
     answer:
-      "The 3-box subscription gives the lowest price per cup, free shipping, and the strongest savings.",
+      "The 3-box subscription gives the lowest price per day, free shipping, and the strongest savings.",
   },
 ];
 
@@ -163,14 +163,14 @@ export default function HomePage() {
             <div className="mb-6 flex flex-wrap items-center gap-3 text-sm font-semibold text-[#111111]/65">
               <span className="text-[#EFAF00]">★★★★★</span>
               <span>
-                <AnimatedNumber value={4.8} decimals={1} /> Stars
+                <AnimatedNumber value={4.8} decimals={1} startAt={4.6} /> Stars
               </span>
               <span className="h-5 w-px bg-[#111111]/20" />
               <span>
-                <AnimatedNumber value={1000} compact />+ Customers
+                <AnimatedNumber value={1000} compact startAt={900} />+ Customers
               </span>
             </div>
-            <h1 className="max-w-[640px] text-[clamp(46px,5.2vw,82px)] font-black uppercase leading-[0.9] tracking-[-0.052em] text-[#111111]">
+            <h1 className="max-w-[640px] text-[clamp(46px,5.2vw,82px)] font-[family-name:var(--font-anton)] uppercase leading-[0.9] tracking-normal text-[#111111]">
               The decaf coffee ritual, reworked.
             </h1>
             <p className="mt-6 max-w-[520px] text-base leading-relaxed text-[#111111]/68 sm:text-xl">
@@ -193,26 +193,24 @@ export default function HomePage() {
 
           <Link
             href={PDP}
-            className="relative block min-h-[340px] overflow-hidden bg-[#EEEAF8] sm:min-h-[500px] lg:hidden"
+            className="relative mx-5 mb-8 block aspect-[16/10] overflow-hidden rounded-[22px] bg-[#EEEAF8] shadow-[0_18px_55px_rgba(17,17,17,0.08)] sm:mx-8 sm:aspect-[16/9] lg:hidden"
           >
             <Image
               src={HOME_HERO_IMAGE}
               alt="STUNN Decaf Coffee box, sachet, and coffee"
               fill
-              className="animate-slow-zoom object-cover object-[68%_center]"
+              className="animate-slow-zoom object-cover object-[70%_center]"
               priority
               sizes="100vw"
             />
-            <div className="absolute bottom-5 left-5 bg-[#5A3493] px-5 py-3 text-sm font-black text-white shadow-[0_18px_50px_rgba(17,17,17,0.18)] sm:left-8">
-              Limited launch offer
-            </div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[#EEEAF8]/88 to-transparent" />
           </Link>
         </div>
       </section>
 
       <section className="bg-white px-5 py-14 sm:px-8 lg:py-24">
         <div className="mx-auto max-w-[1320px] text-center">
-          <h2 className="mx-auto max-w-5xl text-[clamp(40px,7vw,90px)] font-black uppercase leading-[0.92] tracking-[-0.05em] text-[#111111]">
+          <h2 className="mx-auto max-w-5xl text-[clamp(40px,7vw,90px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
             How we're raising the bar for decaf.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
@@ -242,7 +240,7 @@ export default function HomePage() {
                 <Link
                   key={text}
                   href={PDP}
-                  className="rounded-[18px] border border-[#111111]/10 bg-white p-4 text-xs font-black uppercase leading-tight tracking-[-0.01em] text-[#111111] shadow-[0_12px_30px_rgba(17,17,17,0.04)]"
+                  className="rounded-[18px] border border-[#111111]/10 bg-white p-4 text-xs font-[family-name:var(--font-anton)] uppercase leading-tight tracking-[-0.01em] text-[#111111] shadow-[0_12px_30px_rgba(17,17,17,0.04)]"
                 >
                   <span className="mb-3 flex h-7 w-7 items-center justify-center rounded-full bg-[#111111] text-base text-white">
                     +
@@ -265,7 +263,7 @@ export default function HomePage() {
               <Link
                 key={text}
                 href={PDP}
-                className={`absolute ${pos} max-w-[150px] text-sm font-black uppercase leading-tight tracking-[-0.02em] text-[#111111] sm:max-w-[190px] sm:text-lg`}
+                className={`absolute ${pos} max-w-[150px] text-sm font-[family-name:var(--font-anton)] uppercase leading-tight tracking-[-0.02em] text-[#111111] sm:max-w-[190px] sm:text-lg`}
               >
                 <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#111111] text-xl text-white">
                   +
@@ -282,7 +280,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] border border-[#111111] bg-white lg:grid-cols-[0.86fr_1.14fr]">
           <div className="p-7 sm:p-10 lg:p-14">
             <Label>Morning focus</Label>
-            <h2 className="max-w-xl text-[clamp(42px,6vw,86px)] font-black uppercase leading-[0.94] tracking-[-0.045em] text-[#111111]">
+            <h2 className="max-w-xl text-[clamp(42px,6vw,86px)] font-[family-name:var(--font-anton)] uppercase leading-[0.94] tracking-normal text-[#111111]">
               Start sharp. Stay composed.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-[#111111]/68">
@@ -292,10 +290,10 @@ export default function HomePage() {
             <div className="mt-9 space-y-6">
               {PROOF_POINTS.map(([amount, suffix, ingredient, copy]) => (
                 <div key={ingredient}>
-                  <p className="text-[clamp(44px,8vw,82px)] font-black leading-none tracking-[-0.055em] text-[#111111]">
+                  <p className="text-[clamp(44px,8vw,82px)] font-black leading-none tracking-normal text-[#111111]">
                     <AnimatedNumber value={amount as number} suffix={suffix as string} />
                   </p>
-                  <h3 className="mt-1 text-2xl font-black tracking-[-0.03em] text-[#111111]">{ingredient}</h3>
+                  <h3 className="mt-1 text-2xl font-black tracking-normal text-[#111111]">{ingredient}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-[#111111]/62">{copy}</p>
                 </div>
               ))}
@@ -317,7 +315,7 @@ export default function HomePage() {
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
             <div>
               <Label>Who it is for</Label>
-              <h2 className="max-w-4xl text-[clamp(44px,7vw,108px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
+              <h2 className="max-w-4xl text-[clamp(44px,7vw,108px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
                 Different reasons. Same better cup.
               </h2>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-[#111111]/68 sm:text-lg">
@@ -331,7 +329,7 @@ export default function HomePage() {
                     {number}
                   </span>
                   <div>
-                    <h3 className="text-xl font-black uppercase tracking-[-0.025em] text-[#111111]">{title}</h3>
+                    <h3 className="text-xl font-black uppercase tracking-normal text-[#111111]">{title}</h3>
                     <p className="mt-1 text-sm leading-relaxed text-[#111111]/62">{copy}</p>
                   </div>
                 </div>
@@ -345,7 +343,7 @@ export default function HomePage() {
                 <p className="mb-4 text-xs font-black uppercase tracking-[0.24em] text-[#111111]/42">
                   {persona.label}
                 </p>
-                <h3 className="text-2xl font-black uppercase leading-[1.05] tracking-[-0.03em] text-[#111111]">
+                <h3 className="text-2xl font-[family-name:var(--font-anton)] uppercase leading-[1.05] tracking-normal text-[#111111]">
                   {persona.title}
                 </h3>
                 <p className="mt-4 text-sm leading-relaxed text-[#111111]/62">{persona.copy}</p>
@@ -359,11 +357,11 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <Label>Best value</Label>
-            <h2 className="max-w-xl text-[clamp(44px,6vw,92px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
+            <h2 className="max-w-xl text-[clamp(44px,6vw,92px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
               Start with three boxes. Save 25%.
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-[#111111]/65">
-              The 3-box subscription is the best way to make the switch stick: lowest price per cup, free shipping, and a full ritual reset.
+              The 3-box subscription is the best way to make the switch stick: lowest price per day, free shipping, and a full ritual reset.
             </p>
           </div>
 
@@ -388,13 +386,14 @@ export default function HomePage() {
                     From{" "}
                     <AnimatedNumber
                       value={Number(BEST_VALUE_PER_DAY)}
-                      decimals={2}
+                      decimals={0}
                       prefix="$"
+                      startAt={1}
                     />{" "}
                     / day
                   </span>
                 </div>
-                <h3 className="text-3xl font-black tracking-[-0.03em] text-[#111111]">
+                <h3 className="text-3xl font-black tracking-normal text-[#111111]">
                   3 boxes delivered every 3 months
                 </h3>
                 <div className="mt-7 grid gap-3 text-sm font-semibold text-[#111111]/75 sm:grid-cols-3">
@@ -415,7 +414,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <Label>Questions</Label>
-            <h2 className="max-w-md text-[clamp(42px,6vw,82px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
+            <h2 className="max-w-md text-[clamp(42px,6vw,82px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
               A better cup should feel simple.
             </h2>
             <div className="mt-8">
@@ -442,14 +441,14 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] bg-[#F4F0FB] lg:grid-cols-[1fr_0.82fr]">
           <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-16">
               <Label>Anytime coffee</Label>
-            <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
+            <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
               The afternoon cup is back.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/65">
               Have coffee when you actually want it, not only when your sleep schedule can tolerate it.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Cta>{`Get STUNN from $${BEST_VALUE_PER_DAY}/day`}</Cta>
+              <Cta>Get STUNN from {BEST_VALUE_PER_DAY_LABEL}</Cta>
               <span className="text-sm font-semibold text-[#111111]/55">Sleep-friendly by design</span>
             </div>
           </div>
