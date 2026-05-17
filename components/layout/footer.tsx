@@ -7,7 +7,6 @@ const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const STORE_LINKS = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products/focus-without-caffeine" },
-  { label: "Movement", href: "/movement" },
   { label: "About Us", href: "/about-us" },
 ];
 

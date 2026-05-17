@@ -247,7 +247,7 @@ export default function HomePage() {
                 Try STUNN
               </Link>
               <Link
-                href="/movement"
+                href="/about-us"
                 className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/24 px-6 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-white"
               >
                 Read the movement

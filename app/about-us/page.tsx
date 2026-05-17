@@ -1,4 +1,5 @@
 import Footer from "components/layout/footer";
+import { OffTheDripCapture } from "components/off-the-drip-capture";
 import { BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
 import Image from "next/image";
 import Link from "next/link";
@@ -111,6 +112,33 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="bg-[#111111] px-5 py-14 text-white sm:px-8 lg:py-24">
+        <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-white/45">
+              Off The Drip
+            </p>
+            <h2 className="max-w-4xl text-[clamp(48px,8vw,118px)] stunn-display uppercase leading-[0.88] tracking-normal">
+              Caffeine had its run.
+            </h2>
+          </div>
+          <div className="max-w-2xl">
+            <p className="text-lg font-semibold leading-relaxed text-white/78">
+              Most people do not realize they are dependent until they skip the
+              cup: the headache, the anxious second coffee, the crash by 2pm,
+              the feeling that normal now has a dose.
+            </p>
+            <p className="mt-5 text-base leading-relaxed text-white/65">
+              STUNN is for people who want the ritual without the dependency.
+              You do not have to quit caffeine. You just stop being owned by it.
+            </p>
+            <p className="mt-5 text-base leading-relaxed text-white/65">
+              Every STUNN product is caffeine-free by design, always.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white px-5 py-14 sm:px-8 lg:py-24">
         <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
           <div>
@@ -179,6 +207,20 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="bg-[#5A3493] px-5 py-14 text-white sm:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <div>
+            <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-white/52">
+              Join the list
+            </p>
+            <h2 className="max-w-xl text-[clamp(42px,7vw,96px)] stunn-display uppercase leading-[0.9] tracking-normal">
+              Build better rituals without dependency.
+            </h2>
+          </div>
+          <OffTheDripCapture mode="inline" tone="dark" />
         </div>
       </section>
 

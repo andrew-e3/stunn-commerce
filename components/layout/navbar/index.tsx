@@ -14,7 +14,6 @@ const LEFT_LINKS = [
     href: "/products/focus-without-caffeine",
     highlighted: true,
   },
-  { label: "Movement", href: "/movement" },
   { label: "About", href: "/about-us" },
 ];
 
