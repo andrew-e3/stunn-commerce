@@ -148,6 +148,62 @@ export default function HomePage() {
     <>
       <section className="relative overflow-hidden border-b border-[#111111]/10 bg-white">
         <div className="relative mx-auto max-w-[2048px] text-[#111111]">
+          <div className="lg:hidden">
+            <Link
+              href={PDP}
+              aria-label="Shop STUNN Decaf Coffee"
+              className="block bg-[#F4F0FB] px-4 pb-5 pt-5"
+            >
+              <div className="relative h-[300px] overflow-hidden rounded-[28px] bg-[#EEEAF8] shadow-[0_18px_50px_rgba(17,17,17,0.1)]">
+                <Image
+                  src={HOME_HERO_IMAGE}
+                  alt="STUNN Decaf Coffee box, sachet, and coffee"
+                  fill
+                  className="animate-slow-zoom object-cover object-[72%_center]"
+                  priority
+                  sizes="100vw"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#F4F0FB]/70 via-[#F4F0FB]/10 to-transparent" />
+                <div className="absolute left-4 top-4 rounded-full bg-white/92 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-[#5A3493] shadow-[0_10px_24px_rgba(17,17,17,0.08)]">
+                  0mg caffeine
+                </div>
+              </div>
+            </Link>
+
+            <div className="px-5 pb-8 pt-3">
+              <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold text-[#111111]/60">
+                <span className="text-[#EFAF00]">★★★★★</span>
+                <span>
+                  <AnimatedNumber value={4.8} decimals={1} startAt={4.6} /> Stars
+                </span>
+                <span className="h-4 w-px bg-[#111111]/18" />
+                <span>
+                  <AnimatedNumber value={1000} compact startAt={900} />+ Customers
+                </span>
+              </div>
+              <h1 className="text-[clamp(42px,12.8vw,56px)] stunn-display uppercase leading-[0.88] tracking-normal text-[#111111]">
+                The decaf coffee ritual, reworked.
+              </h1>
+              <p className="mt-4 text-[17px] leading-[1.45] text-[#111111]/68">
+                Real coffee taste with 0mg caffeine, rebuilt for calm focus without the stimulant tradeoff.
+              </p>
+              <div className="mt-6">
+                <Cta>Shop now - save up to 25%</Cta>
+              </div>
+              <div className="mt-5 flex flex-wrap gap-2 text-[12px] font-black uppercase tracking-[0.08em] text-[#111111]/58">
+                <span className="rounded-full border border-[#111111]/10 px-3 py-2">
+                  Calm focus
+                </span>
+                <span className="rounded-full border border-[#111111]/10 px-3 py-2">
+                  No crash
+                </span>
+                <span className="rounded-full border border-[#111111]/10 px-3 py-2">
+                  Coffee taste
+                </span>
+              </div>
+            </div>
+          </div>
+
           <div className="relative h-[max(560px,37.5vw)] w-full overflow-hidden max-lg:hidden">
             <Image
               src={HOME_HERO_IMAGE}
@@ -164,7 +220,7 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="animate-hero-copy-in relative z-10 px-5 pb-7 pt-7 sm:px-8 sm:py-12 lg:absolute lg:left-0 lg:top-[56%] lg:w-[48%] lg:-translate-y-1/2 lg:px-14 lg:py-0 xl:px-20">
+          <div className="animate-hero-copy-in relative z-10 hidden px-5 pb-7 pt-7 sm:px-8 sm:py-12 lg:absolute lg:left-0 lg:top-[56%] lg:block lg:w-[48%] lg:-translate-y-1/2 lg:px-14 lg:py-0 xl:px-20">
             <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold text-[#111111]/65 sm:mb-6 sm:text-sm">
               <span className="text-[#EFAF00]">★★★★★</span>
               <span>
@@ -187,19 +243,6 @@ export default function HomePage() {
                 Free shipping on 3 boxes
               </span>
             </div>
-            <Link
-              href={PDP}
-              className="relative mt-6 block aspect-[1983/793] overflow-hidden rounded-[20px] bg-[#EEEAF8] shadow-[0_16px_42px_rgba(17,17,17,0.08)] lg:hidden"
-            >
-              <Image
-                src={HOME_HERO_IMAGE}
-                alt="STUNN Decaf Coffee box, sachet, and coffee"
-                fill
-                className="animate-slow-zoom object-contain object-center"
-                priority
-                sizes="100vw"
-              />
-            </Link>
             <div className="mt-5 hidden max-w-[520px] grid-cols-3 gap-3 text-xs font-bold text-[#111111]/60 sm:grid sm:text-sm">
               {BENEFITS.map(([title]) => (
                 <span key={title} className="border-t border-[#111111]/14 pt-3">
