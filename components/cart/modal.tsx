@@ -430,15 +430,6 @@ export default function CartModal() {
                                   <div className="mt-2">
                                     <FrequencyDropdown
                                       currentQty={item.quantity}
-                                      disabled={qtyChanging}
-                                      onSelectQuantity={(quantity) => {
-                                        startQtyTransition(async () => {
-                                          await updateItemQuantity(null, {
-                                            merchandiseId: item.merchandise.id,
-                                            quantity,
-                                          });
-                                        });
-                                      }}
                                     />
                                   </div>
                                 </li>
@@ -562,7 +553,7 @@ function CheckoutButton() {
   const { pending } = useFormStatus();
   return (
     <button
-      className="w-full rounded-[5px] bg-white py-4 text-base font-extrabold uppercase tracking-wide text-[#111111] transition-opacity hover:opacity-95 disabled:opacity-60"
+      className="w-full rounded-[5px] bg-white py-4 text-base font-extrabold uppercase tracking-wide text-[#111111] transition-colors hover:bg-[#111111] hover:text-white disabled:opacity-60"
       type="submit"
       disabled={pending}
     >
