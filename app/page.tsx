@@ -161,10 +161,10 @@ export default function HomePage() {
                 </span>
               </div>
               <h1 className="text-[clamp(42px,12.8vw,56px)] stunn-display uppercase leading-[0.88] tracking-normal text-[#111111]">
-                The decaf coffee ritual, reworked.
+                Caffeine had its run.
               </h1>
               <p className="mt-4 text-[16px] leading-[1.45] text-[#111111]/68">
-                Real coffee taste with 0mg caffeine, rebuilt for calm focus without the stimulant tradeoff.
+                Meet STUNN: decaf coffee with adaptogens for the ritual you love, without the jitters, crash, or dependency.
               </p>
               <div className="mt-5 flex flex-wrap gap-2 text-[12px] font-black uppercase tracking-[0.08em] text-[#111111]/58">
                 <span className="rounded-full border border-[#111111]/10 px-3 py-2">
@@ -229,10 +229,10 @@ export default function HomePage() {
               </span>
             </div>
             <h1 className="max-w-[640px] text-[clamp(40px,12.4vw,54px)] stunn-display uppercase leading-[0.88] tracking-normal text-[#111111] sm:text-[clamp(46px,5.2vw,82px)] sm:leading-[0.9]">
-              The decaf coffee ritual, reworked.
+              Caffeine had its run.
             </h1>
             <p className="mt-4 max-w-[520px] text-[17px] leading-[1.45] text-[#111111]/68 sm:mt-6 sm:text-xl sm:leading-relaxed">
-              Real coffee taste with 0mg caffeine, rebuilt for calm focus without the stimulant tradeoff.
+              Meet STUNN: decaf coffee with adaptogens for the ritual you love, without the jitters, crash, or dependency.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
               <Cta>Shop now - save up to 25%</Cta>
@@ -259,7 +259,7 @@ export default function HomePage() {
                 Off The Drip
               </p>
               <h2 className="max-w-4xl text-[clamp(48px,8vw,118px)] stunn-display uppercase leading-[0.88] tracking-normal">
-                Caffeine had its run.
+                The ritual stays. The dependency goes.
               </h2>
             </div>
             <div className="max-w-2xl lg:pb-2">
