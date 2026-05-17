@@ -164,8 +164,8 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="animate-hero-copy-in relative z-10 px-5 py-12 sm:px-8 lg:absolute lg:left-0 lg:top-[56%] lg:w-[48%] lg:-translate-y-1/2 lg:px-14 lg:py-0 xl:px-20">
-            <div className="mb-6 flex flex-wrap items-center gap-3 text-sm font-semibold text-[#111111]/65">
+          <div className="animate-hero-copy-in relative z-10 px-5 pb-7 pt-7 sm:px-8 sm:py-12 lg:absolute lg:left-0 lg:top-[56%] lg:w-[48%] lg:-translate-y-1/2 lg:px-14 lg:py-0 xl:px-20">
+            <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold text-[#111111]/65 sm:mb-6 sm:text-sm">
               <span className="text-[#EFAF00]">★★★★★</span>
               <span>
                 <AnimatedNumber value={4.8} decimals={1} startAt={4.6} /> Stars
@@ -175,19 +175,32 @@ export default function HomePage() {
                 <AnimatedNumber value={1000} compact startAt={900} />+ Customers
               </span>
             </div>
-            <h1 className="max-w-[640px] text-[clamp(46px,5.2vw,82px)] stunn-display uppercase leading-[0.9] tracking-normal text-[#111111]">
+            <h1 className="max-w-[640px] text-[clamp(40px,12.4vw,54px)] stunn-display uppercase leading-[0.88] tracking-normal text-[#111111] sm:text-[clamp(46px,5.2vw,82px)] sm:leading-[0.9]">
               The decaf coffee ritual, reworked.
             </h1>
-            <p className="mt-6 max-w-[520px] text-base leading-relaxed text-[#111111]/68 sm:text-xl">
+            <p className="mt-4 max-w-[520px] text-[17px] leading-[1.45] text-[#111111]/68 sm:mt-6 sm:text-xl sm:leading-relaxed">
               Real coffee taste with 0mg caffeine, rebuilt for calm focus without the stimulant tradeoff.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
               <Cta>Shop now - save up to 25%</Cta>
-              <span className="text-sm font-semibold text-[#111111]/50">
+              <span className="hidden text-sm font-semibold text-[#111111]/50 sm:inline">
                 Free shipping on 3 boxes
               </span>
             </div>
-            <div className="mt-7 grid max-w-[520px] grid-cols-3 gap-3 text-xs font-bold text-[#111111]/60 sm:text-sm">
+            <Link
+              href={PDP}
+              className="relative mt-6 block aspect-[1983/793] overflow-hidden rounded-[20px] bg-[#EEEAF8] shadow-[0_16px_42px_rgba(17,17,17,0.08)] lg:hidden"
+            >
+              <Image
+                src={HOME_HERO_IMAGE}
+                alt="STUNN Decaf Coffee box, sachet, and coffee"
+                fill
+                className="animate-slow-zoom object-contain object-center"
+                priority
+                sizes="100vw"
+              />
+            </Link>
+            <div className="mt-5 hidden max-w-[520px] grid-cols-3 gap-3 text-xs font-bold text-[#111111]/60 sm:grid sm:text-sm">
               {BENEFITS.map(([title]) => (
                 <span key={title} className="border-t border-[#111111]/14 pt-3">
                   {title}
@@ -195,21 +208,6 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-
-          <Link
-            href={PDP}
-            className="relative mx-5 mb-8 block aspect-[16/10] overflow-hidden rounded-[22px] bg-[#EEEAF8] shadow-[0_18px_55px_rgba(17,17,17,0.08)] sm:mx-8 sm:aspect-[16/9] lg:hidden"
-          >
-            <Image
-              src={HOME_HERO_IMAGE}
-              alt="STUNN Decaf Coffee box, sachet, and coffee"
-              fill
-              className="animate-slow-zoom object-cover object-[70%_center]"
-              priority
-              sizes="100vw"
-            />
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[#EEEAF8]/88 to-transparent" />
-          </Link>
         </div>
       </section>
 
