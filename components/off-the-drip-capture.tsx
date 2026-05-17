@@ -2,14 +2,6 @@
 
 import { FormEvent, useEffect, useState } from "react";
 
-declare global {
-  interface Window {
-    klaviyo?: {
-      push?: (args: unknown[]) => void;
-    };
-  }
-}
-
 type CaptureMode = "inline" | "popup";
 type CaptureTone = "light" | "dark";
 
@@ -27,7 +19,9 @@ export function OffTheDripCapture({
   className?: string;
 }) {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
   const [open, setOpen] = useState(mode === "inline");
 
   useEffect(() => {
@@ -35,11 +29,14 @@ export function OffTheDripCapture({
     if (typeof window === "undefined") return;
 
     const joined = window.localStorage.getItem(JOINED_KEY);
-    const dismissedUntil = Number(window.localStorage.getItem(DISMISSED_KEY) || 0);
+    const dismissedUntil = Number(
+      window.localStorage.getItem(DISMISSED_KEY) || 0,
+    );
     if (joined || dismissedUntil > Date.now()) return;
 
     const onScroll = () => {
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
       if (scrollable > 0 && window.scrollY / scrollable > 0.5) {
         setOpen(true);
         window.removeEventListener("scroll", onScroll);
@@ -67,7 +64,7 @@ export function OffTheDripCapture({
     setOpen(false);
   };
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const trimmed = email.trim().toLowerCase();
     if (!trimmed || !trimmed.includes("@")) {
@@ -75,14 +72,31 @@ export function OffTheDripCapture({
       return;
     }
 
-    window.klaviyo?.push?.(["identify", { $email: trimmed }]);
-    window.klaviyo?.push?.([
-      "track",
-      "Joined Off The Drip",
-      { source: mode, movement: "Off The Drip" },
-    ]);
-    window.localStorage.setItem(JOINED_KEY, "true");
-    setStatus("success");
+    setStatus("submitting");
+
+    try {
+      const response = await fetch("/api/klaviyo/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: trimmed,
+          source: `off-the-drip-${mode}`,
+          page:
+            typeof window === "undefined"
+              ? undefined
+              : window.location.pathname,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Klaviyo subscribe failed");
+      }
+
+      window.localStorage.setItem(JOINED_KEY, "true");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   };
 
   if (!open) return null;
@@ -128,10 +142,14 @@ export function OffTheDripCapture({
           You&apos;re in. Caffeine had its run.
         </p>
       ) : (
-        <form onSubmit={submit} className="mt-5 flex flex-col gap-2 sm:flex-row">
+        <form
+          onSubmit={submit}
+          className="mt-5 flex flex-col gap-2 sm:flex-row"
+        >
           <input
             type="email"
             value={email}
+            disabled={status === "submitting"}
             onChange={(event) => {
               setEmail(event.target.value);
               setStatus("idle");
@@ -142,9 +160,10 @@ export function OffTheDripCapture({
           />
           <button
             type="submit"
+            disabled={status === "submitting"}
             className="stunn-cta-motion min-h-12 rounded-[8px] border-2 border-[#5A3493] bg-[#5A3493] px-5 text-sm font-black uppercase tracking-[0.08em] text-white"
           >
-            Join Off The Drip
+            {status === "submitting" ? "Joining..." : "Join Off The Drip"}
           </button>
         </form>
       )}
