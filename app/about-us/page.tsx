@@ -1,4 +1,5 @@
 import Footer from "components/layout/footer";
+import { BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,167 +7,239 @@ const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const PDP = "/products/focus-without-caffeine";
 
 export const metadata = {
-  title: "About Us - STUNN",
+  title: "About STUNN - Keep the Coffee Ritual",
   description:
-    "STUNN was created for people who love coffee but not what it does to them. Learn the story behind the brand.",
+    "STUNN is decaf coffee rebuilt for calm focus: real coffee taste, functional support, and none of the caffeine loop.",
 };
 
-const values = [
+const BELIEFS = [
   {
-    icon: `${CDN}icon-focus.svg`,
-    title: "Calm Focus",
-    description:
-      "We believe productivity shouldn't come at the cost of your wellbeing. Every cup of STUNN is designed to help you stay sharp without the anxiety.",
+    label: "Coffee is the cue",
+    title: "The ritual matters.",
+    copy: "The first cup is not just caffeine. It is a pause, a signal, and a way into the day. STUNN keeps that part intact.",
   },
   {
-    icon: `${CDN}icon-sleep.svg`,
-    title: "Sleep Friendly",
-    description:
-      "Coffee shouldn't ruin your nights. STUNN is caffeine-free, so you can enjoy it morning, afternoon, or evening without compromising sleep.",
+    label: "Caffeine is the compromise",
+    title: "The side effects are not the point.",
+    copy: "Jitters, crashes, anxious energy, and sleep tradeoffs are not what people love about coffee. They are what people tolerate.",
   },
   {
-    icon: `${CDN}icon-energy.svg`,
-    title: "Clean Energy",
-    description:
-      "Powered by Lion's Mane, Rhodiola, Cordyceps, and L-Theanine — ingredients that support your body, not overstimulate it.",
-  },
-  {
-    icon: `${CDN}icon-heart-outline.svg`,
-    title: "The Ritual",
-    description:
-      "Coffee is more than a drink. It's a ritual. STUNN preserves everything you love about that ritual while removing what holds you back.",
+    label: "Decaf can do more",
+    title: "A better cup should still feel like coffee.",
+    copy: "STUNN starts with real decaf instant coffee, then adds functional support for calm focus without turning the ritual into a supplement stack.",
   },
 ];
+
+const INGREDIENTS = [
+  ["Real decaf coffee", "Taste, warmth, and the familiar daily cue."],
+  ["Lion's Mane", "Focus and mental clarity support."],
+  ["Rhodiola", "Stress resilience and steadier energy."],
+  ["Cordyceps", "Daily drive without stimulant intensity."],
+  ["L-Theanine", "A calmer, smoother coffee experience."],
+];
+
+const PRINCIPLES = [
+  "Coffee first, supplement second.",
+  "Calm focus over stimulant intensity.",
+  "Simple sachets over complicated routines.",
+  "Useful daily support without the caffeine debt.",
+];
+
+function Cta({
+  children,
+  variant = "primary",
+}: {
+  children: React.ReactNode;
+  variant?: "primary" | "outline";
+}) {
+  const styles = {
+    primary:
+      "bg-[#5A3493] text-white shadow-[0_5px_0_0_#43256F] hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F]",
+    outline:
+      "border border-[#111111]/18 bg-white text-[#111111] hover:border-[#111111]",
+  };
+
+  return (
+    <Link
+      href={PDP}
+      className={`inline-flex min-h-12 items-center justify-center rounded-[10px] px-6 text-sm font-black uppercase tracking-[0.08em] transition-all ${styles[variant]}`}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function Label({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-[#111111]/45">
+      {children}
+    </p>
+  );
+}
 
 export default function AboutPage() {
   return (
     <>
-      {/* ── HERO ── */}
-      <section className="border-b border-black/10 bg-white">
-        <div className="relative overflow-hidden">
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-            }}
-          />
-          <div className="relative mx-auto max-w-screen-xl px-6 py-20 text-center lg:py-28">
-            <span className="mb-4 inline-block rounded-full border border-black/20 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]/60">
-              Our Story
-            </span>
-            <h1 className="mb-6 font-[family-name:var(--font-anton)] text-[clamp(40px,6vw,80px)] uppercase leading-tight text-[#111111]">
-              Coffee, Without
-              <br />
-              the Consequences.
+      <section className="relative min-h-[calc(100vh-68px)] overflow-hidden bg-[#111111] text-white">
+        <Image
+          src={`${CDN}img-man-drinking-stunn-coffee.webp`}
+          alt="A calm morning coffee ritual with STUNN"
+          fill
+          className="object-cover object-center opacity-72"
+          priority
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#111111]/88 via-[#111111]/52 to-[#111111]/8" />
+        <div className="relative flex min-h-[calc(100vh-68px)] items-end px-5 py-12 sm:px-8 lg:items-center lg:py-20">
+          <div className="max-w-[760px]">
+            <Label>About STUNN</Label>
+            <h1 className="text-[clamp(48px,8vw,118px)] font-black uppercase leading-[0.9] tracking-[-0.052em]">
+              Keep the ritual. Lose the caffeine loop.
             </h1>
-            <p className="mx-auto max-w-xl text-base leading-relaxed text-[#111111]/65">
-              STUNN was built for people who love coffee but not how it makes
-              them feel. We kept everything great about coffee and removed what
-              holds you back.
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/76 sm:text-xl">
+              STUNN was built for people who love coffee but are done with what
+              caffeine keeps taking from the day: calm, sleep, and control.
             </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Cta>Shop STUNN</Cta>
+              <span className="text-sm font-semibold text-white/62">
+                Real decaf coffee. Functional support. 0mg caffeine.
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── FOUNDER STORY ── */}
+      <section className="bg-white px-5 py-14 sm:px-8 lg:py-24">
+        <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
+          <div>
+            <Label>The thesis</Label>
+            <h2 className="max-w-3xl text-[clamp(42px,6vw,96px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
+              We are not anti-coffee. We are anti-compromise.
+            </h2>
+          </div>
+          <div className="grid gap-4">
+            {BELIEFS.map((belief) => (
+              <div
+                key={belief.label}
+                className="grid gap-4 border-t border-[#111111]/14 py-6 sm:grid-cols-[180px_1fr]"
+              >
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-[#5A3493]">
+                  {belief.label}
+                </p>
+                <div>
+                  <h3 className="text-2xl font-black uppercase leading-tight tracking-[-0.03em] text-[#111111]">
+                    {belief.title}
+                  </h3>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#111111]/64 sm:text-base">
+                    {belief.copy}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white">
-        <div className="mx-auto max-w-screen-xl lg:grid lg:grid-cols-2">
-          {/* Image */}
-          <div className="relative min-h-[440px] overflow-hidden lg:min-h-[600px]">
+        <div className="mx-auto grid max-w-screen-xl lg:grid-cols-2">
+          <div className="relative min-h-[420px] overflow-hidden lg:min-h-[620px]">
             <Image
-              src={`${CDN}img-andrew-jennings-stunn-founder.webp`}
+              src="/images/stunn-founder.webp"
               alt="Andrew Jennings, founder of STUNN"
               fill
-              className="object-cover object-top"
-              priority
+              className="object-cover object-center"
+              sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </div>
-          {/* Copy */}
-          <div className="flex flex-col justify-center px-8 py-14 lg:px-14">
-            <span className="mb-3 inline-block rounded-full border border-[#111111]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
-              The Founder
-            </span>
-            <h2 className="mb-4 font-[family-name:var(--font-anton)] text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#111111]">
-              Why I Created STUNN
+          <div className="flex flex-col justify-center px-7 py-12 sm:px-10 lg:px-16">
+            <Label>Founder note</Label>
+            <h2 className="max-w-xl text-[clamp(36px,5vw,64px)] font-black uppercase leading-[0.94] tracking-[-0.045em] text-[#111111]">
+              I did not want to quit coffee. I wanted coffee to stop hijacking
+              the day.
             </h2>
-            <p className="mb-2 text-sm font-semibold text-[#111111]/75">
-              Because coffee shouldn&apos;t leave you feeling worse than before
+            <p className="mt-5 text-base leading-relaxed text-[#111111]/70">
+              I loved the ritual: the first cup, the reset, the feeling that the
+              day was starting properly. I just did not love the racing heart,
+              the anxious edge, the crash, or the nights where sleep felt like a
+              negotiation.
             </p>
-            <p className="mb-5 text-base leading-relaxed text-[#111111]/65">
-              I&apos;ve always loved coffee, but I didn&apos;t love how it made
-              me feel. The jitters, the crashes, and the nights where sleep just
-              wouldn&apos;t come. I tried cutting back, switching brands, even
-              quitting, but nothing really worked.
+            <p className="mt-4 text-base leading-relaxed text-[#111111]/70">
+              STUNN is the answer I wanted: coffee first, caffeine-free by
+              design, and supported with functional ingredients that help the
+              cup feel smoother on the body.
             </p>
-            <p className="mb-7 text-base leading-relaxed text-[#111111]/65">
-              So I decided to create a better option. STUNN is built to keep
-              everything we love about coffee, while removing what we
-              don&apos;t. A smoother, more balanced experience you can enjoy
-              anytime, without second-guessing how you&apos;ll feel after.
-            </p>
-            <p className="mb-6 font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-[#111111]">
-              ANDREW JENNINGS
-            </p>
-            <p className="mb-7 text-xs text-[#111111]/50">Founder, STUNN</p>
-            <Link
-              href={PDP}
-              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F]"
-            >
-              Try STUNN Today
-            </Link>
+            <div className="mt-7 border-t border-[#111111]/12 pt-5">
+              <p className="font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-[#111111]">
+                Andrew Jennings
+              </p>
+              <p className="mt-1 text-xs font-semibold text-[#111111]/52">
+                Founder, STUNN
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── MARQUEE ── */}
-      <section className="overflow-hidden bg-[#111111] py-4">
-        <div
-          className="animate-marquee"
-          style={{ animationDuration: "28s" }}
-          aria-hidden="true"
-        >
-          {Array.from({ length: 6 }).map((_, i) => (
-            <span
-              key={i}
-              className="px-12 font-[family-name:var(--font-anton)] text-[clamp(56px,8vw,112px)] uppercase leading-none text-white"
-            >
-              Focus Without Caffeine
-            </span>
-          ))}
+      <section className="bg-white px-5 py-14 sm:px-8 lg:py-24">
+        <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] bg-[#EDE9F8] lg:grid-cols-[1fr_0.92fr]">
+          <div className="flex flex-col justify-center px-7 py-12 sm:px-10 lg:px-16">
+            <Label>What is inside</Label>
+            <h2 className="max-w-3xl text-[clamp(42px,6vw,92px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
+              Built like coffee. Backed like a daily ritual.
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/68">
+              STUNN keeps the cup familiar and the format simple. One sachet,
+              real decaf instant coffee, and functional ingredients selected to
+              support calm focus.
+            </p>
+            <div className="mt-9 divide-y divide-[#5A3493]/18">
+              {INGREDIENTS.map(([name, copy]) => (
+                <div
+                  key={name}
+                  className="grid grid-cols-[1fr_auto] gap-5 py-4"
+                >
+                  <p className="font-black uppercase tracking-[-0.02em] text-[#111111]">
+                    {name}
+                  </p>
+                  <p className="max-w-[260px] text-right text-sm leading-relaxed text-[#111111]/62">
+                    {copy}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative order-first min-h-[380px] lg:order-last lg:min-h-[680px]">
+            <Image
+              src={`${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`}
+              alt="STUNN sachet poured into coffee"
+              fill
+              className="object-cover object-center"
+              sizes="(min-width: 1024px) 46vw, 100vw"
+            />
+          </div>
         </div>
       </section>
 
-      {/* ── VALUES GRID ── */}
-      <section className="bg-white py-14 lg:py-20">
-        <div className="mx-auto max-w-screen-xl px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <span className="mb-3 inline-block rounded-full border border-[#111111]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
-              What We Stand For
-            </span>
-            <h2 className="font-[family-name:var(--font-anton)] text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#111111]">
-              Built on These Values
+      <section className="border-y border-[#111111]/10 bg-white px-5 py-14 sm:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+          <div>
+            <Label>How we build</Label>
+            <h2 className="max-w-xl text-[clamp(38px,5vw,72px)] font-black uppercase leading-[0.92] tracking-[-0.05em] text-[#111111]">
+              The rules are simple.
             </h2>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {PRINCIPLES.map((principle, index) => (
               <div
-                key={v.title}
-                className="flex flex-col rounded-xl border border-[#111111]/15 bg-white/50 p-8"
+                key={principle}
+                className="rounded-[8px] border border-[#111111]/12 bg-white p-5"
               >
-                <Image
-                  src={v.icon}
-                  alt={v.title}
-                  width={40}
-                  height={40}
-                  className="mb-4 h-10 w-10"
-                />
-                <h3 className="mb-3 font-[family-name:var(--font-anton)] text-xl uppercase text-[#111111]">
-                  {v.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-[#111111]/65">
-                  {v.description}
+                <p className="mb-8 text-xs font-black text-[#5A3493]">
+                  0{index + 1}
+                </p>
+                <p className="text-2xl font-black uppercase leading-[1.02] tracking-[-0.035em] text-[#111111]">
+                  {principle}
                 </p>
               </div>
             ))}
@@ -174,109 +247,33 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── PRODUCT IMAGE SPLIT ── */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-screen-xl lg:grid lg:grid-cols-2">
-          <div className="flex flex-col justify-center px-8 py-14 lg:px-14">
-            <span className="mb-3 inline-block rounded-full border border-[#111111]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
-              The Product
-            </span>
-            <h2 className="mb-5 font-[family-name:var(--font-anton)] text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#111111]">
-              What&apos;s Inside Every Sachet
+      <section className="bg-white px-5 py-12 sm:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] bg-[#F4F0FB] lg:grid-cols-[1fr_0.82fr]">
+          <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-16">
+            <Label>Your next cup</Label>
+            <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] font-black uppercase leading-[0.92] tracking-[-0.052em] text-[#111111]">
+              Coffee is better when it does not collect interest.
             </h2>
-            <p className="mb-6 text-base leading-relaxed text-[#111111]/65">
-              Each STUNN sachet is packed with smooth decaf coffee and four
-              functional ingredients chosen to support your mind and body
-              throughout the day.
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/65">
+              Start with the best value: a 3-box subscription, free shipping,
+              and a calmer coffee routine from {BEST_VALUE_PER_DAY_LABEL}.
             </p>
-            <ul className="mb-8 space-y-3">
-              {[
-                {
-                  name: "Lion's Mane",
-                  benefit: "Focus, memory, and mental clarity",
-                },
-                {
-                  name: "Rhodiola",
-                  benefit: "Stress reduction and steady energy",
-                },
-                {
-                  name: "Cordyceps",
-                  benefit: "Natural energy without overstimulation",
-                },
-                {
-                  name: "L-Theanine",
-                  benefit: "Calm focus and relaxed alertness",
-                },
-              ].map((ing) => (
-                <li key={ing.name} className="flex items-start gap-3 text-sm">
-                  <span className="mt-0.5 font-bold text-[#111111]">✓</span>
-                  <span>
-                    <span className="font-bold text-[#111111]">{ing.name}</span>
-                    <span className="text-[#111111]/65"> — {ing.benefit}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <Link
-              href={PDP}
-              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F]"
-            >
-              Shop STUNN
-            </Link>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Cta>Shop STUNN</Cta>
+              <Cta variant="outline">Learn on the product page</Cta>
+            </div>
           </div>
-          <div className="relative min-h-[400px] overflow-hidden">
-            <Image
-              src={`${CDN}img-stunn-coffee-product-shot.png`}
-              alt="STUNN coffee product"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA BANNER ── */}
-      <section className="relative overflow-hidden bg-[#F7F4FA]">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-        <div className="pointer-events-none absolute -bottom-6 -left-6 h-48 w-48 opacity-95 lg:h-72 lg:w-72">
-          <img
-            src={`${CDN}img-stunn-coffee-and-bread-background-desktop.webp`}
-            alt=""
-            className="h-full w-full object-cover object-left-bottom"
-          />
-        </div>
-        <div
-          className="pointer-events-none absolute -right-6 -top-6 h-48 w-48 opacity-95 lg:h-72 lg:w-72"
-          style={{ transform: "scaleX(-1)" }}
-        >
-          <img
-            src={`${CDN}img-stunn-coffee-and-bread-background-desktop.webp`}
-            alt=""
-            className="h-full w-full object-cover object-right-top"
-          />
-        </div>
-        <div className="relative flex min-h-[400px] flex-col items-center justify-center px-6 py-16 text-center">
-          <span className="mb-3 inline-block rounded-full border border-[#111111]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
-            Ready to Start?
-          </span>
-          <h2 className="mb-4 font-[family-name:var(--font-anton)] text-[clamp(36px,6vw,72px)] uppercase leading-tight text-[#111111]">
-            Try STUNN Today
-          </h2>
-          <p className="mb-8 max-w-md text-base text-[#111111]/80">
-            30 sachets. One month supply. Subscribe or buy once.
-          </p>
           <Link
             href={PDP}
-            className="inline-flex items-center gap-2 rounded-lg bg-[#5A3493] px-6 py-3 text-sm font-bold text-white transition-all hover:bg-[#4F2D82]"
+            className="relative min-h-[360px] overflow-hidden bg-white/45 lg:min-h-[560px]"
           >
-            Try STUNN And Save 25% 🎁
+            <Image
+              src={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
+              alt="Friends enjoying a calm coffee ritual with STUNN"
+              fill
+              className="object-cover object-center"
+              sizes="(min-width: 1024px) 42vw, 100vw"
+            />
           </Link>
         </div>
       </section>
