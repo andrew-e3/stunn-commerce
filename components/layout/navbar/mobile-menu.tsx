@@ -8,7 +8,6 @@ import { Fragment, useEffect, useState } from "react";
 
 import {
   Bars3Icon,
-  PlusIcon,
   UserCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -122,112 +121,49 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
                   <BrandLogo />
                 </Link>
 
-                <div className="flex justify-end">
-                  {account ? (
-                    <MenuLink
-                      item={account}
-                      className="text-[11px] font-extrabold uppercase tracking-[0.08em] text-[#111111]"
-                    >
-                      Account
-                    </MenuLink>
-                  ) : null}
-                </div>
+                <div />
               </div>
 
-              <div className="flex flex-1 flex-col px-5 py-6">
-                <div className="divide-y divide-[#111111] border-b border-t border-[#111111]">
-                  <Link
-                    href={PDP}
-                    prefetch={true}
-                    onClick={closeMobileMenu}
-                    className="group flex items-center justify-between gap-4 py-5"
-                  >
-                    <div>
-                      <p className="text-2xl font-black tracking-[-0.02em] text-[#111111]">
-                        STUNN Decaf Coffee
-                      </p>
-                      <p className="mt-1 text-sm font-semibold text-[#111111]/55">
-                        Save up to 25% on subscription
-                      </p>
-                    </div>
-                    <PlusIcon className="h-7 w-7 shrink-0 text-[#111111] transition-transform group-hover:rotate-90" />
-                  </Link>
-
-                  <Link
-                    href={PDP}
-                    prefetch={true}
-                    onClick={closeMobileMenu}
-                    className="group flex items-center justify-between gap-4 py-5"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="text-2xl font-black tracking-[-0.02em] text-[#111111]">
-                          Bundle & Save
-                        </p>
-                        <span className="rounded bg-[#5A3493] px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white">
-                          Best value
-                        </span>
-                      </div>
-                      <p className="mt-1 text-sm font-semibold text-[#111111]/55">
-                        3 boxes, lowest price per day
-                      </p>
-                    </div>
-                    <PlusIcon className="h-7 w-7 shrink-0 text-[#111111] transition-transform group-hover:rotate-90" />
-                  </Link>
-                </div>
-
+              <div className="flex flex-1 flex-col px-5 py-7">
                 <Link
                   href={PDP}
                   prefetch={true}
                   onClick={closeMobileMenu}
-                  className="stunn-cta-motion mt-7 flex min-h-14 items-center justify-center rounded-lg border-2 border-[#111111] text-base font-black uppercase tracking-[0.04em] text-[#111111]"
+                  className="stunn-cta-motion flex min-h-14 items-center justify-center rounded-lg border-2 border-[#5A3493] bg-[#5A3493] text-base font-black uppercase tracking-[0.04em] text-white"
                 >
                   Shop STUNN
                 </Link>
 
-                <div className="mt-7 divide-y divide-[#111111] border-b border-t border-[#111111]">
+                <div className="mt-7 divide-y divide-[#111111]/14 border-y border-[#111111]/14">
                   <MenuLink
                     item={about}
-                    className="group flex items-center justify-between py-5"
+                    className="flex items-center justify-between py-5"
                   >
-                    <span className="text-2xl font-black tracking-[-0.02em] text-[#111111]">
+                    <span className="text-2xl font-black uppercase tracking-[-0.02em] text-[#111111]">
                       About
                     </span>
-                    <PlusIcon className="h-7 w-7 text-[#111111] transition-transform group-hover:rotate-90" />
                   </MenuLink>
-                  <Link
-                    href={`${PDP}#faq`}
-                    prefetch={true}
-                    onClick={closeMobileMenu}
-                    className="group flex items-center justify-between py-5"
-                  >
-                    <span className="text-2xl font-black tracking-[-0.02em] text-[#111111]">
-                      FAQ
-                    </span>
-                    <PlusIcon className="h-7 w-7 text-[#111111] transition-transform group-hover:rotate-90" />
-                  </Link>
+                  {account ? (
+                    <MenuLink
+                      item={account}
+                      className="flex items-center gap-3 py-5 text-2xl font-black uppercase tracking-[-0.02em] text-[#111111]"
+                    >
+                      <UserCircleIcon className="h-7 w-7" />
+                      Login
+                    </MenuLink>
+                  ) : null}
                 </div>
 
-                {account ? (
-                  <MenuLink
-                    item={account}
-                    className="mt-7 flex items-center gap-3 text-lg font-semibold text-[#111111]/75"
-                  >
-                    <UserCircleIcon className="h-7 w-7" />
-                    Login
-                  </MenuLink>
-                ) : null}
-
                 <div className="mt-auto pt-10">
-                  <div className="rounded-[20px] bg-[#F4F0FB] p-5">
-                    <p className="text-xs font-black uppercase tracking-[0.22em] text-[#111111]/45">
-                      Launch offer
+                  <div className="rounded-[20px] bg-[#111111] p-5 text-white">
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-white/45">
+                      Off The Drip
                     </p>
-                    <p className="mt-2 text-2xl font-black uppercase leading-tight tracking-[-0.03em] text-[#111111]">
-                      Upgrade your coffee ritual.
+                    <p className="mt-2 text-2xl font-black uppercase leading-tight tracking-[-0.03em] text-white">
+                      You do not need caffeine to function.
                     </p>
-                    <p className="mt-2 text-sm font-semibold text-[#111111]/60">
-                      Save up to 25% and get free shipping on the best-value subscription.
+                    <p className="mt-2 text-sm font-semibold leading-relaxed text-white/62">
+                      STUNN is always caffeine-free: real coffee ritual, calm focus, no dependency loop.
                     </p>
                   </div>
                 </div>
