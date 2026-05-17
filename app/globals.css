@@ -110,8 +110,17 @@ button {
 }
 
 .stunn-cta-motion {
+  position: relative;
+  overflow: hidden;
   box-shadow: none !important;
-  transition: all 0.3s ease-in-out !important;
+  background-image: linear-gradient(#111111, #111111) !important;
+  background-position: 0 0 !important;
+  background-repeat: no-repeat !important;
+  background-size: 0% 100% !important;
+  transition:
+    background-size 0.34s ease-in-out,
+    color 0.34s ease-in-out,
+    border-color 0.34s ease-in-out !important;
 }
 
 .stunn-display {
@@ -124,7 +133,7 @@ button {
 
 @media (hover: hover) {
   .stunn-cta-motion:hover:not(:disabled) {
-    background-color: #111111 !important;
+    background-size: 100% 100% !important;
     border-color: #111111 !important;
     color: #ffffff !important;
     box-shadow: none !important;
@@ -132,7 +141,7 @@ button {
 }
 
 .stunn-cta-motion:active:not(:disabled) {
-  background-color: #111111 !important;
+  background-size: 100% 100% !important;
   border-color: #111111 !important;
   color: #ffffff !important;
   box-shadow: none !important;
