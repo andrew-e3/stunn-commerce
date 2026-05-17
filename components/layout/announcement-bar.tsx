@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 const MESSAGES = [
   {
     text: "Free shipping on subscription + orders $75+",
-    className: "bg-[#F47A1F] text-white",
+    className: "bg-[#5A3493] text-white",
   },
   {
     text: "No caffeine. No crash. Same ritual.",
-    className: "bg-[#5A3493] text-white",
+    className: "bg-[#111111] text-white",
   },
 ];
 
