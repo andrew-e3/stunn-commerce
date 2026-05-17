@@ -251,45 +251,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-[#111111] px-5 py-14 text-white sm:px-8 lg:py-24">
-        <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-          <div>
-            <p className="mb-5 text-xs font-black uppercase tracking-[0.28em] text-white/45">
-              Off The Drip
-            </p>
-            <h2 className="max-w-4xl text-[clamp(48px,8vw,118px)] stunn-display uppercase leading-[0.88] tracking-normal">
-              Caffeine had its run.
-            </h2>
-          </div>
-          <div className="max-w-2xl lg:pb-2">
-            <p className="text-lg font-semibold leading-relaxed text-white/78">
-              Most people do not realize they are dependent until they skip the
-              cup: the headache, the anxious second coffee, the crash by 2pm,
-              the feeling that normal now has a dose.
-            </p>
-            <p className="mt-5 text-base leading-relaxed text-white/65">
-              STUNN is for people who want the ritual without the dependency.
-              Real decaf coffee, functional support, and calm focus without
-              needing caffeine to function.
-            </p>
-            <p className="mt-5 text-base leading-relaxed text-white/65">
-              This is Off The Drip. You do not have to quit caffeine. You just
-              stop being owned by it. Every STUNN product is caffeine-free by
-              design, always.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Link
-                href={`${PDP}#purchase`}
-                className="stunn-cta-motion inline-flex min-h-12 items-center justify-center rounded-lg border-2 border-white bg-white px-6 text-sm font-black uppercase tracking-[0.08em] text-[#111111]"
-              >
-                Try STUNN
-              </Link>
-              <Link
-                href="/about-us"
-                className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/24 px-6 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-white"
-              >
-                Read the movement
-              </Link>
+      <section className="bg-white px-4 py-8 sm:px-8 lg:py-14">
+        <div className="mx-auto max-w-[1440px] overflow-hidden rounded-[28px] bg-[#171313] text-white sm:rounded-[34px]">
+          <div className="grid gap-10 px-7 py-12 sm:px-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:px-14 lg:py-16">
+            <div>
+              <p className="mb-5 text-xs font-black uppercase tracking-[0.28em] text-white/42">
+                Off The Drip
+              </p>
+              <h2 className="max-w-4xl text-[clamp(48px,8vw,118px)] stunn-display uppercase leading-[0.88] tracking-normal">
+                Caffeine had its run.
+              </h2>
+            </div>
+            <div className="max-w-2xl lg:pb-2">
+              <p className="text-lg font-semibold leading-relaxed text-white/82">
+                Most people do not realize they are dependent until they skip
+                the cup: the headache, the anxious second coffee, the crash by
+                2pm, the feeling that normal now has a dose.
+              </p>
+              <div className="my-7 grid grid-cols-2 gap-2 border-y border-white/12 py-5 sm:grid-cols-4">
+                {["Lift", "Tension", "Crash", "Repeat"].map((step, index) => (
+                  <div key={step} className="flex items-center gap-2">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-black text-white/60">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-xs font-black uppercase tracking-[0.16em] text-white/72">
+                      {step}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-base leading-relaxed text-white/68">
+                STUNN is for people who want the ritual without the dependency.
+                Real decaf coffee, functional support, and calm focus without
+                needing caffeine to function.
+              </p>
+              <p className="mt-5 text-base leading-relaxed text-white/68">
+                This is Off The Drip. You do not have to quit caffeine. You
+                just stop being owned by it. Every STUNN product is
+                caffeine-free by design, always.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link
+                  href={`${PDP}#purchase`}
+                  className="stunn-cta-motion inline-flex min-h-12 items-center justify-center rounded-lg border-2 border-white bg-white px-6 text-sm font-black uppercase tracking-[0.08em] text-[#111111]"
+                >
+                  Try STUNN
+                </Link>
+                <Link
+                  href="/about-us"
+                  className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/26 px-6 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-white hover:bg-white/8"
+                >
+                  Read the movement
+                </Link>
+              </div>
             </div>
           </div>
         </div>
