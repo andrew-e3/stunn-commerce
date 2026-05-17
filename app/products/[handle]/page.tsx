@@ -136,6 +136,11 @@ const pdpFaqs = [
       "STUNN is designed for calm focus, not stimulant intensity. The formula combines decaf coffee with Lion's Mane, Rhodiola, Cordyceps, and L-Theanine so you can keep the coffee ritual while stepping away from caffeine dependency.",
   },
   {
+    question: "Will STUNN ever make caffeinated products?",
+    answer:
+      "No. STUNN is caffeine-free by design. The brand exists to build better coffee rituals without caffeine dependency, so every future product will follow that rule.",
+  },
+  {
     question: "Is STUNN a supplement or coffee?",
     answer:
       "STUNN is coffee first: a premium decaf instant coffee ritual with functional ingredients added for support. It should not feel like swallowing a supplement stack or replacing the emotional comfort of coffee.",

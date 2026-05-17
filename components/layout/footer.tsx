@@ -1,11 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import { OffTheDripCapture } from "components/off-the-drip-capture";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
 const STORE_LINKS = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products/focus-without-caffeine" },
+  { label: "Movement", href: "/movement" },
   { label: "About Us", href: "/about-us" },
 ];
 
@@ -126,32 +128,7 @@ export default function Footer() {
 
         {/* Newsletter */}
         <div className="flex flex-col gap-4 lg:pl-4">
-          <h2 className="stunn-display text-[clamp(2rem,3.2vw,3.25rem)] uppercase leading-[0.95] text-white">
-            Sign up for
-            <br />
-            STUNN updates
-          </h2>
-          <p className="max-w-md text-sm font-semibold leading-relaxed text-white/90">
-            Ritual notes, product drops, and subscriber-only perks for calmer
-            coffee days.
-          </p>
-          <form className="flex gap-2">
-            <input
-              type="email"
-              placeholder="E-mail"
-              className="min-w-0 flex-1 rounded-[6px] border border-white bg-transparent px-4 py-2.5 text-sm font-bold text-white placeholder-white/75 outline-none focus:bg-white/10"
-            />
-            <button
-              type="submit"
-              className="stunn-cta-motion shrink-0 rounded-[6px] bg-white px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.22)] [--stunn-cta-shadow:#111111]"
-            >
-              Sign up
-            </button>
-          </form>
-          <p className="text-[9px] font-medium leading-relaxed text-white/70">
-            By joining, you&apos;ll receive STUNN updates and can unsubscribe
-            anytime.
-          </p>
+          <OffTheDripCapture mode="inline" tone="dark" />
         </div>
       </div>
 

@@ -39,6 +39,7 @@ const INGREDIENTS = [
 ];
 
 const PRINCIPLES = [
+  "Caffeine-free by design. Always.",
   "Coffee first, supplement second.",
   "Calm focus over stimulant intensity.",
   "Simple sachets over complicated routines.",

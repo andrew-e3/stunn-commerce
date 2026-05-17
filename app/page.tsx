@@ -117,7 +117,12 @@ const FAQS = [
   {
     question: "How much caffeine is in it?",
     answer:
-      "STUNN is 99.9% caffeine-free, so it keeps the coffee ritual without the stimulant tradeoff.",
+      "STUNN is caffeine-free by design. Every product we make is built around the same rule: no caffeine, no dependency loop.",
+  },
+  {
+    question: "Will STUNN ever make caffeinated products?",
+    answer:
+      "No. STUNN exists to build better coffee rituals without caffeine dependency. We are not anti-coffee, we are anti-needing caffeine to feel normal.",
   },
   {
     question: "When should I drink it?",
@@ -134,7 +139,7 @@ const FAQS = [
 export const metadata = {
   title: "STUNN - Decaf Coffee That Keeps You Sharp",
   description:
-    "Functional decaf coffee with Lion's Mane, Rhodiola, Cordyceps, and L-Theanine. Calm focus, no jitters, no crash.",
+    "Caffeine-free decaf coffee with Lion's Mane, Rhodiola, Cordyceps, and L-Theanine. Calm focus, no jitters, no crash.",
   openGraph: { type: "website" },
 };
 
@@ -205,6 +210,50 @@ export default function HomePage() {
             />
             <div className="pointer-events-none absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-[#EEEAF8]/88 to-transparent" />
           </Link>
+        </div>
+      </section>
+
+      <section className="bg-[#111111] px-5 py-14 text-white sm:px-8 lg:py-24">
+        <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <p className="mb-5 text-xs font-black uppercase tracking-[0.28em] text-white/45">
+              Off The Drip
+            </p>
+            <h2 className="max-w-4xl text-[clamp(48px,8vw,118px)] stunn-display uppercase leading-[0.88] tracking-normal">
+              Caffeine had its run.
+            </h2>
+          </div>
+          <div className="max-w-2xl lg:pb-2">
+            <p className="text-lg font-semibold leading-relaxed text-white/78">
+              Most people do not realize they are dependent until they skip the
+              cup: the headache, the anxious second coffee, the crash by 2pm,
+              the feeling that normal now has a dose.
+            </p>
+            <p className="mt-5 text-base leading-relaxed text-white/65">
+              STUNN is for people who want the ritual without the dependency.
+              Real decaf coffee, functional support, and calm focus without
+              needing caffeine to function.
+            </p>
+            <p className="mt-5 text-base leading-relaxed text-white/65">
+              This is Off The Drip. You do not have to quit caffeine. You just
+              stop being owned by it. Every STUNN product is caffeine-free by
+              design, always.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Link
+                href={`${PDP}#purchase`}
+                className="stunn-cta-motion inline-flex min-h-12 items-center justify-center rounded-lg border-2 border-white bg-white px-6 text-sm font-black uppercase tracking-[0.08em] text-[#111111]"
+              >
+                Try STUNN
+              </Link>
+              <Link
+                href="/movement"
+                className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/24 px-6 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-white"
+              >
+                Read the movement
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 

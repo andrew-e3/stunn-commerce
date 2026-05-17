@@ -1,6 +1,7 @@
 import { CartProvider } from "components/cart/cart-context";
 import { KlaviyoOnsite } from "components/klaviyo-onsite";
 import { Navbar } from "components/layout/navbar";
+import { OffTheDripCapture } from "components/off-the-drip-capture";
 import { Anton, Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
 import { ReactNode } from "react";
@@ -52,6 +53,7 @@ export default async function RootLayout({
             {children}
             <Toaster closeButton />
           </main>
+          <OffTheDripCapture mode="popup" tone="dark" />
         </CartProvider>
       </body>
     </html>
