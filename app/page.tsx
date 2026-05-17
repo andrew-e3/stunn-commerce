@@ -16,7 +16,7 @@ function Cta({
 }) {
   const styles = {
     primary:
-      "bg-[#7C3AED] text-white shadow-[0_4px_0_0_#5E22B8] hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_#5E22B8]",
+      "bg-[#5A3493] text-white shadow-[0_4px_0_0_#5E22B8] hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_#5E22B8]",
     light: "bg-white text-[#111111] hover:bg-white/90",
     outline:
       "border border-[#111111]/18 bg-white text-[#111111] hover:border-[#111111]",
@@ -333,7 +333,7 @@ export default function HomePage() {
               </div>
               <div className="flex flex-col justify-center p-7 sm:p-9">
                 <div className="mb-5 flex items-center justify-between gap-4">
-                  <span className="rounded-full bg-[#7C3AED] px-3 py-1 text-xs font-black text-white">
+                  <span className="rounded-full bg-[#5A3493] px-3 py-1 text-xs font-black text-white">
                     SAVE 25%
                   </span>
                   <span className="text-sm font-semibold text-[#111111]/55">From $1.00 / cup</span>
@@ -346,7 +346,7 @@ export default function HomePage() {
                   <span>Cancel anytime</span>
                   <span>30-day guarantee</span>
                 </div>
-                <div className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#7C3AED] px-6 py-4 text-sm font-black text-white shadow-[0_4px_0_0_#5E22B8] transition-transform group-hover:-translate-y-0.5">
+                <div className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#5A3493] px-6 py-4 text-sm font-black text-white shadow-[0_4px_0_0_#5E22B8] transition-transform group-hover:-translate-y-0.5">
                   Shop the subscription
                 </div>
               </div>
