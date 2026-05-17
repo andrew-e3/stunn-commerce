@@ -379,7 +379,8 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               >
                 <circle cx="12" cy="12" r="9" />
                 <path d="M8 14.5c1 1.2 2.3 1.8 4 1.8s3-.6 4-1.8" />
-                <path d="M9 9.5h.01M15 9.5h.01" />
+                <circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none" />
+                <circle cx="15" cy="9.5" r="1" fill="currentColor" stroke="none" />
               </svg>
             ),
             label: "Over 1000+\nHappy Customers",
