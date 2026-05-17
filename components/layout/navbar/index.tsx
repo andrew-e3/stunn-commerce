@@ -1,10 +1,9 @@
 import CartModal from "components/cart/modal";
-import Image from "next/image";
+import BrandLogo from "components/brand-logo";
 import Link from "next/link";
 import { Suspense } from "react";
 import MobileMenu from "./mobile-menu";
 
-const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const ACCOUNT_URL = process.env.SHOPIFY_STORE_DOMAIN
   ? `https://${process.env.SHOPIFY_STORE_DOMAIN}/account/login`
   : "/account";
@@ -53,15 +52,8 @@ export function Navbar() {
 
       {/* Centered logo */}
       <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">
-        <Link href="/" prefetch={true}>
-          <Image
-            src={`${CDN}STUNN_LOGO-Purple.png`}
-            alt="STUNN"
-            width={132}
-            height={32}
-            className="h-8 w-auto"
-            priority
-          />
+        <Link href="/" prefetch={true} aria-label="STUNN home">
+          <BrandLogo />
         </Link>
       </div>
 

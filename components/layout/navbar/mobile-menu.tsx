@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, Transition } from "@headlessui/react";
-import Image from "next/image";
+import BrandLogo from "components/brand-logo";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
@@ -13,7 +13,6 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
-const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const PDP = "/products/focus-without-caffeine";
 
 type MobileMenuItem = {
@@ -120,14 +119,7 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
                   className="flex items-center justify-center"
                   aria-label="STUNN home"
                 >
-                  <Image
-                    src={`${CDN}STUNN_LOGO-Purple.png`}
-                    alt="STUNN"
-                    width={132}
-                    height={32}
-                    className="h-8 w-auto"
-                    priority
-                  />
+                  <BrandLogo />
                 </Link>
 
                 <div className="flex justify-end">
