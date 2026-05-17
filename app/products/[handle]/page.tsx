@@ -505,10 +505,10 @@ export default async function ProductPage(props: {
         <div className="flex flex-col lg:flex-row">
           <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-1/2 lg:min-h-[560px]">
             <Image
-              src={`${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`}
+              src="/images/stunn-function-pour-corrected.png"
               alt="STUNN sachet poured into coffee"
               fill
-              className="object-cover"
+              className="object-cover object-center"
             />
           </div>
           <div className="flex flex-col justify-center bg-[#EDE9F8] px-7 py-14 lg:w-1/2 lg:px-16">
@@ -769,14 +769,13 @@ export default async function ProductPage(props: {
               Your next cup
             </span>
             <h2 className="mb-5 font-[family-name:var(--font-anton)] text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] text-[#111111]">
-              Everything you love about coffee.
+              Keep the ritual.
               <br />
-              None of what you don&apos;t.
+              Lose the caffeine.
             </h2>
             <p className="mb-8 max-w-xl text-base leading-relaxed text-[#111111]/68">
-              A daily coffee ritual for calm focus, steady energy, and better
-              evenings. Start with the best-value box and make the switch feel
-              effortless.
+              Everything you love about coffee - the taste, the pause, the
+              daily cue - without the jitters, crash, or sleep tradeoff.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
