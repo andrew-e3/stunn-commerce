@@ -503,13 +503,62 @@ export default async function ProductPage(props: {
       <section className="overflow-hidden">
         {/* Panel A: Formula */}
         <div className="flex flex-col lg:flex-row">
-          <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-1/2 lg:min-h-[560px]">
-            <Image
-              src="/images/stunn-function-pour-corrected.png"
-              alt="STUNN sachet poured into coffee"
-              fill
-              className="object-cover object-center"
-            />
+          <div className="relative flex min-h-[520px] w-full overflow-hidden bg-[#F6F2EB] px-6 py-10 sm:min-h-[620px] sm:px-10 lg:w-1/2 lg:px-12">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_58%_44%,rgba(237,233,248,0.95),rgba(246,242,235,0)_34%),linear-gradient(135deg,rgba(255,255,255,0.8),rgba(237,233,248,0.34))]" />
+            <div className="absolute bottom-0 right-0 h-32 w-2/3 bg-[radial-gradient(ellipse_at_center,rgba(17,17,17,0.16),rgba(17,17,17,0)_66%)] blur-xl" />
+
+            <div className="relative z-10 flex w-full flex-col justify-between">
+              <div className="max-w-[250px] sm:max-w-[320px]">
+                <p className="font-[family-name:var(--font-anton)] text-[clamp(3rem,7vw,5.6rem)] uppercase leading-[0.9] tracking-normal text-[#111111]">
+                  Focus
+                  <br />
+                  without
+                  <br />
+                  <span className="font-serif italic normal-case tracking-normal">
+                    overstimulation.
+                  </span>
+                </p>
+                <p className="mt-6 max-w-[210px] text-sm leading-relaxed text-[#111111]/58">
+                  Real decaf coffee, functional support, and a calmer daily
+                  ritual.
+                </p>
+                <div className="mt-5 h-0.5 w-14 bg-[#5A3493]" />
+              </div>
+
+              <div className="relative mt-10 min-h-[250px] sm:min-h-[320px]">
+                <div className="absolute bottom-0 left-1/2 w-[min(92vw,460px)] -translate-x-1/2 sm:w-[min(72vw,520px)]">
+                  <Image
+                    src={`${CDN}3-boxes-of-stunn-1080x1080.webp`}
+                    alt="Three boxes of STUNN Decaf Coffee"
+                    width={760}
+                    height={760}
+                    className="h-auto w-full object-contain drop-shadow-[0_26px_42px_rgba(17,17,17,0.22)]"
+                  />
+                </div>
+
+                {[
+                  ["Lion's Mane", "Clarity + focus", "top-[2%] right-0"],
+                  ["Cordyceps", "Energy + endurance", "top-[34%] right-1"],
+                  ["L-Theanine", "Calm + balance", "bottom-[10%] right-3"],
+                ].map(([title, copy, position]) => (
+                  <div
+                    key={title}
+                    className={`absolute hidden w-[190px] items-center gap-4 text-left sm:flex ${position}`}
+                  >
+                    <span className="h-px flex-1 bg-[#5A3493]/55" />
+                    <span className="h-2 w-2 rounded-full bg-[#5A3493]" />
+                    <span className="w-[115px]">
+                      <span className="block text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#111111]">
+                        {title}
+                      </span>
+                      <span className="mt-1 block text-xs font-medium text-[#111111]/55">
+                        {copy}
+                      </span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
           <div className="flex flex-col justify-center bg-[#EDE9F8] px-7 py-14 lg:w-1/2 lg:px-16">
             <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
