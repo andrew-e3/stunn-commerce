@@ -112,7 +112,7 @@ export default function AboutPage() {
             <p className="mb-7 text-xs text-[#111111]/50">Founder, STUNN</p>
             <Link
               href={PDP}
-              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#7C3AED] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#5B21B6] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#5B21B6]"
+              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F]"
             >
               Try STUNN Today
             </Link>
@@ -219,7 +219,7 @@ export default function AboutPage() {
             </ul>
             <Link
               href={PDP}
-              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#7C3AED] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#5B21B6] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#5B21B6]"
+              className="inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F]"
             >
               Shop STUNN
             </Link>
@@ -274,7 +274,7 @@ export default function AboutPage() {
           </p>
           <Link
             href={PDP}
-            className="inline-flex items-center gap-2 rounded-lg bg-[#7C3AED] px-6 py-3 text-sm font-bold text-white transition-all hover:bg-[#6D28D9]"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#5A3493] px-6 py-3 text-sm font-bold text-white transition-all hover:bg-[#4F2D82]"
           >
             Try STUNN And Save 25% 🎁
           </Link>

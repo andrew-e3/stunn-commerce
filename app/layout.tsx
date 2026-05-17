@@ -42,7 +42,7 @@ export default async function RootLayout({
         <KlaviyoOnsite />
         <CartProvider cartPromise={cart}>
           <div className="sticky top-0 z-40">
-            <div className="bg-[#7C3AED] py-2 text-center text-sm font-semibold text-white">
+            <div className="bg-[#5A3493] py-2 text-center text-sm font-semibold text-white">
               Upgrade your coffee ritual — get up to 25% off + free shipping →
             </div>
             <Navbar />

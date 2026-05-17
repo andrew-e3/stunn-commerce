@@ -147,7 +147,7 @@ export function StickyAtc({ product }: { product: Product }) {
             <span className="text-[11px] font-extrabold uppercase tracking-wide text-[#111111] sm:text-sm sm:normal-case sm:tracking-normal">
               Autoship
             </span>
-            <span className="rounded-full bg-[#7C3AED] px-2 py-1 text-[10px] font-extrabold uppercase leading-none text-white">
+            <span className="rounded-full bg-[#5A3493] px-2 py-1 text-[10px] font-extrabold uppercase leading-none text-white">
               Save {selectedTier.discountPct}%
             </span>
             <span className="hidden text-sm text-[#111111]/35 line-through sm:inline">
@@ -167,7 +167,7 @@ export function StickyAtc({ product }: { product: Product }) {
           type="button"
           disabled={!oneBoxVariant || pending}
           onClick={addSelectedOffer}
-          className="shrink-0 rounded-[8px] bg-[#7C3AED] px-4 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_0_#5B21B6] transition-all hover:translate-y-[1px] hover:bg-[#6D28D9] hover:shadow-[0_3px_0_0_#5B21B6] active:translate-y-[3px] active:shadow-none disabled:opacity-50 sm:px-8 lg:min-w-[190px] lg:text-sm"
+          className="shrink-0 rounded-[8px] bg-[#5A3493] px-4 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_0_#43256F] transition-all hover:translate-y-[1px] hover:bg-[#4F2D82] hover:shadow-[0_3px_0_0_#43256F] active:translate-y-[3px] active:shadow-none disabled:opacity-50 sm:px-8 lg:min-w-[190px] lg:text-sm"
         >
           {pending ? "Adding..." : "Add to cart"}
         </button>

@@ -23,7 +23,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#7C3AED] text-white">
+    <footer className="bg-[#5A3493] text-white">
       {/* ── Top: Newsletter + Nav ── */}
       <div className="mx-auto grid max-w-screen-xl gap-8 px-6 py-8 lg:grid-cols-[1.25fr_0.9fr] lg:gap-14 lg:px-8 lg:py-10">
         {/* Nav columns + social */}
@@ -77,7 +77,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#5A3493] transition-transform hover:-translate-y-0.5"
               >
                 <svg
                   width="19"
@@ -93,7 +93,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#5A3493] transition-transform hover:-translate-y-0.5"
               >
                 <svg
                   width="19"
@@ -109,7 +109,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#7C3AED] transition-transform hover:-translate-y-0.5"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#5A3493] transition-transform hover:-translate-y-0.5"
               >
                 <svg
                   width="18"

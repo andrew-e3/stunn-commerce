@@ -90,7 +90,7 @@ export default function ContactPage() {
                     name="firstName"
                     type="text"
                     required
-                    className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20"
+                    className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#5A3493] focus:ring-2 focus:ring-[#5A3493]/20"
                     placeholder="Your first name"
                   />
                 </div>
@@ -106,7 +106,7 @@ export default function ContactPage() {
                     name="lastName"
                     type="text"
                     required
-                    className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20"
+                    className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#5A3493] focus:ring-2 focus:ring-[#5A3493]/20"
                     placeholder="Your last name"
                   />
                 </div>
@@ -124,7 +124,7 @@ export default function ContactPage() {
                   name="email"
                   type="email"
                   required
-                  className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20"
+                  className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#5A3493] focus:ring-2 focus:ring-[#5A3493]/20"
                   placeholder="you@example.com"
                 />
               </div>
@@ -143,7 +143,7 @@ export default function ContactPage() {
                   id="phone"
                   name="phone"
                   type="tel"
-                  className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20"
+                  className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#5A3493] focus:ring-2 focus:ring-[#5A3493]/20"
                   placeholder="+1 (000) 000-0000"
                 />
               </div>
@@ -160,7 +160,7 @@ export default function ContactPage() {
                   name="message"
                   rows={5}
                   required
-                  className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/20"
+                  className="w-full rounded-[10px] border border-gray-200 bg-white px-4 py-3 text-sm text-[#111111] outline-none transition-all focus:border-[#5A3493] focus:ring-2 focus:ring-[#5A3493]/20"
                   placeholder="Tell us how we can help..."
                 />
               </div>
@@ -168,7 +168,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-[10px] bg-[#7C3AED] py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#5B21B6] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#5B21B6] active:translate-y-[4px] active:shadow-[0_1px_0_0_#5B21B6] disabled:opacity-60"
+                className="w-full rounded-[10px] bg-[#5A3493] py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#43256F] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F] active:translate-y-[4px] active:shadow-[0_1px_0_0_#43256F] disabled:opacity-60"
               >
                 {loading ? "Sending..." : "Submit"}
               </button>

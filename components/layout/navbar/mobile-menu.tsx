@@ -172,7 +172,7 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
                         <p className="text-2xl font-black tracking-[-0.02em] text-[#111111]">
                           Bundle & Save
                         </p>
-                        <span className="rounded bg-[#7C3AED] px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white">
+                        <span className="rounded bg-[#5A3493] px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white">
                           Best value
                         </span>
                       </div>

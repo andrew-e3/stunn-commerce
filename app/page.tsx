@@ -16,7 +16,7 @@ function Cta({
 }) {
   const styles = {
     primary:
-      "bg-[#5A3493] text-white shadow-[0_4px_0_0_#5E22B8] hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_#5E22B8]",
+      "bg-[#5A3493] text-white shadow-[0_4px_0_0_#43256F] hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_#43256F]",
     light: "bg-white text-[#111111] hover:bg-white/90",
     outline:
       "border border-[#111111]/18 bg-white text-[#111111] hover:border-[#111111]",
@@ -346,7 +346,7 @@ export default function HomePage() {
                   <span>Cancel anytime</span>
                   <span>30-day guarantee</span>
                 </div>
-                <div className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#5A3493] px-6 py-4 text-sm font-black text-white shadow-[0_4px_0_0_#5E22B8] transition-transform group-hover:-translate-y-0.5">
+                <div className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#5A3493] px-6 py-4 text-sm font-black text-white shadow-[0_4px_0_0_#43256F] transition-transform group-hover:-translate-y-0.5">
                   Shop the subscription
                 </div>
               </div>

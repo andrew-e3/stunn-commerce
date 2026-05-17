@@ -172,7 +172,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         {BENEFIT_CHIPS.slice(0, 4).map((chip) => (
           <span
             key={chip}
-            className="rounded-full border border-[#7C3AED]/20 bg-[#EDE9F8] px-3 py-1 text-xs font-bold text-[#111111]"
+            className="rounded-full border border-[#5A3493]/20 bg-[#EDE9F8] px-3 py-1 text-xs font-bold text-[#111111]"
           >
             {chip}
           </span>
@@ -210,10 +210,10 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               key={v.qty}
               type="button"
               onClick={() => setSelectedQty(v.qty)}
-              className={`relative flex min-h-[82px] items-center gap-2 rounded-[10px] border p-2 text-left transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(124,58,237,0.12)] ${
+              className={`relative flex min-h-[82px] items-center gap-2 rounded-[10px] border p-2 text-left transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(90,52,147,0.12)] ${
                 isSelected
                   ? "border-2 border-gray-900 bg-white shadow-[0_8px_20px_rgba(0,0,0,0.08)]"
-                  : "border-gray-300 bg-white hover:border-[#7C3AED]/60"
+                  : "border-gray-300 bg-white hover:border-[#5A3493]/60"
               }`}
             >
               {v.popular && (
@@ -248,14 +248,14 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Autoship offer card */}
-      <div className="mb-5 rounded-[12px] bg-white p-4 shadow-[0_12px_32px_rgba(124,58,237,0.14)]">
+      <div className="mb-5 rounded-[12px] bg-white p-4 shadow-[0_12px_32px_rgba(90,52,147,0.14)]">
         <div className="mb-3 flex items-start justify-between gap-4">
           <div>
             <div className="mb-1 flex flex-wrap items-center gap-2">
               <h2 className="text-lg font-extrabold leading-none text-[#111111]">
                 Autoship
               </h2>
-              <span className="rounded-full bg-[#7C3AED] px-2 py-1 text-[11px] font-extrabold uppercase leading-none text-white">
+              <span className="rounded-full bg-[#5A3493] px-2 py-1 text-[11px] font-extrabold uppercase leading-none text-white">
                 Save {display.subDiscountPct}%
               </span>
             </div>
@@ -287,7 +287,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               await addItem(null, oneBoxVariant.id, display.qty);
             });
           }}
-          className="mb-4 w-full rounded-[8px] bg-[#7C3AED] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-all hover:-translate-y-0.5 hover:bg-[#6D28D9] hover:shadow-[0_10px_22px_rgba(124,58,237,0.22)] active:translate-y-0 disabled:opacity-50"
+          className="mb-4 w-full rounded-[8px] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-all hover:-translate-y-0.5 hover:bg-[#4F2D82] hover:shadow-[0_10px_22px_rgba(90,52,147,0.22)] active:translate-y-0 disabled:opacity-50"
         >
           {addPending ? "ADDING..." : "ADD TO CART"}
         </button>
@@ -398,7 +398,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Payment icons */}
-      <div className="mb-6 rounded-[10px] border border-[#7C3AED]/10 p-3 text-center">
+      <div className="mb-6 rounded-[10px] border border-[#5A3493]/10 p-3 text-center">
         <p className="mb-2 text-xs text-[#111111]/45">We accept:</p>
         <Image
           src={`${CDN}icon-payment-mode-logos.svg`}
@@ -461,7 +461,7 @@ function Accordion({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border-t border-[#7C3AED]/14">
+    <div className="border-t border-[#5A3493]/14">
       <button
         type="button"
         onClick={() => setOpen(!open)}
