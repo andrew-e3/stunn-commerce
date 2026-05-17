@@ -9,7 +9,7 @@ const MESSAGES = [
   },
   {
     text: "No caffeine. No crash. Same ritual.",
-    className: "bg-[#111111] text-white",
+    className: "bg-[#5A3493] text-white",
   },
 ];
 
