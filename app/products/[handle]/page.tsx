@@ -694,7 +694,7 @@ export default async function ProductPage(props: {
               src="/images/stunn-founder.webp"
               alt="Andrew Jennings, founder of STUNN"
               fill
-              className="object-cover object-center"
+              className="object-cover object-[center_35%]"
               priority
             />
           </div>
