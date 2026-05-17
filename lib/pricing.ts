@@ -25,9 +25,17 @@ export function perDay(price: number, days: number) {
   return (price / days).toFixed(2);
 }
 
-export function formatPerDay(amount: string | number) {
+function formatMoneyCopy(amount: string | number) {
   const value = typeof amount === "number" ? amount.toFixed(2) : amount;
-  return `$${value}/day`;
+  return value.endsWith(".00") ? value.slice(0, -3) : value;
+}
+
+export function formatPerDay(
+  amount: string | number,
+  options: { spaced?: boolean; unit?: "day" | "Day" } = {},
+) {
+  const separator = options.spaced ? " / " : "/";
+  return `$${formatMoneyCopy(amount)}${separator}${options.unit || "day"}`;
 }
 
 export const SUPPLY_TIERS: SupplyTier[] = [
