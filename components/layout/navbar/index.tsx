@@ -42,7 +42,7 @@ export function Navbar() {
             prefetch={true}
             className={
               item.highlighted
-                ? "stunn-cta-motion rounded-full bg-[#5A3493] px-4 py-2 text-[13px] font-extrabold uppercase tracking-[0.08em] text-white shadow-[0_3px_0_0_#43256F]"
+                ? "stunn-cta-motion rounded-full border-2 border-[#5A3493] bg-[#5A3493] px-4 py-2 text-[13px] font-extrabold uppercase tracking-[0.08em] text-white"
                 : "text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#111111] transition-opacity hover:opacity-60"
             }
           >

@@ -111,16 +111,12 @@ button {
 
 .stunn-cta-motion {
   box-shadow: none !important;
-  transition:
-    background-color 0.3s ease-in-out,
-    color 0.3s ease-in-out,
-    border-color 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out !important;
 }
 
 .stunn-display {
   font-family:
-    var(--font-anton), Impact, Haettenschweiler, "Arial Narrow Bold",
+    Anton, Impact, Haettenschweiler, "Arial Narrow Bold",
     "Arial Black", sans-serif;
   font-synthesis: none;
   font-synthesis-weight: none;

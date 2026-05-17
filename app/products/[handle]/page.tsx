@@ -654,7 +654,7 @@ export default async function ProductPage(props: {
             </div>
             <a
               href="#purchase"
-              className="stunn-cta-motion mt-8 inline-flex w-fit items-center gap-2 rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F]"
+              className="stunn-cta-motion mt-8 inline-flex w-fit items-center gap-2 rounded-[10px] border-2 border-[#5A3493] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white"
             >
               Start Your Ritual →
             </a>
@@ -709,7 +709,7 @@ export default async function ProductPage(props: {
             </p>
             <a
               href="#purchase"
-              className="stunn-cta-motion inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F]"
+              className="stunn-cta-motion inline-flex items-center gap-2 self-start rounded-[10px] border-2 border-[#5A3493] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white"
             >
               Start Your Ritual →
             </a>
@@ -760,7 +760,7 @@ export default async function ProductPage(props: {
             </h2>
             <a
               href="#purchase"
-              className="stunn-cta-motion inline-flex items-center gap-2 self-start rounded-[10px] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F]"
+              className="stunn-cta-motion inline-flex items-center gap-2 self-start rounded-[10px] border-2 border-[#5A3493] bg-[#5A3493] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white"
             >
               Start Your Ritual →
             </a>
@@ -813,7 +813,7 @@ export default async function ProductPage(props: {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
                 href="#purchase"
-                className="stunn-cta-motion inline-flex items-center justify-center gap-2 rounded-[10px] bg-[#5A3493] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-[0_5px_0_0_#43256F]"
+                className="stunn-cta-motion inline-flex items-center justify-center gap-2 rounded-[10px] border-2 border-[#5A3493] bg-[#5A3493] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white"
               >
                 Get STUNN from {BEST_VALUE_PER_DAY_LABEL}
               </a>

@@ -158,7 +158,7 @@ export function StickyAtc({ product }: { product: Product }) {
           type="button"
           disabled={!oneBoxVariant || pending}
           onClick={addSelectedOffer}
-          className="stunn-cta-motion shrink-0 rounded-[8px] bg-[#5A3493] px-4 py-3 text-xs font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_0_#43256F] disabled:opacity-50 sm:px-8 lg:min-w-[190px] lg:text-sm"
+          className="stunn-cta-motion shrink-0 rounded-[8px] border-2 border-[#5A3493] bg-[#5A3493] px-4 py-3 text-xs font-extrabold uppercase tracking-wide text-white disabled:opacity-50 sm:px-8 lg:min-w-[190px] lg:text-sm"
         >
           {pending ? "Adding..." : "Add to cart"}
         </button>

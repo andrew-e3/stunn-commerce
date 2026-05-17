@@ -180,7 +180,7 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
                   href={PDP}
                   prefetch={true}
                   onClick={closeMobileMenu}
-                  className="stunn-cta-motion mt-7 flex min-h-14 items-center justify-center rounded-lg border-2 border-[#111111] text-base font-black uppercase tracking-[0.04em] text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.22)] [--stunn-cta-shadow:#111111]"
+                  className="stunn-cta-motion mt-7 flex min-h-14 items-center justify-center rounded-lg border-2 border-[#111111] text-base font-black uppercase tracking-[0.04em] text-[#111111]"
                 >
                   Shop STUNN
                 </Link>

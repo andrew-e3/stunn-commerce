@@ -262,7 +262,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               await addItem(null, oneBoxVariant.id, display.qty, sellingPlanId);
             });
           }}
-          className="stunn-cta-motion mb-4 w-full rounded-[8px] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_4px_0_0_#43256F] disabled:opacity-50"
+          className="stunn-cta-motion mb-4 w-full rounded-[8px] border-2 border-[#5A3493] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white disabled:opacity-50"
         >
           {addPending ? "ADDING..." : "ADD TO CART"}
         </button>

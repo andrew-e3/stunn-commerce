@@ -55,9 +55,9 @@ function Cta({
 }) {
   const styles = {
     primary:
-      "bg-[#5A3493] text-white shadow-[0_5px_0_0_#43256F]",
+      "border-2 border-[#5A3493] bg-[#5A3493] text-white",
     outline:
-      "border border-[#111111]/18 bg-white text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.18)] [--stunn-cta-shadow:#111111]",
+      "border-2 border-[#111111] bg-white text-[#111111]",
   };
 
   return (

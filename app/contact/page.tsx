@@ -168,7 +168,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="stunn-cta-motion w-full rounded-[10px] bg-[#5A3493] py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#43256F] disabled:opacity-60"
+                className="stunn-cta-motion w-full rounded-[10px] border-2 border-[#5A3493] bg-[#5A3493] py-4 text-sm font-bold uppercase tracking-widest text-white disabled:opacity-60"
               >
                 {loading ? "Sending..." : "Submit"}
               </button>

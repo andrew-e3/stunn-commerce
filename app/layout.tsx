@@ -14,6 +14,7 @@ const anton = Anton({
   subsets: ["latin"],
   variable: "--font-anton",
   display: "block",
+  adjustFontFallback: false,
 });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 

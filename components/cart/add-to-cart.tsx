@@ -16,7 +16,7 @@ function SubmitButton({
   selectedVariantId: string | undefined;
 }) {
   const buttonClasses =
-    "stunn-cta-motion relative flex w-full items-center justify-center rounded-[10px] bg-[#5A3493] p-4 font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#43256F]";
+    "stunn-cta-motion relative flex w-full items-center justify-center rounded-[10px] border-2 border-[#5A3493] bg-[#5A3493] p-4 font-bold uppercase tracking-widest text-white";
   const disabledClasses = "cursor-not-allowed opacity-60 hover:opacity-60";
 
   if (!availableForSale) {

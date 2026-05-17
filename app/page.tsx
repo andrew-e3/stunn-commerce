@@ -21,10 +21,10 @@ function Cta({
 }) {
   const styles = {
     primary:
-      "bg-[#5A3493] text-white shadow-[0_4px_0_0_#43256F]",
-    light: "bg-white text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.22)] [--stunn-cta-shadow:#111111]",
+      "border-2 border-[#5A3493] bg-[#5A3493] text-white",
+    light: "border-2 border-[#111111] bg-white text-[#111111]",
     outline:
-      "border border-[#111111]/18 bg-white text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.18)] [--stunn-cta-shadow:#111111]",
+      "border-2 border-[#111111] bg-white text-[#111111]",
   };
 
   return (
@@ -450,7 +450,7 @@ export default function HomePage() {
                   <span>Cancel anytime</span>
                   <span>30-day guarantee</span>
                 </div>
-                <div className="stunn-cta-motion mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#5A3493] px-6 py-4 text-sm font-black text-white shadow-[0_4px_0_0_#43256F]">
+                <div className="stunn-cta-motion mt-8 inline-flex w-full items-center justify-center rounded-lg border-2 border-[#5A3493] bg-[#5A3493] px-6 py-4 text-sm font-black text-white">
                   Shop the subscription
                 </div>
               </div>
