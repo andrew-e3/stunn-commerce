@@ -1,20 +1,13 @@
 import { CartProvider } from "components/cart/cart-context";
 import { Navbar } from "components/layout/navbar";
 import { OffTheDripCapture } from "components/off-the-drip-capture";
-import { Anton, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { baseUrl } from "lib/utils";
 
-const anton = Anton({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-anton",
-  display: "block",
-  adjustFontFallback: false,
-});
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const { SITE_NAME } = process.env;
@@ -39,7 +32,7 @@ export default async function RootLayout({
   const cart = getCart();
 
   return (
-    <html lang="en" className={`${anton.variable} ${inter.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body className="bg-white font-[family-name:var(--font-inter)] text-[#111111]">
         <CartProvider cartPromise={cart}>
           <div className="sticky top-0 z-40">
