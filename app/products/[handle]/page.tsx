@@ -12,6 +12,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
+const COMPARISON_IMAGE = "/images/stunn-comparison-pour.png";
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -606,9 +607,11 @@ export default async function ProductPage(props: {
                   <tr>
                     <th className="w-[34%] pb-4" />
                     <th className="w-[33%] rounded-t-[10px] bg-[#5A3493] px-1 pb-4 pt-4 text-center">
-                      <span className="stunn-display text-base text-white sm:text-lg">
-                        STUNN+
-                      </span>
+                      <img
+                        src={`${CDN}STUNN_LOGO-White.png`}
+                        alt="STUNN"
+                        className="mx-auto h-5 w-auto"
+                      />
                     </th>
                     <th className="w-[33%] px-1 pb-4 text-center text-[9px] font-bold uppercase tracking-wider text-[#111111]/60 sm:text-[10px]">
                       Caffeine Loop
@@ -661,7 +664,7 @@ export default async function ProductPage(props: {
           </div>
           <div className="relative order-1 aspect-[4/3] w-full lg:order-2 lg:aspect-auto lg:w-1/2 lg:min-h-[500px]">
             <Image
-              src={`${CDN}img-s-6.webp`}
+              src={COMPARISON_IMAGE}
               alt="STUNN vs regular coffee"
               fill
               className="object-cover"
