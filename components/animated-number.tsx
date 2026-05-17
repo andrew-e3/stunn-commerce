@@ -8,6 +8,7 @@ type AnimatedNumberProps = {
   prefix?: string;
   suffix?: string;
   compact?: boolean;
+  startAt?: number;
 };
 
 export default function AnimatedNumber({
@@ -16,9 +17,10 @@ export default function AnimatedNumber({
   prefix = "",
   suffix = "",
   compact = false,
+  startAt = 0,
 }: AnimatedNumberProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [displayValue, setDisplayValue] = useState(0);
+  const [displayValue, setDisplayValue] = useState(startAt);
 
   useEffect(() => {
     const node = ref.current;
@@ -44,7 +46,7 @@ export default function AnimatedNumber({
           const progress = Math.min((now - startedAt) / duration, 1);
           const eased = 1 - Math.pow(1 - progress, 3);
 
-          setDisplayValue(value * eased);
+          setDisplayValue(startAt + (value - startAt) * eased);
 
           if (progress < 1) {
             requestAnimationFrame(tick);
@@ -60,7 +62,7 @@ export default function AnimatedNumber({
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [value]);
+  }, [startAt, value]);
 
   const formatted = compact
     ? `${Math.round(displayValue).toLocaleString()}`
