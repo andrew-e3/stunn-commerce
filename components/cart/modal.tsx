@@ -195,7 +195,7 @@ export default function CartModal() {
                   <Link
                     href="/products/focus-without-caffeine"
                     onClick={closeCart}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#5A3493] px-8 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#43256F] transition-all hover:bg-[#111111] hover:translate-y-px hover:shadow-[0_3px_0_0_#43256F]"
+                    className="stunn-cta-motion mt-6 inline-flex items-center gap-2 rounded-full bg-[#5A3493] px-8 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#43256F]"
                   >
                     Shop now →
                   </Link>
@@ -566,7 +566,7 @@ function CheckoutButton() {
   const { pending } = useFormStatus();
   return (
     <button
-      className="w-full rounded-[5px] bg-white py-4 text-base font-extrabold uppercase tracking-wide text-[#111111] transition-colors hover:bg-[#111111] hover:text-white disabled:opacity-60"
+      className="stunn-cta-motion w-full rounded-[5px] bg-white py-4 text-base font-extrabold uppercase tracking-wide text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.22)] [--stunn-cta-shadow:#111111] disabled:opacity-60"
       type="submit"
       disabled={pending}
     >

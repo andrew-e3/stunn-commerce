@@ -109,6 +109,39 @@ button {
   animation: hero-copy-in 700ms ease-out both;
 }
 
+.stunn-cta-motion {
+  --stunn-cta-shadow: #43256f;
+  transition:
+    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .stunn-cta-motion:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background-color: #111111 !important;
+    border-color: #111111 !important;
+    color: #ffffff !important;
+    box-shadow:
+      0 6px 0 0 var(--stunn-cta-shadow),
+      0 16px 32px rgb(17 17 17 / 0.18);
+  }
+}
+
+.stunn-cta-motion:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 var(--stunn-cta-shadow);
+}
+
+.stunn-cta-motion:disabled {
+  cursor: not-allowed;
+  transform: none;
+}
+
 .stunn-pour-scene {
   box-shadow: 0 24px 70px rgb(17 17 17 / 0.08);
 }
@@ -158,8 +191,10 @@ button {
   .animate-soft-float,
   .animate-slow-zoom,
   .animate-hero-copy-in,
-  .stunn-powder-dot {
+  .stunn-powder-dot,
+  .stunn-cta-motion {
     animation: none;
+    transition: none;
   }
 }
 

@@ -82,7 +82,7 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
         <Bars3Icon className="h-6" />
       </button>
       <Transition show={isOpen}>
-        <Dialog onClose={closeMobileMenu} className="relative z-50">
+        <Dialog onClose={closeMobileMenu} className="relative z-[1000000]">
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -169,7 +169,7 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
                         </span>
                       </div>
                       <p className="mt-1 text-sm font-semibold text-[#111111]/55">
-                        3 boxes, lowest price per cup
+                        3 boxes, lowest price per day
                       </p>
                     </div>
                     <PlusIcon className="h-7 w-7 shrink-0 text-[#111111] transition-transform group-hover:rotate-90" />
@@ -180,7 +180,7 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
                   href={PDP}
                   prefetch={true}
                   onClick={closeMobileMenu}
-                  className="mt-7 flex min-h-14 items-center justify-center rounded-lg border-2 border-[#111111] text-base font-black uppercase tracking-[0.04em] text-[#111111] transition-colors hover:bg-[#111111] hover:text-white"
+                  className="stunn-cta-motion mt-7 flex min-h-14 items-center justify-center rounded-lg border-2 border-[#111111] text-base font-black uppercase tracking-[0.04em] text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.22)] [--stunn-cta-shadow:#111111]"
                 >
                   Shop STUNN
                 </Link>

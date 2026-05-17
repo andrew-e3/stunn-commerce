@@ -21,16 +21,16 @@ function Cta({
 }) {
   const styles = {
     primary:
-      "bg-[#5A3493] text-white shadow-[0_4px_0_0_#43256F] hover:bg-[#111111] hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_#43256F]",
-    light: "bg-white text-[#111111] hover:bg-white/90",
+      "bg-[#5A3493] text-white shadow-[0_4px_0_0_#43256F]",
+    light: "bg-white text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.22)] [--stunn-cta-shadow:#111111]",
     outline:
-      "border border-[#111111]/18 bg-white text-[#111111] hover:border-[#111111]",
+      "border border-[#111111]/18 bg-white text-[#111111] shadow-[0_4px_0_0_rgba(17,17,17,0.18)] [--stunn-cta-shadow:#111111]",
   };
 
   return (
     <Link
       href={PDP}
-      className={`inline-flex min-h-12 w-full items-center justify-center rounded-lg px-6 text-sm font-black transition-all sm:w-auto ${styles[variant]}`}
+      className={`stunn-cta-motion inline-flex min-h-12 w-full items-center justify-center rounded-lg px-6 text-sm font-black sm:w-auto ${styles[variant]}`}
     >
       {children}
     </Link>
@@ -401,7 +401,7 @@ export default function HomePage() {
                   <span>Cancel anytime</span>
                   <span>30-day guarantee</span>
                 </div>
-                <div className="mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#5A3493] px-6 py-4 text-sm font-black text-white shadow-[0_4px_0_0_#43256F] transition-transform group-hover:bg-[#111111] group-hover:-translate-y-0.5">
+                <div className="stunn-cta-motion mt-8 inline-flex w-full items-center justify-center rounded-lg bg-[#5A3493] px-6 py-4 text-sm font-black text-white shadow-[0_4px_0_0_#43256F]">
                   Shop the subscription
                 </div>
               </div>
