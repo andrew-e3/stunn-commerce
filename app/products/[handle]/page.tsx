@@ -191,12 +191,12 @@ const MOSAIC_IMAGES = [
     alt: "STUNN decaf coffee box",
   },
   {
-    src: `${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`,
-    alt: "STUNN sachet with adaptogens and nootropics",
+    src: `${CDN}img-s-6.webp`,
+    alt: "STUNN coffee ritual without caffeine",
   },
   {
-    src: `${CDN}3-boxes-of-stunn-1080x1080.webp`,
-    alt: "3 boxes of STUNN",
+    src: `${CDN}img-man-drinking-stunn-coffee.webp`,
+    alt: "A calm morning coffee ritual after switching to STUNN",
   },
   {
     src: `${CDN}img-s-11.webp`,
