@@ -287,7 +287,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               await addItem(null, oneBoxVariant.id, display.qty);
             });
           }}
-          className="mb-4 w-full rounded-[8px] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-all hover:-translate-y-0.5 hover:bg-[#4F2D82] hover:shadow-[0_10px_22px_rgba(90,52,147,0.22)] active:translate-y-0 disabled:opacity-50"
+          className="mb-4 w-full rounded-[8px] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-all hover:bg-[#111111] hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(90,52,147,0.22)] active:translate-y-0 disabled:opacity-50"
         >
           {addPending ? "ADDING..." : "ADD TO CART"}
         </button>

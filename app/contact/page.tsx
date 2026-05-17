@@ -168,7 +168,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-[10px] bg-[#5A3493] py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#43256F] transition-all hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F] active:translate-y-[4px] active:shadow-[0_1px_0_0_#43256F] disabled:opacity-60"
+                className="w-full rounded-[10px] bg-[#5A3493] py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[0_5px_0_0_#43256F] transition-all hover:bg-[#111111] hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F] active:translate-y-[4px] active:shadow-[0_1px_0_0_#43256F] disabled:opacity-60"
               >
                 {loading ? "Sending..." : "Submit"}
               </button>

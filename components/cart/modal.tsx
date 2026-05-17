@@ -194,7 +194,7 @@ export default function CartModal() {
                   <Link
                     href="/products/focus-without-caffeine"
                     onClick={closeCart}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#5A3493] px-8 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#43256F] transition-all hover:translate-y-px hover:shadow-[0_3px_0_0_#43256F]"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#5A3493] px-8 py-3 text-sm font-bold text-white shadow-[0_4px_0_0_#43256F] transition-all hover:bg-[#111111] hover:translate-y-px hover:shadow-[0_3px_0_0_#43256F]"
                   >
                     Shop now →
                   </Link>

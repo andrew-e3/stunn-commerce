@@ -143,7 +143,7 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="shrink-0 rounded-[6px] bg-white px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-[#111111] transition-transform hover:-translate-y-0.5"
+              className="shrink-0 rounded-[6px] bg-white px-5 py-2.5 text-sm font-extrabold uppercase tracking-wide text-[#111111] transition-all hover:-translate-y-0.5 hover:bg-[#111111] hover:text-white"
             >
               Sign up
             </button>

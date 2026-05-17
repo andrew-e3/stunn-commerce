@@ -54,7 +54,7 @@ function Cta({
 }) {
   const styles = {
     primary:
-      "bg-[#5A3493] text-white shadow-[0_5px_0_0_#43256F] hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F]",
+      "bg-[#5A3493] text-white shadow-[0_5px_0_0_#43256F] hover:bg-[#111111] hover:translate-y-[2px] hover:shadow-[0_3px_0_0_#43256F]",
     outline:
       "border border-[#111111]/18 bg-white text-[#111111] hover:border-[#111111]",
   };
