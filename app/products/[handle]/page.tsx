@@ -637,35 +637,6 @@ export default async function ProductPage(props: {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
-      <section className="border-y border-black/10 bg-white py-16">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-10 text-center">
-            <div className="mb-2 text-lg leading-none text-[#EFAF00]">
-              ★★★★★
-            </div>
-            <span className="text-sm font-bold text-[#111111]/70">
-              4.8 · Over 1,000 happy customers
-            </span>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {testimonials.map((t) => (
-              <div
-                key={t.name}
-                className="flex flex-col gap-4 border-t border-black/15 pt-6"
-              >
-                <p className="text-sm leading-relaxed text-[#111111]/75">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <p className="text-sm font-bold text-[#111111]">
-                  {t.name}, {t.age}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── FOUNDER ── */}
       <section className="bg-white">
         <div className="mx-auto max-w-screen-xl px-0 lg:grid lg:grid-cols-2">
@@ -709,6 +680,35 @@ export default async function ProductPage(props: {
             >
               Start Your Ritual →
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ── */}
+      <section className="border-y border-black/10 bg-white py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <div className="mb-2 text-lg leading-none text-[#EFAF00]">
+              ★★★★★
+            </div>
+            <span className="text-sm font-bold text-[#111111]/70">
+              4.8 · Over 1,000 happy customers
+            </span>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {testimonials.map((t) => (
+              <div
+                key={t.name}
+                className="flex flex-col gap-4 border-t border-black/15 pt-6"
+              >
+                <p className="text-sm leading-relaxed text-[#111111]/75">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <p className="text-sm font-bold text-[#111111]">
+                  {t.name}, {t.age}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
