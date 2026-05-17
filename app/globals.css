@@ -47,6 +47,122 @@ button {
   will-change: transform;
 }
 
+@keyframes soft-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-0.5deg);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(0.7deg);
+  }
+}
+
+@keyframes slow-zoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes hero-copy-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes powder-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0) scale(0.7);
+  }
+  18% {
+    opacity: 0.9;
+  }
+  78% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--dot-drift, 0px), 42px, 0) scale(1);
+  }
+}
+
+.animate-soft-float {
+  animation: soft-float 5.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-slow-zoom {
+  animation: slow-zoom 11s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-hero-copy-in {
+  animation: hero-copy-in 700ms ease-out both;
+}
+
+.stunn-pour-scene {
+  box-shadow: 0 24px 70px rgb(17 17 17 / 0.08);
+}
+
+.stunn-photo-powder-stream {
+  transform: rotate(-5deg);
+  transform-origin: top left;
+}
+
+.stunn-powder-dot {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 4px;
+  width: 4px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, #c37b31, #4a2416 72%);
+  box-shadow: 0 1px 3px rgb(58 29 17 / 0.22);
+  opacity: 0;
+  animation: powder-fall 1.05s linear infinite;
+  animation-delay: calc(var(--dot-index) * -0.08s);
+  will-change: transform, opacity;
+}
+
+.stunn-powder-dot:nth-child(2n) {
+  left: 42%;
+  height: 3px;
+  width: 3px;
+  --dot-drift: -4px;
+}
+
+.stunn-powder-dot:nth-child(3n) {
+  left: 57%;
+  height: 4px;
+  width: 4px;
+  --dot-drift: 5px;
+}
+
+.stunn-powder-dot:nth-child(4n) {
+  left: 48%;
+  height: 3px;
+  width: 3px;
+  --dot-drift: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-soft-float,
+  .animate-slow-zoom,
+  .animate-hero-copy-in,
+  .stunn-powder-dot {
+    animation: none;
+  }
+}
+
 details summary::-webkit-details-marker {
   display: none;
 }
