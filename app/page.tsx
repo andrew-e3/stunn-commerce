@@ -132,7 +132,7 @@ const FAQS = [
   {
     question: "What is the best value?",
     answer:
-      "The 3-box subscription gives the lowest price per day, free shipping, and the strongest savings.",
+      "The 3-box subscription gives the lowest price per day, includes free shipping, and unlocks the strongest savings.",
   },
 ];
 
@@ -237,7 +237,7 @@ export default function HomePage() {
             <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
               <Cta>Shop now - save up to 25%</Cta>
               <span className="hidden text-sm font-semibold text-[#111111]/50 sm:inline">
-                Free shipping on 3 boxes
+                Free shipping on subscription + $75+ orders
               </span>
             </div>
             <div className="mt-5 hidden max-w-[520px] grid-cols-3 gap-3 text-xs font-bold text-[#111111]/60 sm:grid sm:text-sm">
@@ -462,7 +462,7 @@ export default function HomePage() {
               Start with three boxes. Save 25%.
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-[#111111]/65">
-              The 3-box subscription is the best way to make the switch stick: lowest price per day, free shipping, and a full ritual reset.
+              The 3-box subscription is the best way to make the switch stick: lowest price per day, free shipping included, and a full ritual reset.
             </p>
           </div>
 
@@ -498,7 +498,7 @@ export default function HomePage() {
                   3 boxes delivered every 3 months
                 </h3>
                 <div className="mt-7 grid gap-3 text-sm font-semibold text-[#111111]/75 sm:grid-cols-3">
-                  <span>Free shipping</span>
+                  <span>Subscription ships free</span>
                   <span>Cancel anytime</span>
                   <span>30-day guarantee</span>
                 </div>

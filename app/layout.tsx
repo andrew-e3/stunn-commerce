@@ -1,4 +1,5 @@
 import { CartProvider } from "components/cart/cart-context";
+import { AnnouncementBar } from "components/layout/announcement-bar";
 import { Navbar } from "components/layout/navbar";
 import { OffTheDripCapture } from "components/off-the-drip-capture";
 import { Inter } from "next/font/google";
@@ -36,9 +37,7 @@ export default async function RootLayout({
       <body className="bg-white font-[family-name:var(--font-inter)] text-[#111111]">
         <CartProvider cartPromise={cart}>
           <div className="sticky top-0 z-40">
-            <div className="bg-[#5A3493] py-2 text-center text-sm font-semibold text-white">
-              No caffeine. No crash. Same ritual.
-            </div>
+            <AnnouncementBar />
             <Navbar />
           </div>
           <main>

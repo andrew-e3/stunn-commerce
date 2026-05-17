@@ -150,7 +150,7 @@ export function StickyAtc({ product }: { product: Product }) {
           </div>
           <p className="mt-1 hidden truncate text-[11px] text-[#111111]/60 sm:block sm:text-xs">
             {selectedTier.display.toLowerCase()} {selectedTier.shipEvery} ·{" "}
-            {formatPerDay(subscriptionPerDay)} · free shipping
+            {formatPerDay(subscriptionPerDay)} · subscription ships free
           </p>
         </div>
 

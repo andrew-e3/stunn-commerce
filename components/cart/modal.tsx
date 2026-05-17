@@ -203,7 +203,7 @@ export default function CartModal() {
               ) : (
                 (() => {
                   // ── Displayed cart economics. Shopify checkout remains the source of truth.
-                  const FREE_SHIPPING_THRESHOLD = 60;
+                  const FREE_SHIPPING_THRESHOLD = 75;
                   const totalRetail = cart.lines.reduce(
                     (sum, line) =>
                       sum + getSavingsForQuantity(line.quantity).retail,
@@ -221,15 +221,21 @@ export default function CartModal() {
                       : 0;
 
                   // ── Shipping progress ──
+                  const hasSubscription = cart.lines.some(
+                    (line) => Boolean(line.sellingPlanAllocation),
+                  );
                   const remaining = Math.max(
                     0,
-                    FREE_SHIPPING_THRESHOLD - totalRetail,
+                    FREE_SHIPPING_THRESHOLD - discountedSubtotal,
                   );
-                  const progress = Math.min(
-                    100,
-                    (totalRetail / FREE_SHIPPING_THRESHOLD) * 100,
-                  );
-                  const hasFreeShipping = remaining === 0;
+                  const progress = hasSubscription
+                    ? 100
+                    : Math.min(
+                        100,
+                        (discountedSubtotal / FREE_SHIPPING_THRESHOLD) * 100,
+                      );
+                  const hasFreeShipping =
+                    hasSubscription || remaining === 0;
 
                   return (
                     <div className="flex h-full flex-col overflow-hidden">
@@ -246,7 +252,12 @@ export default function CartModal() {
                             </span>
                           </div>
                         )}
-                        {hasFreeShipping ? (
+                        {hasSubscription ? (
+                          <span>
+                            Subscription order unlocked{" "}
+                            <strong>Free Shipping!</strong>
+                          </span>
+                        ) : hasFreeShipping ? (
                           <span>
                             Congrats, you&apos;ve unlocked{" "}
                             <strong>Free Shipping!</strong>
@@ -254,7 +265,8 @@ export default function CartModal() {
                         ) : (
                           <span>
                             Add <strong>${remaining.toFixed(2)}</strong> more
-                            for <strong>Free Shipping</strong>
+                            or choose subscription for{" "}
+                            <strong>Free Shipping</strong>
                           </span>
                         )}
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/80">

@@ -298,8 +298,9 @@ export default function AboutPage() {
               Coffee is better when it does not collect interest.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/65">
-              Start with the best value: a 3-box subscription, free shipping,
-              and a calmer coffee routine from {BEST_VALUE_PER_DAY_LABEL}.
+              Start with the best value: a 3-box subscription with free
+              shipping, and a calmer coffee routine from{" "}
+              {BEST_VALUE_PER_DAY_LABEL}.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Cta>Shop STUNN</Cta>
