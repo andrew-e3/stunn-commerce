@@ -93,7 +93,7 @@ export default function AboutPage() {
         <div className="relative flex min-h-[calc(100vh-68px)] items-end px-5 py-12 sm:px-8 lg:items-center lg:py-20">
           <div className="max-w-[760px]">
             <Label>About STUNN</Label>
-            <h1 className="text-[clamp(48px,8vw,118px)] font-[family-name:var(--font-anton)] uppercase leading-[0.9] tracking-normal">
+            <h1 className="text-[clamp(48px,8vw,118px)] stunn-display uppercase leading-[0.9] tracking-normal">
               Keep the ritual. Lose the caffeine loop.
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-white/76 sm:text-xl">
@@ -114,7 +114,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
           <div>
             <Label>The thesis</Label>
-            <h2 className="max-w-3xl text-[clamp(42px,6vw,96px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+            <h2 className="max-w-3xl text-[clamp(42px,6vw,96px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
               We are not anti-coffee. We are anti-compromise.
             </h2>
           </div>
@@ -128,7 +128,7 @@ export default function AboutPage() {
                   {belief.label}
                 </p>
                 <div>
-                  <h3 className="text-2xl font-[family-name:var(--font-anton)] uppercase leading-tight tracking-normal text-[#111111]">
+                  <h3 className="text-2xl stunn-display uppercase leading-tight tracking-normal text-[#111111]">
                     {belief.title}
                   </h3>
                   <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#111111]/64 sm:text-base">
@@ -154,7 +154,7 @@ export default function AboutPage() {
           </div>
           <div className="flex flex-col justify-center px-7 py-12 sm:px-10 lg:px-16">
             <Label>Founder note</Label>
-            <h2 className="max-w-xl text-[clamp(36px,5vw,64px)] font-[family-name:var(--font-anton)] uppercase leading-[0.94] tracking-normal text-[#111111]">
+            <h2 className="max-w-xl text-[clamp(36px,5vw,64px)] stunn-display uppercase leading-[0.94] tracking-normal text-[#111111]">
               I did not want to quit coffee. I wanted coffee to stop hijacking
               the day.
             </h2>
@@ -170,7 +170,7 @@ export default function AboutPage() {
               cup feel smoother on the body.
             </p>
             <div className="mt-7 border-t border-[#111111]/12 pt-5">
-              <p className="font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-[#111111]">
+              <p className="stunn-display text-sm uppercase tracking-widest text-[#111111]">
                 Andrew Jennings
               </p>
               <p className="mt-1 text-xs font-semibold text-[#111111]/52">
@@ -185,7 +185,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] bg-[#EDE9F8] lg:grid-cols-[1fr_0.92fr]">
           <div className="flex flex-col justify-center px-7 py-12 sm:px-10 lg:px-16">
             <Label>What is inside</Label>
-            <h2 className="max-w-3xl text-[clamp(42px,6vw,92px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+            <h2 className="max-w-3xl text-[clamp(42px,6vw,92px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
               Built like coffee. Backed like a daily ritual.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/68">
@@ -225,7 +225,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
           <div>
             <Label>How we build</Label>
-            <h2 className="max-w-xl text-[clamp(38px,5vw,72px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+            <h2 className="max-w-xl text-[clamp(38px,5vw,72px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
               The rules are simple.
             </h2>
           </div>
@@ -238,7 +238,7 @@ export default function AboutPage() {
                 <p className="mb-8 text-xs font-black text-[#5A3493]">
                   0{index + 1}
                 </p>
-                <p className="text-2xl font-[family-name:var(--font-anton)] uppercase leading-[1.02] tracking-normal text-[#111111]">
+                <p className="text-2xl stunn-display uppercase leading-[1.02] tracking-normal text-[#111111]">
                   {principle}
                 </p>
               </div>
@@ -251,7 +251,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] bg-[#F4F0FB] lg:grid-cols-[1fr_0.82fr]">
           <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-16">
             <Label>Your next cup</Label>
-            <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+            <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
               Coffee is better when it does not collect interest.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/65">

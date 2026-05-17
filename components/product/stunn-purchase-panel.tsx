@@ -123,7 +123,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </div>
 
       {/* Title */}
-      <h1 className="mb-2 font-[family-name:var(--font-anton)] text-[clamp(2.35rem,9vw,4.5rem)] uppercase leading-[0.9] tracking-normal text-[#111111]">
+      <h1 className="mb-2 stunn-display text-[clamp(2.35rem,9vw,4.5rem)] uppercase leading-[0.9] tracking-normal text-[#111111]">
         <span>Decaf </span>
         <span className="whitespace-nowrap">
           Coffee

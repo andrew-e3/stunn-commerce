@@ -189,7 +189,7 @@ export default function CartModal() {
                 /* ── Empty state ── */
                 <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
                   <EmptyBox />
-                  <p className="mt-6 font-[family-name:var(--font-anton)] text-2xl uppercase text-[#5A3493]">
+                  <p className="mt-6 stunn-display text-2xl uppercase text-[#5A3493]">
                     Your cart is empty
                   </p>
                   <Link

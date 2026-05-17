@@ -260,7 +260,7 @@ export default async function ProductPage(props: {
                           className="h-4 w-4"
                         />
                       </span>
-                      <span className="font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#111111]">
+                      <span className="stunn-display text-[11px] uppercase tracking-wider text-[#111111]">
                         {pill.label}
                       </span>
                     </div>
@@ -283,7 +283,7 @@ export default async function ProductPage(props: {
                           className="h-4 w-4"
                         />
                       </span>
-                      <span className="font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#111111]">
+                      <span className="stunn-display text-[11px] uppercase tracking-wider text-[#111111]">
                         {pill.label}
                       </span>
                     </div>
@@ -312,7 +312,7 @@ export default async function ProductPage(props: {
               <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-[#111111]/50">
                 The STUNN shift
               </p>
-              <h2 className="mb-7 font-[family-name:var(--font-anton)] text-[clamp(2.5rem,5vw,5.2rem)] uppercase leading-[0.95] text-[#111111]">
+              <h2 className="mb-7 stunn-display text-[clamp(2.5rem,5vw,5.2rem)] uppercase leading-[0.95] text-[#111111]">
                 Keep the ritual.
                 <br />
                 Feel clear again.
@@ -359,7 +359,7 @@ export default async function ProductPage(props: {
                   <span className="absolute -left-[34px] top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#5A3493] text-[10px] font-bold text-white">
                     {index + 1}
                   </span>
-                  <h3 className="mb-2 font-[family-name:var(--font-anton)] text-3xl uppercase leading-none text-[#111111]">
+                  <h3 className="mb-2 stunn-display text-3xl uppercase leading-none text-[#111111]">
                     {step.title}
                   </h3>
                   <p className="max-w-sm text-sm leading-relaxed text-[#111111]/65">
@@ -377,7 +377,7 @@ export default async function ProductPage(props: {
                   <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#111111]/42">
                     {card.eyebrow}
                   </p>
-                  <h3 className="font-[family-name:var(--font-anton)] text-2xl uppercase leading-[1.02] tracking-normal text-[#111111]">
+                  <h3 className="stunn-display text-2xl uppercase leading-[1.02] tracking-normal text-[#111111]">
                     {card.title}
                   </h3>
                 </div>
@@ -394,7 +394,7 @@ export default async function ProductPage(props: {
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
               The timeline
             </p>
-            <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2rem,5vw,3.5rem)] uppercase leading-tight text-[#111111]">
+            <h2 className="stunn-display text-[clamp(2rem,5vw,3.5rem)] uppercase leading-tight text-[#111111]">
               What to expect after
               <br />
               switching to STUNN
@@ -487,7 +487,7 @@ export default async function ProductPage(props: {
                       {step.time}
                     </span>
                   </div>
-                  <p className="mb-1 font-[family-name:var(--font-anton)] text-2xl uppercase leading-none tracking-normal text-[#111111]">
+                  <p className="mb-1 stunn-display text-2xl uppercase leading-none tracking-normal text-[#111111]">
                     {step.headline}
                   </p>
                   <p className="text-sm leading-relaxed text-[#111111]/65">
@@ -510,7 +510,7 @@ export default async function ProductPage(props: {
 
             <div className="relative z-10 flex w-full flex-col justify-between">
               <div className="max-w-[250px] sm:max-w-[320px]">
-                <p className="font-[family-name:var(--font-anton)] text-[clamp(3rem,7vw,5.6rem)] uppercase leading-[0.9] tracking-normal text-[#111111]">
+                <p className="stunn-display text-[clamp(3rem,7vw,5.6rem)] uppercase leading-[0.9] tracking-normal text-[#111111]">
                   Focus
                   <br />
                   without
@@ -543,7 +543,7 @@ export default async function ProductPage(props: {
             <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
               What makes it work
             </span>
-            <h2 className="mb-5 font-[family-name:var(--font-anton)] text-[clamp(2.2rem,4vw,3.7rem)] uppercase leading-[0.95] text-[#111111]">
+            <h2 className="mb-5 stunn-display text-[clamp(2.2rem,4vw,3.7rem)] uppercase leading-[0.95] text-[#111111]">
               Coffee first.
               <br />
               Function underneath.
@@ -561,7 +561,7 @@ export default async function ProductPage(props: {
                   className="grid grid-cols-[1fr_auto] gap-4 border-b border-[#5A3493]/15 py-4 last:border-b-0"
                 >
                   <div>
-                    <p className="font-[family-name:var(--font-anton)] text-xl uppercase leading-none text-[#111111]">
+                    <p className="stunn-display text-xl uppercase leading-none text-[#111111]">
                       {ing.name}
                     </p>
                     <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-[#111111]/55">
@@ -590,7 +590,7 @@ export default async function ProductPage(props: {
             <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
               STUNN vs the caffeine loop
             </span>
-            <h2 className="mb-8 font-[family-name:var(--font-anton)] text-[clamp(2rem,4vw,3.5rem)] uppercase leading-tight text-[#111111]">
+            <h2 className="mb-8 stunn-display text-[clamp(2rem,4vw,3.5rem)] uppercase leading-tight text-[#111111]">
               Keep the cup.
               <br />
               Lose the cost.
@@ -601,7 +601,7 @@ export default async function ProductPage(props: {
                   <tr>
                     <th className="w-[34%] pb-4" />
                     <th className="w-[33%] rounded-t-[10px] bg-[#5A3493] px-1 pb-4 pt-4 text-center">
-                      <span className="font-[family-name:var(--font-anton)] text-base text-white sm:text-lg">
+                      <span className="stunn-display text-base text-white sm:text-lg">
                         STUNN+
                       </span>
                     </th>
@@ -681,7 +681,7 @@ export default async function ProductPage(props: {
             <span className="mb-3 inline-block rounded-full border border-[#5A3493]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
               The Founder
             </span>
-            <h2 className="mb-3 font-[family-name:var(--font-anton)] text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#111111]">
+            <h2 className="mb-3 stunn-display text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#111111]">
               Why I Created STUNN
             </h2>
             <p className="mb-2 text-sm font-semibold text-[#111111]/82">
@@ -695,7 +695,7 @@ export default async function ProductPage(props: {
               felt like a negotiation. STUNN is built to keep everything we love
               about coffee, while removing what we don&apos;t.
             </p>
-            <p className="mb-6 font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-[#111111]">
+            <p className="mb-6 stunn-display text-sm uppercase tracking-widest text-[#111111]">
               ANDREW JENNINGS
               <br />
               <span className="font-sans text-xs font-normal normal-case tracking-normal text-[#111111]/55">
@@ -748,7 +748,7 @@ export default async function ProductPage(props: {
             <span className="mb-3 inline-block rounded-full border border-[#5A3493]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
               Frequently Asked Questions
             </span>
-            <h2 className="mb-6 font-[family-name:var(--font-anton)] text-[clamp(36px,5vw,64px)] uppercase leading-tight text-[#111111]">
+            <h2 className="mb-6 stunn-display text-[clamp(36px,5vw,64px)] uppercase leading-tight text-[#111111]">
               Questions,
               <br />
               answered.
@@ -764,7 +764,7 @@ export default async function ProductPage(props: {
             {pdpFaqs.map((faq) => (
               <details key={faq.question} className="group py-4">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-                  <span className="font-[family-name:var(--font-anton)] text-base uppercase tracking-wide text-[#111111]">
+                  <span className="stunn-display text-base uppercase tracking-wide text-[#111111]">
                     {faq.question}
                   </span>
                   <span className="shrink-0 text-[#111111] transition-transform duration-200 group-open:rotate-180">
@@ -796,7 +796,7 @@ export default async function ProductPage(props: {
             <span className="mb-5 w-fit rounded-full border border-[#5A3493]/25 bg-white/70 px-3 py-1 text-xs font-bold uppercase tracking-[0.22em] text-[#111111]/60">
               Your next cup
             </span>
-            <h2 className="mb-5 font-[family-name:var(--font-anton)] text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] text-[#111111]">
+            <h2 className="mb-5 stunn-display text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] text-[#111111]">
               Keep the ritual.
               <br />
               Lose the caffeine.

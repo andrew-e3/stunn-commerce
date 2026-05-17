@@ -126,7 +126,7 @@ export default function Footer() {
 
         {/* Newsletter */}
         <div className="flex flex-col gap-4 lg:pl-4">
-          <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2rem,3.2vw,3.25rem)] uppercase leading-[0.95] text-white">
+          <h2 className="stunn-display text-[clamp(2rem,3.2vw,3.25rem)] uppercase leading-[0.95] text-white">
             Sign up for
             <br />
             STUNN updates

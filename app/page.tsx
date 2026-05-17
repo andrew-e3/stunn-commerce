@@ -170,7 +170,7 @@ export default function HomePage() {
                 <AnimatedNumber value={1000} compact startAt={900} />+ Customers
               </span>
             </div>
-            <h1 className="max-w-[640px] text-[clamp(46px,5.2vw,82px)] font-[family-name:var(--font-anton)] uppercase leading-[0.9] tracking-normal text-[#111111]">
+            <h1 className="max-w-[640px] text-[clamp(46px,5.2vw,82px)] stunn-display uppercase leading-[0.9] tracking-normal text-[#111111]">
               The decaf coffee ritual, reworked.
             </h1>
             <p className="mt-6 max-w-[520px] text-base leading-relaxed text-[#111111]/68 sm:text-xl">
@@ -210,7 +210,7 @@ export default function HomePage() {
 
       <section className="bg-white px-5 py-14 sm:px-8 lg:py-24">
         <div className="mx-auto max-w-[1320px] text-center">
-          <h2 className="mx-auto max-w-5xl text-[clamp(40px,7vw,90px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+          <h2 className="mx-auto max-w-5xl text-[clamp(40px,7vw,90px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
             How we're raising the bar for decaf.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
@@ -240,7 +240,7 @@ export default function HomePage() {
                 <Link
                   key={text}
                   href={PDP}
-                  className="rounded-[18px] border border-[#111111]/10 bg-white p-4 text-xs font-[family-name:var(--font-anton)] uppercase leading-tight tracking-[-0.01em] text-[#111111] shadow-[0_12px_30px_rgba(17,17,17,0.04)]"
+                  className="rounded-[18px] border border-[#111111]/10 bg-white p-4 text-xs stunn-display uppercase leading-tight tracking-[-0.01em] text-[#111111] shadow-[0_12px_30px_rgba(17,17,17,0.04)]"
                 >
                   <span className="mb-3 flex h-7 w-7 items-center justify-center rounded-full bg-[#111111] text-base text-white">
                     +
@@ -263,7 +263,7 @@ export default function HomePage() {
               <Link
                 key={text}
                 href={PDP}
-                className={`absolute ${pos} max-w-[150px] text-sm font-[family-name:var(--font-anton)] uppercase leading-tight tracking-[-0.02em] text-[#111111] sm:max-w-[190px] sm:text-lg`}
+                className={`absolute ${pos} max-w-[150px] text-sm stunn-display uppercase leading-tight tracking-[-0.02em] text-[#111111] sm:max-w-[190px] sm:text-lg`}
               >
                 <span className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#111111] text-xl text-white">
                   +
@@ -280,7 +280,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] border border-[#111111] bg-white lg:grid-cols-[0.86fr_1.14fr]">
           <div className="p-7 sm:p-10 lg:p-14">
             <Label>Morning focus</Label>
-            <h2 className="max-w-xl text-[clamp(42px,6vw,86px)] font-[family-name:var(--font-anton)] uppercase leading-[0.94] tracking-normal text-[#111111]">
+            <h2 className="max-w-xl text-[clamp(42px,6vw,86px)] stunn-display uppercase leading-[0.94] tracking-normal text-[#111111]">
               Start sharp. Stay composed.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-[#111111]/68">
@@ -315,7 +315,7 @@ export default function HomePage() {
           <div className="grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center">
             <div>
               <Label>Who it is for</Label>
-              <h2 className="max-w-4xl text-[clamp(44px,7vw,108px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+              <h2 className="max-w-4xl text-[clamp(44px,7vw,108px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
                 Different reasons. Same better cup.
               </h2>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-[#111111]/68 sm:text-lg">
@@ -343,7 +343,7 @@ export default function HomePage() {
                 <p className="mb-4 text-xs font-black uppercase tracking-[0.24em] text-[#111111]/42">
                   {persona.label}
                 </p>
-                <h3 className="text-2xl font-[family-name:var(--font-anton)] uppercase leading-[1.05] tracking-normal text-[#111111]">
+                <h3 className="text-2xl stunn-display uppercase leading-[1.05] tracking-normal text-[#111111]">
                   {persona.title}
                 </h3>
                 <p className="mt-4 text-sm leading-relaxed text-[#111111]/62">{persona.copy}</p>
@@ -357,7 +357,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <Label>Best value</Label>
-            <h2 className="max-w-xl text-[clamp(44px,6vw,92px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+            <h2 className="max-w-xl text-[clamp(44px,6vw,92px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
               Start with three boxes. Save 25%.
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-[#111111]/65">
@@ -414,7 +414,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <Label>Questions</Label>
-            <h2 className="max-w-md text-[clamp(42px,6vw,82px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+            <h2 className="max-w-md text-[clamp(42px,6vw,82px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
               A better cup should feel simple.
             </h2>
             <div className="mt-8">
@@ -441,7 +441,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] bg-[#F4F0FB] lg:grid-cols-[1fr_0.82fr]">
           <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-16">
               <Label>Anytime coffee</Label>
-            <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] font-[family-name:var(--font-anton)] uppercase leading-[0.92] tracking-normal text-[#111111]">
+            <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
               The afternoon cup is back.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/65">

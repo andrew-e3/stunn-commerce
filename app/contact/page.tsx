@@ -47,7 +47,7 @@ export default function ContactPage() {
             <span className="mb-4 inline-block rounded-full border border-[#111111]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
               Get In Touch
             </span>
-            <h1 className="mb-4 font-[family-name:var(--font-anton)] text-[clamp(36px,5vw,64px)] uppercase leading-tight text-[#111111]">
+            <h1 className="mb-4 stunn-display text-[clamp(36px,5vw,64px)] uppercase leading-tight text-[#111111]">
               Contact Us
             </h1>
             <p className="text-base leading-relaxed text-[#111111]/65">
@@ -67,7 +67,7 @@ export default function ContactPage() {
           {submitted ? (
             <div className="rounded-xl border border-[#111111]/20 bg-white/60 p-12 text-center">
               <div className="mb-4 text-4xl">✓</div>
-              <h2 className="mb-2 font-[family-name:var(--font-anton)] text-2xl uppercase text-[#111111]">
+              <h2 className="mb-2 stunn-display text-2xl uppercase text-[#111111]">
                 Message Sent
               </h2>
               <p className="text-sm text-[#111111]/65">
@@ -211,7 +211,7 @@ export default function ContactPage() {
                   height={40}
                   className="mb-4 h-10 w-10"
                 />
-                <p className="mb-2 font-[family-name:var(--font-anton)] text-xl uppercase text-[#111111]">
+                <p className="mb-2 stunn-display text-xl uppercase text-[#111111]">
                   {col.heading}
                 </p>
                 <p className="text-sm leading-relaxed text-[#111111]/65">

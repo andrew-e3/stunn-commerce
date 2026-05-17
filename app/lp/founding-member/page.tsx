@@ -167,7 +167,7 @@ export default async function FoundingMemberPage() {
                       <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EDE9F8]">
                         <img src={`${CDN}${pill.icon}`} alt="" className="h-4 w-4" />
                       </span>
-                      <span className="font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#111111]">
+                      <span className="stunn-display text-[11px] uppercase tracking-wider text-[#111111]">
                         {pill.label}
                       </span>
                     </div>
@@ -185,7 +185,7 @@ export default async function FoundingMemberPage() {
                       <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EDE9F8]">
                         <img src={`${CDN}${pill.icon}`} alt="" className="h-4 w-4" />
                       </span>
-                      <span className="font-[family-name:var(--font-anton)] text-[11px] uppercase tracking-wider text-[#111111]">
+                      <span className="stunn-display text-[11px] uppercase tracking-wider text-[#111111]">
                         {pill.label}
                       </span>
                     </div>
@@ -210,7 +210,7 @@ export default async function FoundingMemberPage() {
               <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-[#111111]/50">
                 The STUNN shift
               </p>
-              <h2 className="mb-7 font-[family-name:var(--font-anton)] text-[clamp(2.5rem,5vw,5.2rem)] uppercase leading-[0.95] text-[#111111]">
+              <h2 className="mb-7 stunn-display text-[clamp(2.5rem,5vw,5.2rem)] uppercase leading-[0.95] text-[#111111]">
                 Keep the ritual.
                 <br />
                 Feel clear again.
@@ -245,7 +245,7 @@ export default async function FoundingMemberPage() {
                   <span className="absolute -left-[34px] top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#5A3493] text-[10px] font-bold text-white">
                     {index + 1}
                   </span>
-                  <h3 className="mb-2 font-[family-name:var(--font-anton)] text-3xl uppercase leading-none text-[#111111]">
+                  <h3 className="mb-2 stunn-display text-3xl uppercase leading-none text-[#111111]">
                     {step.title}
                   </h3>
                   <p className="max-w-sm text-sm leading-relaxed text-[#111111]/65">{step.copy}</p>
@@ -261,7 +261,7 @@ export default async function FoundingMemberPage() {
                   <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#111111]/42">
                     {card.eyebrow}
                   </p>
-                  <h3 className="font-[family-name:var(--font-anton)] text-2xl uppercase leading-[1.02] tracking-normal text-[#111111]">
+                  <h3 className="stunn-display text-2xl uppercase leading-[1.02] tracking-normal text-[#111111]">
                     {card.title}
                   </h3>
                 </div>
@@ -278,7 +278,7 @@ export default async function FoundingMemberPage() {
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
               The timeline
             </p>
-            <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2rem,5vw,3.5rem)] uppercase leading-tight text-[#111111]">
+            <h2 className="stunn-display text-[clamp(2rem,5vw,3.5rem)] uppercase leading-tight text-[#111111]">
               What to expect after
               <br />
               switching to STUNN
@@ -325,7 +325,7 @@ export default async function FoundingMemberPage() {
                     {step.icon}
                     <span className="text-xs font-bold uppercase tracking-widest text-[#111111]">{step.time}</span>
                   </div>
-                  <p className="mb-1 font-[family-name:var(--font-anton)] text-2xl uppercase leading-none tracking-normal text-[#111111]">
+                  <p className="mb-1 stunn-display text-2xl uppercase leading-none tracking-normal text-[#111111]">
                     {step.headline}
                   </p>
                   <p className="text-sm leading-relaxed text-[#111111]/65">{step.copy}</p>
@@ -351,7 +351,7 @@ export default async function FoundingMemberPage() {
             <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
               What makes it work
             </span>
-            <h2 className="mb-5 font-[family-name:var(--font-anton)] text-[clamp(2.2rem,4vw,3.7rem)] uppercase leading-[0.95] text-[#111111]">
+            <h2 className="mb-5 stunn-display text-[clamp(2.2rem,4vw,3.7rem)] uppercase leading-[0.95] text-[#111111]">
               Coffee first.
               <br />
               Function underneath.
@@ -365,7 +365,7 @@ export default async function FoundingMemberPage() {
               {ingredients.map((ing) => (
                 <div key={ing.name} className="grid grid-cols-[1fr_auto] gap-4 border-b border-[#5A3493]/15 py-4 last:border-b-0">
                   <div>
-                    <p className="font-[family-name:var(--font-anton)] text-xl uppercase leading-none text-[#111111]">{ing.name}</p>
+                    <p className="stunn-display text-xl uppercase leading-none text-[#111111]">{ing.name}</p>
                     <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-[#111111]/55">{ing.benefit}</p>
                   </div>
                   <p className="pt-0.5 text-right text-sm font-extrabold uppercase tracking-widest text-[#111111]">{ing.dose}</p>
@@ -385,7 +385,7 @@ export default async function FoundingMemberPage() {
             <span className="mb-4 text-xs font-bold uppercase tracking-widest text-[#111111]/60">
               STUNN vs the caffeine loop
             </span>
-            <h2 className="mb-8 font-[family-name:var(--font-anton)] text-[clamp(2rem,4vw,3.5rem)] uppercase leading-tight text-[#111111]">
+            <h2 className="mb-8 stunn-display text-[clamp(2rem,4vw,3.5rem)] uppercase leading-tight text-[#111111]">
               Keep the cup.
               <br />
               Lose the cost.
@@ -395,7 +395,7 @@ export default async function FoundingMemberPage() {
                 <tr>
                   <th className="w-[34%] pb-4" />
                   <th className="w-[33%] rounded-t-[10px] bg-[#5A3493] px-1 pb-4 pt-4 text-center">
-                    <span className="font-[family-name:var(--font-anton)] text-base text-white sm:text-lg">STUNN+</span>
+                    <span className="stunn-display text-base text-white sm:text-lg">STUNN+</span>
                   </th>
                   <th className="w-[33%] px-1 pb-4 text-center text-[9px] font-bold uppercase tracking-wider text-[#111111]/60 sm:text-[10px]">
                     Caffeine Loop
@@ -441,7 +441,7 @@ export default async function FoundingMemberPage() {
             <span className="mb-3 inline-block rounded-full border border-[#5A3493]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
               The Founder
             </span>
-            <h2 className="mb-3 font-[family-name:var(--font-anton)] text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#111111]">
+            <h2 className="mb-3 stunn-display text-[clamp(28px,4vw,52px)] uppercase leading-tight text-[#111111]">
               Why I Created STUNN
             </h2>
             <p className="mb-2 text-sm font-semibold text-[#111111]/82">
@@ -453,7 +453,7 @@ export default async function FoundingMemberPage() {
               nights where sleep felt like a negotiation. STUNN is built to keep everything we love
               about coffee, while removing what we don&apos;t.
             </p>
-            <p className="mb-6 font-[family-name:var(--font-anton)] text-sm uppercase tracking-widest text-[#111111]">
+            <p className="mb-6 stunn-display text-sm uppercase tracking-widest text-[#111111]">
               ANDREW JENNINGS
               <br />
               <span className="font-sans text-xs font-normal normal-case tracking-normal text-[#111111]/55">
@@ -477,7 +477,7 @@ export default async function FoundingMemberPage() {
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#111111]/50">
               First Batch — Founding Members Only
             </p>
-            <h2 className="font-[family-name:var(--font-anton)] text-[clamp(2rem,5vw,3.5rem)] uppercase leading-tight text-[#111111]">
+            <h2 className="stunn-display text-[clamp(2rem,5vw,3.5rem)] uppercase leading-tight text-[#111111]">
               We&apos;re new.
               <br />
               Here&apos;s what that means for you.
@@ -492,7 +492,7 @@ export default async function FoundingMemberPage() {
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
               </div>
-              <h3 className="mb-3 font-[family-name:var(--font-anton)] text-2xl uppercase leading-tight text-[#111111]">
+              <h3 className="mb-3 stunn-display text-2xl uppercase leading-tight text-[#111111]">
                 Price Locked In.<br />Forever.
               </h3>
               <p className="text-sm leading-relaxed text-[#111111]/65">
@@ -508,7 +508,7 @@ export default async function FoundingMemberPage() {
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
-              <h3 className="mb-3 font-[family-name:var(--font-anton)] text-2xl uppercase leading-tight text-[#111111]">
+              <h3 className="mb-3 stunn-display text-2xl uppercase leading-tight text-[#111111]">
                 30 Days.<br />Full Refund.
               </h3>
               <p className="text-sm leading-relaxed text-[#111111]/65">
@@ -524,7 +524,7 @@ export default async function FoundingMemberPage() {
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                 </svg>
               </div>
-              <h3 className="mb-3 font-[family-name:var(--font-anton)] text-2xl uppercase leading-tight text-[#111111]">
+              <h3 className="mb-3 stunn-display text-2xl uppercase leading-tight text-[#111111]">
                 Be One Of<br />Our First Reviews.
               </h3>
               <p className="text-sm leading-relaxed text-[#111111]/65">
@@ -543,7 +543,7 @@ export default async function FoundingMemberPage() {
             <span className="mb-3 inline-block rounded-full border border-[#5A3493]/30 px-3 py-1 text-xs font-medium tracking-widest text-[#111111]">
               Frequently Asked Questions
             </span>
-            <h2 className="mb-6 font-[family-name:var(--font-anton)] text-[clamp(36px,5vw,64px)] uppercase leading-tight text-[#111111]">
+            <h2 className="mb-6 stunn-display text-[clamp(36px,5vw,64px)] uppercase leading-tight text-[#111111]">
               Questions,
               <br />
               answered.
@@ -559,7 +559,7 @@ export default async function FoundingMemberPage() {
             {pdpFaqs.map((faq) => (
               <details key={faq.question} className="group py-4">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-                  <span className="font-[family-name:var(--font-anton)] text-base uppercase tracking-wide text-[#111111]">
+                  <span className="stunn-display text-base uppercase tracking-wide text-[#111111]">
                     {faq.question}
                   </span>
                   <span className="shrink-0 text-[#111111] transition-transform duration-200 group-open:rotate-180">
@@ -582,7 +582,7 @@ export default async function FoundingMemberPage() {
             <span className="mb-5 w-fit rounded-full border border-[#5A3493]/25 bg-white/70 px-3 py-1 text-xs font-bold uppercase tracking-[0.22em] text-[#111111]/60">
               Founding Member Offer
             </span>
-            <h2 className="mb-5 font-[family-name:var(--font-anton)] text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] text-[#111111]">
+            <h2 className="mb-5 stunn-display text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] text-[#111111]">
               Keep the ritual.
               <br />
               Lose the caffeine.
