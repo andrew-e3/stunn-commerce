@@ -38,12 +38,6 @@ const QTY_TIERS = SUPPLY_TIERS.map((tier) => ({
   best: tier.popular,
 }));
 
-const FREQUENCY_OPTIONS = [
-  { label: "Every 1 month", value: "1" },
-  { label: "Every 2 months", value: "2" },
-  { label: "Every 3 months", value: "3" },
-];
-
 function getTierForQuantity(quantity: number) {
   if (quantity <= 1) return QTY_TIERS.find((tier) => tier.qty === 1)!;
   if (quantity === 2) return QTY_TIERS.find((tier) => tier.qty === 2)!;
@@ -442,21 +436,6 @@ export default function CartModal() {
                                     })}
                                   </div>
 
-                                  {/* ── Frequency dropdown ── */}
-                                  <div className="mt-2">
-                                    <FrequencyDropdown
-                                      currentQty={item.quantity}
-                                      disabled={qtyChanging}
-                                      onSelectQuantity={(quantity) => {
-                                        startQtyTransition(async () => {
-                                          await updateItemQuantity(null, {
-                                            merchandiseId: item.merchandise.id,
-                                            quantity,
-                                          });
-                                        });
-                                      }}
-                                    />
-                                  </div>
                                 </li>
                               );
                             })}
@@ -584,105 +563,5 @@ function CheckoutButton() {
     >
       {pending ? <LoadingDots className="bg-gray-900" /> : "Checkout"}
     </button>
-  );
-}
-
-function FrequencyDropdown({
-  currentQty,
-  disabled,
-  onSelectQuantity,
-}: {
-  currentQty: number;
-  disabled?: boolean;
-  onSelectQuantity: (quantity: number) => void;
-}) {
-  const defaultOpt =
-    FREQUENCY_OPTIONS.find((option) => Number(option.value) === currentQty) ??
-    FREQUENCY_OPTIONS[2]!;
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(defaultOpt);
-  const prevQty = useRef(currentQty);
-
-  useEffect(() => {
-    if (prevQty.current !== currentQty) {
-      prevQty.current = currentQty;
-      setSelected(
-        FREQUENCY_OPTIONS.find(
-          (option) => Number(option.value) === currentQty,
-        ) ?? FREQUENCY_OPTIONS[2]!,
-      );
-    }
-  }, [currentQty]);
-
-  const savePct = getTierForQuantity(Number(selected.value)).savePct;
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between rounded-[5px] border border-[#5A3493] bg-white px-3 py-3 text-left disabled:opacity-60"
-      >
-        <span className="text-sm font-extrabold text-[#111111]">
-          Delivers {selected.label.toLowerCase()}
-        </span>
-        <div className="flex items-center gap-2">
-          {savePct > 0 && (
-            <span
-              className="text-xs font-bold uppercase tracking-wide"
-              style={{ color: BRAND_PURPLE }}
-            >
-              SAVE {savePct}%
-            </span>
-          )}
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            className={`text-[#111111] transition-transform ${open ? "rotate-180" : ""}`}
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </div>
-      </button>
-      {open && (
-        <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[5px] border border-[#5A3493] bg-white shadow-lg">
-          {FREQUENCY_OPTIONS.map((opt) => {
-            const quantity = Number(opt.value);
-            const pct = getTierForQuantity(quantity).savePct;
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => {
-                  setSelected(opt);
-                  onSelectQuantity(quantity);
-                  setOpen(false);
-                }}
-                className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#EDE9F8] ${
-                  selected.value === opt.value
-                    ? "font-bold text-[#111111]"
-                    : "text-[#111111]/75"
-                }`}
-              >
-                <span>Delivers {opt.label.toLowerCase()}</span>
-                {pct > 0 && (
-                  <span
-                    className="text-[9px] font-bold uppercase tracking-wide"
-                    style={{ color: BRAND_PURPLE }}
-                  >
-                    SAVE {pct}%
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
   );
 }
