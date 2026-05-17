@@ -19,6 +19,26 @@ export type CartProduct = {
   featuredImage: Image;
 };
 
+export type SellingPlan = {
+  id: string;
+  name: string;
+  description?: string;
+  recurringDeliveries?: boolean;
+  billingPolicy?: {
+    intervalCount: number;
+    interval: string;
+  };
+  deliveryPolicy?: {
+    intervalCount: number;
+    interval: string;
+  };
+};
+
+export type SellingPlanGroup = {
+  name: string;
+  sellingPlans: SellingPlan[];
+};
+
 export type CartItem = {
   id: string | undefined;
   quantity: number;
@@ -33,6 +53,12 @@ export type CartItem = {
       value: string;
     }[];
     product: CartProduct;
+  };
+  sellingPlanAllocation?: {
+    sellingPlan: {
+      id: string;
+      name: string;
+    };
   };
 };
 
@@ -68,9 +94,10 @@ export type Page = {
   updatedAt: string;
 };
 
-export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
+export type Product = Omit<ShopifyProduct, "variants" | "images" | "sellingPlanGroups"> & {
   variants: ProductVariant[];
   images: Image[];
+  sellingPlanGroups: SellingPlanGroup[];
 };
 
 export type ProductOption = {
@@ -133,6 +160,10 @@ export type ShopifyProduct = {
   seo: SEO;
   tags: string[];
   updatedAt: string;
+  sellingPlanGroups: Connection<{
+    name: string;
+    sellingPlans: Connection<SellingPlan>;
+  }>;
 };
 
 export type ShopifyCartOperation = {
@@ -150,6 +181,7 @@ export type ShopifyCreateCartOperation = {
     lineItems?: {
       merchandiseId: string;
       quantity: number;
+      sellingPlanId?: string;
     }[];
   };
 };
@@ -165,6 +197,7 @@ export type ShopifyAddToCartOperation = {
     lines: {
       merchandiseId: string;
       quantity: number;
+      sellingPlanId?: string;
     }[];
   };
 };

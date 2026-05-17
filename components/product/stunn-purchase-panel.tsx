@@ -3,66 +3,19 @@
 import { addItem } from "components/cart/actions";
 import { useCart } from "components/cart/cart-context";
 import { DEFAULT_OPTION } from "lib/constants";
+import {
+  formatPerDay,
+  perDay,
+  priceAfterDiscount,
+  roundMoney,
+  SUPPLY_TIERS,
+} from "lib/pricing";
 import { Product } from "lib/shopify/types";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { usePurchaseSelection } from "./purchase-selection-context";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
-const RETAIL_PER_BOX = 39.99;
-
-function roundMoney(value: number) {
-  return Math.round(value * 100) / 100;
-}
-
-function priceAfterDiscount(retail: number, discountPct: number) {
-  return roundMoney(retail * (1 - discountPct / 100));
-}
-
-function perDay(price: number, days: number) {
-  return (price / days).toFixed(2);
-}
-
-// Each tier = N single boxes. Shopify automatic discounts should apply the real discount.
-// Keep the ladder visibly stepped so the 3-box tier reads as the clear best value.
-const SUPPLY_TIERS = [
-  {
-    qty: 3,
-    label: "3 Months",
-    display: "3 Boxes",
-    shipEvery: "every 3 months",
-    shipLabel: "3 boxes (90 sachets) · ships every 3 months",
-    count: 90,
-    retailPrice: roundMoney(RETAIL_PER_BOX * 3),
-    subDiscountPct: 25,
-    popular: true,
-    boxImg: `${CDN}3_e644de60-d3c2-46f8-8f0c-a3ff6cdc08ce.svg`,
-  },
-  {
-    qty: 2,
-    label: "2 Months",
-    display: "2 Boxes",
-    shipEvery: "every 2 months",
-    shipLabel: "2 boxes (60 sachets) · ships every 2 months",
-    count: 60,
-    retailPrice: roundMoney(RETAIL_PER_BOX * 2),
-    subDiscountPct: 23,
-    popular: false,
-    boxImg: `${CDN}2_285eb8bf-bd05-4b30-9fe2-102fc163df41.svg`,
-  },
-  {
-    qty: 1,
-    label: "1 Month",
-    display: "1 Box",
-    shipEvery: "every month",
-    shipLabel: "1 box (30 sachets) · ships every month",
-    count: 30,
-    retailPrice: RETAIL_PER_BOX,
-    subDiscountPct: 20,
-    popular: false,
-    boxImg: `${CDN}1_f8453072-0eb1-4a97-b211-2dca94f998b6.svg`,
-  },
-];
 
 const BENEFIT_CHIPS = [
   "Calm Focus",
@@ -95,6 +48,21 @@ function DarkCheckIcon() {
   );
 }
 
+/** Find the Appstle selling plan ID that matches a given delivery interval in months */
+function findSellingPlanId(product: Product, intervalMonths: number): string | undefined {
+  for (const group of product.sellingPlanGroups ?? []) {
+    for (const plan of group.sellingPlans ?? []) {
+      if (
+        plan.deliveryPolicy?.interval === "MONTH" &&
+        plan.deliveryPolicy?.intervalCount === intervalMonths
+      ) {
+        return plan.id;
+      }
+    }
+  }
+  return undefined;
+}
+
 export function StunnPurchasePanel({ product }: { product: Product }) {
   const { selectedQty, setSelectedQty } = usePurchaseSelection();
   const { addCartItem } = useCart();
@@ -109,6 +77,9 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
   const subSaving = roundMoney(display.retailPrice - subPrice);
   const subPerDay = perDay(subPrice, display.count);
   const oneTimePerDay = perDay(display.retailPrice, display.count);
+
+  // Selling plan ID for the current tier (intervalCount = qty, since qty = months between deliveries)
+  const sellingPlanId = findSellingPlanId(product, display.qty);
 
   const oneBoxVariant =
     product.variants.find(
@@ -222,7 +193,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
                 </span>
               )}
               <img
-                src={v.boxImg}
+                src={`${CDN}${v.boxImgName}`}
                 alt={`${v.qty} box supply`}
                 className="h-10 w-10 shrink-0 object-contain sm:h-14 sm:w-14"
               />
@@ -234,12 +205,15 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
                   {v.count} Count
                 </span>
                 <span className="mt-0.5 block text-[10px] font-medium leading-tight text-[#111111]/55 sm:text-[11px]">
-                  ($
-                  {perDay(
-                    priceAfterDiscount(v.retailPrice, v.subDiscountPct),
-                    v.count,
-                  )}{" "}
-                  / Day)
+                  (
+                  {formatPerDay(
+                    perDay(
+                      priceAfterDiscount(v.retailPrice, v.subDiscountPct),
+                      v.count,
+                    ),
+                    { spaced: true, unit: "Day" },
+                  )}
+                  )
                 </span>
               </div>
             </button>
@@ -261,7 +235,8 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             </div>
             <p className="text-xs text-[#111111]">
               <strong>{display.label}</strong>{" "}
-              <span>{display.count} Count</span> <span>${subPerDay} / Day</span>
+              <span>{display.count} Count</span>{" "}
+              <span>{formatPerDay(subPerDay, { spaced: true, unit: "Day" })}</span>
             </p>
           </div>
           <div className="text-right">
@@ -284,7 +259,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             if (!oneBoxVariant) return;
             addCartItem(oneBoxVariant, product, display.qty);
             startAddTransition(async () => {
-              await addItem(null, oneBoxVariant.id, display.qty);
+              await addItem(null, oneBoxVariant.id, display.qty, sellingPlanId);
             });
           }}
           className="mb-4 w-full rounded-[8px] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white transition-all hover:bg-[#111111] hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(90,52,147,0.22)] active:translate-y-0 disabled:opacity-50"
@@ -327,7 +302,8 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           ) : (
             <span className="font-semibold underline text-[#111111]/82">
               One-Time Purchase —{" "}
-              ${display.retailPrice.toFixed(0)} (${oneTimePerDay} / Day)
+              ${display.retailPrice.toFixed(0)} (
+              {formatPerDay(oneTimePerDay, { spaced: true, unit: "Day" })})
             </span>
           )}
         </button>

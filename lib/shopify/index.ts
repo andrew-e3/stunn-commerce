@@ -192,12 +192,18 @@ const reshapeProduct = (
     return undefined;
   }
 
-  const { images, variants, ...rest } = product;
+  const { images, variants, sellingPlanGroups, ...rest } = product;
 
   return {
     ...rest,
     images: reshapeImages(images, product.title),
     variants: removeEdgesAndNodes(variants),
+    sellingPlanGroups: removeEdgesAndNodes(sellingPlanGroups ?? { edges: [] }).map(
+      (group) => ({
+        name: group.name,
+        sellingPlans: removeEdgesAndNodes(group.sellingPlans ?? { edges: [] }),
+      }),
+    ),
   };
 };
 

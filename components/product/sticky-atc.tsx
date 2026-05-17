@@ -3,41 +3,19 @@
 import { addItem } from "components/cart/actions";
 import { useCart } from "components/cart/cart-context";
 import { DEFAULT_OPTION } from "lib/constants";
+import {
+  formatPerDay,
+  perDay,
+  priceAfterDiscount,
+  roundMoney,
+  SUPPLY_TIERS,
+} from "lib/pricing";
 import { Product } from "lib/shopify/types";
 import Image from "next/image";
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { usePurchaseSelection } from "./purchase-selection-context";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
-const RETAIL_PER_BOX = 39.99;
-
-function roundMoney(value: number) {
-  return Math.round(value * 100) / 100;
-}
-
-const SUPPLY_TIERS = [
-  {
-    qty: 3,
-    label: "3 boxes",
-    count: 90,
-    shipEvery: "every 3 months",
-    discountPct: 25,
-  },
-  {
-    qty: 2,
-    label: "2 boxes",
-    count: 60,
-    shipEvery: "every 2 months",
-    discountPct: 23,
-  },
-  {
-    qty: 1,
-    label: "1 box",
-    count: 30,
-    shipEvery: "every month",
-    discountPct: 20,
-  },
-];
 
 export function StickyAtc({ product }: { product: Product }) {
   const { selectedQty } = usePurchaseSelection();
@@ -46,13 +24,12 @@ export function StickyAtc({ product }: { product: Product }) {
   const { addCartItem } = useCart();
   const selectedTier =
     SUPPLY_TIERS.find((tier) => tier.qty === selectedQty) || SUPPLY_TIERS[0]!;
-  const retailPrice = roundMoney(RETAIL_PER_BOX * selectedTier.qty);
-  const subscriptionPrice = roundMoney(
-    retailPrice * (1 - selectedTier.discountPct / 100),
+  const retailPrice = roundMoney(selectedTier.retailPrice);
+  const subscriptionPrice = priceAfterDiscount(
+    retailPrice,
+    selectedTier.subDiscountPct,
   );
-  const subscriptionPerDay = (subscriptionPrice / selectedTier.count).toFixed(
-    2,
-  );
+  const subscriptionPerDay = perDay(subscriptionPrice, selectedTier.count);
 
   const oneBoxVariant = useMemo(
     () =>
@@ -99,11 +76,25 @@ export function StickyAtc({ product }: { product: Product }) {
     };
   }, []);
 
+  const sellingPlanId = useMemo(() => {
+    for (const group of product.sellingPlanGroups ?? []) {
+      for (const plan of group.sellingPlans ?? []) {
+        if (
+          plan.deliveryPolicy?.interval === "MONTH" &&
+          plan.deliveryPolicy?.intervalCount === selectedTier.qty
+        ) {
+          return plan.id;
+        }
+      }
+    }
+    return undefined;
+  }, [product.sellingPlanGroups, selectedTier.qty]);
+
   const addSelectedOffer = () => {
     if (!oneBoxVariant) return;
     addCartItem(oneBoxVariant, product, selectedTier.qty);
     startTransition(async () => {
-      await addItem(null, oneBoxVariant.id, selectedTier.qty);
+      await addItem(null, oneBoxVariant.id, selectedTier.qty, sellingPlanId);
     });
   };
 
@@ -137,7 +128,7 @@ export function StickyAtc({ product }: { product: Product }) {
               STUNN Decaf Coffee
             </p>
             <p className="text-xs text-[#111111]/55">
-              {selectedTier.label} · {selectedTier.count} sachets · calm focus
+              {selectedTier.display.toLowerCase()} · {selectedTier.count} sachets · calm focus
             </p>
           </div>
         </div>
@@ -148,7 +139,7 @@ export function StickyAtc({ product }: { product: Product }) {
               Autoship
             </span>
             <span className="rounded-full bg-[#5A3493] px-2 py-1 text-[10px] font-extrabold uppercase leading-none text-white">
-              Save {selectedTier.discountPct}%
+              Save {selectedTier.subDiscountPct}%
             </span>
             <span className="hidden text-sm text-[#111111]/35 line-through sm:inline">
               ${retailPrice.toFixed(0)}
@@ -158,8 +149,8 @@ export function StickyAtc({ product }: { product: Product }) {
             </span>
           </div>
           <p className="mt-1 hidden truncate text-[11px] text-[#111111]/60 sm:block sm:text-xs">
-            {selectedTier.label} {selectedTier.shipEvery} · $
-            {subscriptionPerDay}/day · free shipping
+            {selectedTier.display.toLowerCase()} {selectedTier.shipEvery} ·{" "}
+            {formatPerDay(subscriptionPerDay)} · free shipping
           </p>
         </div>
 

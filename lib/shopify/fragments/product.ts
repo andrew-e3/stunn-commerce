@@ -56,6 +56,35 @@ const productFragment = /* GraphQL */ `
     }
     tags
     updatedAt
+    sellingPlanGroups(first: 10) {
+      edges {
+        node {
+          name
+          sellingPlans(first: 10) {
+            edges {
+              node {
+                id
+                name
+                description
+                recurringDeliveries
+                billingPolicy {
+                  ... on SellingPlanRecurringBillingPolicy {
+                    intervalCount
+                    interval
+                  }
+                }
+                deliveryPolicy {
+                  ... on SellingPlanRecurringDeliveryPolicy {
+                    intervalCount
+                    interval
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
   ${imageFragment}
   ${seoFragment}

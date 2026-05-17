@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import LoadingDots from "components/loading-dots";
 import { DEFAULT_OPTION } from "lib/constants";
+import { priceAfterDiscount, RETAIL_PER_BOX, SUPPLY_TIERS } from "lib/pricing";
 import { createUrl } from "lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,17 +27,16 @@ const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const BRAND_PURPLE = "#5A3493";
 const BRAND_LIGHT_PURPLE = "#EDE9F8";
 
-// Retail price per box (no discount). Discount is applied by Shopify Automatic Discounts.
-const RETAIL_PER_BOX = 39.99;
-
 // Qty tiers — savings shown in the button label, cadence in the sub-label.
 // Shopify Automatic Discounts should mirror this model at checkout:
 // 1 box subscription = 20% off, 2 boxes = 23% off, 3+ boxes = 25% off.
-const QTY_TIERS = [
-  { qty: 1, label: "BUY 1", savePct: 20, sub: "every month", best: false },
-  { qty: 2, label: "BUY 2", savePct: 23, sub: "every 2 months", best: false },
-  { qty: 3, label: "BUY 3", savePct: 25, sub: "every 3 months", best: true },
-];
+const QTY_TIERS = SUPPLY_TIERS.map((tier) => ({
+  qty: tier.qty,
+  label: `BUY ${tier.qty}`,
+  savePct: tier.subDiscountPct,
+  sub: tier.shipEvery,
+  best: tier.popular,
+}));
 
 const FREQUENCY_OPTIONS = [
   { label: "Every 1 month", value: "1" },
@@ -45,19 +45,20 @@ const FREQUENCY_OPTIONS = [
 ];
 
 function getTierForQuantity(quantity: number) {
-  if (quantity <= 1) return QTY_TIERS[0]!;
-  if (quantity === 2) return QTY_TIERS[1]!;
-  return QTY_TIERS[2]!;
+  if (quantity <= 1) return QTY_TIERS.find((tier) => tier.qty === 1)!;
+  if (quantity === 2) return QTY_TIERS.find((tier) => tier.qty === 2)!;
+  return QTY_TIERS.find((tier) => tier.qty === 3)!;
 }
 
 function getSavingsForQuantity(quantity: number) {
   const tier = getTierForQuantity(quantity);
   const retail = quantity * RETAIL_PER_BOX;
-  const savings = retail * (tier.savePct / 100);
+  const discounted = priceAfterDiscount(retail, tier.savePct);
+  const savings = retail - discounted;
   return {
     retail,
     savings,
-    discounted: retail - savings,
+    discounted,
     savePct: tier.savePct,
     tier,
   };
@@ -141,7 +142,7 @@ export default function CartModal() {
         <OpenCart quantity={cart?.totalQuantity} />
       </button>
       <Transition show={isOpen}>
-        <Dialog onClose={closeCart} className="relative z-50">
+        <Dialog onClose={closeCart} className="relative z-[1000000]">
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -340,7 +341,10 @@ export default function CartModal() {
                                       <p className="mt-1 text-sm text-[#111111]/65">
                                         {item.quantity}{" "}
                                         {item.quantity === 1 ? "box" : "boxes"}{" "}
-                                        · {currentTier.sub}
+                                        ·{" "}
+                                        {item.sellingPlanAllocation
+                                          ? item.sellingPlanAllocation.sellingPlan.name
+                                          : currentTier.sub}
                                       </p>
 
                                       {/* Qty stepper + prices */}
@@ -408,8 +412,8 @@ export default function CartModal() {
                                           }}
                                           className={`rounded-[5px] border py-3 text-center transition-all disabled:cursor-default ${
                                             isSelected
-                                              ? "border-[#5A3493]/20 bg-[#EDE9F8] text-[#5A3493]"
-                                              : "border-[#5A3493] bg-[#5A3493] text-white hover:bg-[#4F2D82]"
+                                              ? "border-[#5A3493] bg-[#5A3493] text-white"
+                                              : "border-[#5A3493]/35 bg-white text-[#5A3493] hover:border-[#5A3493] hover:bg-[#EDE9F8]"
                                           }`}
                                           style={{
                                             boxShadow:
@@ -430,6 +434,15 @@ export default function CartModal() {
                                   <div className="mt-2">
                                     <FrequencyDropdown
                                       currentQty={item.quantity}
+                                      disabled={qtyChanging}
+                                      onSelectQuantity={(quantity) => {
+                                        startQtyTransition(async () => {
+                                          await updateItemQuantity(null, {
+                                            merchandiseId: item.merchandise.id,
+                                            quantity,
+                                          });
+                                        });
+                                      }}
                                     />
                                   </div>
                                 </li>
@@ -562,7 +575,15 @@ function CheckoutButton() {
   );
 }
 
-function FrequencyDropdown({ currentQty }: { currentQty: number }) {
+function FrequencyDropdown({
+  currentQty,
+  disabled,
+  onSelectQuantity,
+}: {
+  currentQty: number;
+  disabled?: boolean;
+  onSelectQuantity: (quantity: number) => void;
+}) {
   const defaultOpt =
     FREQUENCY_OPTIONS.find((option) => Number(option.value) === currentQty) ??
     FREQUENCY_OPTIONS[2]!;
@@ -581,14 +602,15 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
     }
   }, [currentQty]);
 
-  const savePct = Math.max(0, (Number(selected.value) - 1) * 5);
+  const savePct = getTierForQuantity(Number(selected.value)).savePct;
 
   return (
     <div className="relative">
       <button
         type="button"
+        disabled={disabled}
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between rounded-[5px] border border-[#5A3493] bg-white px-3 py-3 text-left"
+        className="flex w-full items-center justify-between rounded-[5px] border border-[#5A3493] bg-white px-3 py-3 text-left disabled:opacity-60"
       >
         <span className="text-sm font-extrabold text-[#111111]">
           Delivers {selected.label.toLowerCase()}
@@ -618,13 +640,15 @@ function FrequencyDropdown({ currentQty }: { currentQty: number }) {
       {open && (
         <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[5px] border border-[#5A3493] bg-white shadow-lg">
           {FREQUENCY_OPTIONS.map((opt) => {
-            const pct = Math.max(0, (Number(opt.value) - 1) * 5);
+            const quantity = Number(opt.value);
+            const pct = getTierForQuantity(quantity).savePct;
             return (
               <button
                 key={opt.value}
                 type="button"
                 onClick={() => {
                   setSelected(opt);
+                  onSelectQuantity(quantity);
                   setOpen(false);
                 }}
                 className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#EDE9F8] ${

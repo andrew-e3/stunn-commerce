@@ -16,6 +16,7 @@ export async function addItem(
   prevState: any,
   selectedVariantId: string | undefined,
   quantity: number = 1,
+  sellingPlanId?: string,
 ) {
   if (!selectedVariantId) {
     return "Error adding item to cart";
@@ -23,14 +24,13 @@ export async function addItem(
 
   try {
     const cart = await getCart();
+    const line = { merchandiseId: selectedVariantId, quantity, ...(sellingPlanId ? { sellingPlanId } : {}) };
 
     if (!cart) {
-      const newCart = await createCart([
-        { merchandiseId: selectedVariantId, quantity },
-      ]);
+      const newCart = await createCart([line]);
       (await cookies()).set("cartId", newCart.id!);
     } else {
-      await addToCart([{ merchandiseId: selectedVariantId, quantity }]);
+      await addToCart([line]);
     }
 
     updateTag(TAGS.cart);
