@@ -430,6 +430,15 @@ export default function CartModal() {
                                   <div className="mt-2">
                                     <FrequencyDropdown
                                       currentQty={item.quantity}
+                                      disabled={qtyChanging}
+                                      onSelectQuantity={(quantity) => {
+                                        startQtyTransition(async () => {
+                                          await updateItemQuantity(null, {
+                                            merchandiseId: item.merchandise.id,
+                                            quantity,
+                                          });
+                                        });
+                                      }}
                                     />
                                   </div>
                                 </li>
