@@ -1,13 +1,10 @@
-import AnimatedNumber from "components/animated-number";
 import Footer from "components/layout/footer";
-import { BEST_VALUE_PER_DAY } from "lib/pricing";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const PDP = "/products/focus-without-caffeine";
-const HOME_HERO_IMAGE = "/images/stunn-home-hero-banner-v2.png";
 const SACHET_POUR_IMAGE = "/images/stunn-sachet-pour.png";
 const MORNING_FOCUS_IMAGE = "/images/stunn-morning-focus-generated.jpg";
 const EVENING_RITUAL_IMAGE = "/images/stunn-evening-ritual-generated.jpg";
@@ -85,9 +82,9 @@ const RITUAL_STEPS = [
 ];
 
 const PROOF_POINTS = [
-  [300, "mg", "Lion's Mane", "Focus and mental clarity support."],
-  [250, "mg", "Rhodiola", "Stress resilience and steady energy support."],
-  [100, "mg", "L-Theanine", "A calmer, smoother coffee experience."],
+  ["300mg", "Lion's Mane", "Focus and mental clarity support."],
+  ["250mg", "Rhodiola", "Stress resilience and steady energy support."],
+  ["100mg", "L-Theanine", "A calmer, smoother coffee experience."],
 ];
 
 const PERSONAS = [
@@ -141,73 +138,44 @@ export const metadata = {
 export default function HomePage() {
   return (
     <>
-      <section className="relative overflow-hidden border-b border-[#111111]/10 bg-white">
-        <div className="relative mx-auto max-w-[2048px] text-[#111111]">
-          <div className="relative h-[max(560px,37.5vw)] w-full overflow-hidden max-lg:hidden">
-            <Image
-              src={HOME_HERO_IMAGE}
-              alt="STUNN Decaf Coffee box, sachet, and coffee"
-              fill
-              className="object-contain object-center"
-              priority
-              sizes="100vw"
-            />
-            <Link
-              href={PDP}
-              aria-label="Shop STUNN Decaf Coffee"
-              className="absolute inset-0"
-            />
-          </div>
-
-          <div className="animate-hero-copy-in relative z-10 px-5 py-12 sm:px-8 lg:absolute lg:left-0 lg:top-[56%] lg:w-[48%] lg:-translate-y-1/2 lg:px-14 lg:py-0 xl:px-20">
-            <div className="mb-6 flex flex-wrap items-center gap-3 text-sm font-semibold text-[#111111]/65">
+      <section className="bg-white">
+        <div className="px-5 py-16 text-[#111111] sm:px-8 lg:py-24">
+          <div className="mx-auto max-w-[1440px] text-center">
+            <div className="mb-7 flex items-center justify-center gap-3 text-sm font-semibold text-[#111111]/65">
               <span className="text-[#EFAF00]">★★★★★</span>
-              <span>
-                <AnimatedNumber value={4.8} decimals={1} /> Stars
-              </span>
+              <span>4.8 Stars</span>
               <span className="h-5 w-px bg-[#111111]/20" />
-              <span>
-                <AnimatedNumber value={1000} compact />+ Customers
-              </span>
+              <span>1,000+ Customers</span>
             </div>
-            <h1 className="max-w-[640px] text-[clamp(46px,5.2vw,82px)] font-black uppercase leading-[0.9] tracking-[-0.052em] text-[#111111]">
-              The decaf coffee ritual, reworked.
+            <h1 className="mx-auto max-w-5xl text-[clamp(48px,10vw,122px)] font-black uppercase leading-[0.9] tracking-[-0.055em] text-[#111111]">
+              The original coffee ritual, reworked.
             </h1>
-            <p className="mt-6 max-w-[520px] text-base leading-relaxed text-[#111111]/68 sm:text-xl">
-              Real coffee taste with 0mg caffeine, rebuilt for calm focus without the stimulant tradeoff.
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
+              Everything you love about coffee, rebuilt without the stimulant tradeoff.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mx-auto mt-8 max-w-xl">
               <Cta>Shop now - save up to 25%</Cta>
-              <span className="text-sm font-semibold text-[#111111]/50">
-                Free shipping on 3 boxes
-              </span>
             </div>
-            <div className="mt-7 grid max-w-[520px] grid-cols-3 gap-3 text-xs font-bold text-[#111111]/60 sm:text-sm">
+            <div className="mx-auto mt-6 grid max-w-3xl grid-cols-3 gap-3 text-xs font-semibold text-[#111111]/60 sm:text-sm">
               {BENEFITS.map(([title]) => (
-                <span key={title} className="border-t border-[#111111]/14 pt-3">
-                  {title}
-                </span>
+                <span key={title}>{title}</span>
               ))}
             </div>
           </div>
-
-          <Link
-            href={PDP}
-            className="relative block min-h-[340px] overflow-hidden bg-[#EEEAF8] sm:min-h-[500px] lg:hidden"
-          >
-            <Image
-              src={HOME_HERO_IMAGE}
-              alt="STUNN Decaf Coffee box, sachet, and coffee"
-              fill
-              className="animate-slow-zoom object-cover object-[68%_center]"
-              priority
-              sizes="100vw"
-            />
-            <div className="absolute bottom-5 left-5 bg-[#5A3493] px-5 py-3 text-sm font-black text-white shadow-[0_18px_50px_rgba(17,17,17,0.18)] sm:left-8">
-              Limited launch offer
-            </div>
-          </Link>
         </div>
+
+        <Link href={PDP} className="relative block h-[430px] overflow-hidden sm:h-[560px] lg:h-[680px]">
+          <Image
+            src={`${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`}
+            alt="STUNN sachet poured into coffee"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute bottom-5 left-5 rounded-full bg-[#5A3493] px-5 py-3 text-sm font-black text-white shadow-[0_16px_40px_rgba(17,17,17,0.18)] sm:left-8">
+            Limited launch offer
+          </div>
+        </Link>
       </section>
 
       <section className="bg-white px-5 py-14 sm:px-8 lg:py-24">
@@ -290,10 +258,10 @@ export default function HomePage() {
             </p>
 
             <div className="mt-9 space-y-6">
-              {PROOF_POINTS.map(([amount, suffix, ingredient, copy]) => (
+              {PROOF_POINTS.map(([amount, ingredient, copy]) => (
                 <div key={ingredient}>
                   <p className="text-[clamp(44px,8vw,82px)] font-black leading-none tracking-[-0.055em] text-[#111111]">
-                    <AnimatedNumber value={amount as number} suffix={suffix as string} />
+                    {amount}
                   </p>
                   <h3 className="mt-1 text-2xl font-black tracking-[-0.03em] text-[#111111]">{ingredient}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-[#111111]/62">{copy}</p>
@@ -306,7 +274,7 @@ export default function HomePage() {
               src={MORNING_FOCUS_IMAGE}
               alt="Calm morning coffee ritual"
               fill
-              className="animate-slow-zoom object-cover object-center"
+              className="object-cover object-center"
             />
           </div>
         </div>
@@ -384,15 +352,7 @@ export default function HomePage() {
                   <span className="rounded-full bg-[#5A3493] px-3 py-1 text-xs font-black text-white">
                     SAVE 25%
                   </span>
-                  <span className="text-sm font-semibold text-[#111111]/55">
-                    From{" "}
-                    <AnimatedNumber
-                      value={Number(BEST_VALUE_PER_DAY)}
-                      decimals={2}
-                      prefix="$"
-                    />{" "}
-                    / day
-                  </span>
+                  <span className="text-sm font-semibold text-[#111111]/55">From $1.00 / cup</span>
                 </div>
                 <h3 className="text-3xl font-black tracking-[-0.03em] text-[#111111]">
                   3 boxes delivered every 3 months
@@ -449,7 +409,7 @@ export default function HomePage() {
               Have coffee when you actually want it, not only when your sleep schedule can tolerate it.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Cta>{`Get STUNN from $${BEST_VALUE_PER_DAY}/day`}</Cta>
+              <Cta>Get STUNN from $1.00/cup</Cta>
               <span className="text-sm font-semibold text-[#111111]/55">Sleep-friendly by design</span>
             </div>
           </div>
@@ -460,7 +420,7 @@ export default function HomePage() {
             <img
               src={EVENING_RITUAL_IMAGE}
               alt="Evening coffee ritual"
-              className="animate-slow-zoom absolute inset-0 h-full w-full object-cover object-bottom"
+              className="absolute inset-0 h-full w-full object-cover object-bottom"
             />
           </Link>
         </div>
