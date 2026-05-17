@@ -526,38 +526,16 @@ export default async function ProductPage(props: {
                 <div className="mt-5 h-0.5 w-14 bg-[#5A3493]" />
               </div>
 
-              <div className="relative mt-10 min-h-[250px] sm:min-h-[320px]">
-                <div className="absolute bottom-0 left-1/2 w-[min(92vw,460px)] -translate-x-1/2 sm:w-[min(72vw,520px)]">
+              <div className="relative mt-10 flex min-h-[300px] items-center justify-center sm:min-h-[390px]">
+                <div className="w-[min(96vw,540px)] sm:w-[min(78vw,620px)] lg:w-[min(46vw,640px)]">
                   <Image
                     src={`${CDN}3-boxes-of-stunn-1080x1080.webp`}
                     alt="Three boxes of STUNN Decaf Coffee"
                     width={760}
                     height={760}
-                    className="h-auto w-full object-contain drop-shadow-[0_26px_42px_rgba(17,17,17,0.22)]"
+                    className="h-auto w-full object-contain drop-shadow-[0_30px_54px_rgba(17,17,17,0.2)]"
                   />
                 </div>
-
-                {[
-                  ["Lion's Mane", "Clarity + focus", "top-[2%] right-0"],
-                  ["Cordyceps", "Energy + endurance", "top-[34%] right-1"],
-                  ["L-Theanine", "Calm + balance", "bottom-[10%] right-3"],
-                ].map(([title, copy, position]) => (
-                  <div
-                    key={title}
-                    className={`absolute hidden w-[190px] items-center gap-4 text-left sm:flex ${position}`}
-                  >
-                    <span className="h-px flex-1 bg-[#5A3493]/55" />
-                    <span className="h-2 w-2 rounded-full bg-[#5A3493]" />
-                    <span className="w-[115px]">
-                      <span className="block text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#111111]">
-                        {title}
-                      </span>
-                      <span className="mt-1 block text-xs font-medium text-[#111111]/55">
-                        {copy}
-                      </span>
-                    </span>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
