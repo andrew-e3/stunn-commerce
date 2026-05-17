@@ -12,6 +12,7 @@ const anton = Anton({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-anton",
+  display: "block",
 });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
