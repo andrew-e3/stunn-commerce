@@ -149,28 +149,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden border-b border-[#111111]/10 bg-white">
         <div className="relative mx-auto max-w-[2048px] text-[#111111]">
           <div className="lg:hidden">
-            <Link
-              href={PDP}
-              aria-label="Shop STUNN Decaf Coffee"
-              className="block bg-[#F4F0FB] px-4 pb-5 pt-5"
-            >
-              <div className="relative h-[300px] overflow-hidden rounded-[28px] bg-[#EEEAF8] shadow-[0_18px_50px_rgba(17,17,17,0.1)]">
-                <Image
-                  src={HOME_HERO_IMAGE}
-                  alt="STUNN Decaf Coffee box, sachet, and coffee"
-                  fill
-                  className="animate-slow-zoom object-cover object-[72%_center]"
-                  priority
-                  sizes="100vw"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#F4F0FB]/70 via-[#F4F0FB]/10 to-transparent" />
-                <div className="absolute left-4 top-4 rounded-full bg-white/92 px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-[#5A3493] shadow-[0_10px_24px_rgba(17,17,17,0.08)]">
-                  0mg caffeine
-                </div>
-              </div>
-            </Link>
-
-            <div className="px-5 pb-8 pt-3">
+            <div className="px-5 pb-6 pt-7">
               <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold text-[#111111]/60">
                 <span className="text-[#EFAF00]">★★★★★</span>
                 <span>
@@ -184,15 +163,12 @@ export default function HomePage() {
               <h1 className="text-[clamp(42px,12.8vw,56px)] stunn-display uppercase leading-[0.88] tracking-normal text-[#111111]">
                 The decaf coffee ritual, reworked.
               </h1>
-              <p className="mt-4 text-[17px] leading-[1.45] text-[#111111]/68">
+              <p className="mt-4 text-[16px] leading-[1.45] text-[#111111]/68">
                 Real coffee taste with 0mg caffeine, rebuilt for calm focus without the stimulant tradeoff.
               </p>
-              <div className="mt-6">
-                <Cta>Shop now - save up to 25%</Cta>
-              </div>
               <div className="mt-5 flex flex-wrap gap-2 text-[12px] font-black uppercase tracking-[0.08em] text-[#111111]/58">
                 <span className="rounded-full border border-[#111111]/10 px-3 py-2">
-                  Calm focus
+                  0mg caffeine
                 </span>
                 <span className="rounded-full border border-[#111111]/10 px-3 py-2">
                   No crash
@@ -201,6 +177,27 @@ export default function HomePage() {
                   Coffee taste
                 </span>
               </div>
+            </div>
+
+            <Link
+              href={PDP}
+              aria-label="Shop STUNN Decaf Coffee"
+              className="block px-4 pb-5"
+            >
+              <div className="relative h-[320px] overflow-hidden rounded-[24px] bg-[#F4F0FB] shadow-[0_18px_50px_rgba(17,17,17,0.1)]">
+                <Image
+                  src={HOME_HERO_IMAGE}
+                  alt="STUNN Decaf Coffee box, sachet, and coffee"
+                  fill
+                  className="animate-slow-zoom object-cover object-[88%_center]"
+                  priority
+                  sizes="100vw"
+                />
+              </div>
+            </Link>
+
+            <div className="px-5 pb-8">
+              <Cta>Shop now - save up to 25%</Cta>
             </div>
           </div>
 
