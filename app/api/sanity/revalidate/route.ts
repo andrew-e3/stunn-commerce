@@ -13,6 +13,10 @@ const TYPE_TO_TAG: Record<string, string> = {
   siteSettings: SANITY_TAGS.siteSettings,
   homepage: SANITY_TAGS.homepage,
   landingPage: SANITY_TAGS.landingPage,
+  productContent: SANITY_TAGS.productContent,
+  testimonial: SANITY_TAGS.testimonial,
+  customerProfile: SANITY_TAGS.customerProfile,
+  faqItem: SANITY_TAGS.faqItem,
 };
 
 export async function POST(req: NextRequest) {

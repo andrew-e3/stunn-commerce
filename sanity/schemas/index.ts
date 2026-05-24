@@ -1,6 +1,10 @@
 import { type SchemaTypeDefinition } from "sanity";
+import { customerProfile } from "./customerProfile";
+import { faqItem } from "./faqItem";
 import { homepage } from "./homepage";
 import { landingPage } from "./landingPage";
+import { productContent } from "./productContent";
+import { testimonial } from "./testimonial";
 import { ctaBlock } from "./objects/ctaBlock";
 import { emailCaptureBlock } from "./objects/emailCaptureBlock";
 import { featureGridBlock } from "./objects/featureGridBlock";
@@ -29,6 +33,10 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   siteSettings,
   homepage,
   landingPage,
+  productContent,
+  testimonial,
+  customerProfile,
+  faqItem,
   // Objects
   seo,
   ...blocks,

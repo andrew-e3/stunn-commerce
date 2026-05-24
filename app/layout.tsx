@@ -5,6 +5,8 @@ import { OffTheDripCapture } from "components/off-the-drip-capture";
 import { Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
 import { getSiteSettings } from "lib/sanity";
+import { urlForImage } from "lib/sanity/image";
+import type { Metadata } from "next";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -14,17 +16,26 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const { SITE_NAME } = process.env;
 
-export const metadata = {
-  metadataBase: new URL(baseUrl),
-  title: {
-    default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`,
-  },
-  robots: {
-    follow: true,
-    index: true,
-  },
-};
+// Default site metadata, overridable from Sanity (Site Settings → Default SEO).
+// Falls back to SITE_NAME when the CMS is empty.
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const seo = settings?.defaultSeo;
+  const ogImage = seo?.ogImage
+    ? urlForImage(seo.ogImage)?.width(1200).height(630).url()
+    : undefined;
+
+  return {
+    metadataBase: new URL(baseUrl),
+    title: {
+      default: seo?.title || SITE_NAME!,
+      template: `%s | ${SITE_NAME}`,
+    },
+    description: seo?.description,
+    robots: { follow: true, index: true },
+    openGraph: ogImage ? { images: [{ url: ogImage }] } : undefined,
+  };
+}
 
 export default async function RootLayout({
   children,
@@ -41,7 +52,7 @@ export default async function RootLayout({
         <CartProvider cartPromise={cart}>
           <div className="sticky top-0 z-40">
             <AnnouncementBar messages={settings?.announcements} />
-            <Navbar />
+            <Navbar links={settings?.navLinks} />
           </div>
           <main>
             {children}

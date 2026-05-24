@@ -62,6 +62,12 @@ export const siteSettings = defineType({
               type: "string",
               validation: (rule) => rule.required(),
             }),
+            defineField({
+              name: "highlighted",
+              title: "Highlighted (button style)",
+              type: "boolean",
+              initialValue: false,
+            }),
           ],
           preview: { select: { title: "label", subtitle: "href" } },
         }),
