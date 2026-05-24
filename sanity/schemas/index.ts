@@ -4,6 +4,7 @@ import { faqItem } from "./faqItem";
 import { homepage } from "./homepage";
 import { landingPage } from "./landingPage";
 import { productContent } from "./productContent";
+import { siteImage } from "./siteImage";
 import { testimonial } from "./testimonial";
 import { ctaBlock } from "./objects/ctaBlock";
 import { emailCaptureBlock } from "./objects/emailCaptureBlock";
@@ -37,6 +38,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   testimonial,
   customerProfile,
   faqItem,
+  siteImage,
   // Objects
   seo,
   ...blocks,

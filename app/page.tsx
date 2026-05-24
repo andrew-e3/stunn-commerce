@@ -1,7 +1,7 @@
 import AnimatedNumber from "components/animated-number";
 import Footer from "components/layout/footer";
+import { SiteImage } from "components/site-image";
 import { BEST_VALUE_PER_DAY, BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
-import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
@@ -50,8 +50,9 @@ function PourAnimation() {
       aria-hidden="true"
       className="stunn-pour-scene relative mx-auto aspect-[641/590] w-full max-w-[420px] overflow-hidden rounded-[22px]"
     >
-      <Image
-        src={SACHET_POUR_IMAGE}
+      <SiteImage
+        slot="home-sachet-pour"
+        fallbackSrc={SACHET_POUR_IMAGE}
         alt=""
         fill
         className="object-cover"
@@ -191,8 +192,9 @@ export default function HomePage() {
               className="block px-4 pb-5"
             >
               <div className="relative h-[230px] overflow-hidden rounded-[24px] bg-[#F4F0FB] shadow-[0_18px_50px_rgba(17,17,17,0.1)] min-[430px]:h-[270px]">
-                <Image
-                  src={HOME_HERO_IMAGE}
+                <SiteImage
+                  slot="home-hero"
+                  fallbackSrc={HOME_HERO_IMAGE}
                   alt="STUNN Decaf Coffee box, sachet, and coffee"
                   fill
                   className="animate-slow-zoom object-cover object-[92%_center]"
@@ -208,8 +210,9 @@ export default function HomePage() {
           </div>
 
           <div className="relative h-[max(560px,37.5vw)] w-full overflow-hidden max-lg:hidden">
-            <Image
-              src={HOME_HERO_IMAGE}
+            <SiteImage
+              slot="home-hero"
+              fallbackSrc={HOME_HERO_IMAGE}
               alt="STUNN Decaf Coffee box, sachet, and coffee"
               fill
               className="object-contain object-center"
@@ -417,8 +420,9 @@ export default function HomePage() {
             </div>
           </div>
           <div className="relative min-h-[560px] bg-[#F4F0FB]">
-            <Image
-              src={MORNING_FOCUS_IMAGE}
+            <SiteImage
+              slot="home-morning-focus"
+              fallbackSrc={MORNING_FOCUS_IMAGE}
               alt="Calm morning coffee ritual"
               fill
               className="animate-slow-zoom object-cover object-center"
@@ -504,10 +508,12 @@ export default function HomePage() {
           >
             <div className="grid md:grid-cols-[0.92fr_1.08fr]">
               <div className="relative min-h-[330px] overflow-hidden bg-white">
-                <img
-                  src={`${CDN}3-boxes-of-stunn-1080x1080.webp`}
+                <SiteImage
+                  slot="home-3-boxes"
+                  fallbackSrc={`${CDN}3-boxes-of-stunn-1080x1080.webp`}
                   alt="Three STUNN boxes"
-                  className="absolute inset-0 h-full w-full object-cover object-bottom"
+                  fill
+                  className="object-cover object-bottom"
                 />
               </div>
               <div className="flex flex-col justify-center p-7 sm:p-9">
@@ -599,10 +605,12 @@ export default function HomePage() {
             href={PDP}
             className="relative min-h-[360px] overflow-hidden bg-white/45 lg:min-h-[560px]"
           >
-            <img
-              src={EVENING_RITUAL_IMAGE}
+            <SiteImage
+              slot="home-evening-ritual"
+              fallbackSrc={EVENING_RITUAL_IMAGE}
               alt="Evening coffee ritual"
-              className="animate-slow-zoom absolute inset-0 h-full w-full object-cover object-bottom"
+              fill
+              className="animate-slow-zoom object-cover object-bottom"
             />
           </Link>
         </div>

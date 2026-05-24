@@ -3,6 +3,7 @@ import {
   unstable_cacheTag as cacheTag,
 } from "next/cache";
 import { client, previewClient } from "./client";
+import { urlForImage } from "./image";
 import {
   CUSTOMER_PROFILES_QUERY,
   FAQ_QUERY,
@@ -23,6 +24,7 @@ export const SANITY_TAGS = {
   testimonial: "sanity:testimonial",
   customerProfile: "sanity:customerProfile",
   faqItem: "sanity:faqItem",
+  siteImage: "sanity:siteImage",
 } as const;
 
 // ---- Types ---------------------------------------------------------------
@@ -234,5 +236,37 @@ export async function getProductContent(
   } catch (error) {
     console.error("Sanity product content fetch failed:", error);
     return null;
+  }
+}
+
+// ---- Site image registry -------------------------------------------------
+
+export interface SiteImageResolved {
+  url: string;
+  alt?: string;
+}
+
+// Returns a map of { key -> { url, alt } } for all configured Site Images.
+// Used by the <SiteImage> component to override hardcoded images by slot key.
+export async function getSiteImages(): Promise<
+  Record<string, SiteImageResolved>
+> {
+  "use cache";
+  cacheTag(SANITY_TAGS.siteImage);
+  cacheLife("hours");
+  if (!client) return {};
+  try {
+    const rows = await client.fetch<
+      { key?: string; alt?: string; image?: SanityImage }[]
+    >(`*[_type == "siteImage" && defined(key) && defined(image)]{ key, alt, image }`);
+    const map: Record<string, SiteImageResolved> = {};
+    for (const row of rows) {
+      const url = urlForImage(row.image)?.width(2400).url();
+      if (row.key && url) map[row.key] = { url, alt: row.alt };
+    }
+    return map;
+  } catch (error) {
+    console.error("Sanity site images fetch failed:", error);
+    return {};
   }
 }

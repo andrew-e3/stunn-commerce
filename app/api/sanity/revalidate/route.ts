@@ -17,6 +17,7 @@ const TYPE_TO_TAG: Record<string, string> = {
   testimonial: SANITY_TAGS.testimonial,
   customerProfile: SANITY_TAGS.customerProfile,
   faqItem: SANITY_TAGS.faqItem,
+  siteImage: SANITY_TAGS.siteImage,
 };
 
 export async function POST(req: NextRequest) {
