@@ -8,7 +8,10 @@ const ACCOUNT_URL = process.env.SHOPIFY_STORE_DOMAIN
   ? `https://${process.env.SHOPIFY_STORE_DOMAIN}/account/login`
   : "/account";
 
-const LEFT_LINKS = [
+type NavLink = { label: string; href: string; highlighted?: boolean };
+
+// Fallback links, used when Sanity has no nav links configured.
+const DEFAULT_LEFT_LINKS: NavLink[] = [
   {
     label: "Shop",
     href: "/products/focus-without-caffeine",
@@ -17,7 +20,8 @@ const LEFT_LINKS = [
   { label: "About", href: "/about-us" },
 ];
 
-export function Navbar() {
+export function Navbar({ links }: { links?: NavLink[] }) {
+  const LEFT_LINKS = links && links.length > 0 ? links : DEFAULT_LEFT_LINKS;
   return (
     <nav className="relative grid min-h-[68px] grid-cols-[1fr_auto_1fr] items-center border-b border-black/10 bg-white px-4 md:px-8">
       {/* Mobile menu */}
