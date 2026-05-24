@@ -4,6 +4,7 @@ import { Navbar } from "components/layout/navbar";
 import { OffTheDripCapture } from "components/off-the-drip-capture";
 import { Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
+import { getSiteSettings } from "lib/sanity";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -31,13 +32,15 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   const cart = getCart();
+  // Content-managed via Sanity (/admin). Falls back to hardcoded copy when empty.
+  const settings = await getSiteSettings();
 
   return (
     <html lang="en" className={inter.variable}>
       <body className="bg-white font-[family-name:var(--font-inter)] text-[#111111]">
         <CartProvider cartPromise={cart}>
           <div className="sticky top-0 z-40">
-            <AnnouncementBar />
+            <AnnouncementBar messages={settings?.announcements} />
             <Navbar />
           </div>
           <main>
