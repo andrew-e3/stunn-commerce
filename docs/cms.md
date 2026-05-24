@@ -66,9 +66,29 @@ Shared secrets also live in `~/.openclaw/workspace/credentials/secrets.env`
 - Images: use the built-in asset library (drag-drop, auto-optimised on render).
 - Nothing goes live until you click Publish.
 
-## What's content-managed today (Phase 1)
+## Building a landing page (Phase 2)
 
-- **Announcement bar** messages (rotating top bar)
+The landing page builder lets you ship campaign pages with no code.
+
+1. In `/admin`, open **Landing Pages** → **Create new**.
+2. Set an **internal title** and a **slug** (the URL becomes `/lp/<slug>`).
+3. In **Page content**, add blocks and fill them in. Available blocks:
+   Hero, Manifesto, Feature Grid, Personas, Call To Action, Email Capture
+   (Quiet Club), Text, Image. Drag to reorder.
+4. Set **SEO** and leave **"Hide from search engines"** ON for paid pages.
+5. **Preview before publishing** (Draft Mode):
+   `/api/draft/enable?secret=<SANITY_REVALIDATE_SECRET>&slug=<your-slug>`
+   shows the unpublished draft on the live render. A yellow banner appears with
+   an "exit preview" link.
+6. **Publish.** The page is live at `/lp/<slug>` within seconds.
+
+Note: a hardcoded route (e.g. the existing `/lp/founding-member`) takes
+priority over a CMS page with the same slug — avoid reusing those slugs.
+
+## What's content-managed today
+
+- **Announcement bar** messages (rotating top bar) ✅ live
+- **Landing pages** — full block builder at `/lp/<slug>` ✅ live (Phase 2)
 - **Site Settings:** nav links, footer links, default SEO (title, description,
   social image) — *schema ready; wire into navbar/footer/metadata next*
 - **Homepage hero** — *schema ready; wiring deferred (see below)*
@@ -82,10 +102,13 @@ Shared secrets also live in `~/.openclaw/workspace/credentials/secrets.env`
 
 ## Roadmap
 
-- **Phase 2 — Landing page builder:** block library + `landingPage` docs +
-  `/lp/[slug]` renderer + Draft Mode preview. Ship campaign LPs with no code.
+- **Phase 2 — Landing page builder:** ✅ done. Block library + `landingPage`
+  docs + `/lp/[slug]` renderer + Draft Mode preview.
 - **Phase 3 — PDP content + testimonials + personas + FAQ:** `productContent`
   overlay joined to Shopify by handle; testimonials/personas/FAQ as documents.
+- **Finish Phase 1 wiring:** hero, nav, footer, default SEO into the existing
+  components (schemas + fetchers already exist; deferred only because
+  `app/page.tsx` had uncommitted parallel work).
 
 ## Adding a new content type (for developers)
 
