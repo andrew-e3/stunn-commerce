@@ -214,10 +214,10 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <div>
             <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-white/52">
-              Join the list
+              Quiet Club
             </p>
             <h2 className="max-w-xl text-[clamp(42px,7vw,96px)] stunn-display uppercase leading-[0.9] tracking-normal">
-              Build better rituals without dependency.
+              Join the quieter side of coffee.
             </h2>
           </div>
           <OffTheDripCapture mode="inline" tone="dark" />

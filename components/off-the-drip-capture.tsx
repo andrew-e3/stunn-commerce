@@ -5,8 +5,8 @@ import { FormEvent, useEffect, useState } from "react";
 type CaptureMode = "inline" | "popup";
 type CaptureTone = "light" | "dark";
 
-const DISMISSED_KEY = "stunn.offTheDrip.dismissedUntil";
-const JOINED_KEY = "stunn.offTheDrip.joined";
+const DISMISSED_KEY = "stunn.quietClub.dismissedUntil";
+const JOINED_KEY = "stunn.quietClub.joined";
 const DISMISS_MS = 1000 * 60 * 60 * 24 * 7;
 
 export function OffTheDripCapture({
@@ -80,7 +80,7 @@ export function OffTheDripCapture({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: trimmed,
-          source: `off-the-drip-${mode}`,
+          source: `quiet-club-${mode}`,
           page:
             typeof window === "undefined"
               ? undefined
@@ -120,26 +120,26 @@ export function OffTheDripCapture({
           type="button"
           onClick={dismiss}
           className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-xl leading-none text-current/60 transition hover:bg-current/10 hover:text-current"
-          aria-label="Close Off The Drip signup"
+          aria-label="Close Quiet Club signup"
         >
           ×
         </button>
       )}
 
       <p className="mb-2 text-[11px] font-black uppercase tracking-[0.24em] opacity-55">
-        Off The Drip
+        Quiet Club
       </p>
       <h2 className="stunn-display text-[clamp(2rem,5vw,3.75rem)] uppercase leading-[0.92] tracking-normal">
-        Join Off The Drip
+        Join the Quiet Club
       </h2>
       <p className="mt-3 max-w-xl text-sm font-medium leading-relaxed opacity-72">
-        Early access to new caffeine-free drops, behind-the-scenes, and a
-        community of people who have broken the dependency.
+        Get the launch offer, early access to caffeine-free drops, and notes
+        for people who want the edge without the noise.
       </p>
 
       {status === "success" ? (
         <p className="mt-5 rounded-[10px] bg-[#EDE9F8] px-4 py-3 text-sm font-black text-[#111111]">
-          You&apos;re in. Caffeine had its run.
+          You&apos;re in. Welcome to Quiet Club.
         </p>
       ) : (
         <form
@@ -163,7 +163,7 @@ export function OffTheDripCapture({
             disabled={status === "submitting"}
             className="stunn-cta-motion min-h-12 rounded-[8px] border-2 border-[#5A3493] bg-[#5A3493] px-5 text-sm font-black uppercase tracking-[0.08em] text-white"
           >
-            {status === "submitting" ? "Joining..." : "Join Off The Drip"}
+            {status === "submitting" ? "Joining..." : "Join Quiet Club"}
           </button>
         </form>
       )}
