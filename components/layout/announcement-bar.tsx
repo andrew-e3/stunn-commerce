@@ -2,20 +2,27 @@
 
 import { useEffect, useState } from "react";
 
-const MESSAGES = [
-  {
-    text: "Free shipping on subscription + orders $75+",
-    className: "bg-[#5A3493] text-white",
-  },
-  {
-    text: "No caffeine. No crash. Same ritual.",
-    className: "bg-[#5A3493] text-white",
-  },
+export type AnnouncementMessage = { text: string; href?: string };
+
+// Fallback copy, used when Sanity has no announcements configured so the bar
+// always renders something on brand.
+const DEFAULT_MESSAGES: AnnouncementMessage[] = [
+  { text: "Free shipping on subscription + orders $75+" },
+  { text: "No caffeine. No crash. Same ritual." },
 ];
 
-export function AnnouncementBar() {
+const BAR_CLASS = "bg-[#5A3493] text-white";
+
+export function AnnouncementBar({
+  messages,
+}: {
+  messages?: AnnouncementMessage[];
+}) {
+  const MESSAGES =
+    messages && messages.length > 0 ? messages : DEFAULT_MESSAGES;
   const [index, setIndex] = useState(0);
-  const message = MESSAGES[index]!;
+  const safeIndex = index % MESSAGES.length;
+  const message = MESSAGES[safeIndex]!;
 
   const showPrevious = () => {
     setIndex((current) => (current - 1 + MESSAGES.length) % MESSAGES.length);
@@ -35,7 +42,7 @@ export function AnnouncementBar() {
 
   return (
     <div
-      className={`relative flex min-h-9 items-center justify-center overflow-hidden px-11 py-2 text-center text-sm font-semibold transition-colors duration-500 ${message.className}`}
+      className={`relative flex min-h-9 items-center justify-center overflow-hidden px-11 py-2 text-center text-sm font-semibold transition-colors duration-500 ${BAR_CLASS}`}
     >
       <button
         type="button"
@@ -47,9 +54,19 @@ export function AnnouncementBar() {
           ‹
         </span>
       </button>
-      <span key={message.text} className="animate-hero-copy-in block px-4">
-        {message.text}
-      </span>
+      {message.href ? (
+        <a
+          key={message.text}
+          href={message.href}
+          className="animate-hero-copy-in block px-4 underline-offset-2 hover:underline"
+        >
+          {message.text}
+        </a>
+      ) : (
+        <span key={message.text} className="animate-hero-copy-in block px-4">
+          {message.text}
+        </span>
+      )}
       <button
         type="button"
         aria-label="Next announcement"
