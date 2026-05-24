@@ -26,3 +26,17 @@ export const HOMEPAGE_QUERY = groq`
     }
   }
 `;
+
+export const LANDING_PAGE_QUERY = groq`
+  *[_type == "landingPage" && slug.current == $slug][0]{
+    title,
+    "slug": slug.current,
+    noindex,
+    seo,
+    pageBuilder[]{ ... }
+  }
+`;
+
+export const LANDING_PAGE_SLUGS_QUERY = groq`
+  *[_type == "landingPage" && defined(slug.current)]{ "slug": slug.current }
+`;

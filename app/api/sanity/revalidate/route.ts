@@ -12,6 +12,7 @@ import { type NextRequest, NextResponse } from "next/server";
 const TYPE_TO_TAG: Record<string, string> = {
   siteSettings: SANITY_TAGS.siteSettings,
   homepage: SANITY_TAGS.homepage,
+  landingPage: SANITY_TAGS.landingPage,
 };
 
 export async function POST(req: NextRequest) {

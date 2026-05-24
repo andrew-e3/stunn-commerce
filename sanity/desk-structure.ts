@@ -17,6 +17,6 @@ export const structure: StructureResolver = (S) =>
         .id("homepage")
         .child(S.document().schemaType("homepage").documentId("homepage")),
       S.divider(),
-      // Future phases (landing pages, testimonials, etc.) append here as
-      // regular document-list items.
+      S.documentTypeListItem("landingPage").title("Landing Pages"),
+      // Future phases (testimonials, personas, product content) append here.
     ]);
