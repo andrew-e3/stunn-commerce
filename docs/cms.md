@@ -88,27 +88,52 @@ priority over a CMS page with the same slug — avoid reusing those slugs.
 ## What's content-managed today
 
 - **Announcement bar** messages (rotating top bar) ✅ live
+- **Header nav links** (with highlighted/button flag) ✅ live
+- **Default SEO** (title, description, social image) ✅ live
 - **Landing pages** — full block builder at `/lp/<slug>` ✅ live (Phase 2)
-- **Site Settings:** nav links, footer links, default SEO (title, description,
-  social image) — *schema ready; wire into navbar/footer/metadata next*
-- **Homepage hero** — *schema ready; wiring deferred (see below)*
+- **Testimonials, Customer Profiles, FAQ Items, Product Content** — editable in
+  the Studio now; display components built (`components/content/`). Wiring into
+  the PDP is deferred (see below).
+- **Homepage hero** & **footer links** — schema ready; wiring deferred.
 
-### Deferred
+## Phase 3 content (editable now)
 
-- **Homepage hero wiring** into `app/page.tsx` is deferred because that file had
-  uncommitted parallel work at build time. The `homepage` schema and
-  `getHomepage()` fetcher exist — wiring is a small follow-up once `page.tsx` is
-  committed.
+In `/admin` you can already create and publish:
+
+- **Testimonials** — author, role, quote, rating, avatar, featured flag. Add
+  real reviews here and retire any placeholder copy.
+- **Customer Profiles** — the Jamie/Sam/Rachel personas (label, headline, body).
+- **FAQ Items** — question, answer, section (General or Product).
+- **Product Content** — a marketing overlay keyed by Shopify **handle**
+  (e.g. `focus-without-caffeine`): subtitle override, extra block sections, and
+  toggles to show testimonials / profiles on that product page.
+
+Display components (`TestimonialGrid`, `PersonaGrid`, `FaqList`) and the
+fetchers (`getTestimonials`, `getCustomerProfiles`, `getFaqItems`,
+`getProductContent`) are ready — the PDP just needs them dropped in (deferred
+below).
+
+### Deferred (blocked only by uncommitted parallel work)
+
+These are quick follow-ups once the relevant file is committed — the schemas,
+fetchers, and components all exist:
+
+- **Homepage hero** → `app/page.tsx` (uses `getHomepage()`)
+- **PDP content** → `app/products/[handle]/page.tsx`: read `getProductContent(handle)`
+  for the subtitle override + extra sections (via `BlockRenderer`), and drop in
+  `TestimonialGrid` / `PersonaGrid` / `FaqList` guarded by the product's toggles
+- **Footer links** → needs a richer grouped-footer schema (STORE / HELP /
+  social columns) rather than the current flat `footerLinks` field
 
 ## Roadmap
 
 - **Phase 2 — Landing page builder:** ✅ done. Block library + `landingPage`
   docs + `/lp/[slug]` renderer + Draft Mode preview.
-- **Phase 3 — PDP content + testimonials + personas + FAQ:** `productContent`
-  overlay joined to Shopify by handle; testimonials/personas/FAQ as documents.
-- **Finish Phase 1 wiring:** hero, nav, footer, default SEO into the existing
-  components (schemas + fetchers already exist; deferred only because
-  `app/page.tsx` had uncommitted parallel work).
+- **Phase 3 — PDP content + testimonials + personas + FAQ:** ✅ schemas,
+  fetchers, and display components done and editable in the Studio. Only the
+  PDP read-wiring is deferred (see Deferred above).
+- **Finish wiring:** homepage hero, PDP reads, and footer — see Deferred above.
+  Nav + default SEO are ✅ done.
 
 ## Adding a new content type (for developers)
 
