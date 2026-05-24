@@ -92,7 +92,7 @@ export function StickyAtc({ product }: { product: Product }) {
 
   const addSelectedOffer = () => {
     if (!oneBoxVariant) return;
-    addCartItem(oneBoxVariant, product, selectedTier.qty);
+    addCartItem(oneBoxVariant, product, selectedTier.qty, sellingPlanId);
     startTransition(async () => {
       await addItem(null, oneBoxVariant.id, selectedTier.qty, sellingPlanId);
     });
@@ -128,7 +128,8 @@ export function StickyAtc({ product }: { product: Product }) {
               STUNN Decaf Coffee
             </p>
             <p className="text-xs text-[#111111]/55">
-              {selectedTier.display.toLowerCase()} · {selectedTier.count} sachets · calm focus
+              {selectedTier.display.toLowerCase()} · {selectedTier.count}{" "}
+              sachets · calm focus
             </p>
           </div>
         </div>

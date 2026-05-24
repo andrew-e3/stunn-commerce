@@ -5,15 +5,17 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import LoadingDots from "components/loading-dots";
 import { DEFAULT_OPTION } from "lib/constants";
 import { priceAfterDiscount, RETAIL_PER_BOX, SUPPLY_TIERS } from "lib/pricing";
+import type { CartItem } from "lib/shopify/types";
 import { createUrl } from "lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useEffect, useRef, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import {
+  convertCartLineToSubscription,
   createCartAndSetCookie,
   redirectToCheckout,
-  updateItemQuantity,
+  updateCartLineQuantity,
 } from "./actions";
 import { useCart } from "./cart-context";
 import { DeleteItemButton } from "./delete-item-button";
@@ -38,12 +40,6 @@ const QTY_TIERS = SUPPLY_TIERS.map((tier) => ({
   best: tier.popular,
 }));
 
-const FREQUENCY_OPTIONS = [
-  { label: "Every 1 month", value: "1" },
-  { label: "Every 2 months", value: "2" },
-  { label: "Every 3 months", value: "3" },
-];
-
 function getTierForQuantity(quantity: number) {
   if (quantity <= 1) return QTY_TIERS.find((tier) => tier.qty === 1)!;
   if (quantity === 2) return QTY_TIERS.find((tier) => tier.qty === 2)!;
@@ -62,6 +58,50 @@ function getSavingsForQuantity(quantity: number) {
     savePct: tier.savePct,
     tier,
   };
+}
+
+function getUpsellQuantities(quantity: number, includeCurrent: boolean) {
+  const start = includeCurrent ? quantity : quantity + 1;
+  return [start, start + 1, start + 2];
+}
+
+function getLinePricing(line: CartItem) {
+  const tier = getTierForQuantity(line.quantity);
+  const retail = line.quantity * RETAIL_PER_BOX;
+
+  if (!line.sellingPlanAllocation) {
+    return {
+      retail,
+      savings: 0,
+      discounted: retail,
+      savePct: 0,
+      tier,
+    };
+  }
+
+  return getSavingsForQuantity(line.quantity);
+}
+
+function getSellingPlanIdForQuantity(item: CartItem, quantity: number) {
+  const cappedInterval = Math.min(Math.max(quantity, 1), 3);
+  const groups = item.merchandise.product.sellingPlanGroups as any;
+  const normalizedGroups = Array.isArray(groups)
+    ? groups
+    : (groups?.edges?.map((edge: any) => edge.node) ?? []);
+  const plans = normalizedGroups.flatMap((group: any) => {
+    const sellingPlans = group.sellingPlans;
+    return Array.isArray(sellingPlans)
+      ? sellingPlans
+      : (sellingPlans?.edges?.map((edge: any) => edge.node) ?? []);
+  });
+
+  return (
+    plans.find(
+      (plan: any) =>
+        plan.deliveryPolicy?.interval === "MONTH" &&
+        plan.deliveryPolicy.intervalCount === cappedInterval,
+    )?.id ?? plans[0]?.id
+  );
 }
 
 function EmptyBox() {
@@ -205,13 +245,11 @@ export default function CartModal() {
                   // ── Displayed cart economics. Shopify checkout remains the source of truth.
                   const FREE_SHIPPING_THRESHOLD = 75;
                   const totalRetail = cart.lines.reduce(
-                    (sum, line) =>
-                      sum + getSavingsForQuantity(line.quantity).retail,
+                    (sum, line) => sum + getLinePricing(line).retail,
                     0,
                   );
                   const discountedSubtotal = cart.lines.reduce(
-                    (sum, line) =>
-                      sum + getSavingsForQuantity(line.quantity).discounted,
+                    (sum, line) => sum + getLinePricing(line).discounted,
                     0,
                   );
                   const cartSavings = totalRetail - discountedSubtotal;
@@ -221,8 +259,8 @@ export default function CartModal() {
                       : 0;
 
                   // ── Shipping progress ──
-                  const hasSubscription = cart.lines.some(
-                    (line) => Boolean(line.sellingPlanAllocation),
+                  const hasSubscription = cart.lines.some((line) =>
+                    Boolean(line.sellingPlanAllocation),
                   );
                   const remaining = Math.max(
                     0,
@@ -234,41 +272,46 @@ export default function CartModal() {
                         100,
                         (discountedSubtotal / FREE_SHIPPING_THRESHOLD) * 100,
                       );
-                  const hasFreeShipping =
-                    hasSubscription || remaining === 0;
+                  const hasFreeShipping = hasSubscription || remaining === 0;
 
                   return (
                     <div className="flex h-full flex-col overflow-hidden">
                       {/* ── Free shipping banner ── */}
                       <div
-                        className="px-6 py-4 text-center text-xs font-medium text-[#5A3493]"
+                        className="px-5 py-4 text-center text-[#5A3493] sm:px-6"
                         style={{ backgroundColor: BRAND_LIGHT_PURPLE }}
                       >
-                        {cartSavings > 0 && (
-                          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-[#5A3493]">
-                            <span>Estimated savings</span>
-                            <span>
-                              ${cartSavings.toFixed(2)} / {cartSavePct}% off
-                            </span>
-                          </div>
-                        )}
-                        {hasSubscription ? (
-                          <span>
-                            Subscription order unlocked{" "}
-                            <strong>Free Shipping!</strong>
-                          </span>
-                        ) : hasFreeShipping ? (
-                          <span>
-                            Congrats, you&apos;ve unlocked{" "}
-                            <strong>Free Shipping!</strong>
-                          </span>
-                        ) : (
-                          <span>
-                            Add <strong>${remaining.toFixed(2)}</strong> more
-                            or choose subscription for{" "}
-                            <strong>Free Shipping</strong>
-                          </span>
-                        )}
+                        <div className="mx-auto flex max-w-full flex-col items-center gap-2">
+                          {cartSavings > 0 && (
+                            <div className="inline-flex max-w-full items-center justify-center gap-2 rounded-full bg-white px-3 py-1 text-[10px] font-extrabold uppercase leading-none tracking-wide text-[#5A3493] sm:text-[11px]">
+                              <span className="whitespace-nowrap">
+                                Estimated savings
+                              </span>
+                              <span className="whitespace-nowrap">
+                                ${cartSavings.toFixed(2)} / {cartSavePct}% off
+                              </span>
+                            </div>
+                          )}
+                          <p className="text-sm font-semibold leading-snug sm:text-[15px]">
+                            {hasSubscription ? (
+                              <>
+                                Subscription order unlocked{" "}
+                                <strong>Free Shipping!</strong>
+                              </>
+                            ) : hasFreeShipping ? (
+                              <>
+                                Congrats, you&apos;ve unlocked{" "}
+                                <strong>Free Shipping!</strong>
+                              </>
+                            ) : (
+                              <>
+                                Add <strong>${remaining.toFixed(2)}</strong>{" "}
+                                more or choose subscription for{" "}
+                                <strong>Free Shipping</strong>
+                              </>
+                            )}
+                          </p>
+                        </div>
                         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/80">
                           <div
                             className="h-full rounded-full transition-all duration-500"
@@ -308,7 +351,14 @@ export default function CartModal() {
                                 discounted: itemDiscounted,
                                 savePct: itemSavePct,
                                 tier: currentTier,
-                              } = getSavingsForQuantity(item.quantity);
+                              } = getLinePricing(item);
+                              const isSubscription = Boolean(
+                                item.sellingPlanAllocation,
+                              );
+                              const upsellQuantities = getUpsellQuantities(
+                                item.quantity,
+                                !isSubscription,
+                              );
 
                               return (
                                 <li key={i} className="py-5">
@@ -354,9 +404,10 @@ export default function CartModal() {
                                         {item.quantity}{" "}
                                         {item.quantity === 1 ? "box" : "boxes"}{" "}
                                         ·{" "}
-                                        {item.sellingPlanAllocation
-                                          ? item.sellingPlanAllocation.sellingPlan.name
-                                          : currentTier.sub}
+                                        {isSubscription
+                                          ? item.sellingPlanAllocation
+                                              ?.sellingPlan.name
+                                          : "One-time purchase"}
                                       </p>
 
                                       {/* Qty stepper + prices */}
@@ -395,67 +446,75 @@ export default function CartModal() {
 
                                   <div className="mt-4 flex items-center justify-between rounded-[5px] border border-[#5A3493]/15 bg-[#EDE9F8] px-3 py-2 text-[#5A3493]">
                                     <span className="text-[11px] font-bold uppercase tracking-wide">
-                                      Buy more, save more
+                                      {isSubscription
+                                        ? "Upgrade your autoship"
+                                        : "Switch to autoship"}
                                     </span>
                                     <span className="text-[11px] font-extrabold uppercase tracking-wide">
-                                      Save ${itemSaveAmt.toFixed(2)} (
-                                      {itemSavePct}%)
+                                      {isSubscription
+                                        ? "More coffee, same savings"
+                                        : "Save 20-25%"}
                                     </span>
                                   </div>
 
-                                  {/* ── Qty tier buttons ── */}
+                                  {/* ── Upsell buttons ── */}
                                   <div className="mt-5 grid grid-cols-3 gap-3">
-                                    {QTY_TIERS.map((tier) => {
-                                      const isSelected =
-                                        item.quantity === tier.qty;
+                                    {upsellQuantities.map((quantity) => {
+                                      const tier = getTierForQuantity(quantity);
+                                      const sellingPlanId =
+                                        getSellingPlanIdForQuantity(
+                                          item,
+                                          quantity,
+                                        );
+                                      const disabled =
+                                        qtyChanging ||
+                                        (!isSubscription && !sellingPlanId);
+
                                       return (
                                         <button
-                                          key={tier.qty}
+                                          key={`${isSubscription ? "upgrade" : "subscribe"}-${quantity}`}
                                           type="button"
-                                          disabled={isSelected || qtyChanging}
+                                          disabled={disabled}
                                           onClick={() => {
                                             startQtyTransition(async () => {
-                                              await updateItemQuantity(null, {
-                                                merchandiseId:
-                                                  item.merchandise.id,
-                                                quantity: tier.qty,
-                                              });
+                                              if (isSubscription) {
+                                                await updateCartLineQuantity(
+                                                  null,
+                                                  {
+                                                    lineId: item.id,
+                                                    merchandiseId:
+                                                      item.merchandise.id,
+                                                    quantity,
+                                                  },
+                                                );
+                                                return;
+                                              }
+
+                                              await convertCartLineToSubscription(
+                                                null,
+                                                {
+                                                  lineId: item.id,
+                                                  merchandiseId:
+                                                    item.merchandise.id,
+                                                  quantity,
+                                                  sellingPlanId,
+                                                },
+                                              );
                                             });
                                           }}
-                                          className={`rounded-[5px] border py-3 text-center transition-all disabled:cursor-default ${
-                                            isSelected
-                                              ? "border-[#5A3493] bg-[#5A3493] text-white"
-                                              : "border-[#5A3493]/35 bg-white text-[#5A3493] hover:border-[#5A3493] hover:bg-[#EDE9F8]"
-                                          }`}
-                                          style={{
-                                            boxShadow:
-                                              tier.best && !isSelected
-                                                ? "0 0 0 2px rgba(90,52,147,0.18)"
-                                                : undefined,
-                                          }}
+                                          className="rounded-[5px] border border-[#5A3493]/35 bg-white py-3 text-center text-[#5A3493] transition-all hover:border-[#5A3493] hover:bg-[#EDE9F8] disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                           <span className="block text-[12px] font-extrabold uppercase leading-none">
-                                            {tier.label} SAVE {tier.savePct}%
+                                            {isSubscription
+                                              ? `Upgrade to ${quantity}`
+                                              : `Subscribe ${quantity}`}
+                                          </span>
+                                          <span className="mt-1 block text-[10px] font-bold uppercase leading-none">
+                                            Save {tier.savePct}%
                                           </span>
                                         </button>
                                       );
                                     })}
-                                  </div>
-
-                                  {/* ── Frequency dropdown ── */}
-                                  <div className="mt-2">
-                                    <FrequencyDropdown
-                                      currentQty={item.quantity}
-                                      disabled={qtyChanging}
-                                      onSelectQuantity={(quantity) => {
-                                        startQtyTransition(async () => {
-                                          await updateItemQuantity(null, {
-                                            merchandiseId: item.merchandise.id,
-                                            quantity,
-                                          });
-                                        });
-                                      }}
-                                    />
                                   </div>
                                 </li>
                               );
@@ -584,105 +643,5 @@ function CheckoutButton() {
     >
       {pending ? <LoadingDots className="bg-gray-900" /> : "Checkout"}
     </button>
-  );
-}
-
-function FrequencyDropdown({
-  currentQty,
-  disabled,
-  onSelectQuantity,
-}: {
-  currentQty: number;
-  disabled?: boolean;
-  onSelectQuantity: (quantity: number) => void;
-}) {
-  const defaultOpt =
-    FREQUENCY_OPTIONS.find((option) => Number(option.value) === currentQty) ??
-    FREQUENCY_OPTIONS[2]!;
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(defaultOpt);
-  const prevQty = useRef(currentQty);
-
-  useEffect(() => {
-    if (prevQty.current !== currentQty) {
-      prevQty.current = currentQty;
-      setSelected(
-        FREQUENCY_OPTIONS.find(
-          (option) => Number(option.value) === currentQty,
-        ) ?? FREQUENCY_OPTIONS[2]!,
-      );
-    }
-  }, [currentQty]);
-
-  const savePct = getTierForQuantity(Number(selected.value)).savePct;
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between rounded-[5px] border border-[#5A3493] bg-white px-3 py-3 text-left disabled:opacity-60"
-      >
-        <span className="text-sm font-extrabold text-[#111111]">
-          Delivers {selected.label.toLowerCase()}
-        </span>
-        <div className="flex items-center gap-2">
-          {savePct > 0 && (
-            <span
-              className="text-xs font-bold uppercase tracking-wide"
-              style={{ color: BRAND_PURPLE }}
-            >
-              SAVE {savePct}%
-            </span>
-          )}
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            className={`text-[#111111] transition-transform ${open ? "rotate-180" : ""}`}
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </div>
-      </button>
-      {open && (
-        <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-[5px] border border-[#5A3493] bg-white shadow-lg">
-          {FREQUENCY_OPTIONS.map((opt) => {
-            const quantity = Number(opt.value);
-            const pct = getTierForQuantity(quantity).savePct;
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => {
-                  setSelected(opt);
-                  onSelectQuantity(quantity);
-                  setOpen(false);
-                }}
-                className={`flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors hover:bg-[#EDE9F8] ${
-                  selected.value === opt.value
-                    ? "font-bold text-[#111111]"
-                    : "text-[#111111]/75"
-                }`}
-              >
-                <span>Delivers {opt.label.toLowerCase()}</span>
-                {pct > 0 && (
-                  <span
-                    className="text-[9px] font-bold uppercase tracking-wide"
-                    style={{ color: BRAND_PURPLE }}
-                  >
-                    SAVE {pct}%
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
   );
 }

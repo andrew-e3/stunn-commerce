@@ -6,6 +6,7 @@ import Link from "next/link";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const PDP = "/products/focus-without-caffeine";
+const ABOUT_HERO_IMAGE = "/images/stunn-about-purple-ritual-coffee.png";
 
 export const metadata = {
   title: "About STUNN - Keep the Coffee Ritual",
@@ -55,10 +56,8 @@ function Cta({
   variant?: "primary" | "outline";
 }) {
   const styles = {
-    primary:
-      "border-2 border-[#5A3493] bg-[#5A3493] text-white",
-    outline:
-      "border-2 border-[#111111] bg-white text-[#111111]",
+    primary: "border-2 border-[#5A3493] bg-[#5A3493] text-white",
+    outline: "border-2 border-[#111111] bg-white text-[#111111]",
   };
 
   return (
@@ -84,14 +83,15 @@ export default function AboutPage() {
     <>
       <section className="relative min-h-[calc(100vh-68px)] overflow-hidden bg-[#111111] text-white">
         <Image
-          src={`${CDN}img-man-drinking-stunn-coffee.webp`}
-          alt="A calm morning coffee ritual with STUNN"
+          src={ABOUT_HERO_IMAGE}
+          alt="A glass of coffee in purple light with flowers and coffee beans"
           fill
-          className="object-cover object-center opacity-72"
+          className="object-cover object-center opacity-90"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#111111]/88 via-[#111111]/52 to-[#111111]/8" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#111111]/92 via-[#111111]/58 to-[#111111]/10" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#111111]/55 to-transparent" />
         <div className="relative flex min-h-[calc(100vh-68px)] items-end px-5 py-12 sm:px-8 lg:items-center lg:py-20">
           <div className="max-w-[760px]">
             <Label>About STUNN</Label>
@@ -130,7 +130,8 @@ export default function AboutPage() {
             </p>
             <p className="mt-5 text-base leading-relaxed text-white/65">
               STUNN is for people who want the ritual without the dependency.
-              You do not have to quit caffeine. You just stop being owned by it.
+              You do not have to quit coffee. You just stop letting caffeine
+              decide how the day feels.
             </p>
             <p className="mt-5 text-base leading-relaxed text-white/65">
               Every STUNN product is caffeine-free by design, always.
@@ -214,10 +215,10 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <div>
             <p className="mb-4 text-xs font-black uppercase tracking-[0.26em] text-white/52">
-              Join the list
+              Quiet Club
             </p>
             <h2 className="max-w-xl text-[clamp(42px,7vw,96px)] stunn-display uppercase leading-[0.9] tracking-normal">
-              Build better rituals without dependency.
+              Join the quieter side of coffee.
             </h2>
           </div>
           <OffTheDripCapture mode="inline" tone="dark" />
@@ -304,7 +305,7 @@ export default function AboutPage() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Cta>Shop STUNN</Cta>
-              <Cta variant="outline">Learn on the product page</Cta>
+              <Cta variant="outline">See the product</Cta>
             </div>
           </div>
           <Link

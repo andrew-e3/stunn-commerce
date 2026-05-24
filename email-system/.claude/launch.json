@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "stunn-emails",
+      "runtimeExecutable": "/Users/andrewjennings/.npm-global/bin/pnpm",
+      "runtimeArgs": ["dev"],
+      "cwd": "/Users/andrewjennings/stunn-commerce/email-system",
+      "port": 3333
+    }
+  ]
+}

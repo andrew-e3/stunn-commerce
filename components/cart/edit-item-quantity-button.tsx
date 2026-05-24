@@ -2,7 +2,7 @@
 
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import { updateItemQuantity } from "components/cart/actions";
+import { updateCartLineQuantity } from "components/cart/actions";
 import type { CartItem } from "lib/shopify/types";
 import { useActionState } from "react";
 
@@ -38,8 +38,9 @@ export function EditItemQuantityButton({
   type: "plus" | "minus";
   optimisticUpdate: any;
 }) {
-  const [message, formAction] = useActionState(updateItemQuantity, null);
+  const [message, formAction] = useActionState(updateCartLineQuantity, null);
   const payload = {
+    lineId: item.id,
     merchandiseId: item.merchandise.id,
     quantity: type === "plus" ? item.quantity + 1 : item.quantity - 1,
   };
@@ -48,7 +49,7 @@ export function EditItemQuantityButton({
   return (
     <form
       action={async () => {
-        optimisticUpdate(payload.merchandiseId, type);
+        optimisticUpdate(payload.merchandiseId, type, payload.lineId);
         updateItemQuantityAction();
       }}
     >

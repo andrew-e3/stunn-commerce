@@ -4,7 +4,6 @@ import { StickyAtc } from "components/product/sticky-atc";
 import { PurchaseSelectionProvider } from "components/product/purchase-selection-context";
 import Footer from "components/layout/footer";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
-import { BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
 import { getProduct } from "lib/shopify";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -112,7 +111,7 @@ const comparisonRows = [
 const testimonials = [
   {
     quote:
-      "I quit caffeine a few months ago but missed my morning ritual. STUNN changed everything — I get the taste of coffee without the jitters or crashes. It's calm, focused energy in a cup.",
+      "I broke the caffeine dependency a few months ago but missed my morning ritual. STUNN changed everything — I get the taste of coffee without the jitters or crashes. It's calm, focused energy in a cup.",
     name: "Sarah M.",
     age: "34",
   },
@@ -250,46 +249,25 @@ export default async function ProductPage(props: {
             images={MOSAIC_IMAGES}
             heroOverlay={
               <>
-                <div className="absolute bottom-5 left-4 flex flex-col gap-2">
+                <div className="absolute inset-x-4 bottom-4 grid grid-cols-2 gap-2 sm:inset-x-5 sm:bottom-5 sm:grid-cols-4 sm:gap-3">
                   {[
                     { label: "Calm Focus", icon: "icon-focus.svg" },
                     { label: "No Jitters", icon: "icon-smile.svg" },
-                  ].map((pill) => (
-                    <div
-                      key={pill.label}
-                      className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md"
-                    >
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EDE9F8]">
-                        <img
-                          src={`${CDN}${pill.icon}`}
-                          alt=""
-                          className="h-4 w-4"
-                        />
-                      </span>
-                      <span className="stunn-display text-[11px] uppercase tracking-wider text-[#111111]">
-                        {pill.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="absolute bottom-5 right-4 flex flex-col gap-2">
-                  {[
                     { label: "Steady Energy", icon: "icon-energy.svg" },
                     { label: "Sleep Friendly", icon: "icon-sleep.svg" },
                   ].map((pill) => (
                     <div
                       key={pill.label}
-                      className="flex items-center gap-2 rounded-full bg-white/90 py-2 pl-2.5 pr-4 shadow-md backdrop-blur-md"
+                      className="flex min-w-0 items-center justify-center gap-2 rounded-full bg-[#111111]/82 px-2.5 py-2 shadow-[0_8px_24px_rgba(17,17,17,0.22)] backdrop-blur-md"
                     >
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EDE9F8]">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#EDE9F8] sm:h-6 sm:w-6">
                         <img
                           src={`${CDN}${pill.icon}`}
                           alt=""
-                          className="h-4 w-4"
+                          className="h-3.5 w-3.5 sm:h-4 sm:w-4"
                         />
                       </span>
-                      <span className="stunn-display text-[11px] uppercase tracking-wider text-[#111111]">
+                      <span className="truncate text-[9px] font-black uppercase tracking-[0.06em] text-white sm:text-[10px] sm:tracking-[0.08em]">
                         {pill.label}
                       </span>
                     </div>
@@ -310,6 +288,22 @@ export default async function ProductPage(props: {
         </div>
       </div>
 
+      <section
+        aria-label="Off The Drip"
+        className="overflow-hidden bg-[#111111] py-3 text-white"
+      >
+        <div className="animate-marquee" style={{ animationDuration: "28s" }}>
+          {Array.from({ length: 8 }).map((_, index) => (
+            <span
+              key={index}
+              className="shrink-0 px-5 text-[11px] font-black uppercase tracking-[0.22em] text-white/90 sm:text-xs"
+            >
+              Off The Drip · Caffeine had its run ·
+            </span>
+          ))}
+        </div>
+      </section>
+
       {/* ── IDENTITY REFRAME ── */}
       <section className="bg-white px-4 py-8 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-7xl rounded-[28px] bg-[#EEEAF8] px-6 py-9 lg:px-16 lg:py-16">
@@ -319,9 +313,9 @@ export default async function ProductPage(props: {
                 The STUNN shift
               </p>
               <h2 className="mb-7 stunn-display text-[clamp(2.5rem,5vw,5.2rem)] uppercase leading-[0.95] text-[#111111]">
-                Keep the ritual.
+                The ritual.
                 <br />
-                Feel clear again.
+                Minus the dependency.
               </h2>
               <p className="max-w-md text-base leading-relaxed text-[#111111]/68">
                 STUNN gives coffee lovers a calmer way back to the cup: real
@@ -799,31 +793,28 @@ export default async function ProductPage(props: {
 
       {/* ── FINAL CTA RAIL ── */}
       <section className="bg-white px-4 py-12 lg:px-8 lg:py-20">
-        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[28px] bg-[#EDE9F8] lg:grid-cols-[1fr_0.9fr]">
+        <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[28px] bg-[#111111] text-white lg:grid-cols-[1fr_0.9fr]">
           <div className="flex flex-col justify-center px-7 py-12 lg:px-14 lg:py-16">
-            <span className="mb-5 w-fit rounded-full border border-[#5A3493]/25 bg-white/70 px-3 py-1 text-xs font-bold uppercase tracking-[0.22em] text-[#111111]/60">
-              Your next cup
+            <span className="mb-5 text-xs font-black uppercase tracking-[0.28em] text-white/45">
+              Off The Drip
             </span>
-            <h2 className="mb-5 stunn-display text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] text-[#111111]">
-              Keep the ritual.
-              <br />
-              Lose the caffeine.
+            <h2 className="mb-5 stunn-display text-[clamp(2.8rem,6vw,5.8rem)] uppercase leading-[0.92] text-white">
+              Caffeine had its run.
             </h2>
-            <p className="mb-8 max-w-xl text-base leading-relaxed text-[#111111]/68">
-              Everything you love about coffee - the taste, the pause, the
-              daily cue - without the jitters, crash, or sleep tradeoff.
+            <p className="mb-8 max-w-xl text-base leading-relaxed text-white/68">
+              You don&apos;t have to quit. You just stop needing it.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <a
                 href="#purchase"
-                className="stunn-cta-motion inline-flex items-center justify-center gap-2 rounded-[10px] border-2 border-[#5A3493] bg-[#5A3493] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white"
+                className="stunn-cta-motion inline-flex items-center justify-center gap-2 rounded-[10px] border-2 border-white bg-white px-8 py-4 text-sm font-bold uppercase tracking-wider text-[#111111]"
               >
-                Get STUNN from {BEST_VALUE_PER_DAY_LABEL}
+                Start your ritual
               </a>
-              <div className="flex items-center gap-2 text-sm text-[#111111]/60">
+              <div className="flex items-center gap-2 text-sm text-white/62">
                 <span className="text-[#EFAF00]">★★★★★</span>
                 <span>
-                  <strong className="text-[#111111]">4.8</strong> from 1,000+
+                  <strong className="text-white">4.8</strong> from 1,000+
                   customers
                 </span>
               </div>
@@ -834,8 +825,9 @@ export default async function ProductPage(props: {
               src={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
               alt="Friends enjoying a calm coffee ritual with STUNN"
               fill
-              className="object-cover"
+              className="object-cover opacity-78"
             />
+            <div className="absolute inset-0 bg-[#111111]/18" />
           </div>
         </div>
       </section>

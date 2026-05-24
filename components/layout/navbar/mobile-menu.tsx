@@ -157,13 +157,14 @@ export default function MobileMenu({ menu }: { menu: MobileMenuItem[] }) {
                 <div className="mt-auto pt-10">
                   <div className="rounded-[20px] bg-[#111111] p-5 text-white">
                     <p className="text-xs font-black uppercase tracking-[0.22em] text-white/45">
-                      Off The Drip
+                      Quiet Club
                     </p>
                     <p className="mt-2 text-2xl font-black uppercase leading-tight tracking-[-0.03em] text-white">
-                      You do not need caffeine to function.
+                      Calm ambition. Better coffee days.
                     </p>
                     <p className="mt-2 text-sm font-semibold leading-relaxed text-white/62">
-                      STUNN is always caffeine-free: real coffee ritual, calm focus, no dependency loop.
+                      Join the list for launch offers, private notes, and the
+                      caffeine-free coffee ritual we are building.
                     </p>
                   </div>
                 </div>

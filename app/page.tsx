@@ -8,6 +8,7 @@ import type { CSSProperties } from "react";
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 const PDP = "/products/focus-without-caffeine";
 const HOME_HERO_IMAGE = "/images/stunn-home-hero-banner-v2.png";
+const HOME_HERO_MOBILE_IMAGE = "/images/stunn-home-hero-mobile-product.png";
 const SACHET_POUR_IMAGE = "/images/stunn-sachet-pour.png";
 const MORNING_FOCUS_IMAGE = "/images/stunn-morning-focus-generated.jpg";
 const EVENING_RITUAL_IMAGE = "/images/stunn-evening-ritual-generated.jpg";
@@ -20,11 +21,9 @@ function Cta({
   variant?: "primary" | "light" | "outline";
 }) {
   const styles = {
-    primary:
-      "border-2 border-[#5A3493] bg-[#5A3493] text-white",
+    primary: "border-2 border-[#5A3493] bg-[#5A3493] text-white",
     light: "border-2 border-[#111111] bg-white text-[#111111]",
-    outline:
-      "border-2 border-[#111111] bg-white text-[#111111]",
+    outline: "border-2 border-[#111111] bg-white text-[#111111]",
   };
 
   return (
@@ -81,7 +80,11 @@ const RITUAL_STEPS = [
   ["01", "Same cue", "The cup still marks the beginning of work."],
   ["02", "Less tension", "No caffeine surge pushing the nervous system."],
   ["03", "Cleaner pace", "Support for focus without the afternoon rebound."],
-  ["04", "Better cutoff", "A coffee habit that does not ask for perfect timing."],
+  [
+    "04",
+    "Better cutoff",
+    "A coffee habit that does not ask for perfect timing.",
+  ],
 ];
 
 const PROOF_POINTS = [
@@ -153,18 +156,21 @@ export default function HomePage() {
               <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold text-[#111111]/60">
                 <span className="text-[#EFAF00]">★★★★★</span>
                 <span>
-                  <AnimatedNumber value={4.8} decimals={1} startAt={4.6} /> Stars
+                  <AnimatedNumber value={4.8} decimals={1} startAt={4.6} />{" "}
+                  Stars
                 </span>
                 <span className="h-4 w-px bg-[#111111]/18" />
                 <span>
-                  <AnimatedNumber value={1000} compact startAt={900} />+ Customers
+                  <AnimatedNumber value={1000} compact startAt={900} />+
+                  Customers
                 </span>
               </div>
               <h1 className="text-[clamp(42px,12.8vw,56px)] stunn-display uppercase leading-[0.88] tracking-normal text-[#111111]">
                 Caffeine had its run.
               </h1>
               <p className="mt-4 text-[16px] leading-[1.45] text-[#111111]/68">
-                Meet STUNN: decaf coffee with adaptogens for the ritual you love, without the jitters, crash, or dependency.
+                Meet STUNN: decaf coffee with adaptogens for the ritual you
+                love, without the jitters, crash, or dependency.
               </p>
               <div className="mt-5 flex flex-wrap gap-2 text-[12px] font-black uppercase tracking-[0.08em] text-[#111111]/58">
                 <span className="rounded-full border border-[#111111]/10 px-3 py-2">
@@ -184,12 +190,12 @@ export default function HomePage() {
               aria-label="Shop STUNN Decaf Coffee"
               className="block px-4 pb-5"
             >
-              <div className="relative h-[320px] overflow-hidden rounded-[24px] bg-[#F4F0FB] shadow-[0_18px_50px_rgba(17,17,17,0.1)]">
+              <div className="relative h-[230px] overflow-hidden rounded-[24px] bg-[#F4F0FB] shadow-[0_18px_50px_rgba(17,17,17,0.1)] min-[430px]:h-[270px]">
                 <Image
                   src={HOME_HERO_IMAGE}
                   alt="STUNN Decaf Coffee box, sachet, and coffee"
                   fill
-                  className="animate-slow-zoom object-cover object-[88%_center]"
+                  className="animate-slow-zoom object-cover object-[92%_center]"
                   priority
                   sizes="100vw"
                 />
@@ -232,7 +238,8 @@ export default function HomePage() {
               Caffeine had its run.
             </h1>
             <p className="mt-4 max-w-[520px] text-[17px] leading-[1.45] text-[#111111]/68 sm:mt-6 sm:text-xl sm:leading-relaxed">
-              Meet STUNN: decaf coffee with adaptogens for the ritual you love, without the jitters, crash, or dependency.
+              Meet STUNN: decaf coffee with adaptogens for the ritual you love,
+              without the jitters, crash, or dependency.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
               <Cta>Shop now - save up to 25%</Cta>
@@ -286,9 +293,9 @@ export default function HomePage() {
                 needing caffeine to function.
               </p>
               <p className="mt-5 text-base leading-relaxed text-white/68">
-                This is Off The Drip. You do not have to quit caffeine. You
-                just stop being owned by it. Every STUNN product is
-                caffeine-free by design, always.
+                You do not have to quit coffee. You just stop letting caffeine
+                decide how the day feels. STUNN keeps the cup and removes the
+                stimulant loop.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
@@ -301,7 +308,7 @@ export default function HomePage() {
                   href="/about-us"
                   className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/26 px-6 text-sm font-black uppercase tracking-[0.08em] text-white transition hover:border-white hover:bg-white/8"
                 >
-                  Read the movement
+                  Learn about STUNN
                 </Link>
               </div>
             </div>
@@ -315,7 +322,8 @@ export default function HomePage() {
             How we're raising the bar for decaf.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#111111]/68 sm:text-xl">
-            STUNN is real decaf coffee with functional support, built for people who want the cup to feel easier on the body and the day.
+            STUNN is real decaf coffee with functional support, built for people
+            who want the cup to feel easier on the body and the day.
           </p>
 
           <div className="mx-auto mt-10 inline-flex rounded-full bg-[#F4F0FB] p-1 shadow-[0_18px_50px_rgba(17,17,17,0.08)]">
@@ -385,17 +393,25 @@ export default function HomePage() {
               Start sharp. Stay composed.
             </h2>
             <p className="mt-5 max-w-lg text-base leading-relaxed text-[#111111]/68">
-              A familiar coffee moment with a cleaner arc: steady attention, less edge, and no need to manage the crash later.
+              A familiar coffee moment with a cleaner arc: steady attention,
+              less edge, and no need to manage the crash later.
             </p>
 
             <div className="mt-9 space-y-6">
               {PROOF_POINTS.map(([amount, suffix, ingredient, copy]) => (
                 <div key={ingredient}>
                   <p className="text-[clamp(44px,8vw,82px)] font-black leading-none tracking-normal text-[#111111]">
-                    <AnimatedNumber value={amount as number} suffix={suffix as string} />
+                    <AnimatedNumber
+                      value={amount as number}
+                      suffix={suffix as string}
+                    />
                   </p>
-                  <h3 className="mt-1 text-2xl font-black tracking-normal text-[#111111]">{ingredient}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-[#111111]/62">{copy}</p>
+                  <h3 className="mt-1 text-2xl font-black tracking-normal text-[#111111]">
+                    {ingredient}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-[#111111]/62">
+                    {copy}
+                  </p>
                 </div>
               ))}
             </div>
@@ -420,18 +436,26 @@ export default function HomePage() {
                 Different reasons. Same better cup.
               </h2>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-[#111111]/68 sm:text-lg">
-                STUNN is for people who are not trying to quit coffee. They are trying to stop letting caffeine decide how the day feels.
+                STUNN is for people who are not trying to quit coffee. They are
+                trying to stop letting caffeine decide how the day feels.
               </p>
             </div>
             <div className="overflow-hidden rounded-[22px] border border-[#111111]/10 bg-white shadow-[0_24px_70px_rgba(17,17,17,0.08)]">
               {RITUAL_STEPS.map(([number, title, copy]) => (
-                <div key={number} className="grid grid-cols-[48px_1fr] gap-4 border-b border-[#111111]/10 p-5 last:border-b-0">
+                <div
+                  key={number}
+                  className="grid grid-cols-[48px_1fr] gap-4 border-b border-[#111111]/10 p-5 last:border-b-0"
+                >
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#111111] text-xs font-black text-white">
                     {number}
                   </span>
                   <div>
-                    <h3 className="text-xl font-black uppercase tracking-normal text-[#111111]">{title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-[#111111]/62">{copy}</p>
+                    <h3 className="text-xl font-black uppercase tracking-normal text-[#111111]">
+                      {title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-[#111111]/62">
+                      {copy}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -440,14 +464,20 @@ export default function HomePage() {
 
           <div className="mt-10 grid border-t border-[#111111]/12 pt-8 lg:grid-cols-3 lg:divide-x lg:divide-[#111111]/12">
             {PERSONAS.map((persona) => (
-              <Link key={persona.label} href={PDP} className="block py-5 lg:px-8 lg:first:pl-0 lg:last:pr-0">
+              <Link
+                key={persona.label}
+                href={PDP}
+                className="block py-5 lg:px-8 lg:first:pl-0 lg:last:pr-0"
+              >
                 <p className="mb-4 text-xs font-black uppercase tracking-[0.24em] text-[#111111]/42">
                   {persona.label}
                 </p>
                 <h3 className="text-2xl stunn-display uppercase leading-[1.05] tracking-normal text-[#111111]">
                   {persona.title}
                 </h3>
-                <p className="mt-4 text-sm leading-relaxed text-[#111111]/62">{persona.copy}</p>
+                <p className="mt-4 text-sm leading-relaxed text-[#111111]/62">
+                  {persona.copy}
+                </p>
               </Link>
             ))}
           </div>
@@ -462,7 +492,9 @@ export default function HomePage() {
               Start with three boxes. Save 25%.
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-[#111111]/65">
-              The 3-box subscription is the best way to make the switch stick: lowest price per day, free shipping included, and a full ritual reset.
+              The 3-box subscription is the best way to make the switch stick:
+              lowest price per day, free shipping included, and a full ritual
+              reset.
             </p>
           </div>
 
@@ -524,14 +556,21 @@ export default function HomePage() {
           </div>
           <div className="grid gap-3">
             {FAQS.map((faq) => (
-              <details key={faq.question} className="group rounded-[16px] border border-[#111111]/10 bg-white p-5 shadow-[0_12px_40px_rgba(17,17,17,0.04)]">
+              <details
+                key={faq.question}
+                className="group rounded-[16px] border border-[#111111]/10 bg-white p-5 shadow-[0_12px_40px_rgba(17,17,17,0.04)]"
+              >
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-5">
-                  <span className="text-lg font-black text-[#111111]">{faq.question}</span>
+                  <span className="text-lg font-black text-[#111111]">
+                    {faq.question}
+                  </span>
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F4F0FB] text-[#111111] transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>
-                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#111111]/65">{faq.answer}</p>
+                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#111111]/65">
+                  {faq.answer}
+                </p>
               </details>
             ))}
           </div>
@@ -541,16 +580,19 @@ export default function HomePage() {
       <section className="bg-white px-5 py-12 sm:px-8 lg:py-20">
         <div className="mx-auto grid max-w-[1440px] overflow-hidden rounded-[28px] bg-[#F4F0FB] lg:grid-cols-[1fr_0.82fr]">
           <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-16">
-              <Label>Anytime coffee</Label>
+            <Label>Anytime coffee</Label>
             <h2 className="max-w-3xl text-[clamp(44px,7vw,102px)] stunn-display uppercase leading-[0.92] tracking-normal text-[#111111]">
               The afternoon cup is back.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-[#111111]/65">
-              Have coffee when you actually want it, not only when your sleep schedule can tolerate it.
+              Have coffee when you actually want it, not only when your sleep
+              schedule can tolerate it.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Cta>Get STUNN from {BEST_VALUE_PER_DAY_LABEL}</Cta>
-              <span className="text-sm font-semibold text-[#111111]/55">Sleep-friendly by design</span>
+              <span className="text-sm font-semibold text-[#111111]/55">
+                Sleep-friendly by design
+              </span>
             </div>
           </div>
           <Link

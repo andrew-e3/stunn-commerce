@@ -1,14 +1,18 @@
 "use client";
 
+import {
+  formatPerDay,
+  perDay,
+  priceAfterDiscount,
+  SUPPLY_TIERS,
+} from "lib/pricing";
 import { ProductVariant } from "lib/shopify/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-const VARIANT_CONFIG: Record<string, { days: number; popular: boolean }> = {
-  "1 Month": { days: 30, popular: false },
-  "2 Months": { days: 60, popular: false },
-  "3 Months": { days: 90, popular: true },
-};
+const VARIANT_CONFIG = Object.fromEntries(
+  SUPPLY_TIERS.map((tier) => [tier.label, tier]),
+);
 
 export function StunnVariantSelector({
   variants,
@@ -45,8 +49,11 @@ export function StunnVariantSelector({
             "";
           const config = VARIANT_CONFIG[duration];
           const isSelected = selectedDuration === duration;
-          const perDay = config
-            ? (parseFloat(variant.price.amount) / config.days).toFixed(2)
+          const dailyPrice = config
+            ? perDay(
+                priceAfterDiscount(config.retailPrice, config.subDiscountPct),
+                config.count,
+              )
             : null;
 
           return (
@@ -71,9 +78,9 @@ export function StunnVariantSelector({
               <span className="mt-1 text-base font-bold text-gray-900">
                 ${parseFloat(variant.price.amount).toFixed(2)}
               </span>
-              {perDay && (
+              {dailyPrice && (
                 <span className="text-xs font-medium text-[#5A3493]">
-                  ${perDay}/day
+                  {formatPerDay(dailyPrice)}
                 </span>
               )}
             </button>

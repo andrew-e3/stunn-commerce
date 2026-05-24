@@ -17,6 +17,7 @@ export type CartProduct = {
   handle: string;
   title: string;
   featuredImage: Image;
+  sellingPlanGroups?: SellingPlanGroup[];
 };
 
 export type SellingPlan = {
@@ -94,7 +95,10 @@ export type Page = {
   updatedAt: string;
 };
 
-export type Product = Omit<ShopifyProduct, "variants" | "images" | "sellingPlanGroups"> & {
+export type Product = Omit<
+  ShopifyProduct,
+  "variants" | "images" | "sellingPlanGroups"
+> & {
   variants: ProductVariant[];
   images: Image[];
   sellingPlanGroups: SellingPlanGroup[];

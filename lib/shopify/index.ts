@@ -198,12 +198,12 @@ const reshapeProduct = (
     ...rest,
     images: reshapeImages(images, product.title),
     variants: removeEdgesAndNodes(variants),
-    sellingPlanGroups: removeEdgesAndNodes(sellingPlanGroups ?? { edges: [] }).map(
-      (group) => ({
-        name: group.name,
-        sellingPlans: removeEdgesAndNodes(group.sellingPlans ?? { edges: [] }),
-      }),
-    ),
+    sellingPlanGroups: removeEdgesAndNodes(
+      sellingPlanGroups ?? { edges: [] },
+    ).map((group) => ({
+      name: group.name,
+      sellingPlans: removeEdgesAndNodes(group.sellingPlans ?? { edges: [] }),
+    })),
   };
 };
 
@@ -223,9 +223,13 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
   return reshapedProducts;
 };
 
-export async function createCart(
-  lineItems?: { merchandiseId: string; quantity: number }[],
-): Promise<Cart> {
+type CartLineInput = {
+  merchandiseId: string;
+  quantity: number;
+  sellingPlanId?: string;
+};
+
+export async function createCart(lineItems?: CartLineInput[]): Promise<Cart> {
   const res = await shopifyFetch<ShopifyCreateCartOperation>({
     query: createCartMutation,
     variables: lineItems ? { lineItems } : undefined,
@@ -234,9 +238,7 @@ export async function createCart(
   return reshapeCart(res.body.data.cartCreate.cart);
 }
 
-export async function addToCart(
-  lines: { merchandiseId: string; quantity: number }[],
-): Promise<Cart> {
+export async function addToCart(lines: CartLineInput[]): Promise<Cart> {
   const cartId = (await cookies()).get("cartId")?.value!;
   const res = await shopifyFetch<ShopifyAddToCartOperation>({
     query: addToCartMutation,

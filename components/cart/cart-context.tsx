@@ -19,11 +19,20 @@ type UpdateType = "plus" | "minus" | "delete";
 type CartAction =
   | {
       type: "UPDATE_ITEM";
-      payload: { merchandiseId: string; updateType: UpdateType };
+      payload: {
+        lineId?: string;
+        merchandiseId: string;
+        updateType: UpdateType;
+      };
     }
   | {
       type: "ADD_ITEM";
-      payload: { variant: ProductVariant; product: Product; quantity?: number };
+      payload: {
+        variant: ProductVariant;
+        product: Product;
+        quantity?: number;
+        sellingPlanId?: string;
+      };
     };
 
 type CartContextType = {
@@ -70,11 +79,15 @@ function createOrUpdateCartItem(
   variant: ProductVariant,
   product: Product,
   quantityToAdd: number = 1,
+  sellingPlanId?: string,
 ): CartItem {
   const quantity = existingItem
     ? existingItem.quantity + quantityToAdd
     : quantityToAdd;
   const totalAmount = calculateItemCost(quantity, variant.price.amount);
+  const sellingPlan = product.sellingPlanGroups
+    ?.flatMap((group) => group.sellingPlans)
+    .find((plan) => plan.id === sellingPlanId);
 
   return {
     id: existingItem?.id,
@@ -96,6 +109,16 @@ function createOrUpdateCartItem(
         featuredImage: product.featuredImage,
       },
     },
+    ...(sellingPlanId
+      ? {
+          sellingPlanAllocation: {
+            sellingPlan: {
+              id: sellingPlanId,
+              name: sellingPlan?.name ?? "Subscription",
+            },
+          },
+        }
+      : {}),
   };
 }
 
@@ -138,10 +161,10 @@ function cartReducer(state: Cart | undefined, action: CartAction): Cart {
 
   switch (action.type) {
     case "UPDATE_ITEM": {
-      const { merchandiseId, updateType } = action.payload;
+      const { lineId, merchandiseId, updateType } = action.payload;
       const updatedLines = currentCart.lines
         .map((item) =>
-          item.merchandise.id === merchandiseId
+          (lineId ? item.id === lineId : item.merchandise.id === merchandiseId)
             ? updateCartItem(item, updateType)
             : item,
         )
@@ -166,20 +189,28 @@ function cartReducer(state: Cart | undefined, action: CartAction): Cart {
       };
     }
     case "ADD_ITEM": {
-      const { variant, product, quantity } = action.payload;
+      const { variant, product, quantity, sellingPlanId } = action.payload;
       const existingItem = currentCart.lines.find(
-        (item) => item.merchandise.id === variant.id,
+        (item) =>
+          item.merchandise.id === variant.id &&
+          (item.sellingPlanAllocation?.sellingPlan.id ?? undefined) ===
+            sellingPlanId,
       );
       const updatedItem = createOrUpdateCartItem(
         existingItem,
         variant,
         product,
         quantity,
+        sellingPlanId,
       );
 
       const updatedLines = existingItem
         ? currentCart.lines.map((item) =>
-            item.merchandise.id === variant.id ? updatedItem : item,
+            item.merchandise.id === variant.id &&
+            (item.sellingPlanAllocation?.sellingPlan.id ?? undefined) ===
+              sellingPlanId
+              ? updatedItem
+              : item,
           )
         : [...currentCart.lines, updatedItem];
 
@@ -220,10 +251,14 @@ export function useCart() {
     cartReducer,
   );
 
-  const updateCartItem = (merchandiseId: string, updateType: UpdateType) => {
+  const updateCartItem = (
+    merchandiseId: string,
+    updateType: UpdateType,
+    lineId?: string,
+  ) => {
     updateOptimisticCart({
       type: "UPDATE_ITEM",
-      payload: { merchandiseId, updateType },
+      payload: { lineId, merchandiseId, updateType },
     });
   };
 
@@ -231,10 +266,11 @@ export function useCart() {
     variant: ProductVariant,
     product: Product,
     quantity?: number,
+    sellingPlanId?: string,
   ) => {
     updateOptimisticCart({
       type: "ADD_ITEM",
-      payload: { variant, product, quantity },
+      payload: { variant, product, quantity, sellingPlanId },
     });
   };
 

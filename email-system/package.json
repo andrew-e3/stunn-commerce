@@ -1,0 +1,33 @@
+{
+  "name": "stunn-email-system",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "email dev --dir emails --port 3333",
+    "export": "email export --outDir out --dir emails --pretty",
+    "export:single": "tsx scripts/export-single.ts",
+    "sync:klaviyo": "tsx scripts/sync-klaviyo.ts",
+    "flows:create": "tsx scripts/create-lifecycle-flows.ts"
+  },
+  "dependencies": {
+    "@react-email/components": "1.0.12",
+    "@react-email/tailwind": "2.0.7",
+    "@react-email/ui": "^6.1.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "sharp": "^0.34.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "react-email": "6.1.4",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

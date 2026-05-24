@@ -49,7 +49,10 @@ function DarkCheckIcon() {
 }
 
 /** Find the Appstle selling plan ID that matches a given delivery interval in months */
-function findSellingPlanId(product: Product, intervalMonths: number): string | undefined {
+function findSellingPlanId(
+  product: Product,
+  intervalMonths: number,
+): string | undefined {
   for (const group of product.sellingPlanGroups ?? []) {
     for (const plan of group.sellingPlans ?? []) {
       if (
@@ -134,8 +137,8 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         </span>
       </h1>
       <p className="mb-5 max-w-lg text-base font-medium leading-snug text-[#111111]/75 lg:text-lg">
-        Quit caffeine. Keep the edge. Everything you love about coffee. None of
-        what you don&apos;t: no jitters, no crash, no dependency.
+        Real decaf coffee with functional support. The ritual stays. The
+        caffeine loop goes.
       </p>
 
       {/* Benefit chips */}
@@ -236,7 +239,9 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             <p className="text-xs text-[#111111]">
               <strong>{display.label}</strong>{" "}
               <span>{display.count} Count</span>{" "}
-              <span>{formatPerDay(subPerDay, { spaced: true, unit: "Day" })}</span>
+              <span>
+                {formatPerDay(subPerDay, { spaced: true, unit: "Day" })}
+              </span>
             </p>
           </div>
           <div className="text-right">
@@ -257,7 +262,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           disabled={!oneBoxVariant || addPending}
           onClick={() => {
             if (!oneBoxVariant) return;
-            addCartItem(oneBoxVariant, product, display.qty);
+            addCartItem(oneBoxVariant, product, display.qty, sellingPlanId);
             startAddTransition(async () => {
               await addItem(null, oneBoxVariant.id, display.qty, sellingPlanId);
             });
@@ -301,9 +306,9 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             </span>
           ) : (
             <span className="font-semibold underline text-[#111111]/82">
-              One-Time Purchase —{" "}
-              ${display.retailPrice.toFixed(0)} (
-              {formatPerDay(oneTimePerDay, { spaced: true, unit: "Day" })})
+              One-Time Purchase — ${display.retailPrice.toFixed(0)} (
+              {formatPerDay(oneTimePerDay, { spaced: true, unit: "Day" })}) · no
+              subscription
             </span>
           )}
         </button>
@@ -355,8 +360,20 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               >
                 <circle cx="12" cy="12" r="9" />
                 <path d="M8 14.5c1 1.2 2.3 1.8 4 1.8s3-.6 4-1.8" />
-                <circle cx="9" cy="9.5" r="1" fill="currentColor" stroke="none" />
-                <circle cx="15" cy="9.5" r="1" fill="currentColor" stroke="none" />
+                <circle
+                  cx="9"
+                  cy="9.5"
+                  r="1"
+                  fill="currentColor"
+                  stroke="none"
+                />
+                <circle
+                  cx="15"
+                  cy="9.5"
+                  r="1"
+                  fill="currentColor"
+                  stroke="none"
+                />
               </svg>
             ),
             label: "Over 1000+\nHappy Customers",
@@ -377,13 +394,21 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       {/* Payment icons */}
       <div className="mb-6 rounded-[10px] border border-[#5A3493]/10 p-3 text-center">
         <p className="mb-2 text-xs text-[#111111]/45">We accept:</p>
-        <Image
-          src={`${CDN}icon-payment-mode-logos.svg`}
-          alt="Visa, Apple Pay, Mastercard and more"
-          width={300}
-          height={24}
-          className="mx-auto h-5 w-auto"
-        />
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <Image
+            src={`${CDN}icon-payment-mode-logos.svg`}
+            alt="Visa, Shop Pay, Amex, Discover, and Mastercard"
+            width={300}
+            height={24}
+            className="h-5 w-auto"
+          />
+          <span
+            aria-label="PayPal"
+            className="inline-flex h-5 items-center rounded-[2px] border border-[#D9D9D9] bg-white px-1.5 text-[9px] font-black leading-none tracking-[-0.03em] text-[#003087]"
+          >
+            Pay<span className="text-[#009CDE]">Pal</span>
+          </span>
+        </div>
       </div>
 
       {/* Accordions */}
@@ -396,9 +421,10 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
       </Accordion>
       <Accordion title="WHY STUNN?">
         <p className="text-sm leading-relaxed text-[#111111]/68">
-          Most coffee gives you ritual and side effects together. STUNN keeps
-          the ritual and removes the caffeine loop: the spike, crash, disrupted
-          sleep, and tolerance creep.
+          Most people don&apos;t realise caffeine is running the day until they
+          skip the cup: the headache, the second coffee, the 2pm crash. STUNN is
+          for people who want the cup without the cycle: real decaf coffee,
+          functional support, same ritual, no dependency loop.
         </p>
       </Accordion>
       <Accordion title="DIRECTIONS">
