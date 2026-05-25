@@ -1,7 +1,7 @@
 import Footer from "components/layout/footer";
 import { OffTheDripCapture } from "components/off-the-drip-capture";
+import { SiteImage } from "components/site-image";
 import { BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
-import Image from "next/image";
 import Link from "next/link";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
@@ -82,8 +82,9 @@ export default function AboutPage() {
   return (
     <>
       <section className="relative min-h-[calc(100vh-68px)] overflow-hidden bg-[#111111] text-white">
-        <Image
-          src={ABOUT_HERO_IMAGE}
+        <SiteImage
+          slot="about-hero"
+          fallbackSrc={ABOUT_HERO_IMAGE}
           alt="A glass of coffee in purple light with flowers and coffee beans"
           fill
           className="object-cover object-center opacity-90"
@@ -174,8 +175,9 @@ export default function AboutPage() {
       <section className="bg-white">
         <div className="mx-auto grid max-w-screen-xl lg:grid-cols-2">
           <div className="relative min-h-[420px] overflow-hidden lg:min-h-[620px]">
-            <Image
-              src="/images/stunn-founder.webp"
+            <SiteImage
+              slot="founder"
+              fallbackSrc="/images/stunn-founder.webp"
               alt="Andrew Jennings, founder of STUNN"
               fill
               className="scale-[1.12] object-cover object-[52%_30%]"
@@ -254,8 +256,9 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="relative order-first min-h-[380px] lg:order-last lg:min-h-[680px]">
-            <Image
-              src={`${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`}
+            <SiteImage
+              slot="sachet-pour-adaptogens"
+              fallbackSrc={`${CDN}img-stunn-decaf-coffee-stick-pour-adaptogens-nootropics-480-x-745.jpg`}
               alt="STUNN sachet poured into coffee"
               fill
               className="object-cover object-center"
@@ -312,8 +315,9 @@ export default function AboutPage() {
             href={PDP}
             className="relative min-h-[360px] overflow-hidden bg-white/45 lg:min-h-[560px]"
           >
-            <Image
-              src={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
+            <SiteImage
+              slot="lifestyle-friends"
+              fallbackSrc={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
               alt="Friends enjoying a calm coffee ritual with STUNN"
               fill
               className="object-cover object-center"

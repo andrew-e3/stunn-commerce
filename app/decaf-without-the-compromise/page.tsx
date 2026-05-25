@@ -144,6 +144,7 @@ const page: ListicleLandingPageProps = {
   finalHeadline: "Get the cup back.",
   finalSubhead: "Real coffee taste. No caffeine. Free shipping. Cancel any time.",
   stickyLabel: "Decaf without compromise",
+  slotPrefix: "lp-decaf",
 };
 
 export default function DecafWithoutTheCompromisePage() {

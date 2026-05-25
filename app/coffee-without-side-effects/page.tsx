@@ -141,6 +141,7 @@ const page: ListicleLandingPageProps = {
   finalSubhead:
     "You do not have to quit coffee. You just stop letting caffeine decide how the day feels.",
   stickyLabel: "Coffee without the side effects",
+  slotPrefix: "lp-coffee",
 };
 
 export default function CoffeeWithoutSideEffectsPage() {

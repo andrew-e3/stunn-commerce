@@ -5,7 +5,7 @@ import { PurchaseSelectionProvider } from "components/product/purchase-selection
 import { BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
 import { getProduct } from "lib/shopify";
 import type { Metadata } from "next";
-import Image from "next/image";
+import { SiteImage } from "components/site-image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -225,8 +225,9 @@ export default async function FoundingMemberPage() {
 
             <div className="relative mx-auto flex aspect-square w-full max-w-[340px] items-center justify-center">
               <div className="absolute inset-6 rounded-full bg-white/70 blur-2xl" />
-              <Image
-                src={`${CDN}mockup-stunn-box.webp`}
+              <SiteImage
+                slot="product-box-mockup"
+                fallbackSrc={`${CDN}mockup-stunn-box.webp`}
                 alt="STUNN decaf coffee box"
                 width={420}
                 height={420}
@@ -312,11 +313,14 @@ export default async function FoundingMemberPage() {
                 alt: "A calm morning coffee ritual after switching to STUNN",
                 objectPosition: "center center",
               },
-            ].map((step) => (
+            ].map((step, i) => (
               <div key={step.time} className="flex flex-col">
                 <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[8px]">
-                  <Image
-                    src={step.img} alt={step.alt} fill
+                  <SiteImage
+                    slot={`fm-timeline-${i}`}
+                    fallbackSrc={step.img}
+                    alt={step.alt}
+                    fill
                     className="object-cover object-top"
                     style={{ objectPosition: step.objectPosition || "center top" }}
                   />
@@ -342,10 +346,12 @@ export default async function FoundingMemberPage() {
         {/* Formula panel */}
         <div className="flex flex-col lg:flex-row">
           <div className="relative aspect-[4/3] w-full lg:aspect-auto lg:w-1/2 lg:min-h-[560px]">
-            <Image
-              src="/images/stunn-function-pour-corrected.png"
+            <SiteImage
+              slot="fm-formula-pour"
+              fallbackSrc="/images/stunn-function-pour-corrected.png"
               alt="STUNN sachet poured into coffee"
-              fill className="object-cover object-center"
+              fill
+              className="object-cover object-center"
             />
           </div>
           <div className="flex flex-col justify-center bg-[#EDE9F8] px-7 py-14 lg:w-1/2 lg:px-16">
@@ -427,7 +433,13 @@ export default async function FoundingMemberPage() {
             </a>
           </div>
           <div className="relative order-1 aspect-[4/3] w-full lg:order-2 lg:aspect-auto lg:w-1/2 lg:min-h-[500px]">
-            <Image src={COMPARISON_IMAGE} alt="STUNN vs regular coffee" fill className="object-cover" />
+            <SiteImage
+              slot="comparison-pour"
+              fallbackSrc={COMPARISON_IMAGE}
+              alt="STUNN vs regular coffee"
+              fill
+              className="object-cover"
+            />
           </div>
         </div>
       </section>
@@ -436,10 +448,13 @@ export default async function FoundingMemberPage() {
       <section className="bg-white">
         <div className="mx-auto max-w-screen-xl px-0 lg:grid lg:grid-cols-2">
           <div className="relative min-h-[400px] overflow-hidden lg:min-h-[560px]">
-            <Image
-              src="/images/stunn-founder.webp"
+            <SiteImage
+              slot="founder"
+              fallbackSrc="/images/stunn-founder.webp"
               alt="Andrew Jennings, founder of STUNN"
-              fill className="object-cover object-center" priority
+              fill
+              className="object-cover object-center"
+              priority
             />
           </div>
           <div className="flex flex-col justify-center px-8 py-12 lg:px-14">
@@ -609,10 +624,12 @@ export default async function FoundingMemberPage() {
             </div>
           </div>
           <div className="relative order-first aspect-[4/3] lg:order-last lg:aspect-auto">
-            <Image
-              src={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
+            <SiteImage
+              slot="lifestyle-friends"
+              fallbackSrc={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
               alt="Friends enjoying a calm coffee ritual with STUNN"
-              fill className="object-cover"
+              fill
+              className="object-cover"
             />
           </div>
         </div>

@@ -1,5 +1,5 @@
+import { SiteImage } from "components/site-image";
 import { BEST_VALUE_PER_DAY_LABEL } from "lib/pricing";
-import Image from "next/image";
 import Link from "next/link";
 
 const PDP = "/products/focus-without-caffeine";
@@ -46,6 +46,8 @@ export type ListicleLandingPageProps = {
   finalHeadline: string;
   finalSubhead: string;
   stickyLabel: string;
+  /** Prefix for Site Image slot keys, so each LP's images swap independently. */
+  slotPrefix: string;
 };
 
 function PrimaryCta({ children }: { children: React.ReactNode }) {
@@ -66,6 +68,7 @@ export function StunnListicleLandingPage({
   trustRow,
   heroImage,
   heroAlt,
+  slotPrefix,
   heroCaptionEyebrow,
   heroCaption,
   listEyebrow,
@@ -119,8 +122,9 @@ export function StunnListicleLandingPage({
           <div className="relative">
             <div className="absolute -inset-x-8 top-8 h-2/3 rounded-full bg-[#D9C9F2]/70 blur-3xl" />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[18px] bg-[#2D2145] shadow-[0_24px_70px_rgba(17,17,17,0.15)] sm:aspect-[5/4] lg:aspect-[1.08/1]">
-              <Image
-                src={heroImage}
+              <SiteImage
+                slot={`${slotPrefix}-hero`}
+                fallbackSrc={heroImage}
                 alt={heroAlt}
                 fill
                 priority
@@ -193,8 +197,9 @@ export function StunnListicleLandingPage({
                 </div>
               </div>
               <div className="relative aspect-[5/4] overflow-hidden rounded-[16px] bg-[#EEEAF8] shadow-[0_18px_50px_rgba(17,17,17,0.1)]">
-                <Image
-                  src={section.image}
+                <SiteImage
+                  slot={`${slotPrefix}-section-${section.number}`}
+                  fallbackSrc={section.image}
                   alt={section.alt}
                   fill
                   className="object-cover object-center"
@@ -272,8 +277,9 @@ export function StunnListicleLandingPage({
       <section className="bg-white px-5 py-14 sm:px-8 lg:py-20">
         <div className="mx-auto grid max-w-[1180px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="relative aspect-[5/4] overflow-hidden rounded-[16px] bg-white shadow-[0_18px_55px_rgba(17,17,17,0.12)]">
-            <Image
-              src="/images/stunn-sachet-pour.png"
+            <SiteImage
+              slot={`${slotPrefix}-closing`}
+              fallbackSrc="/images/stunn-sachet-pour.png"
               alt="STUNN sachet being poured into a cup"
               fill
               className="object-cover object-center"

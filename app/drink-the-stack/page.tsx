@@ -140,6 +140,7 @@ const page: ListicleLandingPageProps = {
   finalHeadline: "Drink the stack.",
   finalSubhead: "Full doses. 0mg caffeine. Free shipping. Cancel any time.",
   stickyLabel: "Drink the stack",
+  slotPrefix: "lp-stack",
 };
 
 export default function DrinkTheStackPage() {

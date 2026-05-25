@@ -5,8 +5,8 @@ import { PurchaseSelectionProvider } from "components/product/purchase-selection
 import Footer from "components/layout/footer";
 import { HIDDEN_PRODUCT_TAG } from "lib/constants";
 import { getProduct } from "lib/shopify";
+import { SiteImage } from "components/site-image";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -326,8 +326,9 @@ export default async function ProductPage(props: {
 
             <div className="relative mx-auto flex aspect-square w-full max-w-[340px] items-center justify-center">
               <div className="absolute inset-6 rounded-full bg-white/70 blur-2xl" />
-              <Image
-                src={`${CDN}mockup-stunn-box.webp`}
+              <SiteImage
+                slot="product-box-mockup"
+                fallbackSrc={`${CDN}mockup-stunn-box.webp`}
                 alt="STUNN decaf coffee box"
                 width={420}
                 height={420}
@@ -467,11 +468,12 @@ export default async function ProductPage(props: {
                 alt: "A calm morning coffee ritual after switching to STUNN",
                 objectPosition: "center center",
               },
-            ].map((step) => (
+            ].map((step, i) => (
               <div key={step.time} className="flex flex-col">
                 <div className="relative aspect-[3/4] w-full overflow-hidden rounded-[8px]">
-                  <Image
-                    src={step.img}
+                  <SiteImage
+                    slot={`pdp-timeline-${i}`}
+                    fallbackSrc={step.img}
                     alt={step.alt}
                     fill
                     className="object-cover object-top"
@@ -528,8 +530,9 @@ export default async function ProductPage(props: {
 
               <div className="relative mt-10 flex min-h-[300px] items-center justify-center sm:min-h-[390px]">
                 <div className="w-[min(96vw,540px)] sm:w-[min(78vw,620px)] lg:w-[min(46vw,640px)]">
-                  <Image
-                    src={`${CDN}3-boxes-of-stunn-1080x1080.webp`}
+                  <SiteImage
+                    slot="product-3-boxes"
+                    fallbackSrc={`${CDN}3-boxes-of-stunn-1080x1080.webp`}
                     alt="Three boxes of STUNN Decaf Coffee"
                     width={760}
                     height={760}
@@ -657,8 +660,9 @@ export default async function ProductPage(props: {
             </a>
           </div>
           <div className="relative order-1 aspect-[4/3] w-full lg:order-2 lg:aspect-auto lg:w-1/2 lg:min-h-[500px]">
-            <Image
-              src={COMPARISON_IMAGE}
+            <SiteImage
+              slot="comparison-pour"
+              fallbackSrc={COMPARISON_IMAGE}
               alt="STUNN vs regular coffee"
               fill
               className="object-cover"
@@ -671,8 +675,9 @@ export default async function ProductPage(props: {
       <section className="bg-white">
         <div className="mx-auto max-w-screen-xl px-0 lg:grid lg:grid-cols-2">
           <div className="relative min-h-[400px] overflow-hidden lg:min-h-[560px]">
-            <Image
-              src="/images/stunn-founder.webp"
+            <SiteImage
+              slot="founder"
+              fallbackSrc="/images/stunn-founder.webp"
               alt="Andrew Jennings, founder of STUNN"
               fill
               className="scale-[1.12] object-cover object-[52%_30%]"
@@ -821,8 +826,9 @@ export default async function ProductPage(props: {
             </div>
           </div>
           <div className="relative order-first aspect-[4/3] lg:order-last lg:aspect-auto">
-            <Image
-              src={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
+            <SiteImage
+              slot="lifestyle-friends"
+              fallbackSrc={`${CDN}img-happy-women-business-coffee-break-holding-mugs-steaming-latte_1.webp`}
               alt="Friends enjoying a calm coffee ritual with STUNN"
               fill
               className="object-cover opacity-78"
