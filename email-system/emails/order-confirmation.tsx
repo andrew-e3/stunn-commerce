@@ -15,18 +15,18 @@ import { typography } from "../tokens/typography";
 
 export const templateName = "STUNN - Order Confirmation";
 export const subject = "Your STUNN order is confirmed.";
-export const preview = "The caffeine-free ritual is on its way.";
+export const preview = "Your quieter coffee ritual is on its way.";
 
 export default function OrderConfirmation() {
   return (
     <EmailFrame
       preheader={preview}
       eyebrow="Order confirmed"
-      title="Your ritual is on its way."
+      title="Your quieter coffee ritual starts now."
       intro={<>Thanks {tags.firstName} — we have your order.</>}
       image={urls.ritual}
       imageLabel="Your caffeine-free coffee ritual is moving"
-      cta={{ href: urls.home, label: "Visit STUNN" }}
+      cta={{ href: urls.product, label: "View your ritual" }}
       footerNote="You are receiving this transactional email because you placed an order with STUNN."
     >
       <StatementBand kicker="Confirmed">
@@ -35,23 +35,27 @@ export default function OrderConfirmation() {
       <CopySection>
         <Copy>
           We are getting your STUNN ready now. You will receive tracking as soon
-          as it ships.
+          as it ships, and your order will move through Shopify checkout and
+          fulfilment like any normal coffee order.
         </Copy>
         <Copy>
           When it lands: mix one sachet with hot water or milk, stir, and keep
-          the coffee ritual without the caffeine dependency.
+          the coffee ritual without the caffeine dependency. Use it where
+          caffeine usually wins: the second cup, the afternoon cup, or the
+          evening ritual.
         </Copy>
       </CopySection>
       <EditorialNote
-        eyebrow="First cup"
-        title="Start with the moment you normally reach for another coffee."
-        body="That is where STUNN makes the most sense: the second cup, the afternoon cup, or the calm evening ritual."
+        eyebrow="Subscription note"
+        title="If you chose autoship, your discount is locked in."
+        body="Your first order is confirmed today. Future renewals follow the cadence you selected at checkout, and you can pause, edit, or cancel before renewal."
       />
       <Callout>Order {tags.orderNumber} is confirmed.</Callout>
       <RuleRows
         rows={[
           { label: "Order date", value: tags.orderDate },
-          { label: "Shipping to", value: tags.shippingName },
+          { label: "Ships to", value: tags.shippingName },
+          { label: "Need help?", value: "Reply to this email" },
         ]}
       />
       <Section className="stunn-pad" style={{ padding: "0 34px 30px" }}>
@@ -75,6 +79,8 @@ export default function OrderConfirmation() {
           2. You get tracking when it ships.
           <br />
           3. Your caffeine-free coffee ritual arrives.
+          <br />
+          4. One sachet becomes your next calmer cup.
         </Text>
       </Section>
     </EmailFrame>

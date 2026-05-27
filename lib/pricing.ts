@@ -18,6 +18,18 @@ export function roundMoney(value: number) {
 }
 
 export function priceAfterDiscount(retail: number, discountPct: number) {
+  const inferredBoxQty = Math.round(retail / RETAIL_PER_BOX);
+  const matchesBoxQuantity =
+    inferredBoxQty > 1 &&
+    Math.abs(retail - RETAIL_PER_BOX * inferredBoxQty) < 0.01;
+
+  if (matchesBoxQuantity) {
+    const discountedBoxPrice = roundMoney(
+      RETAIL_PER_BOX * (1 - discountPct / 100),
+    );
+    return roundMoney(discountedBoxPrice * inferredBoxQty);
+  }
+
   return roundMoney(retail * (1 - discountPct / 100));
 }
 

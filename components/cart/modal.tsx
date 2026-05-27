@@ -82,6 +82,11 @@ function getLinePricing(line: CartItem) {
   return getSavingsForQuantity(line.quantity);
 }
 
+function getSubscriptionInterval(line: CartItem) {
+  if (!line.sellingPlanAllocation) return null;
+  return Math.min(Math.max(line.quantity, 1), 3);
+}
+
 function getSellingPlanIdForQuantity(item: CartItem, quantity: number) {
   const cappedInterval = Math.min(Math.max(quantity, 1), 3);
   const groups = item.merchandise.product.sellingPlanGroups as any;
@@ -262,6 +267,16 @@ export default function CartModal() {
                   const hasSubscription = cart.lines.some((line) =>
                     Boolean(line.sellingPlanAllocation),
                   );
+                  const subscriptionLines = cart.lines.filter((line) =>
+                    Boolean(line.sellingPlanAllocation),
+                  );
+                  const subscriptionQuantity = subscriptionLines.reduce(
+                    (sum, line) => sum + line.quantity,
+                    0,
+                  );
+                  const subscriptionInterval =
+                    subscriptionLines[0] &&
+                    getSubscriptionInterval(subscriptionLines[0]);
                   const remaining = Math.max(
                     0,
                     FREE_SHIPPING_THRESHOLD - discountedSubtotal,
@@ -347,7 +362,6 @@ export default function CartModal() {
 
                               const {
                                 retail: itemRetail,
-                                savings: itemSaveAmt,
                                 discounted: itemDiscounted,
                                 savePct: itemSavePct,
                                 tier: currentTier,
@@ -405,8 +419,7 @@ export default function CartModal() {
                                         {item.quantity === 1 ? "box" : "boxes"}{" "}
                                         ·{" "}
                                         {isSubscription
-                                          ? item.sellingPlanAllocation
-                                              ?.sellingPlan.name
+                                          ? `Ships ${currentTier.sub}`
                                           : "One-time purchase"}
                                       </p>
 
@@ -447,12 +460,12 @@ export default function CartModal() {
                                   <div className="mt-4 flex items-center justify-between rounded-[5px] border border-[#5A3493]/15 bg-[#EDE9F8] px-3 py-2 text-[#5A3493]">
                                     <span className="text-[11px] font-bold uppercase tracking-wide">
                                       {isSubscription
-                                        ? "Upgrade your autoship"
+                                        ? "Subscription active"
                                         : "Switch to autoship"}
                                     </span>
                                     <span className="text-[11px] font-extrabold uppercase tracking-wide">
                                       {isSubscription
-                                        ? "More coffee, same savings"
+                                        ? `Save ${itemSavePct}% · ${item.quantity} ${item.quantity === 1 ? "box" : "boxes"} today`
                                         : "Save 20-25%"}
                                     </span>
                                   </div>
@@ -583,6 +596,35 @@ export default function CartModal() {
                           </div>
                         </div>
 
+                        <div className="mb-4 rounded-[8px] border border-white/20 bg-white/10 p-4 text-white">
+                          <div className="flex items-start justify-between gap-4">
+                            <div>
+                              <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-white/65">
+                                Checkout summary
+                              </p>
+                              <p className="mt-1 text-sm font-extrabold leading-tight">
+                                {hasSubscription
+                                  ? `${subscriptionQuantity} ${subscriptionQuantity === 1 ? "box" : "boxes"} today · ships every ${subscriptionInterval || 1} ${subscriptionInterval === 1 ? "month" : "months"}`
+                                  : `${cart.totalQuantity} ${cart.totalQuantity === 1 ? "box" : "boxes"} today · one-time purchase`}
+                              </p>
+                            </div>
+                            {cartSavings > 0 && (
+                              <div className="shrink-0 rounded-full bg-white px-3 py-1 text-xs font-extrabold text-[#5A3493]">
+                                Save ${cartSavings.toFixed(2)}
+                              </div>
+                            )}
+                          </div>
+                          <div className="mt-3 grid grid-cols-3 gap-2 text-[10px] font-bold uppercase leading-tight tracking-wide text-white/80">
+                            <span>Free shipping</span>
+                            <span>Secure checkout</span>
+                            <span>
+                              {hasSubscription
+                                ? "Pause anytime"
+                                : "30-day guarantee"}
+                            </span>
+                          </div>
+                        </div>
+
                         {/* Subtotal: [X% OFF] $old  $new — matches Create.co pattern */}
                         <div className="mb-3 flex items-center justify-between gap-3">
                           <span className="text-lg font-extrabold text-white">
@@ -618,7 +660,9 @@ export default function CartModal() {
                           <CheckoutButton />
                         </form>
                         <p className="mt-4 text-center text-[11px] font-semibold text-white">
-                          *Taxes, shipping and discounts calculated at checkout.
+                          {hasSubscription
+                            ? "*Subscription renews on the selected cadence. You can pause, edit, or cancel before renewal."
+                            : "*Taxes, shipping and discounts calculated at checkout."}
                         </p>
                       </div>
                     </div>
