@@ -29,6 +29,9 @@ export function OffTheDripCapture({
     if (mode !== "popup") return;
     if (typeof window === "undefined") return;
     if (suppressed) return;
+    const canUseExitIntent = window.matchMedia(
+      "(hover: hover) and (pointer: fine)",
+    ).matches;
 
     const joined = window.localStorage.getItem(JOINED_KEY);
     const dismissedUntil = Number(
@@ -51,14 +54,16 @@ export function OffTheDripCapture({
     };
 
     const onMouseLeave = (event: MouseEvent) => {
-      if (event.clientY <= 8) {
+      if (canUseExitIntent && event.clientY <= 8) {
         setOpen(true);
         removeTriggers();
       }
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    document.addEventListener("mouseleave", onMouseLeave);
+    if (canUseExitIntent) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      document.addEventListener("mouseleave", onMouseLeave);
+    }
 
     return () => {
       removeTriggers();

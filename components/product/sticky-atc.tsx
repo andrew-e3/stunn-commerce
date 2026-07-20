@@ -12,7 +12,7 @@ import {
 } from "lib/pricing";
 import { Product } from "lib/shopify/types";
 import Image from "next/image";
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { usePurchaseSelection } from "./purchase-selection-context";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
@@ -21,6 +21,8 @@ export function StickyAtc({ product }: { product: Product }) {
   const { selectedQty } = usePurchaseSelection();
   const [isVisible, setIsVisible] = useState(false);
   const [pending, startTransition] = useTransition();
+  const visibleRef = useRef(false);
+  const frameRef = useRef<number | null>(null);
   const { addCartItem } = useCart();
   const selectedTier =
     SUPPLY_TIERS.find((tier) => tier.qty === selectedQty) || SUPPLY_TIERS[0]!;
@@ -49,21 +51,47 @@ export function StickyAtc({ product }: { product: Product }) {
 
   useEffect(() => {
     const isMobile = () => window.matchMedia("(max-width: 1023px)").matches;
+    const setVisible = (nextVisible: boolean) => {
+      if (visibleRef.current === nextVisible) return;
+      visibleRef.current = nextVisible;
+      setIsVisible(nextVisible);
+    };
+
     const onScroll = () => {
-      if (isMobile()) setIsVisible(window.scrollY > 520);
+      if (!isMobile()) return;
+      if (frameRef.current !== null) return;
+
+      frameRef.current = window.requestAnimationFrame(() => {
+        frameRef.current = null;
+        const y = window.scrollY;
+
+        if (!visibleRef.current && y > 560) {
+          setVisible(true);
+          return;
+        }
+
+        if (visibleRef.current && y < 440) {
+          setVisible(false);
+        }
+      });
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
     const purchase = document.getElementById("purchase");
     if (!purchase) {
-      return () => window.removeEventListener("scroll", onScroll);
+      return () => {
+        window.removeEventListener("scroll", onScroll);
+        if (frameRef.current !== null) {
+          window.cancelAnimationFrame(frameRef.current);
+        }
+      };
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!isMobile()) {
-          setIsVisible(!entry?.isIntersecting && window.scrollY > 260);
+          setVisible(!entry?.isIntersecting && window.scrollY > 260);
         }
       },
       { threshold: 0.08 },
@@ -73,6 +101,9 @@ export function StickyAtc({ product }: { product: Product }) {
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
     };
   }, []);
 
