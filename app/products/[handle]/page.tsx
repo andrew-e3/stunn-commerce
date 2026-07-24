@@ -189,8 +189,8 @@ const PERSONA_CARDS = [
 // Keep paid-social infographic assets out of the hero gallery so the PDP feels premium.
 const MOSAIC_IMAGES = [
   {
-    src: "/images/stunn-hero-brand-mug-v2.webp",
-    alt: "A man enjoying STUNN decaf coffee from a soft lavender mug",
+    src: "/images/stunn-ritual-morning-woman-v1.webp",
+    alt: "A quiet morning decaf coffee ritual before work",
   },
   {
     src: `${CDN}mockup-stunn-box.webp`,
@@ -201,8 +201,8 @@ const MOSAIC_IMAGES = [
     alt: "STUNN coffee ritual without caffeine",
   },
   {
-    src: `${CDN}img-man-drinking-stunn-coffee.webp`,
-    alt: "A calm morning coffee ritual after switching to STUNN",
+    src: "/images/stunn-ritual-afternoon-man-v1.webp",
+    alt: "A calm afternoon coffee ritual at home",
   },
   {
     src: `${CDN}img-s-11.webp`,
@@ -464,8 +464,8 @@ export default async function ProductPage(props: {
                 ),
                 headline: "Better nights, better mornings.",
                 copy: "Deep, restorative sleep — wake up reset and truly refreshed.",
-                img: `${CDN}img-man-drinking-stunn-coffee.webp`,
-                alt: "A calm morning coffee ritual after switching to STUNN",
+                img: "/images/stunn-rested-morning-v1.webp",
+                alt: "Morning light after a restful night",
                 objectPosition: "center center",
               },
             ].map((step, i) => (

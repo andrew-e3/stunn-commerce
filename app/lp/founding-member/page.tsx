@@ -120,8 +120,8 @@ const PERSONA_CARDS = [
 
 const MOSAIC_IMAGES = [
   {
-    src: "/images/stunn-hero-brand-mug-v2.webp",
-    alt: "A man enjoying STUNN decaf coffee from a soft lavender mug",
+    src: "/images/stunn-ritual-morning-woman-v1.webp",
+    alt: "A quiet morning decaf coffee ritual before work",
   },
   {
     src: `${CDN}mockup-stunn-box.webp`,
@@ -309,8 +309,8 @@ export default async function FoundingMemberPage() {
                 icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5A3493" strokeWidth="2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>,
                 headline: "Better nights, better mornings.",
                 copy: "Deep, restorative sleep — wake up reset and truly refreshed.",
-                img: `${CDN}img-man-drinking-stunn-coffee.webp`,
-                alt: "A calm morning coffee ritual after switching to STUNN",
+                img: "/images/stunn-rested-morning-v1.webp",
+                alt: "Morning light after a restful night",
                 objectPosition: "center center",
               },
             ].map((step, i) => (
