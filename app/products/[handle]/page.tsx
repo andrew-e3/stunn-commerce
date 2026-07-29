@@ -1,3 +1,4 @@
+import { MetaViewContent } from "components/meta-pixel";
 import { StunnPurchasePanel } from "components/product/stunn-purchase-panel";
 import { ImageGallery } from "components/product/image-gallery";
 import { StickyAtc } from "components/product/sticky-atc";
@@ -239,6 +240,12 @@ export default async function ProductPage(props: {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <MetaViewContent
+        contentId={product.id}
+        contentName={product.title}
+        value={Number(product.priceRange.minVariantPrice.amount)}
+        currency={product.priceRange.minVariantPrice.currencyCode}
       />
 
       {/* ── HERO: coffee lifestyle image + purchase panel ── */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { addItem } from "components/cart/actions";
+import { trackMetaEvent } from "components/meta-pixel";
 import { useCart } from "components/cart/cart-context";
 import { DEFAULT_OPTION } from "lib/constants";
 import {
@@ -262,6 +263,16 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           disabled={!oneBoxVariant || addPending}
           onClick={() => {
             if (!oneBoxVariant) return;
+            trackMetaEvent("AddToCart", {
+              content_ids: [product.id],
+              content_name: product.title,
+              content_type: "product",
+              value: priceAfterDiscount(
+                display.retailPrice,
+                display.subDiscountPct,
+              ),
+              currency: "USD",
+            });
             addCartItem(oneBoxVariant, product, display.qty, sellingPlanId);
             startAddTransition(async () => {
               await addItem(null, oneBoxVariant.id, display.qty, sellingPlanId);
@@ -293,6 +304,13 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           disabled={!oneBoxVariant || otpPending}
           onClick={() => {
             if (!oneBoxVariant) return;
+            trackMetaEvent("AddToCart", {
+              content_ids: [product.id],
+              content_name: product.title,
+              content_type: "product",
+              value: display.retailPrice,
+              currency: "USD",
+            });
             addCartItem(oneBoxVariant, product, display.qty);
             startOtpTransition(async () => {
               await addItem(null, oneBoxVariant.id, display.qty);

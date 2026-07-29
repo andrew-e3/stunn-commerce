@@ -1,7 +1,9 @@
 import { CartProvider } from "components/cart/cart-context";
+import { KlaviyoOnsite } from "components/klaviyo-onsite";
 import { AnnouncementBar } from "components/layout/announcement-bar";
 import { ChromeGate } from "components/layout/chrome-gate";
 import { Navbar } from "components/layout/navbar";
+import { MetaPixel } from "components/meta-pixel";
 import { OffTheDripCapture } from "components/off-the-drip-capture";
 import { Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
@@ -65,6 +67,8 @@ export default async function RootLayout({
             <OffTheDripCapture mode="popup" tone="dark" />
           </ChromeGate>
         </CartProvider>
+        <MetaPixel />
+        <KlaviyoOnsite />
       </body>
     </html>
   );
