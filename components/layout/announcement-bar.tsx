@@ -7,7 +7,8 @@ export type AnnouncementMessage = { text: string; href?: string };
 // Fallback copy, used when Sanity has no announcements configured so the bar
 // always renders something on brand.
 const DEFAULT_MESSAGES: AnnouncementMessage[] = [
-  { text: "Free shipping on subscription + orders $75+" },
+  { text: "10% off your first order with code WELCOME10" },
+  { text: "Free shipping on every US order" },
   { text: "No caffeine. No crash. Same ritual." },
 ];
 
