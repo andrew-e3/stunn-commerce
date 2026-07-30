@@ -6,7 +6,6 @@ import { ChromeGate } from "components/layout/chrome-gate";
 import { Navbar } from "components/layout/navbar";
 import { MetaPixel } from "components/meta-pixel";
 import { OffTheDripCapture } from "components/off-the-drip-capture";
-import { QuietClubPopup } from "components/quiet-club-popup";
 import { Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
 import { getSiteSettings } from "lib/sanity";
@@ -20,9 +19,6 @@ import { baseUrl } from "lib/utils";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const { SITE_NAME } = process.env;
-const SCRATCH_POPUP_ENABLED =
-  process.env.NEXT_PUBLIC_STUNN_SCRATCH_POPUP_ENABLED !== "false";
-
 // Default site metadata, overridable from Sanity (Site Settings → Default SEO).
 // Falls back to SITE_NAME when the CMS is empty.
 export async function generateMetadata(): Promise<Metadata> {
@@ -68,11 +64,7 @@ export default async function RootLayout({
             <Toaster closeButton />
           </main>
           <ChromeGate>
-            {SCRATCH_POPUP_ENABLED ? (
-              <QuietClubPopup />
-            ) : (
-              <OffTheDripCapture mode="popup" tone="dark" />
-            )}
+            <OffTheDripCapture mode="popup" tone="dark" />
           </ChromeGate>
         </CartProvider>
         <AnalyticsBeacon />
