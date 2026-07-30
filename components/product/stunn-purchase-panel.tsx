@@ -1,6 +1,7 @@
 "use client";
 
 import { addItem } from "components/cart/actions";
+import { trackStunnEvent } from "components/analytics-beacon";
 import { trackMetaEvent } from "components/meta-pixel";
 import { useCart } from "components/cart/cart-context";
 import { DEFAULT_OPTION } from "lib/constants";
@@ -263,6 +264,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           disabled={!oneBoxVariant || addPending}
           onClick={() => {
             if (!oneBoxVariant) return;
+            trackStunnEvent("add_to_cart");
             trackMetaEvent("AddToCart", {
               content_ids: [product.id],
               content_name: product.title,
@@ -304,6 +306,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
           disabled={!oneBoxVariant || otpPending}
           onClick={() => {
             if (!oneBoxVariant) return;
+            trackStunnEvent("add_to_cart");
             trackMetaEvent("AddToCart", {
               content_ids: [product.id],
               content_name: product.title,

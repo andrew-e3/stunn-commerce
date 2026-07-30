@@ -1,3 +1,4 @@
+import { AnalyticsBeacon } from "components/analytics-beacon";
 import { CartProvider } from "components/cart/cart-context";
 import { KlaviyoOnsite } from "components/klaviyo-onsite";
 import { AnnouncementBar } from "components/layout/announcement-bar";
@@ -74,6 +75,7 @@ export default async function RootLayout({
             )}
           </ChromeGate>
         </CartProvider>
+        <AnalyticsBeacon />
         <MetaPixel />
         <KlaviyoOnsite />
       </body>
