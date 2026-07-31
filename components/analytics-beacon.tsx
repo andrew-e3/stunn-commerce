@@ -123,3 +123,15 @@ export function AnalyticsBeacon() {
     </Suspense>
   );
 }
+
+// Drop into a PDP so the funnel's "viewed product" step is populated. Pairs with
+// MetaViewContent, which does the same job for the Meta pixel.
+export function StunnViewProduct() {
+  const fired = useRef(false);
+  useEffect(() => {
+    if (fired.current) return;
+    fired.current = true;
+    trackStunnEvent("view_product");
+  }, []);
+  return null;
+}
