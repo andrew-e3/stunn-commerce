@@ -1,6 +1,8 @@
 "use client";
 
 import { addItem } from "components/cart/actions";
+import { trackStunnEvent } from "components/analytics-beacon";
+import { trackMetaEvent } from "components/meta-pixel";
 import { useCart } from "components/cart/cart-context";
 import { DEFAULT_OPTION } from "lib/constants";
 import {
@@ -123,6 +125,13 @@ export function StickyAtc({ product }: { product: Product }) {
 
   const addSelectedOffer = () => {
     if (!oneBoxVariant) return;
+    trackStunnEvent("add_to_cart");
+    trackMetaEvent("AddToCart", {
+      content_ids: [product.id],
+      content_name: product.title,
+      content_type: "product",
+      currency: "USD",
+    });
     addCartItem(oneBoxVariant, product, selectedTier.qty, sellingPlanId);
     startTransition(async () => {
       await addItem(null, oneBoxVariant.id, selectedTier.qty, sellingPlanId);
