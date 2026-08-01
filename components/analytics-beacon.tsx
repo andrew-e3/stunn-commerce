@@ -73,9 +73,17 @@ export function trackStunnEvent(
   });
   try {
     // sendBeacon survives the navigation away to Shopify checkout.
+    //
+    // The Blob MUST be text/plain: application/json is not a CORS-safelisted
+    // content type, so it forces a preflight, and sendBeacon cannot preflight —
+    // the browser drops the request and returns false. The edge function parses
+    // the body with req.json() regardless of the declared content type.
     if (navigator.sendBeacon) {
-      navigator.sendBeacon(ENDPOINT, new Blob([payload], { type: "application/json" }));
-      return;
+      const queued = navigator.sendBeacon(
+        ENDPOINT,
+        new Blob([payload], { type: "text/plain" }),
+      );
+      if (queued) return; // otherwise fall through to fetch
     }
   } catch { /* fall through to fetch */ }
   fetch(ENDPOINT, {
