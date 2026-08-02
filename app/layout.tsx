@@ -1,5 +1,6 @@
 import { AnalyticsBeacon } from "components/analytics-beacon";
 import { CartProvider } from "components/cart/cart-context";
+import { KlaviyoOnsite } from "components/klaviyo-onsite";
 import { AnnouncementBar } from "components/layout/announcement-bar";
 import { ChromeGate } from "components/layout/chrome-gate";
 import { Navbar } from "components/layout/navbar";
@@ -68,6 +69,10 @@ export default async function RootLayout({
         </CartProvider>
         <AnalyticsBeacon />
         <MetaPixel />
+        {/* Klaviyo onsite JS. The Quiet Club popup posts to our own API route and
+            does not need this, but the live Browse Abandonment flow does - without
+            klaviyo.js there is no onsite tracking for it to trigger on. */}
+        <KlaviyoOnsite />
       </body>
     </html>
   );
