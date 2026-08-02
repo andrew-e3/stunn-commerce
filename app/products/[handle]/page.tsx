@@ -187,28 +187,28 @@ const PERSONA_CARDS = [
   },
 ];
 
-// Product-led PDP gallery: start with physical product/ritual proof, then
-// explain the formula with edited brand cards.
+// Mosaic images — calm ritual first, then clean product/packaging proof.
+// Keep paid-social infographic assets out of the hero gallery so the PDP feels premium.
 const MOSAIC_IMAGES = [
   {
-    src: "/images/stunn-home-hero-mobile-product.png",
-    alt: "STUNN box, sachet, coffee glass, beans, and coffee grounds",
+    src: "/images/stunn-ritual-morning-woman-v1.webp",
+    alt: "A quiet morning decaf coffee ritual before work",
   },
   {
-    src: "/images/pdp-candidates/stunn-pdp-pour-closeup-v1.png",
-    alt: "STUNN sachet being poured into a glass mug of coffee",
+    src: `${CDN}mockup-stunn-box.webp`,
+    alt: "STUNN decaf coffee box",
   },
   {
-    src: "/images/pdp-candidates/stunn-pdp-card-dose-proof-edited.svg",
-    alt: "STUNN dose proof card showing published ingredient amounts",
+    src: `${CDN}img-s-6.webp`,
+    alt: "STUNN coffee ritual without caffeine",
   },
   {
-    src: "/images/pdp-candidates/stunn-pdp-card-comparison-edited.svg",
-    alt: "STUNN comparison card against regular coffee and typical mushroom coffee",
+    src: "/images/stunn-ritual-afternoon-man-v1.webp",
+    alt: "A calm afternoon coffee ritual at home",
   },
   {
-    src: "/images/pdp-candidates/stunn-pdp-card-keep-lose-edited.svg",
-    alt: "STUNN keep and lose card for coffee ritual benefits",
+    src: `${CDN}img-s-11.webp`,
+    alt: "STUNN coffee ritual",
   },
 ];
 
