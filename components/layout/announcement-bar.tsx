@@ -7,7 +7,7 @@ export type AnnouncementMessage = { text: string; href?: string };
 // Fallback copy, used when Sanity has no announcements configured so the bar
 // always renders something on brand.
 const DEFAULT_MESSAGES: AnnouncementMessage[] = [
-  { text: "10% off your first order with code WELCOME10" },
+  { text: "10% off your first order · code WELCOME10" },
   { text: "Free shipping on every US order" },
   { text: "No caffeine. No crash. Same ritual." },
 ];
@@ -42,8 +42,11 @@ export function AnnouncementBar({
   }, []);
 
   return (
+    // Fixed height, not min-height: messages rotate every 3.5s, and a longer one
+    // wrapping to two lines used to grow the bar and shift the whole page down.
+    // Height is locked and copy is held to a single line at every width.
     <div
-      className={`relative flex min-h-9 items-center justify-center overflow-hidden px-11 py-2 text-center text-sm font-semibold transition-colors duration-500 ${BAR_CLASS}`}
+      className={`relative flex h-9 items-center justify-center overflow-hidden px-10 text-center text-[13px] font-semibold transition-colors duration-500 sm:px-11 sm:text-sm ${BAR_CLASS}`}
     >
       <button
         type="button"
@@ -59,12 +62,12 @@ export function AnnouncementBar({
         <a
           key={message.text}
           href={message.href}
-          className="animate-hero-copy-in block px-4 underline-offset-2 hover:underline"
+          className="animate-hero-copy-in block truncate whitespace-nowrap px-2 underline-offset-2 hover:underline sm:px-4"
         >
           {message.text}
         </a>
       ) : (
-        <span key={message.text} className="animate-hero-copy-in block px-4">
+        <span key={message.text} className="animate-hero-copy-in block truncate whitespace-nowrap px-2 sm:px-4">
           {message.text}
         </span>
       )}
