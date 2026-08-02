@@ -1,11 +1,10 @@
 import { AnalyticsBeacon } from "components/analytics-beacon";
 import { CartProvider } from "components/cart/cart-context";
-import { KlaviyoOnsite } from "components/klaviyo-onsite";
 import { AnnouncementBar } from "components/layout/announcement-bar";
 import { ChromeGate } from "components/layout/chrome-gate";
 import { Navbar } from "components/layout/navbar";
 import { MetaPixel } from "components/meta-pixel";
-import { OffTheDripCapture } from "components/off-the-drip-capture";
+import { QuietClubPopup } from "components/quiet-club-popup";
 import { Inter } from "next/font/google";
 import { getCart } from "lib/shopify";
 import { getSiteSettings } from "lib/sanity";
@@ -64,12 +63,11 @@ export default async function RootLayout({
             <Toaster closeButton />
           </main>
           <ChromeGate>
-            <OffTheDripCapture mode="popup" tone="dark" />
+            <QuietClubPopup />
           </ChromeGate>
         </CartProvider>
         <AnalyticsBeacon />
         <MetaPixel />
-        <KlaviyoOnsite />
       </body>
     </html>
   );
