@@ -18,10 +18,13 @@ const PurchaseSelectionContext =
 
 export function PurchaseSelectionProvider({
   children,
+  initialQty = 3,
 }: {
   children: ReactNode;
+  // Variant B opens on a single box; the live PDP keeps the 3-box default.
+  initialQty?: number;
 }) {
-  const [selectedQty, setSelectedQty] = useState(3);
+  const [selectedQty, setSelectedQty] = useState(initialQty);
   const value = useMemo(
     () => ({ selectedQty, setSelectedQty }),
     [selectedQty],

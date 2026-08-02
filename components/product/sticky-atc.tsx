@@ -19,7 +19,15 @@ import { usePurchaseSelection } from "./purchase-selection-context";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
 
-export function StickyAtc({ product }: { product: Product }) {
+export function StickyAtc({
+  product,
+  oneTime = false,
+}: {
+  product: Product;
+  // Variant B sells one-time by default, so the sticky bar must match the page
+  // rather than silently adding a subscription.
+  oneTime?: boolean;
+}) {
   const { selectedQty } = usePurchaseSelection();
   const [isVisible, setIsVisible] = useState(false);
   const [pending, startTransition] = useTransition();
@@ -132,9 +140,10 @@ export function StickyAtc({ product }: { product: Product }) {
       content_type: "product",
       currency: "USD",
     });
-    addCartItem(oneBoxVariant, product, selectedTier.qty, sellingPlanId);
+    const plan = oneTime ? undefined : sellingPlanId;
+    addCartItem(oneBoxVariant, product, selectedTier.qty, plan);
     startTransition(async () => {
-      await addItem(null, oneBoxVariant.id, selectedTier.qty, sellingPlanId);
+      await addItem(null, oneBoxVariant.id, selectedTier.qty, plan);
     });
   };
 
@@ -186,12 +195,13 @@ export function StickyAtc({ product }: { product: Product }) {
               ${retailPrice.toFixed(0)}
             </span>
             <span className="text-base font-extrabold leading-none text-[#111111] sm:text-lg">
-              ${subscriptionPrice.toFixed(0)}
+              ${(oneTime ? retailPrice : subscriptionPrice).toFixed(0)}
             </span>
           </div>
           <p className="mt-1 hidden truncate text-[11px] text-[#111111]/60 sm:block sm:text-xs">
             {selectedTier.display.toLowerCase()} {selectedTier.shipEvery} ·{" "}
-            {formatPerDay(subscriptionPerDay)} · subscription ships free
+            {formatPerDay(oneTime ? perDay(retailPrice, selectedTier.count) : subscriptionPerDay)}
+            {oneTime ? " · one-time, ships free" : " · subscription ships free"}
           </p>
         </div>
 
