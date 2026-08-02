@@ -186,14 +186,16 @@ export function StickyAtc({
         <div className="min-w-0 flex-1 lg:text-right">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 lg:justify-end">
             <span className="text-[11px] font-extrabold uppercase tracking-wide text-[#111111] sm:text-sm sm:normal-case sm:tracking-normal">
-              Autoship
+              {oneTime ? "Buy once" : "Autoship"}
             </span>
             <span className="rounded-full bg-[#5A3493] px-2 py-1 text-[10px] font-extrabold uppercase leading-none text-white">
-              Save {selectedTier.subDiscountPct}%
+              {oneTime ? "No commitment" : `Save ${selectedTier.subDiscountPct}%`}
             </span>
-            <span className="hidden text-sm text-[#111111]/35 line-through sm:inline">
-              ${retailPrice.toFixed(0)}
-            </span>
+            {!oneTime && (
+              <span className="hidden text-sm text-[#111111]/35 line-through sm:inline">
+                ${retailPrice.toFixed(0)}
+              </span>
+            )}
             <span className="text-base font-extrabold leading-none text-[#111111] sm:text-lg">
               ${(oneTime ? retailPrice : subscriptionPrice).toFixed(0)}
             </span>

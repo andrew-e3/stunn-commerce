@@ -192,11 +192,7 @@ export function StunnPurchasePanelB({ product }: { product: Product }) {
                   : "border-gray-300 bg-white hover:border-[#5A3493]/60"
               }`}
             >
-              {v.popular && (
-                <span className="absolute -top-2 left-3 whitespace-nowrap rounded-[3px] bg-gray-900 px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wide text-white">
-                  Best Value
-                </span>
-              )}
+
               <img
                 src={`${CDN}${v.boxImgName}`}
                 alt={`${v.qty} box supply`}
