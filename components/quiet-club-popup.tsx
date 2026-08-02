@@ -269,18 +269,18 @@ export function QuietClubPopup() {
             )}
           </div>
 
-          <div className="relative order-1 h-[150px] overflow-hidden border-b border-[#111111]/10 bg-[#EDE9F8] md:order-2 md:h-auto md:min-h-[548px] md:border-b-0 md:border-l">
+          <div className="relative order-1 h-[196px] overflow-hidden border-b border-[#111111]/10 bg-[#F4F1F6] md:order-2 md:h-auto md:min-h-[548px] md:border-b-0 md:border-l md:bg-[#EDE9F8]">
             <img
               src="/images/stunn-home-hero-mobile-product.png"
               alt="STUNN decaf coffee box, sachet, and prepared coffee"
-              className="absolute inset-0 h-full w-full object-cover object-[50%_55%] md:hidden"
+              className="absolute inset-0 h-full w-full object-cover object-[50%_52%] md:hidden"
             />
             <img
               src="/images/stunn-sachet-pour-lilac.png"
               alt="STUNN decaf coffee sachet being poured beside the product box"
               className="absolute inset-0 hidden h-full w-full object-cover object-[48%_50%] md:block"
             />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(17,17,17,0.02)_50%,rgba(17,17,17,0.13)_100%)]" />
+            <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(180deg,rgba(17,17,17,0.02)_50%,rgba(17,17,17,0.13)_100%)] md:block" />
             <div className="absolute bottom-3 left-3 rounded-full border border-white/55 bg-white/88 px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.12em] text-[#111111] backdrop-blur-sm md:bottom-5 md:left-5 md:text-[10px]">
               No caffeine. Same ritual.
             </div>
