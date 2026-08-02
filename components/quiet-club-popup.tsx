@@ -152,7 +152,9 @@ export function QuietClubPopup() {
           </button>
 
           <div className="order-2 flex flex-col justify-center px-5 py-6 sm:px-8 sm:py-8 md:order-1 md:min-h-[548px] md:px-11 md:py-12">
-            <BrandLogo className="h-6 w-[105px]" />
+            <div className="[&>span]:h-6 [&>span]:w-[105px]">
+              <BrandLogo />
+            </div>
 
             {status === "success" ? (
               <div className="mt-7 max-w-[440px]">
