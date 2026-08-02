@@ -8,9 +8,7 @@ function isValidEmail(email: string) {
 
 export async function POST(request: NextRequest) {
   const privateKey = process.env.KLAVIYO_PRIVATE_API_KEY;
-  const listId =
-    process.env.KLAVIYO_QUIET_CLUB_LIST_ID ||
-    process.env.KLAVIYO_OFF_THE_DRIP_LIST_ID;
+  const listId = process.env.KLAVIYO_QUIET_CLUB_LIST_ID;
 
   if (!privateKey || !listId) {
     return NextResponse.json(
@@ -33,8 +31,7 @@ export async function POST(request: NextRequest) {
 
   const email =
     typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-  const source =
-    typeof body.source === "string" ? body.source : "quiet-club";
+  const source = typeof body.source === "string" ? body.source : "quiet-club";
 
   if (!email || !isValidEmail(email)) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
