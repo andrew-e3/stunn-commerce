@@ -1,0 +1,86 @@
+{
+  "generatedAt": "2026-08-03T17:38:03.014Z",
+  "ads": [
+    {
+      "number": "01",
+      "headline": "COFFEE CULTURE WENT TOO FAR.",
+      "subhead": "Keep the cup. Lose the caffeine loop.",
+      "layoutVariant": "top-left-scrim",
+      "sourceImages": [
+        "stunn-sachet-pour.png"
+      ],
+      "outputs": {
+        "square": "square-1x1/01-coffee-culture-went-too-far.png",
+        "portrait": "portrait-4x5/01-coffee-culture-went-too-far.png"
+      }
+    },
+    {
+      "number": "02",
+      "headline": "COFFEE NEVER REQUIRED A NERVOUS SYSTEM TAX.",
+      "subhead": "Calm focus, without paying for it in tension.",
+      "layoutVariant": "top-left-scrim",
+      "sourceImages": [
+        "stunn-function-pour-corrected.png"
+      ],
+      "outputs": {
+        "square": "square-1x1/02-nervous-system-tax.png",
+        "portrait": "portrait-4x5/02-nervous-system-tax.png"
+      }
+    },
+    {
+      "number": "03",
+      "headline": "WHEN DID 3PM COFFEE BECOME A SLEEP DECISION?",
+      "subhead": "Real coffee ritual. No stimulant tax.",
+      "layoutVariant": "upper-right-payoff",
+      "sourceImages": [
+        "stunn-rested-morning-v1.webp",
+        "stunn-home-hero-mobile-product.png"
+      ],
+      "outputs": {
+        "square": "square-1x1/03-3pm-sleep-decision.png",
+        "portrait": "portrait-4x5/03-3pm-sleep-decision.png"
+      }
+    },
+    {
+      "number": "04",
+      "headline": "WHY PAY MORE FOR LESS?",
+      "subhead": "Real coffee ritual. No stimulant tax.",
+      "layoutVariant": "centred-product",
+      "sourceImages": [
+        "stunn-home-hero-mobile-product.png"
+      ],
+      "outputs": {
+        "square": "square-1x1/04-why-pay-more-for-less.png",
+        "portrait": "portrait-4x5/04-why-pay-more-for-less.png"
+      }
+    },
+    {
+      "number": "05",
+      "headline": "STOP RATIONING FOCUS.",
+      "subhead": "Steady attention shouldn't expire after lunch.",
+      "layoutVariant": "left-rail-human",
+      "sourceImages": [
+        "stunn-ritual-morning-woman-v1.webp",
+        "stunn-home-hero-mobile-product.png"
+      ],
+      "outputs": {
+        "square": "square-1x1/05-stop-rationing-focus.png",
+        "portrait": "portrait-4x5/05-stop-rationing-focus.png"
+      }
+    },
+    {
+      "number": "06",
+      "headline": "NO JITTERS. NO APOLOGY.",
+      "subhead": "Keep the cup. Lose the caffeine loop.",
+      "layoutVariant": "bottom-anchor-human",
+      "sourceImages": [
+        "stunn-ritual-afternoon-man-v1.webp",
+        "stunn-home-hero-mobile-product.png"
+      ],
+      "outputs": {
+        "square": "square-1x1/06-no-jitters-no-apology.png",
+        "portrait": "portrait-4x5/06-no-jitters-no-apology.png"
+      }
+    }
+  ]
+}
