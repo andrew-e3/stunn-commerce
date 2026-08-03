@@ -189,6 +189,62 @@ function styles(headlineSize, subheadSize = 34) {
   `;
 }
 
+// Measure a rendered headline line with the actual renderer and font, then trim
+// to the ink bounding box. Hand-authored headlineLines + headlineSize have no
+// safety net otherwise: ad 03 shipped with "WHEN DID 3PM COFFEE" running off the
+// right edge because nothing ever checked the indent against the canvas.
+const measureCache = new Map();
+async function measureLine(text, fontSize) {
+  const key = `${fontSize}|${text}`;
+  if (measureCache.has(key)) return measureCache.get(key);
+  const svg = Buffer.from(`
+    <svg width="3000" height="${Math.ceil(fontSize * 2.2)}" xmlns="http://www.w3.org/2000/svg">
+      <style>${styles(fontSize)}</style>
+      <text x="10" y="${Math.round(fontSize * 1.25)}" class="display">${escapeXml(text)}</text>
+    </svg>`);
+  const { info } = await sharp(svg).png().trim().toBuffer({ resolveWithObject: true });
+  measureCache.set(key, info.width);
+  return info.width;
+}
+
+const RIGHT_MARGIN = 62;
+
+/** Left inset of the headline for a layout, matching overlaySvg(). */
+function headlineX(layout) {
+  return layout === "upper-right-payoff" ? 334 : 62;
+}
+
+/**
+ * Shrink headlineSize until every pre-authored line fits inside the canvas.
+ * Mutates the ad in place and reports what it changed.
+ */
+async function fitHeadline(ad) {
+  const x = headlineX(ad.layout);
+  const available = 1080 - x - RIGHT_MARGIN;
+  const original = ad.headlineSize;
+  while (ad.headlineSize > 34) {
+    const widths = await Promise.all(
+      ad.headlineLines.map((l) => measureLine(l, ad.headlineSize)),
+    );
+    if (Math.max(...widths) <= available) break;
+    ad.headlineSize -= 2;
+  }
+  if (ad.headlineSize !== original) {
+    console.log(
+      `  ${ad.number}: headline ${original}px -> ${ad.headlineSize}px to fit ${available}px measure`,
+    );
+  }
+  const widths = await Promise.all(
+    ad.headlineLines.map((l) => measureLine(l, ad.headlineSize)),
+  );
+  const over = Math.max(...widths) - available;
+  if (over > 0) {
+    throw new Error(
+      `Ad ${ad.number}: headline still overflows by ${over}px at minimum size. Re-break headlineLines.`,
+    );
+  }
+}
+
 function definitions() {
   return `
     <defs>
@@ -202,6 +258,9 @@ function definitions() {
         <stop offset="42%" stop-color="${colors.cream}" stop-opacity=".86"/>
         <stop offset="100%" stop-color="${colors.cream}" stop-opacity="0"/>
       </linearGradient>
+      <filter id="lockupShadow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="10"/>
+      </filter>
       <linearGradient id="bottomScrim" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="${colors.cream}" stop-opacity="0"/>
         <stop offset="35%" stop-color="${colors.cream}" stop-opacity=".82"/>
@@ -229,9 +288,17 @@ function offerStrip(width, height, footer) {
   `;
 }
 
+// The lockup used to be a plain cover-crop of the packshot - white studio
+// background and all - with a purple stroke around it, which read as a
+// screenshot pasted onto the scene. It is now a deliberate cream card with a
+// soft shadow, so the light background belongs to the card instead of looking
+// like a crop that was never removed.
 function lockupFrame(x, y, width, height) {
+  const pad = 14;
   return `
-    <rect x="${x - 8}" y="${y - 8}" width="${width + 16}" height="${height + 16}" rx="8" fill="none" stroke="${colors.purple}" stroke-opacity=".62" stroke-width="3"/>
+    <rect x="${x - pad}" y="${y - pad + 4}" width="${width + pad * 2}" height="${height + pad * 2}" rx="14" fill="#000000" opacity=".13" filter="url(#lockupShadow)"/>
+    <rect x="${x - pad}" y="${y - pad}" width="${width + pad * 2}" height="${height + pad * 2}" rx="14" fill="${colors.cream}"/>
+    <rect x="${x - pad}" y="${y - pad}" width="${width + pad * 2}" height="${height + pad * 2}" rx="14" fill="none" stroke="${colors.purple}" stroke-opacity=".18" stroke-width="1.5"/>
   `;
 }
 
@@ -270,7 +337,6 @@ function overlaySvg(ad, formatName, lockupBox) {
         ${eyebrow(ad.number)}
         ${textLines(ad.headlineLines, textX, headlineY, lineHeight, "display")}
         ${textLines(ad.subheadLines, textX, subheadY, 40, "subhead")}
-        ${lockupFrame(lockupBox.x, lockupBox.y, lockupBox.width, lockupBox.height)}
         ${cta(width - 62 - 380, contentBottom - 150)}
         ${offerStrip(width, height, footer)}
       </svg>
@@ -305,7 +371,6 @@ function overlaySvg(ad, formatName, lockupBox) {
         ${eyebrow(ad.number)}
         ${textLines(ad.headlineLines, 62, headlineY, lineHeight, "display")}
         ${textLines(ad.subheadLines, 62, subheadY, 40, "subhead")}
-        ${lockupFrame(lockupBox.x, lockupBox.y, lockupBox.width, lockupBox.height)}
         ${cta(62, contentBottom - 150)}
         ${offerStrip(width, height, footer)}
       </svg>
@@ -322,7 +387,6 @@ function overlaySvg(ad, formatName, lockupBox) {
       ${eyebrow(ad.number)}
       ${textLines(ad.headlineLines, 62, headlineY, lineHeight, "display")}
       ${textLines(ad.subheadLines, 62, subheadY, 40, "subhead")}
-      ${lockupFrame(lockupBox.x, lockupBox.y, lockupBox.width, lockupBox.height)}
       ${cta(62, contentBottom - 150)}
       ${offerStrip(width, height, footer)}
     </svg>
@@ -373,12 +437,20 @@ async function renderLockup(ad, box) {
   if (!ad.lockupSource || !box) return null;
   return sharp(path.join(imageRoot, ad.lockupSource))
     .resize(box.width, box.height, {
-      fit: "cover",
+      fit: "contain",
       position: "centre",
-      withoutEnlargement: false,
+      background: colors.cream,
     })
     .png()
     .toBuffer();
+}
+
+function lockupCard(width, height, box) {
+  return Buffer.from(`
+    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      ${definitions()}
+      ${lockupFrame(box.x, box.y, box.width, box.height)}
+    </svg>`);
 }
 
 async function renderAd(ad, formatName) {
@@ -392,6 +464,7 @@ async function renderAd(ad, formatName) {
   ]);
   const layers = [{ input: mainImage, left: 0, top: 0 }];
   if (lockupImage && lockupBox) {
+    layers.push({ input: lockupCard(width, height, lockupBox), left: 0, top: 0 });
     layers.push({ input: lockupImage, left: lockupBox.x, top: lockupBox.y });
   }
   layers.push({ input: overlaySvg(ad, formatName, lockupBox), left: 0, top: 0 });
@@ -443,6 +516,7 @@ await Promise.all([
 const squareFiles = [];
 const portraitFiles = [];
 for (const ad of ads) {
+  await fitHeadline(ad);
   squareFiles.push(await renderAd(ad, "square"));
   portraitFiles.push(await renderAd(ad, "portrait"));
 }
