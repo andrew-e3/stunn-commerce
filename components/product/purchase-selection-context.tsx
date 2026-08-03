@@ -18,10 +18,11 @@ const PurchaseSelectionContext =
 
 export function PurchaseSelectionProvider({
   children,
-  initialQty = 3,
+  initialQty = 1,
 }: {
   children: ReactNode;
-  // Variant B opens on a single box; the live PDP keeps the 3-box default.
+  // Opens on a single box. Cold paid traffic should not have to click away from
+  // a 3-month commitment to find the affordable entry price.
   initialQty?: number;
 }) {
   const [selectedQty, setSelectedQty] = useState(initialQty);
@@ -40,5 +41,5 @@ export function PurchaseSelectionProvider({
 export function usePurchaseSelection() {
   const context = useContext(PurchaseSelectionContext);
   if (context) return context;
-  return { selectedQty: 3, setSelectedQty: () => {} };
+  return { selectedQty: 1, setSelectedQty: () => {} };
 }

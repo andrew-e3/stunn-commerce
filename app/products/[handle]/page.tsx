@@ -237,7 +237,7 @@ export default async function ProductPage(props: {
   };
 
   return (
-    <PurchaseSelectionProvider>
+    <PurchaseSelectionProvider initialQty={1}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
@@ -847,7 +847,7 @@ export default async function ProductPage(props: {
         </div>
       </section>
 
-      <StickyAtc product={product} />
+      <StickyAtc product={product} oneTime />
       <Footer />
     </PurchaseSelectionProvider>
   );

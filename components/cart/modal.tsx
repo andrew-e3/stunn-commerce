@@ -4,7 +4,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import LoadingDots from "components/loading-dots";
 import { DEFAULT_OPTION } from "lib/constants";
-import { priceAfterDiscount, RETAIL_PER_BOX, SUPPLY_TIERS } from "lib/pricing";
+import {
+  FREE_SHIPPING_THRESHOLD,
+  priceAfterDiscount,
+  RETAIL_PER_BOX,
+  SUPPLY_TIERS,
+} from "lib/pricing";
 import type { CartItem } from "lib/shopify/types";
 import { createUrl } from "lib/utils";
 import Image from "next/image";
@@ -248,7 +253,6 @@ export default function CartModal() {
               ) : (
                 (() => {
                   // ── Displayed cart economics. Shopify checkout remains the source of truth.
-                  const FREE_SHIPPING_THRESHOLD = 75;
                   const totalRetail = cart.lines.reduce(
                     (sum, line) => sum + getLinePricing(line).retail,
                     0,

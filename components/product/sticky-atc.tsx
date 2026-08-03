@@ -193,11 +193,11 @@ export function StickyAtc({
             </span>
             {!oneTime && (
               <span className="hidden text-sm text-[#111111]/35 line-through sm:inline">
-                ${retailPrice.toFixed(0)}
+                ${retailPrice.toFixed(2)}
               </span>
             )}
             <span className="text-base font-extrabold leading-none text-[#111111] sm:text-lg">
-              ${(oneTime ? retailPrice : subscriptionPrice).toFixed(0)}
+              ${(oneTime ? retailPrice : subscriptionPrice).toFixed(2)}
             </span>
           </div>
           <p className="mt-1 hidden truncate text-[11px] text-[#111111]/60 sm:block sm:text-xs">

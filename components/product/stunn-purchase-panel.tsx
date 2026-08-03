@@ -6,15 +6,19 @@ import { trackMetaEvent } from "components/meta-pixel";
 import { useCart } from "components/cart/cart-context";
 import { DEFAULT_OPTION } from "lib/constants";
 import {
+  FREE_SHIPPING_THRESHOLD,
   formatPerDay,
   perDay,
   priceAfterDiscount,
   roundMoney,
+  shipsFree,
   SUPPLY_TIERS,
 } from "lib/pricing";
 import { Product } from "lib/shopify/types";
 import Image from "next/image";
 import { useState, useTransition } from "react";
+import { ProductFacts } from "./product-facts";
+import { ShopPayInstallments } from "./shop-pay-installments";
 import { usePurchaseSelection } from "./purchase-selection-context";
 
 const CDN = "https://cdn.shopify.com/s/files/1/0758/0785/0596/files/";
@@ -80,7 +84,6 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
     display.subDiscountPct,
   );
   const subSaving = roundMoney(display.retailPrice - subPrice);
-  const subPerDay = perDay(subPrice, display.count);
   const oneTimePerDay = perDay(display.retailPrice, display.count);
 
   // Selling plan ID for the current tier (intervalCount = qty, since qty = months between deliveries)
@@ -176,7 +179,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
 
       {/* Quantity selector */}
       <p className="mb-3 text-sm font-extrabold text-[#111111]">
-        1. Select Your Size:
+        1. Choose your supply:
       </p>
       <div className="mb-5 grid grid-cols-3 gap-2">
         {SUPPLY_TIERS.map((v) => {
@@ -192,11 +195,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
                   : "border-gray-300 bg-white hover:border-[#5A3493]/60"
               }`}
             >
-              {v.popular && (
-                <span className="absolute -top-2 left-3 whitespace-nowrap rounded-[3px] bg-gray-900 px-2 py-0.5 text-[8px] font-extrabold uppercase tracking-wide text-white">
-                  Best Value
-                </span>
-              )}
+
               <img
                 src={`${CDN}${v.boxImgName}`}
                 alt={`${v.qty} box supply`}
@@ -209,16 +208,15 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
                 <span className="block text-[10px] leading-tight text-[#111111]/55 sm:text-[11px]">
                   {v.count} Count
                 </span>
-                <span className="mt-0.5 block text-[10px] font-medium leading-tight text-[#111111]/55 sm:text-[11px]">
-                  (
-                  {formatPerDay(
-                    perDay(
-                      priceAfterDiscount(v.retailPrice, v.subDiscountPct),
-                      v.count,
-                    ),
-                    { spaced: true, unit: "Day" },
-                  )}
-                  )
+                {/* One-time price, not the subscription price. There is no
+                    volume discount on one-time purchases, so per-day is
+                    identical across all three tiers ($1.33) and showing it
+                    made the tiles look broken. The total is what differs. */}
+                <span className="mt-0.5 block text-[10px] font-bold leading-tight text-[#111111] sm:text-[11px]">
+                  ${v.retailPrice.toFixed(2)}
+                </span>
+                <span className="block text-[9px] font-medium leading-tight text-[#5A3493] sm:text-[10px]">
+                  save {v.subDiscountPct}% on subscription
                 </span>
               </div>
             </button>
@@ -226,39 +224,102 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
         })}
       </div>
 
-      {/* Autoship offer card */}
-      <div className="mb-5 rounded-[12px] bg-white p-4 shadow-[0_12px_32px_rgba(90,52,147,0.14)]">
+      {/* PRIMARY — one-time purchase. Lowest-friction entry for cold traffic:
+          no commitment, no recurring charge, one box by default. Subscribe is
+          the upgrade below, not the default (see wiki: PDP buy box vs Lowkey). */}
+      <div className="mb-4 rounded-[12px] bg-white p-4 shadow-[0_12px_32px_rgba(90,52,147,0.14)]">
         <div className="mb-3 flex items-start justify-between gap-4">
           <div>
             <div className="mb-1 flex flex-wrap items-center gap-2">
               <h2 className="text-lg font-extrabold leading-none text-[#111111]">
-                Autoship
+                Buy once
               </h2>
-              <span className="rounded-full bg-[#5A3493] px-2 py-1 text-[11px] font-extrabold uppercase leading-none text-white">
-                Save {display.subDiscountPct}%
+              <span className="rounded-full bg-[#111111] px-2 py-1 text-[11px] font-extrabold uppercase leading-none text-white">
+                No commitment
               </span>
             </div>
             <p className="text-xs text-[#111111]">
               <strong>{display.label}</strong>{" "}
               <span>{display.count} Count</span>{" "}
-              <span>
-                {formatPerDay(subPerDay, { spaced: true, unit: "Day" })}
+              <span className="whitespace-nowrap">
+                {formatPerDay(oneTimePerDay, { spaced: true, unit: "Day" })}
               </span>
             </p>
           </div>
           <div className="text-right">
-            <p className="text-sm text-[#111111]/35 line-through">
-              ${display.retailPrice.toFixed(0)}
-            </p>
             <p className="text-xl font-extrabold leading-none text-[#111111]">
-              ${subPrice.toFixed(0)}
+              ${display.retailPrice.toFixed(2)}
             </p>
-            <p className="mt-1 text-xs text-[#111111]/65">
-              You&apos;re saving ${subSaving.toFixed(0)}
+            <p className="mt-1 text-xs font-semibold text-[#5A3493]">
+              ${roundMoney(display.retailPrice * 0.9).toFixed(2)} with WELCOME10
             </p>
+            <ShopPayInstallments total={display.retailPrice} />
           </div>
         </div>
 
+        <button
+          type="button"
+          disabled={!oneBoxVariant || otpPending}
+          onClick={() => {
+            if (!oneBoxVariant) return;
+            trackStunnEvent("add_to_cart");
+            trackMetaEvent("AddToCart", {
+              content_ids: [product.id],
+              content_name: product.title,
+              content_type: "product",
+              value: display.retailPrice,
+              currency: "USD",
+            });
+            addCartItem(oneBoxVariant, product, display.qty);
+            startOtpTransition(async () => {
+              await addItem(null, oneBoxVariant.id, display.qty);
+            });
+          }}
+          className="stunn-cta-motion mb-4 w-full rounded-[8px] border-2 border-[#5A3493] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white disabled:opacity-50"
+        >
+          {otpPending ? "ADDING..." : "ADD TO CART"}
+        </button>
+
+        <div className="grid gap-2 text-[11px] text-[#111111]/72 sm:grid-cols-3">
+          {[
+            shipsFree(display.retailPrice)
+              ? "Ships FREE"
+              : `Free shipping over $${FREE_SHIPPING_THRESHOLD}`,
+            "10% off your first order",
+            "No subscription",
+          ].map((b) => (
+            <span key={b} className="flex items-center gap-2">
+              <DarkCheckIcon />
+              {b}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* SECONDARY — subscribe & save. Still visible and still carries the real
+          20/23/25% saving, but it is now the upgrade rather than the default. */}
+      <div className="mb-6 rounded-[12px] border border-[#5A3493]/25 bg-[#F6F3FC] p-4">
+        <div className="mb-3 flex items-start justify-between gap-4">
+          <div>
+            <p className="mb-1 text-sm font-extrabold text-[#111111]">
+              Subscribe &amp; save {display.subDiscountPct}%
+            </p>
+            <p className="text-xs text-[#111111]/70">
+              Ships {display.shipEvery}. Pause, edit or cancel anytime.
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-[#111111]/35 line-through">
+              ${display.retailPrice.toFixed(2)}
+            </p>
+            <p className="text-lg font-extrabold leading-none text-[#5A3493]">
+              ${subPrice.toFixed(2)}
+            </p>
+            <p className="mt-0.5 text-[11px] text-[#111111]/65">
+              save ${subSaving.toFixed(2)}
+            </p>
+          </div>
+        </div>
         <button
           type="button"
           disabled={!oneBoxVariant || addPending}
@@ -280,60 +341,13 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
               await addItem(null, oneBoxVariant.id, display.qty, sellingPlanId);
             });
           }}
-          className="stunn-cta-motion mb-4 w-full rounded-[8px] border-2 border-[#5A3493] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white disabled:opacity-50"
+          className="w-full rounded-[8px] border-2 border-[#5A3493] bg-white py-3 text-xs font-extrabold uppercase tracking-wide text-[#5A3493] disabled:opacity-50"
         >
-          {addPending ? "ADDING..." : "ADD TO CART"}
-        </button>
-
-        <div className="grid gap-2 text-[11px] text-[#111111]/72 sm:grid-cols-3">
-          {[
-            `Ships FREE ${display.shipEvery}`,
-            "VIP discounts & perks",
-            "Pause, edit or cancel anytime",
-          ].map((b) => (
-            <span key={b} className="flex items-center gap-2">
-              <DarkCheckIcon />
-              {b}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* One-time purchase — secondary, clearly below ATC */}
-      <div className="mb-6 text-center">
-        <button
-          type="button"
-          disabled={!oneBoxVariant || otpPending}
-          onClick={() => {
-            if (!oneBoxVariant) return;
-            trackStunnEvent("add_to_cart");
-            trackMetaEvent("AddToCart", {
-              content_ids: [product.id],
-              content_name: product.title,
-              content_type: "product",
-              value: display.retailPrice,
-              currency: "USD",
-            });
-            addCartItem(oneBoxVariant, product, display.qty);
-            startOtpTransition(async () => {
-              await addItem(null, oneBoxVariant.id, display.qty);
-            });
-          }}
-          className="text-xs text-[#111111]/60 disabled:opacity-50"
-        >
-          {otpPending ? (
-            <span className="font-semibold underline text-[#111111]/82">
-              Adding…
-            </span>
-          ) : (
-            <span className="font-semibold underline text-[#111111]/82">
-              One-Time Purchase — ${display.retailPrice.toFixed(0)} (
-              {formatPerDay(oneTimePerDay, { spaced: true, unit: "Day" })}) · no
-              subscription
-            </span>
-          )}
+          {addPending ? "ADDING..." : `Subscribe instead — save ${display.subDiscountPct}%`}
         </button>
       </div>
+
+      <ProductFacts />
 
       {/* Trust badges */}
       <div className="mb-5 grid grid-cols-3 gap-6 text-center">

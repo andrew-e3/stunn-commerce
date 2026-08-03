@@ -99,3 +99,23 @@ export const BEST_VALUE_PER_DAY = perDay(
   BEST_VALUE_TIER.count,
 );
 export const BEST_VALUE_PER_DAY_LABEL = formatPerDay(BEST_VALUE_PER_DAY);
+
+// Free-shipping threshold in USD, on the one-time purchase path. Subscriptions
+// always ship free.
+//
+// SINGLE SOURCE OF TRUTH. The cart drawer, the PDP buy box and the homepage all
+// read this. They used to hardcode their own numbers, which is how the buy box
+// ended up promising "Ships FREE" on a $39.99 order while the cart asked for
+// $35.01 more - visible only after add-to-cart, at the worst possible moment.
+//
+// Set to 0 if Shopify's US shipping profile actually charges nothing on every
+// order (which is what the announcement bar and the running Meta ads promise).
+// Verify under Shopify admin -> Settings -> Shipping and delivery before
+// changing: lowering this without the Shopify rate to match would surprise the
+// customer with a shipping charge at checkout instead.
+export const FREE_SHIPPING_THRESHOLD = 75;
+
+/** Does a one-time order of this value ship free? */
+export function shipsFree(subtotal: number) {
+  return subtotal >= FREE_SHIPPING_THRESHOLD;
+}
