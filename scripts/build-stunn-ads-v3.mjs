@@ -98,6 +98,17 @@ const ads = [
     headlineLines: ["WHY PAY MORE", "FOR LESS?"],
     subhead: "Real coffee ritual. / No stimulant tax.",
     subheadLines: ["Real coffee ritual.", "No stimulant tax."],
+    // ON HOLD - do not export. Biasing the crop low to clear the headline made
+    // the pack's Supplement Facts panel fully legible, and the artwork on
+    // stunn-home-hero-mobile-product.png is an OLD formula: L-Theanine 400mg,
+    // Rhodiola 100mg, Magnesium 50mg, CoQ10 50mg, "Servings Per Container 10",
+    // 3.5g sticks, NET WT 35g. The product we actually ship is lion's mane
+    // 300mg / rhodiola 250mg / cordyceps 100mg / L-theanine 100mg / decaf
+    // coffee 1500mg, 2.25g per sachet, 30 sachets, 67.5g. Running this would
+    // advertise a formula, a count and a net weight we do not sell.
+    // Re-enable only with corrected pack photography.
+    cropGravity: "bottom",
+    hold: true,
     source: "stunn-home-hero-mobile-product.png",
     sourcePosition: { square: "centre", portrait: "west" },
     layout: "centred-product",
@@ -270,8 +281,15 @@ function definitions() {
   `;
 }
 
-function eyebrow(number, x = 62) {
-  return `<text x="${x}" y="52" class="eyebrow">STUNN / BETTER DECAF / ${number}</text>`;
+// The eyebrow is purple (luma ~67) so it disappears over a dark crop - ad 06's
+// portrait put it on the subject's hair at 128 luma. When the backdrop is too
+// dark to carry it, sit it on a cream pill instead of hoping for the best.
+function eyebrow(number, x = 62, needsPill = false) {
+  const label = `STUNN / BETTER DECAF / ${number}`;
+  const pill = needsPill
+    ? `<rect x="${x - 14}" y="26" width="${label.length * 13.4 + 28}" height="36" rx="18" fill="${colors.cream}" fill-opacity=".9"/>`
+    : "";
+  return `${pill}<text x="${x}" y="52" class="eyebrow">${label}</text>`;
 }
 
 function cta(x, y, width = 380) {
@@ -316,7 +334,7 @@ function overlaySvg(ad, formatName, lockupBox) {
         <style>${styles(ad.headlineSize)}</style>
         ${definitions()}
         <rect width="${width}" height="${portrait ? 610 : 540}" fill="url(#topScrim)"/>
-        ${eyebrow(ad.number)}
+        ${eyebrow(ad.number, 62, ad.eyebrowPill)}
         ${textLines(ad.headlineLines, 62, headlineY, lineHeight, "display")}
         ${textLines(ad.subheadLines, 62, subheadY, 40, "subhead")}
         ${cta(62, contentBottom - 150)}
@@ -334,7 +352,7 @@ function overlaySvg(ad, formatName, lockupBox) {
         <style>${styles(ad.headlineSize)}</style>
         ${definitions()}
         <rect width="${width}" height="${portrait ? 620 : 555}" fill="url(#topScrim)"/>
-        ${eyebrow(ad.number)}
+        ${eyebrow(ad.number, 62, ad.eyebrowPill)}
         ${textLines(ad.headlineLines, textX, headlineY, lineHeight, "display")}
         ${textLines(ad.subheadLines, textX, subheadY, 40, "subhead")}
         ${cta(width - 62 - 380, contentBottom - 150)}
@@ -351,7 +369,7 @@ function overlaySvg(ad, formatName, lockupBox) {
         <style>${styles(ad.headlineSize)}</style>
         ${definitions()}
         <rect width="${width}" height="${portrait ? 565 : 500}" fill="url(#topScrim)"/>
-        ${eyebrow(ad.number)}
+        ${eyebrow(ad.number, 62, ad.eyebrowPill)}
         ${textLines(ad.headlineLines, 62, headlineY, lineHeight, "display")}
         ${textLines(ad.subheadLines, 62, subheadY, 40, "subhead")}
         ${cta(62, contentBottom - 150)}
@@ -368,7 +386,7 @@ function overlaySvg(ad, formatName, lockupBox) {
         <style>${styles(ad.headlineSize)}</style>
         ${definitions()}
         <rect width="${portrait ? 710 : 680}" height="${contentBottom}" fill="url(#leftScrim)"/>
-        ${eyebrow(ad.number)}
+        ${eyebrow(ad.number, 62, ad.eyebrowPill)}
         ${textLines(ad.headlineLines, 62, headlineY, lineHeight, "display")}
         ${textLines(ad.subheadLines, 62, subheadY, 40, "subhead")}
         ${cta(62, contentBottom - 150)}
@@ -384,7 +402,7 @@ function overlaySvg(ad, formatName, lockupBox) {
       <style>${styles(ad.headlineSize)}</style>
       ${definitions()}
       <rect y="${portrait ? 590 : 380}" width="${width}" height="${contentBottom}" fill="url(#bottomScrim)"/>
-      ${eyebrow(ad.number)}
+      ${eyebrow(ad.number, 62, ad.eyebrowPill)}
       ${textLines(ad.headlineLines, 62, headlineY, lineHeight, "display")}
       ${textLines(ad.subheadLines, 62, subheadY, 40, "subhead")}
       ${cta(62, contentBottom - 150)}
@@ -398,7 +416,7 @@ async function renderMainImage(ad, formatName) {
   return sharp(path.join(imageRoot, ad.source))
     .resize(width, height - footer, {
       fit: "cover",
-      position: ad.sourcePosition[formatName],
+      position: ad.cropGravity ?? ad.sourcePosition[formatName],
       withoutEnlargement: false,
     })
     .png()
@@ -453,6 +471,20 @@ function lockupCard(width, height, box) {
     </svg>`);
 }
 
+const EYEBROW_MIN_LUMA = 150;
+
+/** Is the crop behind the eyebrow light enough for purple type to read? */
+async function eyebrowNeedsPill(mainImage) {
+  const { data, info } = await sharp(mainImage)
+    .extract({ left: 60, top: 26, width: 410, height: 36 })
+    .greyscale()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  let sum = 0;
+  for (let i = 0; i < data.length; i += 1) sum += data[i];
+  return sum / (info.width * info.height) < EYEBROW_MIN_LUMA;
+}
+
 async function renderAd(ad, formatName) {
   const { width, height } = formats[formatName];
   const outputDir = formatName === "portrait" ? portraitDir : squareDir;
@@ -462,6 +494,7 @@ async function renderAd(ad, formatName) {
     renderMainImage(ad, formatName),
     renderLockup(ad, lockupBox),
   ]);
+  ad.eyebrowPill = await eyebrowNeedsPill(mainImage);
   const layers = [{ input: mainImage, left: 0, top: 0 }];
   if (lockupImage && lockupBox) {
     layers.push({ input: lockupCard(width, height, lockupBox), left: 0, top: 0 });
@@ -515,7 +548,8 @@ await Promise.all([
 
 const squareFiles = [];
 const portraitFiles = [];
-for (const ad of ads) {
+const liveAds = ads.filter((a) => !a.hold);
+for (const ad of liveAds) {
   await fitHeadline(ad);
   squareFiles.push(await renderAd(ad, "square"));
   portraitFiles.push(await renderAd(ad, "portrait"));
@@ -529,7 +563,7 @@ await Promise.all([
     JSON.stringify(
       {
         generatedAt: new Date().toISOString(),
-        ads: ads.map((ad, index) => ({
+        ads: liveAds.map((ad, index) => ({
           number: ad.number,
           headline: ad.headline,
           subhead: ad.subhead.replaceAll(" / ", " "),
@@ -546,5 +580,12 @@ await Promise.all([
     ),
   ),
 ]);
+
+const held = ads.filter((a) => a.hold);
+if (held.length) {
+  console.log(
+    `On hold, not exported: ${held.map((a) => a.number).join(", ")} - see the comment on each.`,
+  );
+}
 
 console.log(`Built ${squareFiles.length + portraitFiles.length} ads in ${outputRoot}`);
