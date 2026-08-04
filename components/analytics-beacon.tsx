@@ -16,6 +16,23 @@ const ENDPOINT =
   "https://uifcbjueqgrohkavlhcw.supabase.co/functions/v1/track-session";
 const KEY = "stunn_sid";
 
+// Only report from the real storefront. The endpoint is production Supabase with
+// no environment split, so without this guard every `npm run dev` session writes
+// sessions, pageviews and funnel flags straight into the live analytics - and dev
+// traffic lands disproportionately on the PDP hitting add-to-cart, which is
+// exactly the metric that matters. Two phantom add-to-carts showed up on the
+// dashboard on 2026-08-04 from local testing before this was added.
+//
+// Set NEXT_PUBLIC_ANALYTICS_FORCE=1 locally if you genuinely need to test the
+// beacon end to end.
+const ALLOWED_HOSTS = ["stunn.co", "www.stunn.co"];
+
+function reportingEnabled(): boolean {
+  if (typeof window === "undefined") return false;
+  if (process.env.NEXT_PUBLIC_ANALYTICS_FORCE === "1") return true;
+  return ALLOWED_HOSTS.includes(window.location.hostname);
+}
+
 function sessionKey(): string | null {
   if (typeof window === "undefined") return null;
   try {
@@ -62,6 +79,7 @@ export function trackStunnEvent(
   event: "view_product" | "add_to_cart" | "begin_checkout" | "purchase",
   value?: number,
 ) {
+  if (!reportingEnabled()) return;
   const key = sessionKey();
   if (!key) return;
   const payload = JSON.stringify({
@@ -100,6 +118,7 @@ function Beacon() {
   const lastPath = useRef<string | null>(null);
 
   useEffect(() => {
+    if (!reportingEnabled()) return;
     const key = sessionKey();
     if (!key || lastPath.current === pathname) return;
     lastPath.current = pathname;
