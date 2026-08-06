@@ -17,6 +17,8 @@ import {
   createCartMutation,
   editCartItemsMutation,
   removeFromCartMutation,
+  updateCartAttributesMutation,
+  updateCartDiscountCodesMutation,
 } from "./mutations/cart";
 import { getCartQuery } from "./queries/cart";
 import {
@@ -56,6 +58,7 @@ import {
   ShopifyProductsOperation,
   ShopifyRemoveFromCartOperation,
   ShopifyUpdateCartOperation,
+  ShopifyUpdateCartDiscountCodesOperation,
 } from "./types";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
@@ -276,6 +279,56 @@ export async function updateCart(
   });
 
   return reshapeCart(res.body.data.cartLinesUpdate.cart);
+}
+
+export async function updateCartDiscountCodes(
+  discountCodes: string[],
+): Promise<Cart> {
+  const cartId = (await cookies()).get("cartId")?.value!;
+  const res = await shopifyFetch<ShopifyUpdateCartDiscountCodesOperation>({
+    query: updateCartDiscountCodesMutation,
+    variables: {
+      cartId,
+      discountCodes,
+    },
+  });
+
+  const errors = res.body.data.cartDiscountCodesUpdate.userErrors;
+  if (errors.length) {
+    throw new Error(errors.map((error) => error.message).join("; "));
+  }
+
+  return reshapeCart(res.body.data.cartDiscountCodesUpdate.cart);
+}
+
+// Stamps the first-party analytics session onto the cart so the resulting
+// Shopify order carries it in note_attributes. Deliberately tolerant: a failure
+// here must never block an add-to-cart, since losing attribution on one order
+// is far cheaper than losing the sale.
+export async function updateCartAttributes(
+  attributes: { key: string; value: string }[],
+): Promise<Cart | undefined> {
+  const cartId = (await cookies()).get("cartId")?.value;
+  if (!cartId) return undefined;
+  const res = await shopifyFetch<{
+    data: {
+      cartAttributesUpdate: {
+        cart: ShopifyCart;
+        userErrors: { field: string; message: string }[];
+      };
+    };
+    variables: { cartId: string; attributes: { key: string; value: string }[] };
+  }>({
+    query: updateCartAttributesMutation,
+    variables: { cartId, attributes },
+  });
+
+  const errors = res.body.data.cartAttributesUpdate.userErrors;
+  if (errors.length) {
+    throw new Error(errors.map((error) => error.message).join("; "));
+  }
+
+  return reshapeCart(res.body.data.cartAttributesUpdate.cart);
 }
 
 export async function getCart(): Promise<Cart | undefined> {

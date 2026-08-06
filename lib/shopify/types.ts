@@ -234,6 +234,22 @@ export type ShopifyUpdateCartOperation = {
   };
 };
 
+export type ShopifyUpdateCartDiscountCodesOperation = {
+  data: {
+    cartDiscountCodesUpdate: {
+      cart: ShopifyCart;
+      userErrors: {
+        field: string[];
+        message: string;
+      }[];
+    };
+  };
+  variables: {
+    cartId: string;
+    discountCodes: string[];
+  };
+};
+
 export type ShopifyCollectionOperation = {
   data: {
     collection: ShopifyCollection;

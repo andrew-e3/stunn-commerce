@@ -4,6 +4,7 @@ import { addItem } from "components/cart/actions";
 import { trackStunnEvent } from "components/analytics-beacon";
 import { trackMetaEvent } from "components/meta-pixel";
 import { useCart } from "components/cart/cart-context";
+import { attachAnalyticsSession } from "lib/analytics/attach-session";
 import { DEFAULT_OPTION } from "lib/constants";
 import {
   formatPerDay,
@@ -144,6 +145,7 @@ export function StickyAtc({
     addCartItem(oneBoxVariant, product, selectedTier.qty, plan);
     startTransition(async () => {
       await addItem(null, oneBoxVariant.id, selectedTier.qty, plan);
+      await attachAnalyticsSession();
     });
   };
 

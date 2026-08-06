@@ -7,10 +7,28 @@ import {
   getCart,
   removeFromCart,
   updateCart,
+  updateCartAttributes,
 } from "lib/shopify";
 import { updateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
+// Attaches the analytics session key to the cart so the Shopify order it
+// becomes carries it in note_attributes, letting ib_orders join back to
+// ib_sessions on a real key rather than on timestamp proximity.
+//
+// Swallows its own errors on purpose - attribution is worth strictly less than
+// the order, so a failure here must be invisible to the shopper.
+export async function attachSessionToCart(sessionKey: string) {
+  if (!sessionKey || sessionKey.length > 64) return;
+  try {
+    await updateCartAttributes([
+      { key: "analytics_session_key", value: sessionKey },
+    ]);
+  } catch (e) {
+    console.error("attachSessionToCart failed (non-fatal)", e);
+  }
+}
 
 export async function addItem(
   prevState: any,
@@ -192,7 +210,7 @@ export async function convertCartLineToSubscription(
 }
 
 export async function redirectToCheckout() {
-  let cart = await getCart();
+  const cart = await getCart();
   redirect(cart!.checkoutUrl);
 }
 

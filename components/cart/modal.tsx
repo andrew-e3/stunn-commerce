@@ -2,6 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { trackStunnEvent } from "components/analytics-beacon";
 import LoadingDots from "components/loading-dots";
 import { DEFAULT_OPTION } from "lib/constants";
 import {
@@ -660,7 +661,18 @@ export default function CartModal() {
                           </p>
                         )}
 
-                        <form action={redirectToCheckout}>
+                        {/* onSubmit runs client-side before the server action
+                            navigates away, which is the only place the checkout
+                            step can be recorded - redirectToCheckout is a
+                            server action and cannot reach the beacon. Without
+                            this, reached_checkout is permanently false for
+                            every session. */}
+                        <form
+                          action={redirectToCheckout}
+                          onSubmit={() =>
+                            trackStunnEvent("begin_checkout", discountedSubtotal)
+                          }
+                        >
                           <CheckoutButton />
                         </form>
                         <p className="mt-4 text-center text-[11px] font-semibold text-white">

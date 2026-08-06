@@ -43,3 +43,37 @@ export const removeFromCartMutation = /* GraphQL */ `
   }
   ${cartFragment}
 `;
+
+// Cart attributes carry through to the Shopify order as note_attributes, which
+// is how a first-party session gets joined to the order it produced. Without
+// this the only link available is "an order happened a few minutes after some
+// session added to cart", which is a guess, not attribution.
+export const updateCartAttributesMutation = /* GraphQL */ `
+  mutation updateCartAttributes($cartId: ID!, $attributes: [AttributeInput!]!) {
+    cartAttributesUpdate(cartId: $cartId, attributes: $attributes) {
+      cart {
+        ...cart
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+  ${cartFragment}
+`;
+
+export const updateCartDiscountCodesMutation = /* GraphQL */ `
+  mutation updateCartDiscountCodes($cartId: ID!, $discountCodes: [String!]) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+      cart {
+        ...cart
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+  ${cartFragment}
+`;

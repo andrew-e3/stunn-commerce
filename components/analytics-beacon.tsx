@@ -55,6 +55,14 @@ function device(): string {
   return "desktop";
 }
 
+// Exposed so add-to-cart can stamp the session onto the Shopify cart, which is
+// what makes order-to-session attribution a real join instead of a guess.
+// Returns null when reporting is off or storage is blocked.
+export function getStunnSessionKey(): string | null {
+  if (!reportingEnabled()) return null;
+  return sessionKey();
+}
+
 // UTMs only exist on the entry URL, so remember them for the whole session.
 function utms(search: URLSearchParams) {
   try {
@@ -88,6 +96,13 @@ export function trackStunnEvent(
     event,
     path: window.location.pathname,
     value,
+    // A PDP fires view_product and pageview within milliseconds of each other,
+    // and whichever lands first is the one that creates the session row. When
+    // this event won that race it used to create the row with a null device,
+    // which is why most sessions had no device recorded. Send it on every
+    // event so the row is complete regardless of ordering.
+    device: device(),
+    utm: utms(new URLSearchParams(window.location.search)),
   });
   try {
     // sendBeacon survives the navigation away to Shopify checkout.

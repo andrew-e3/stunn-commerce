@@ -4,6 +4,7 @@ import { addItem } from "components/cart/actions";
 import { trackStunnEvent } from "components/analytics-beacon";
 import { trackMetaEvent } from "components/meta-pixel";
 import { useCart } from "components/cart/cart-context";
+import { attachAnalyticsSession } from "lib/analytics/attach-session";
 import { DEFAULT_OPTION } from "lib/constants";
 import {
   FREE_SHIPPING_THRESHOLD,
@@ -273,6 +274,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             addCartItem(oneBoxVariant, product, display.qty);
             startOtpTransition(async () => {
               await addItem(null, oneBoxVariant.id, display.qty);
+              await attachAnalyticsSession();
             });
           }}
           className="stunn-cta-motion mb-4 w-full rounded-[8px] border-2 border-[#5A3493] bg-[#5A3493] py-4 text-sm font-extrabold uppercase tracking-wide text-white disabled:opacity-50"
@@ -339,6 +341,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
             addCartItem(oneBoxVariant, product, display.qty, sellingPlanId);
             startAddTransition(async () => {
               await addItem(null, oneBoxVariant.id, display.qty, sellingPlanId);
+              await attachAnalyticsSession();
             });
           }}
           className="w-full rounded-[8px] border-2 border-[#5A3493] bg-white py-3 text-xs font-extrabold uppercase tracking-wide text-[#5A3493] disabled:opacity-50"
