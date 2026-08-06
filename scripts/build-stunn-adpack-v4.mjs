@@ -6,6 +6,10 @@ import sharp from "sharp";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(scriptDir, "..");
 const imageRoot = path.join(root, "public/images");
+const productLockupSource = path.join(
+  imageRoot,
+  "stunn-ad-product-lockup.webp",
+);
 const outputRoot = process.argv[2]
   ? path.resolve(process.argv[2])
   : path.join(root, "creative/ads/STUNN-Adpack-v4");
@@ -53,12 +57,20 @@ const ads = [
     id: "S02",
     slug: "S02-third-coffee",
     headline: "THE THIRD COFFEE ISN'T HELPING.",
-    lines: ["THE THIRD COFFEE", "ISN'T HELPING."],
+    lines: {
+      square: ["THE THIRD", "COFFEE ISN'T", "HELPING."],
+      portrait: ["THE THIRD COFFEE", "ISN'T HELPING."],
+    },
     subhead: ["Steady attention shouldn't", "expire after lunch."],
-    source: "stunn-email-comparison.jpg",
-    layout: "lowerEditorial",
+    source: [
+      "stunn-email-pour.jpg",
+      "stunn-function-pour-corrected.png",
+      "stunn-cdn-pour-lilac.jpg",
+    ],
+    layout: "threeCups",
     position: "centre",
-    headlineSize: 82,
+    headlineSize: 78,
+    squareHeadlineSize: 64,
   },
   {
     id: "S03",
@@ -70,6 +82,8 @@ const ads = [
     layout: "rightNarrative",
     position: "centre",
     headlineSize: 67,
+    squareHeadlineSize: 58,
+    productInset: true,
   },
   {
     id: "S04",
@@ -92,17 +106,34 @@ const ads = [
     layout: "topEditorial",
     position: "centre",
     headlineSize: 66,
+    squareHeadlineSize: 58,
+    productInset: true,
   },
   {
     id: "S06",
     slug: "S06-overstimulated",
     headline: "YOU'RE NOT LOW ON ENERGY. YOU'RE OVERSTIMULATED.",
-    lines: ["YOU'RE NOT LOW", "ON ENERGY.", "YOU'RE OVERSTIMULATED."],
+    lines: {
+      square: [
+        "YOU'RE NOT",
+        "LOW ON ENERGY.",
+        "YOU'RE",
+        "OVERSTIMULATED.",
+      ],
+      portrait: [
+        "YOU'RE NOT LOW",
+        "ON ENERGY.",
+        "YOU'RE",
+        "OVERSTIMULATED.",
+      ],
+    },
     subhead: ["Steady attention,", "no borrowing from tomorrow."],
     source: "stunn-ritual-afternoon-man-v1.webp",
-    layout: "lowerEditorial",
-    position: "centre",
-    headlineSize: 61,
+    layout: "humanNegativeSpace",
+    position: { square: "west", portrait: "west" },
+    headlineSize: 48,
+    squareHeadlineSize: 46,
+    productInset: true,
   },
   {
     id: "S07",
@@ -118,24 +149,26 @@ const ads = [
   {
     id: "S08",
     slug: "S08-all-the-ritual",
-    headline: "ALL THE RITUAL. NONE OF THE CAFFEINE.",
-    lines: ["ALL THE RITUAL.", "NONE OF THE CAFFEINE."],
+    headline: "ALL THE RITUAL. NONE OF THE JITTERS.",
+    lines: ["ALL THE RITUAL.", "NONE OF THE", "JITTERS."],
     subhead: ["It tastes like real coffee -", "because it is."],
     source: "stunn-email-ritual.jpg",
     layout: "leftNarrative",
     position: "centre",
-    headlineSize: 70,
+    headlineSize: 66,
   },
   {
     id: "S09",
     slug: "S09-same-mug-7am",
     headline: "SAME MUG. SAME 7AM. NO CRASH.",
     lines: ["SAME MUG.", "SAME 7AM.", "NO CRASH."],
-    subhead: ["Everything you love about the morning,", "minus the tax."],
+    subhead: ["Everything you love about", "the morning, minus the tax."],
     source: "stunn-ritual-morning-woman-v1.webp",
     layout: "leftNarrative",
     position: "centre",
     headlineSize: 73,
+    squareHeadlineSize: 63,
+    productInset: true,
   },
   {
     id: "S10",
@@ -165,6 +198,7 @@ const ads = [
     layout: "typeFirst",
     position: "centre",
     headlineSize: 66,
+    productInset: true,
   },
   {
     id: "S12",
@@ -176,10 +210,10 @@ const ads = [
       square: "stunn-rested-morning-v1.webp",
       portrait: "stunn-evening-ritual-generated.jpg",
     },
-    inset: "stunn-cdn-pour-lilac.jpg",
     layout: "sleepStory",
     position: { square: "centre", portrait: "centre" },
     headlineSize: 69,
+    productInset: true,
   },
 ];
 
@@ -210,6 +244,7 @@ function css(headlineSize, subheadSize = 31) {
     .subheadBold { font-family: "STUNN Bold", Arial, sans-serif; font-size: ${subheadSize}px; font-weight: 700; fill: ${color.ink}; }
     .cta { font-family: "STUNN Bold", Arial, sans-serif; font-size: 27px; font-weight: 700; fill: ${color.white}; letter-spacing: .5px; }
     .offer { font-family: "STUNN Bold", Arial, sans-serif; font-size: 22px; font-weight: 700; fill: ${color.purple}; letter-spacing: .2px; }
+    .sequence { font-family: "STUNN Bold", Arial, sans-serif; font-size: 22px; font-weight: 700; fill: ${color.white}; letter-spacing: 1.2px; }
   `;
 }
 
@@ -260,13 +295,43 @@ function offerStrip(ad, width, height, footer) {
     <text x="${width / 2}" y="${height - 19}" text-anchor="middle" class="offer">${message}</text>`;
 }
 
+function valueForFormat(value, formatName) {
+  if (Array.isArray(value) || typeof value === "string") return value;
+  return value[formatName];
+}
+
+function sourceImagesFor(ad) {
+  const sources = Array.isArray(ad.source)
+    ? ad.source
+    : typeof ad.source === "string"
+      ? [ad.source]
+      : [ad.source.square, ad.source.portrait];
+  if (ad.productInset) {
+    sources.push(path.relative(root, productLockupSource));
+  }
+  return [...new Set(sources.filter(Boolean))];
+}
+
+function productInsetPanel(contentBottom) {
+  const size = 238;
+  const x = 1080 - 64 - size;
+  const y = contentBottom - 42 - size;
+  return `
+    <rect x="${x}" y="${y}" width="${size}" height="${size}" rx="28" fill="${color.cream}" fill-opacity=".96" filter="url(#shadow)"/>`;
+}
+
 function overlay(ad, formatName) {
   const { width, height, footer } = formats[formatName];
   const portrait = formatName === "portrait";
   const contentBottom = height - footer;
-  const lineHeight = ad.headlineSize * 0.9;
-  const headCount = ad.lines.length;
-  const styles = css(ad.headlineSize, ad.layout === "typeFirst" ? 28 : 31);
+  const lines = valueForFormat(ad.lines, formatName);
+  const headlineSize =
+    formatName === "square" && ad.squareHeadlineSize
+      ? ad.squareHeadlineSize
+      : ad.headlineSize;
+  const lineHeight = headlineSize * 0.9;
+  const headCount = lines.length;
+  const styles = css(headlineSize, ad.layout === "typeFirst" ? 28 : 31);
   let body = "";
 
   if (ad.layout === "topEditorial") {
@@ -275,7 +340,7 @@ function overlay(ad, formatName) {
     body = `
       <rect width="${width}" height="${portrait ? 650 : 575}" fill="url(#top)"/>
       ${eyebrow()}
-      ${textLines(ad.lines, 64, y, lineHeight, "headline")}
+      ${textLines(lines, 64, y, lineHeight, "headline")}
       ${textLines(ad.subhead, 64, subY, 39, "subhead")}
       ${cta(64, contentBottom - 112)}`;
   } else if (ad.layout === "lowerEditorial") {
@@ -284,7 +349,7 @@ function overlay(ad, formatName) {
     body = `
       <rect y="${portrait ? 510 : 385}" width="${width}" height="${contentBottom}" fill="url(#bottom)"/>
       ${eyebrow(64, portrait ? 710 : 535)}
-      ${textLines(ad.lines, 64, y, lineHeight, "headline")}
+      ${textLines(lines, 64, y, lineHeight, "headline")}
       ${textLines(ad.subhead, 64, subY, 38, "subhead")}
       ${cta(630, contentBottom - 112, 386)}`;
   } else if (ad.layout === "rightNarrative") {
@@ -294,16 +359,16 @@ function overlay(ad, formatName) {
     body = `
       <rect x="380" width="700" height="${contentBottom}" fill="url(#right)"/>
       ${eyebrow(x)}
-      ${textLines(ad.lines, x, y, lineHeight, "headline")}
+      ${textLines(lines, x, y, lineHeight, "headline")}
       ${textLines(ad.subhead, x, subY, 38, "subhead")}
-      ${cta(x, contentBottom - 112, 414)}`;
+      ${cta(ad.productInset ? 64 : x, contentBottom - 112, 414)}`;
   } else if (ad.layout === "centeredRitual") {
     const y = 148;
     const subY = y + headCount * lineHeight + 18;
     body = `
       <rect width="${width}" height="${portrait ? 570 : 500}" fill="url(#top)"/>
       ${eyebrow()}
-      ${textLines(ad.lines, width / 2, y, lineHeight, "headline", "middle")}
+      ${textLines(lines, width / 2, y, lineHeight, "headline", "middle")}
       ${textLines(ad.subhead, width / 2, subY, 39, "subhead", "middle")}
       ${cta((width - 386) / 2, contentBottom - 112)}`;
   } else if (ad.layout === "quietSplit") {
@@ -312,7 +377,7 @@ function overlay(ad, formatName) {
     body = `
       <rect width="660" height="${contentBottom}" fill="url(#left)"/>
       ${eyebrow()}
-      ${textLines(ad.lines, 64, y, lineHeight, "headline")}
+      ${textLines(lines, 64, y, lineHeight, "headline")}
       <line x1="64" y1="${subY - 20}" x2="164" y2="${subY - 20}" stroke="${color.purple}" stroke-width="3"/>
       ${textLines(ad.subhead, 64, subY + 18, 39, "subhead")}
       ${cta(64, contentBottom - 112)}`;
@@ -322,7 +387,7 @@ function overlay(ad, formatName) {
     body = `
       <rect width="690" height="${contentBottom}" fill="url(#left)"/>
       ${eyebrow()}
-      ${textLines(ad.lines, 64, y, lineHeight, "headline")}
+      ${textLines(lines, 64, y, lineHeight, "headline")}
       ${textLines(ad.subhead, 64, subY, 38, "subhead")}
       ${cta(64, contentBottom - 112)}`;
   } else if (ad.layout === "doseSplit") {
@@ -330,7 +395,7 @@ function overlay(ad, formatName) {
     body = `
       <rect width="590" height="${contentBottom}" fill="${color.cream}" fill-opacity=".96"/>
       ${eyebrow()}
-      ${textLines(ad.lines, 64, y, lineHeight, "headline")}
+      ${textLines(lines, 64, y, lineHeight, "headline")}
       <text x="64" y="${y + 180}" class="subheadBold">300mg Lion&apos;s Mane.</text>
       <text x="64" y="${y + 239}" class="subheadBold">250mg Rhodiola.</text>
       <line x1="64" y1="${y + 280}" x2="470" y2="${y + 280}" stroke="${color.purple}" stroke-width="2"/>
@@ -338,27 +403,53 @@ function overlay(ad, formatName) {
       ${cta(64, contentBottom - 112)}`;
   } else if (ad.layout === "typeFirst") {
     const y = 146;
-    const tight = ad.headlineSize * 0.82;
+    const tight = headlineSize * 0.82;
     const subY = y + headCount * tight + 28;
     body = `
       <rect width="${width}" height="${contentBottom}" fill="${color.cream}"/>
-      <rect x="728" y="${portrait ? 750 : 555}" width="286" height="${portrait ? 360 : 280}" fill="${color.lilac}"/>
       ${eyebrow()}
-      ${textLines(ad.lines, 64, y, tight, "headline")}
+      ${textLines(lines, 64, y, tight, "headline")}
       ${textLines(ad.subhead, 64, subY, 36, "subhead")}
       ${cta(64, contentBottom - 112)}`;
   } else if (ad.layout === "sleepStory") {
     const y = 142;
     const subY = y + headCount * lineHeight + 18;
-    const insetY = portrait ? 895 : 650;
     body = `
       <rect width="${width}" height="${portrait ? 610 : 540}" fill="url(#top)"/>
       ${eyebrow()}
-      ${textLines(ad.lines, 64, y, lineHeight, "headline")}
+      ${textLines(lines, 64, y, lineHeight, "headline")}
       ${textLines(ad.subhead, 64, subY, 38, "subhead")}
-      <rect x="720" y="${insetY}" width="296" height="208" fill="${color.cream}" stroke="${color.cream}" stroke-width="14" filter="url(#shadow)"/>
       ${cta(64, contentBottom - 112)}`;
+  } else if (ad.layout === "threeCups") {
+    const photoTop = portrait ? 520 : 450;
+    const y = portrait ? 142 : 132;
+    const subY = y + headCount * lineHeight + 20;
+    const panelWidth = width / 3;
+    body = `
+      <rect width="${width}" height="${photoTop + 42}" fill="url(#top)"/>
+      ${eyebrow()}
+      ${textLines(lines, 64, y, lineHeight, "headline")}
+      ${textLines(ad.subhead, 64, subY, 38, "subhead")}
+      ${[0, 1, 2]
+        .map(
+          (index) => `
+            <circle cx="${index * panelWidth + 54}" cy="${photoTop + 52}" r="28" fill="${color.purple}"/>
+            <text x="${index * panelWidth + 54}" y="${photoTop + 60}" text-anchor="middle" class="sequence">0${index + 1}</text>`,
+        )
+        .join("")}
+      ${cta(64, contentBottom - 112)}`;
+  } else if (ad.layout === "humanNegativeSpace") {
+    const y = portrait ? 138 : 126;
+    const subY = y + headCount * lineHeight + 18;
+    body = `
+      <rect width="${portrait ? 610 : 560}" height="${contentBottom}" fill="url(#left)"/>
+      ${eyebrow()}
+      ${textLines(lines, 54, y, lineHeight, "headline")}
+      ${textLines(ad.subhead, 54, subY, 36, "subhead")}
+      ${cta(54, contentBottom - 112, 410)}`;
   }
+
+  if (ad.productInset) body += productInsetPanel(contentBottom);
 
   return Buffer.from(`
     <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
@@ -369,7 +460,43 @@ function overlay(ad, formatName) {
     </svg>`);
 }
 
+async function threeCupsSource(ad, formatName) {
+  const { width, height, footer } = formats[formatName];
+  const contentHeight = height - footer;
+  const photoTop = formatName === "portrait" ? 520 : 450;
+  const panelWidth = Math.floor(width / 3);
+  const photoHeight = contentHeight - photoTop;
+  const panels = await Promise.all(
+    ad.source.map(async (sourceName, index) => ({
+      input: await sharp(path.join(imageRoot, sourceName))
+        .resize(panelWidth - (index < 2 ? 3 : 0), photoHeight, {
+          fit: "cover",
+          position: "centre",
+        })
+        .modulate({ saturation: 0.9, brightness: 0.99 })
+        .png()
+        .toBuffer(),
+      left: index * panelWidth,
+      top: photoTop,
+    })),
+  );
+
+  return sharp({
+    create: {
+      width,
+      height: contentHeight,
+      channels: 4,
+      background: color.cream,
+    },
+  })
+    .composite(panels)
+    .png()
+    .toBuffer();
+}
+
 async function sourceFor(ad, formatName) {
+  if (ad.layout === "threeCups") return threeCupsSource(ad, formatName);
+
   const sourceName =
     typeof ad.source === "string" ? ad.source : ad.source[formatName];
   const position =
@@ -398,24 +525,19 @@ async function sourceFor(ad, formatName) {
 
 async function auxiliaryLayers(ad, formatName) {
   const { height, footer } = formats[formatName];
-  const portrait = formatName === "portrait";
-  if (ad.layout === "typeFirst") {
-    const top = portrait ? 764 : 569;
-    const image = await sharp(path.join(imageRoot, ad.source))
-      .resize(258, portrait ? 332 : 252, { fit: "cover", position: "north" })
-      .png()
-      .toBuffer();
-    return [{ input: image, left: 742, top }];
-  }
-  if (ad.layout === "sleepStory") {
-    const top = portrait ? 909 : 664;
-    const image = await sharp(path.join(imageRoot, ad.inset))
-      .resize(268, 180, { fit: "cover", position: "north" })
-      .png()
-      .toBuffer();
-    return [{ input: image, left: 734, top }];
-  }
-  return [];
+  if (!ad.productInset) return [];
+
+  const size = 210;
+  const mask = Buffer.from(
+    `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg"><rect width="${size}" height="${size}" rx="18" fill="white"/></svg>`,
+  );
+  const image = await sharp(productLockupSource)
+    .resize(size, size, { fit: "cover", position: "attention" })
+    .composite([{ input: mask, blend: "dest-in" }])
+    .png()
+    .toBuffer();
+  const contentBottom = height - footer;
+  return [{ input: image, left: 792, top: contentBottom - 266 }];
 }
 
 async function render(ad, formatName) {
@@ -513,11 +635,7 @@ await fs.writeFile(
         headline: ad.headline,
         subhead: ad.subhead.join(" "),
         layoutVariant: ad.layout,
-        sourceImages: [
-          typeof ad.source === "string" ? ad.source : ad.source.square,
-          typeof ad.source === "object" ? ad.source.portrait : null,
-          ad.inset,
-        ].filter(Boolean),
+        sourceImages: sourceImagesFor(ad),
         outputs: {
           square: path.relative(
             outputRoot,
