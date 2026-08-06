@@ -2,9 +2,25 @@
 
 import Script from "next/script";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+
+// Only report from the real storefront, matching the first-party beacon's guard
+// in analytics-beacon.tsx. Without this the pixel fired from every `npm run dev`
+// session and every Vercel preview deploy straight into the production pixel:
+// those AddToCart events counted for Meta and not for us, which is part of why
+// Meta's add-to-cart figure read far above JIQ's, and - worse - they fed fake
+// conversions into the ad account's optimisation and audience building.
+//
+// Set NEXT_PUBLIC_ANALYTICS_FORCE=1 to test the pixel outside production.
+const ALLOWED_HOSTS = ["stunn.co", "www.stunn.co"];
+
+function reportingEnabled(): boolean {
+  if (typeof window === "undefined") return false;
+  if (process.env.NEXT_PUBLIC_ANALYTICS_FORCE === "1") return true;
+  return ALLOWED_HOSTS.includes(window.location.hostname);
+}
 
 declare global {
   interface Window {
@@ -18,13 +34,23 @@ export function trackMetaEvent(
   params?: Record<string, unknown>,
 ) {
   if (!pixelId || typeof window === "undefined" || !window.fbq) return;
+  if (!reportingEnabled()) return;
   window.fbq("track", event, params);
 }
 
-// Base pixel + SPA-aware PageView. Renders nothing without NEXT_PUBLIC_META_PIXEL_ID.
+// Base pixel + SPA-aware PageView. Renders nothing without
+// NEXT_PUBLIC_META_PIXEL_ID, and nothing outside the real storefront.
 export function MetaPixel() {
   const pathname = usePathname();
   const initialised = useRef(false);
+  // Resolved after mount rather than during render: reportingEnabled() needs
+  // window, so evaluating it inline would return false on the server and true
+  // on the client, and the differing markup would be a hydration mismatch.
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    setEnabled(reportingEnabled());
+  }, []);
 
   useEffect(() => {
     if (!pixelId || !window.fbq) return;
@@ -36,7 +62,7 @@ export function MetaPixel() {
     window.fbq("track", "PageView");
   }, [pathname]);
 
-  if (!pixelId) return null;
+  if (!pixelId || !enabled) return null;
 
   return (
     <Script id="meta-pixel" strategy="afterInteractive">

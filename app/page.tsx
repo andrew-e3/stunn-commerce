@@ -247,7 +247,7 @@ export default function HomePage() {
             <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
               <Cta>Shop now - save up to 25%</Cta>
               <span className="hidden text-sm font-semibold text-[#111111]/50 sm:inline">
-                Free shipping on subscription + $75+ orders
+                Free shipping on every US order
               </span>
             </div>
             <div className="mt-5 hidden max-w-[520px] grid-cols-3 gap-3 text-xs font-bold text-[#111111]/60 sm:grid sm:text-sm">

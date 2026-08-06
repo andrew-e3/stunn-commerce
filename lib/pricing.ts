@@ -108,14 +108,31 @@ export const BEST_VALUE_PER_DAY_LABEL = formatPerDay(BEST_VALUE_PER_DAY);
 // ended up promising "Ships FREE" on a $39.99 order while the cart asked for
 // $35.01 more - visible only after add-to-cart, at the worst possible moment.
 //
-// Set to 0 if Shopify's US shipping profile actually charges nothing on every
-// order (which is what the announcement bar and the running Meta ads promise).
-// Verify under Shopify admin -> Settings -> Shipping and delivery before
-// changing: lowering this without the Shopify rate to match would surprise the
-// customer with a shipping charge at checkout instead.
-export const FREE_SHIPPING_THRESHOLD = 75;
+// RESOLVED 2026-08-06: there is no threshold. Shopify's US profile offers
+// Economy at $0.00 on every cart value, with Standard at $6.90 as a paid
+// upgrade. Confirmed two ways rather than from the admin UI:
+//
+//   1. Order #ST-1002 ($39.99 subtotal) shipped with shipping_lines[0].price
+//      = "0.00" and price_set = 0.00 - the BASE rate, with discount_codes []
+//      and discount_allocations [], so nothing discounted it to zero.
+//   2. Storefront API cartCreate against a New York address returned
+//      "Economy $0.0 / Standard $6.9" at both $39.99 and $119.97 subtotals.
+//
+// The old value of 75 was a guess that nothing ever verified, and it was the
+// expensive kind of wrong: the cart drawer told a $39.99 shopper to "Add $35.01
+// more or choose subscription for Free Shipping" when their order already
+// shipped free, and the Meta ad creative deliberately omitted any
+// free-shipping claim to avoid contradicting it. The announcement bar's "Free
+// shipping on every US order" was correct all along.
+//
+// Kept as a named constant rather than deleted so the semantics stay explicit
+// and any future paid-shipping tier has one obvious place to live.
+export const FREE_SHIPPING_THRESHOLD = 0;
 
-/** Does a one-time order of this value ship free? */
+/** The upgrade customers can pay for; Economy is always free. */
+export const STANDARD_SHIPPING_PRICE = 6.9;
+
+/** Does a one-time order of this value ship free? Always true - see above. */
 export function shipsFree(subtotal: number) {
   return subtotal >= FREE_SHIPPING_THRESHOLD;
 }

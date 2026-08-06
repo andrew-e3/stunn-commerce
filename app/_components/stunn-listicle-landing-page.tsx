@@ -308,7 +308,7 @@ export function StunnListicleLandingPage({
                 </span>
               </div>
               <ul className="mt-5 grid gap-2 text-sm font-bold text-[#111111]/64">
-                <li>Free shipping on subscription</li>
+                <li>Free shipping on every US order</li>
                 <li>Pause or cancel any time</li>
                 <li>30-day money-back guarantee</li>
               </ul>

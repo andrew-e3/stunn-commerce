@@ -7,12 +7,10 @@ import { useCart } from "components/cart/cart-context";
 import { attachAnalyticsSession } from "lib/analytics/attach-session";
 import { DEFAULT_OPTION } from "lib/constants";
 import {
-  FREE_SHIPPING_THRESHOLD,
   formatPerDay,
   perDay,
   priceAfterDiscount,
   roundMoney,
-  shipsFree,
   SUPPLY_TIERS,
 } from "lib/pricing";
 import { Product } from "lib/shopify/types";
@@ -284,9 +282,7 @@ export function StunnPurchasePanel({ product }: { product: Product }) {
 
         <div className="grid gap-2 text-[11px] text-[#111111]/72 sm:grid-cols-3">
           {[
-            shipsFree(display.retailPrice)
-              ? "Ships FREE"
-              : `Free shipping over $${FREE_SHIPPING_THRESHOLD}`,
+            "Free US shipping",
             "10% off your first order",
             "No subscription",
           ].map((b) => (

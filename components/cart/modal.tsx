@@ -6,7 +6,6 @@ import { trackStunnEvent } from "components/analytics-beacon";
 import LoadingDots from "components/loading-dots";
 import { DEFAULT_OPTION } from "lib/constants";
 import {
-  FREE_SHIPPING_THRESHOLD,
   priceAfterDiscount,
   RETAIL_PER_BOX,
   SUPPLY_TIERS,
@@ -282,17 +281,12 @@ export default function CartModal() {
                   const subscriptionInterval =
                     subscriptionLines[0] &&
                     getSubscriptionInterval(subscriptionLines[0]);
-                  const remaining = Math.max(
-                    0,
-                    FREE_SHIPPING_THRESHOLD - discountedSubtotal,
-                  );
-                  const progress = hasSubscription
-                    ? 100
-                    : Math.min(
-                        100,
-                        (discountedSubtotal / FREE_SHIPPING_THRESHOLD) * 100,
-                      );
-                  const hasFreeShipping = hasSubscription || remaining === 0;
+                  // Every US order ships free (Economy $0.00 at any value - see
+                  // lib/pricing.ts). The old "spend $X more to unlock free
+                  // shipping" meter and its progress bar are gone: with no
+                  // threshold there is nothing to progress toward, and the
+                  // prompt was telling a $39.99 shopper to add $35.01 they
+                  // never needed to spend.
 
                   return (
                     <div className="flex h-full flex-col overflow-hidden">
@@ -313,33 +307,8 @@ export default function CartModal() {
                             </div>
                           )}
                           <p className="text-sm font-semibold leading-snug sm:text-[15px]">
-                            {hasSubscription ? (
-                              <>
-                                Subscription order unlocked{" "}
-                                <strong>Free Shipping!</strong>
-                              </>
-                            ) : hasFreeShipping ? (
-                              <>
-                                Congrats, you&apos;ve unlocked{" "}
-                                <strong>Free Shipping!</strong>
-                              </>
-                            ) : (
-                              <>
-                                Add <strong>${remaining.toFixed(2)}</strong>{" "}
-                                more or choose subscription for{" "}
-                                <strong>Free Shipping</strong>
-                              </>
-                            )}
+                            <strong>Free shipping</strong> on every US order
                           </p>
-                        </div>
-                        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/80">
-                          <div
-                            className="h-full rounded-full transition-all duration-500"
-                            style={{
-                              width: `${progress}%`,
-                              backgroundColor: BRAND_PURPLE,
-                            }}
-                          />
                         </div>
                       </div>
 
