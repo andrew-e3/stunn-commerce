@@ -51,7 +51,11 @@ export const homepage = defineType({
           name: "ctaNote",
           title: "Note under button",
           type: "string",
-          description: 'e.g. "Free shipping on subscription + $75+ orders"',
+          // Was 'e.g. "Free shipping on subscription + $75+ orders"'. There is
+          // no shipping threshold and never was - Economy is $0.00 at every
+          // cart value - so that example instructed editors to type a false
+          // claim. See FREE_SHIPPING_THRESHOLD in lib/pricing.ts.
+          description: 'e.g. "Free shipping on every US order"',
           validation: (rule) => rule.max(80),
         }),
         defineField({
