@@ -1,0 +1,253 @@
+{% comment %}
+  STUNN - Shopify "Order confirmation" notification.
+  Paste into: Shopify admin -> Settings -> Notifications -> Order confirmation -> Edit code.
+
+  This replaces Shopify's default template, which is unbranded system-font black
+  and white. Order confirmations are the highest-open email any brand sends
+  (typically 60%+), and for STUNN it is also the first chance to tell a new
+  buyer HOW to use a product category most of them have never bought before -
+  which is what protects the reorder and reduces "this isn't what I expected".
+
+  Email-client constraints, so do not "tidy" these away:
+  - Tables for layout, not flex/grid. Outlook uses Word's renderer.
+  - Every style inline. Gmail strips <style> blocks in many contexts.
+  - No webfonts - Futura/Helvetica stack with system fallbacks.
+  - Max width 600px, single column, images with explicit width.
+  - Logo is served from Shopify's own CDN so it is never blocked as third-party.
+
+  Claim rules apply here exactly as they do in ads: 99.9% caffeine-free (never
+  "zero caffeine"), doses only if exact, no medical or clinical language.
+{% endcomment %}
+
+{% assign brand_purple = '#5A3493' %}
+{% assign brand_lilac  = '#E9E2F7' %}
+{% assign brand_cream  = '#F5F2EA' %}
+{% assign brand_ink    = '#111111' %}
+{% assign font_stack   = "'Futura','Helvetica Neue',Helvetica,Arial,sans-serif" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>Order {{ order_name }}</title>
+</head>
+<body style="margin:0; padding:0; background-color:{{ brand_cream }}; -webkit-font-smoothing:antialiased;">
+
+  {% comment %} Preheader - shows in the inbox preview line, hidden in the body. {% endcomment %}
+  <div style="display:none; font-size:1px; color:{{ brand_cream }}; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+    Your STUNN order is confirmed. Here's what happens next, and how to get the most out of it.
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="background-color:{{ brand_cream }};">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"
+               style="width:600px; max-width:600px; background-color:#FFFFFF; border-radius:14px; overflow:hidden;">
+
+          <!-- ── Logo ─────────────────────────────────────────────── -->
+          <tr>
+            <td align="center" style="padding:36px 32px 8px 32px; background-color:#FFFFFF;">
+              <img src="https://cdn.shopify.com/s/files/1/0758/0785/0596/files/STUNN_LOGO-Purple.png"
+                   alt="STUNN" width="132"
+                   style="display:block; width:132px; max-width:132px; height:auto; border:0;">
+            </td>
+          </tr>
+
+          <!-- ── Confirmation ─────────────────────────────────────── -->
+          <tr>
+            <td style="padding:20px 32px 0 32px; font-family:{{ font_stack }};">
+              <p style="margin:0 0 10px 0; font-size:12px; letter-spacing:1.4px; text-transform:uppercase; font-weight:bold; color:{{ brand_purple }};">
+                Order confirmed
+              </p>
+              <h1 style="margin:0 0 14px 0; font-size:28px; line-height:34px; font-weight:bold; color:{{ brand_ink }};">
+                Thanks{% if customer.first_name %}, {{ customer.first_name }}{% endif %} - it's on the way.
+              </h1>
+              <p style="margin:0 0 6px 0; font-size:15px; line-height:23px; color:{{ brand_ink }};">
+                Order <strong>{{ order_name }}</strong>. We're packing it now and you'll get tracking
+                the moment it ships.
+              </p>
+              <p style="margin:0; font-size:15px; line-height:23px; color:#555555;">
+                You kept the cup. You just dropped the part that was costing you.
+              </p>
+            </td>
+          </tr>
+
+          <!-- ── Order status button ──────────────────────────────── -->
+          <tr>
+            <td style="padding:26px 32px 0 32px;" align="left">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="{{ brand_purple }}" style="border-radius:40px;">
+                    <a href="{{ order_status_url }}"
+                       style="display:inline-block; padding:15px 34px; font-family:{{ font_stack }};
+                              font-size:14px; font-weight:bold; letter-spacing:0.6px; color:#FFFFFF;
+                              text-decoration:none; border-radius:40px;">
+                      TRACK YOUR ORDER
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── Order summary ───────────────────────────────────── -->
+          <tr>
+            <td style="padding:34px 32px 0 32px; font-family:{{ font_stack }};">
+              <p style="margin:0 0 14px 0; font-size:12px; letter-spacing:1.4px; text-transform:uppercase; font-weight:bold; color:{{ brand_purple }};">
+                Your order
+              </p>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                {% for line in line_items %}
+                <tr>
+                  <td width="64" valign="top" style="padding:0 14px 16px 0;">
+                    {% if line.image %}
+                      {% comment %} 'compact' is a Shopify-named size, safer in
+                        notification Liquid than explicit pixel dimensions. {% endcomment %}
+                      <img src="{{ line | img_url: 'compact' }}"
+                           alt="{{ line.title | escape }}" width="64"
+                           style="display:block; width:64px; height:64px; border-radius:8px;
+                                  background-color:{{ brand_cream }}; border:0;">
+                    {% else %}
+                      <div style="width:64px; height:64px; border-radius:8px; background-color:{{ brand_lilac }};"></div>
+                    {% endif %}
+                  </td>
+                  <td valign="top" style="padding:0 0 16px 0; font-size:14px; line-height:20px; color:{{ brand_ink }};">
+                    <strong>{{ line.title }}</strong><br>
+                    {% if line.variant.title and line.variant.title != 'Default Title' %}
+                      <span style="color:#666666;">{{ line.variant.title }}</span><br>
+                    {% endif %}
+                    {% if line.selling_plan_allocation %}
+                      <span style="color:{{ brand_purple }}; font-weight:bold;">Subscription - {{ line.selling_plan_allocation.selling_plan.name }}</span><br>
+                    {% endif %}
+                    <span style="color:#666666;">Qty {{ line.quantity }}</span>
+                  </td>
+                  <td valign="top" align="right" style="padding:0 0 16px 0; font-size:14px; line-height:20px; font-weight:bold; color:{{ brand_ink }}; white-space:nowrap;">
+                    {{ line.final_line_price | money }}
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="border-top:1px solid #E5E5E5; margin-top:4px;">
+                <tr>
+                  <td style="padding:14px 0 0 0; font-size:14px; line-height:22px; color:#555555;">Subtotal</td>
+                  <td align="right" style="padding:14px 0 0 0; font-size:14px; line-height:22px; color:{{ brand_ink }};">{{ subtotal_price | money }}</td>
+                </tr>
+                {% if discounts %}
+                <tr>
+                  <td style="font-size:14px; line-height:22px; color:{{ brand_purple }};">Discount{% if discounts.first.code %} ({{ discounts.first.code }}){% endif %}</td>
+                  <td align="right" style="font-size:14px; line-height:22px; color:{{ brand_purple }};">-{{ total_discounts | money }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                  <td style="font-size:14px; line-height:22px; color:#555555;">Shipping</td>
+                  <td align="right" style="font-size:14px; line-height:22px; color:{{ brand_ink }};">
+                    {% if shipping_price == 0 %}
+                      <span style="color:{{ brand_purple }}; font-weight:bold;">FREE</span>
+                    {% else %}
+                      {{ shipping_price | money }}
+                    {% endif %}
+                  </td>
+                </tr>
+                {% if tax_price and tax_price > 0 %}
+                <tr>
+                  <td style="font-size:14px; line-height:22px; color:#555555;">Tax</td>
+                  <td align="right" style="font-size:14px; line-height:22px; color:{{ brand_ink }};">{{ tax_price | money }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                  <td style="padding-top:10px; border-top:1px solid #E5E5E5; font-size:16px; line-height:24px; font-weight:bold; color:{{ brand_ink }};">Total</td>
+                  <td align="right" style="padding-top:10px; border-top:1px solid #E5E5E5; font-size:16px; line-height:24px; font-weight:bold; color:{{ brand_ink }};">{{ total_price | money }} {{ shop.currency }}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── How to drink it - the reorder-protecting bit ─────── -->
+          <tr>
+            <td style="padding:32px 32px 0 32px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color:{{ brand_cream }}; border-radius:12px;">
+                <tr>
+                  <td style="padding:22px 24px; font-family:{{ font_stack }};">
+                    <p style="margin:0 0 12px 0; font-size:12px; letter-spacing:1.4px; text-transform:uppercase; font-weight:bold; color:{{ brand_purple }};">
+                      When it arrives
+                    </p>
+                    <p style="margin:0 0 10px 0; font-size:14px; line-height:22px; color:{{ brand_ink }};">
+                      <strong>One sachet, 6-8oz of hot water, stir.</strong> It's real decaf coffee, so
+                      treat it exactly like your normal cup - milk, oat, black, however you take it.
+                    </p>
+                    <p style="margin:0 0 10px 0; font-size:14px; line-height:22px; color:{{ brand_ink }};">
+                      <strong>Drink it whenever you want.</strong> It's 99.9% caffeine-free, so the 4pm
+                      cup isn't a decision about tonight any more.
+                    </p>
+                    <p style="margin:0; font-size:14px; line-height:22px; color:{{ brand_ink }};">
+                      <strong>Give it a week.</strong> The functional side - Lion's Mane, Rhodiola,
+                      Cordyceps, L-Theanine - is something you notice over days, not minutes.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── Shipping address ────────────────────────────────── -->
+          {% if requires_shipping and shipping_address %}
+          <tr>
+            <td style="padding:30px 32px 0 32px; font-family:{{ font_stack }};">
+              <p style="margin:0 0 10px 0; font-size:12px; letter-spacing:1.4px; text-transform:uppercase; font-weight:bold; color:{{ brand_purple }};">
+                Shipping to
+              </p>
+              <p style="margin:0; font-size:14px; line-height:21px; color:#555555;">
+                {{ shipping_address.name }}<br>
+                {{ shipping_address.street }}<br>
+                {{ shipping_address.city }}{% if shipping_address.province %}, {{ shipping_address.province }}{% endif %} {{ shipping_address.zip }}<br>
+                {{ shipping_address.country }}
+              </p>
+            </td>
+          </tr>
+          {% endif %}
+
+          <!-- ── Help ────────────────────────────────────────────── -->
+          <tr>
+            <td style="padding:30px 32px 34px 32px; font-family:{{ font_stack }};">
+              <p style="margin:0; font-size:14px; line-height:22px; color:#555555;">
+                Questions about this order? Reply to this email - it reaches a person.
+              </p>
+            </td>
+          </tr>
+
+          <!-- ── Footer ──────────────────────────────────────────── -->
+          <tr>
+            <td style="background-color:{{ brand_purple }}; padding:26px 32px; font-family:{{ font_stack }};">
+              <p style="margin:0 0 6px 0; font-size:15px; line-height:22px; font-weight:bold; color:#FFFFFF;">
+                Keep the cup. Lose the loop.
+              </p>
+              <p style="margin:0 0 14px 0; font-size:13px; line-height:20px; color:{{ brand_lilac }};">
+                Decaf coffee + adaptogens &amp; nootropics. No jitters. No crash.
+              </p>
+              <p style="margin:0; font-size:12px; line-height:18px; color:{{ brand_lilac }};">
+                <a href="https://stunn.co" style="color:#FFFFFF; text-decoration:none; font-weight:bold;">stunn.co</a>
+                &nbsp;·&nbsp; {{ shop.name }}
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+        <p style="margin:18px 0 0 0; font-family:{{ font_stack }}; font-size:11px; line-height:17px; color:#999999; max-width:600px;">
+          This is a receipt for order {{ order_name }}.
+        </p>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
