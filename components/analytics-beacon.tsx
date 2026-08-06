@@ -33,17 +33,36 @@ function reportingEnabled(): boolean {
   return ALLOWED_HOSTS.includes(window.location.hostname);
 }
 
+// Survives blocked sessionStorage. This used to `return null`, which made
+// trackStunnEvent bail out entirely - so in any context where storage throws
+// (Safari private browsing, locked-down in-app webviews, strict privacy
+// settings) the add-to-cart was recorded by the Meta pixel, which needs no
+// storage, and by nothing on our side. Ad clicks land disproportionately in
+// in-app browsers, so that asymmetry fell hardest on exactly the traffic we
+// most need to measure.
+//
+// The in-memory fallback lasts for the life of the page rather than the tab, so
+// a hard navigation starts a new session. That over-counts sessions slightly
+// for these visitors, which is strictly better than dropping their funnel
+// events on the floor.
+let memoryKey: string | null = null;
+
+function newKey(): string {
+  return (crypto.randomUUID?.() ?? String(Math.random()).slice(2)).replace(/-/g, "");
+}
+
 function sessionKey(): string | null {
   if (typeof window === "undefined") return null;
   try {
     let k = window.sessionStorage.getItem(KEY);
     if (!k) {
-      k = (crypto.randomUUID?.() ?? String(Math.random()).slice(2)).replace(/-/g, "");
+      k = newKey();
       window.sessionStorage.setItem(KEY, k);
     }
     return k;
   } catch {
-    return null; // storage blocked — skip tracking rather than break the page
+    if (!memoryKey) memoryKey = newKey();
+    return memoryKey;
   }
 }
 
@@ -65,18 +84,26 @@ export function getStunnSessionKey(): string | null {
 
 // UTMs only exist on the entry URL, so remember them for the whole session.
 function utms(search: URLSearchParams) {
+  // Read the URL BEFORE touching storage. When sessionStorage throws, a visitor
+  // landing on a tagged ad URL still gets attributed - previously the getItem
+  // was first, so the whole function fell into the catch and returned {} even
+  // though the UTMs were sitting right there in the query string.
+  const fromUrl = {
+    source: search.get("utm_source"),
+    medium: search.get("utm_medium"),
+    campaign: search.get("utm_campaign"),
+    content: search.get("utm_content"),
+  };
+  if (fromUrl.source || fromUrl.campaign) {
+    try {
+      window.sessionStorage.setItem("stunn_utm", JSON.stringify(fromUrl));
+    } catch {
+      /* can't persist for later events, but this one is still attributed */
+    }
+    return fromUrl;
+  }
   try {
     const stored = window.sessionStorage.getItem("stunn_utm");
-    const fromUrl = {
-      source: search.get("utm_source"),
-      medium: search.get("utm_medium"),
-      campaign: search.get("utm_campaign"),
-      content: search.get("utm_content"),
-    };
-    if (fromUrl.source || fromUrl.campaign) {
-      window.sessionStorage.setItem("stunn_utm", JSON.stringify(fromUrl));
-      return fromUrl;
-    }
     return stored ? JSON.parse(stored) : {};
   } catch {
     return {};
