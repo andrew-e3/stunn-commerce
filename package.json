@@ -2,6 +2,8 @@
   "private": true,
   "scripts": {
     "build:ads:v3": "node scripts/build-stunn-ads-v3.mjs",
+    "build:ads:v4": "node scripts/build-stunn-adpack-v4.mjs",
+    "build:ads:v4:video": "node scripts/build-stunn-adpack-v4-video-animatics.mjs",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
